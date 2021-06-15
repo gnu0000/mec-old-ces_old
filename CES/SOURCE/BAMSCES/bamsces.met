@@ -1,0 +1,2901 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * BAMSCES.met
+ * This file contains metadata for the BAMS/CES windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "..\include\tableid.h"
+
+#define ITIWC_COMBOBOX 0xffff0002L
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// USHORT                                                                RECTS               USHORT     LONG                  LONG
+// Static Window ID       Add,                    Change,                xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+ProgramUserS,          AddProgUserD,         ChProgUserD,          8,  24,  181, 91,  COORD_RNG,    ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+ProgramJobS,           AddProgJobD,          ChProgJobD,           0,   0,   70, 23,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+ProgramFundS,          0,                    0,                   14,   6,   80, 24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+ProgramS,              0,                    ProgramD,             1,   1,  120, 14,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobS,                  0,                    JobD,                 4,   2,  114, 43,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobUserS,              AddJobUserD,          ChJobUserD,          14,   6,   80, 22,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobItemsS,             JobItemD,             JobItemD,             1,  21,  134, 24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobItemScheduleS,      0,                    ItemSchedD,           5,   5,   65, 12,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobItemS,              0,                    JobItemD,             2,   1,  136, 46,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobFundS,              0,                    0,                   14,   6,   92, 24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobCommentS,           JobCommentD,          JobCommentD,         14,  24,  350, 142, COORD_RNG,    ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobBreakdownFundS,     AddJobBreakFundD,     ChJobBreakFundD,     18,  10,   92, 24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobBreakdownS,         0,                    JobBreakdownD,        5,  14,  120, 24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobAlternateGroupS,    JobAltD,              JobAltD,             10,  28,  262, 112, COORD_RNG,    ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+DefaultUserS,          DefltJobProgUsersD,   DefltJobProgUsersD,  34,  45,  308, 99,  COORD_RNG,    ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobBreakdownListS,     JobBreakdownD,        JobBreakdownD,        4,   2,   60, 10,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+JobAlternateGroupListS, JobAltGroupD,        JobAltGroupD,         4,   2,   60, 10,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT                       USHORT                         USHORT                                                RECTS               USHORT
+//
+// Parents Window ID         Type Child Window ID   uKind       Add,                     Change                     <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DefaultUserS,           DefaultUserL1,      ITIWC_LIST,     DefltJobProgUsersD, DefltJobProgUsersD, 0,  2,  50, 0,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+DefaultUserS,           DefaultUserL2,      ITIWC_LIST,     DefltJobProgUsersD, DefltJobProgUsersD, 50, 2,  0,  0,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+JobAlternateGroupS,     JobAlternateL,      ITIWC_LIST,     JobAltD,            JobAltD,            0,  32, 0,  0,  COORD_REL
+//JobAlternateGroupS,   JobAlternateCombo,  ITIWC_COMBOBOX, 0,                  0,                  30, 2,  10, 6,  COORD_CHRRNG
+JobBreakdownFundS,      JobBreakdownFundL,  ITIWC_LIST,     AddJobBreakFundD,   ChJobBreakFundD,    0,  0,  0,  0,  COORD_REL
+JobCommentS,            JobCommentL,        ITIWC_LIST,     JobCommentD,        JobCommentD,        0,  0,  0,  0,  COORD_REL
+JobFundS,               JobFundL,           ITIWC_LIST,     0,                  0,                  0,  0,  0,  0,  COORD_REL
+JobItemS,               JobItemL1,          ITIWC_LIST,     0,                  0,                  20, 32, 44, 1,  TL | BLK | X0ABS | Y0ABS | X1RNG | Y1REL
+JobItemS,               JobItemL2,          ITIWC_LIST,     0,                  0,                  20, 32, 44, 1,  TR | BLK | X0ABS | Y0ABS | X1RNG | Y1REL
+JobItemScheduleS,       JobItemScheduleL,   ITIWC_LIST,     0,                  ItemSchedD,         0,  0,  0,  0,  COORD_REL
+JobItemsS,              JobItemsL,          ITIWC_LIST,     JobItemD,           JobItemD,           0,  0,  0,  0,  COORD_REL
+JobUserS,               JobUserL,           ITIWC_LIST,     AddJobUserD,        ChJobUserD,         0,  0,  0,  0,  COORD_REL
+ProgramFundS,           ProgramFundL,       ITIWC_LIST,     0,                  0,                  0,  0,  0,  0,  COORD_REL
+ProgramJobS,            ProgramJobL,        ITIWC_LIST,     AddProgJobD,        ChProgJobD,         0,  0,  0,  12, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG
+ProgramJobS,            ProgramJobPredL,    ITIWC_LIST,     0,                  ProgramJobSchedD,   4,  28, 60, 1,  TL | BLK | X0ABS | Y0ABS | X1RNG | Y1REL
+ProgramJobS,            ProgramJobSucL,     ITIWC_LIST,     0,                  ProgramJobSchedD,   4,  28, 60, 1,  TR | BLK | X0ABS | Y0ABS | X1RNG | Y1REL
+ProgramUserS,           ProgramUserL,       ITIWC_LIST,     AddProgUserD,       ChProgUserD,        0,  0,  0,  0,  COORD_REL
+JobBreakdownListS,      JobBreakdownL,      ITIWC_LIST,     JobBreakdownD,      JobBreakdownD,      0,  0,  0,  0,  COORD_REL
+JobAlternateGroupListS, JobAlternateGroupL, ITIWC_LIST,     JobAltGroupD,       JobAltGroupD,       0,  0,  0,  0,  COORD_REL
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                  LONG                             LONG                  LONG                  USHORT USHORT   USHORT
+// List Window ID          Window Options                   Background Color      Label Bkg Color       Label ydata    Button Window ID
+//---------------------------------------------------------------------------------------------------------------------------
+DefaultUserL1,      ITI_LISTOPTIONV | LWS_BORDER,   ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+DefaultUserL2,      ITI_LISTOPTIONV | LWS_BORDER,   ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobAlternateL,      ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobBreakdownFundL,  ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobCommentL,        ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobFundL,           ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobItemL1,          ITI_LISTOPTIONHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobItemL2,          ITI_LISTOPTIONHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobItemScheduleL,   ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobItemsL,          ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobUserL,           ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramFundL,       ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobL,        ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobPredL,    ITI_LISTOPTIONV | LWS_BORDER,   ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobSucL,     ITI_LISTOPTIONV | LWS_BORDER,   ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramUserL,       ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+OpenProgramDL,      ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+OpenJobDL,          ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobNewDL,           ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobBreakdownL,      ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobAlternateGroupL, ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+DefJobUserCatL,     ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ChProgJobL,         ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+AddProgJobL,        ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+JobBreakFundL,      ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+ItemSchPredL,       ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ItemSchSucL,        ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+DefltJobUsersL,     ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+DefltProgUsersL,    ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+PredSchedChangeL,   ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+SuccSchedChangeL,   ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+PredSchedAddL,      ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+SuccSchedAddL,      ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+ProgramJobSchPredL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobSchSuccL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+ProgramJobPredSchChgL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobSuccSchChgL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobPredSchAddL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+ProgramJobSuccSchAddL, ITI_LISTOPTIONV| LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                  USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                                USHORT  PSZ
+//
+// Window ID          Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags                                          uIndex           Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DefaultUserL1,          0,                      1,   0,   8,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserGrantedPrivilege, "String"
+DefaultUserL1,          0,                      1,   0,   6,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, AccessPrivilege,      "Privilege"
+
+DefaultUserL2,          0,                      1,   0,   8,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserGrantedPrivilege, "String"
+DefaultUserL2,          0,                      1,   0,   6,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, AccessPrivilege,      "Privilege"
+
+JobS,                 0,                      12,  0,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, Job.Description,         "String"
+JobS,                 0,                      12,  1,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   3,                  "String"
+JobS,                 0,                      17,  1,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, 4,                       "String"
+JobS,                 0,                      12,  2,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   CountyID,                                          "String"
+JobS,                 0,                      17,  2,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, County.Name,             "String"
+JobS,                 0,                      12,  3,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   1,                                                 "String"
+JobS,                 0,                      17,  3,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, 2,                       "String"
+JobS,                 0,                      12,  4, 20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   LettingMonth,                                      "Month,mmmm"
+JobS,                 0,                      12,  5, 20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   BaseDate,                                          "DateTime,mmm d, yyyy  hh:nnA"
+JobS,                 0,                      12,  6,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   SpecYear,                                          "Year,yyyy"
+JobS,        WorkingDayCalendarS,     25,  7,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, WorkingDayCalendarID,    "String"
+JobS,                 0,                      12,  8,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS, Duration,                                          "Number,,"
+JobS,                 0,                      12,  9, 20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   DavisBaconWages,                                   "Flag,Non-Davis Bacon,Davis Bacon"
+JobS,                 0,                      12, 10, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   7,                                                 "String"
+JobS,                 0,                      12, 11, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   DateCreated,                                       "DateTime,mmm d, yyyy"
+JobS,                 0,                      12, 12, 14,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   8,                                                 "String"
+JobS,                 0,                      12, 13, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   DateChecked,                                       "DateTime,mmm d, yyyy"
+JobS,                 0,                      12, 14, 20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   UnitType,                                           "Flag,English System,Metric System"
+JobS,                 0,                      40, 11, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   LastUpdate,                                        "DateTime,mmm d, yyyy"
+JobS,                 0,                      40, 12, 14,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   9,                                                 "String"
+JobS,                 0,                      40, 13, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   DateApproved,                                      "DateTime,mmm d, yyyy"
+JobS,                 JobBreakdownListS, 40, 15, 13,  1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS, EstimatedCost,                                     "Number,$,.."
+JobS,                 0,                      45, 32, 12,  2, COORD_BLKRNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS, ContingencyPercent,                                "Number,%.."
+JobS,                 0,                      40, 16, 13,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS, 5,                                                 "Number,$,.."
+JobS,                 0,                      45, 34, 12,  2, COORD_BLKRNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS, ConstructionEngineeringPct,                        "Number,%.."
+JobS,                 0,                      40, 17, 13,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS, 6,                                                 "Number,$,.."
+JobS,                 JobBreakdownListS, 80, 37, 26,  2, COORD_BLKRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS, EstimateTotal,                                     "Number,$,.."
+
+JobAlternateGroupS,   0,                      11,   0,   1,  2, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAMULTILINEFLAGS, JobAlternateGroup.Description, "String"
+JobAlternateGroupS,   0,                      14,   2,  13,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,                                      JobAlternateGroup.Estimate,    "Number,$,.."
+JobAlternateGroupS,   0,                      30,   2,  10,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                                     JobAlternate.JobAlternateID,   "String"
+
+JobAlternateL,          0,                       1,  0,   9,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                              JobAlternateID,                "String"
+JobAlternateL,          0,                      11,  0,  14,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Description,                   "String"
+JobAlternateL,          0,                       0,  0,  13,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS, Estimate,                     "Number,$,.."
+
+JobBreakdownS,        0,                      14,  0,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                 JobBreakdown.Description,    "String"
+JobBreakdownS,        0,                      14,  1,  8,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATARTFLAGS,               Length,                      "Number,,...."
+JobBreakdownS,        0,                      14,  2,  4,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 1,                           "String"
+JobBreakdownS,        0,                      19,  2,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                 2,                           "String"
+JobBreakdownS,        0,                      14,  3,  4,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATARTFLAGS,               PavementWidth,               "Number,,"
+JobBreakdownS,        0,                      73,  6,  6,  2,   COORD_BLKRNG,                             ITI_SDATACOLOR, ITI_SDATARTFLAGS,               PavementDepth,               "Number,,"
+JobBreakdownS,        0,                      14,  4,  4,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 3,                           "String"
+JobBreakdownS,        0,                      19,  4,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                 4,                           "String"
+// JobBreakdownS,        0,                   14,  5,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITIWND_HIDE | ITI_SDATAFLAGS,   StructureID,                 "String"
+// JobBreakdownS,        0,                   14,  6,  6,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITIWND_HIDE | ITI_SDATARTFLAGS, StructureLength,             "Number,,"
+// JobBreakdownS,        0,                   75, 12,  8,  2,   COORD_BLKRNG,                             ITI_SDATACOLOR, ITIWND_HIDE | ITI_SDATARTFLAGS, StructureWidth,              "Number,,"
+JobBreakdownS,        0,                      14,  5,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                 StructureID,                 "String"
+JobBreakdownS,        0,                      14,  6,  6,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATARTFLAGS,               StructureLength,             "Number,,"
+JobBreakdownS,        0,                      75, 12,  8,  2,   COORD_BLKRNG,                             ITI_SDATACOLOR, ITI_SDATARTFLAGS,               StructureWidth,              "Number,,"
+JobBreakdownS,        0,                      14,  7,  4,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 5,                           "String"
+JobBreakdownS,        0,                      19,  7,  1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                 6,                           "String"
+// JobBreakdownS,        JobItemsS,           30,  8, 13,  1,   COORD_CHRRNG,                             ITI_SLINKCOLOR, ITI_SDATARTFLAGS,               DetailedEstimateCost,        "Number,$,.."
+JobBreakdownS,        0,                      30,  8, 13,  1,   COORD_CHRRNG,                             ITI_SLINKCOLOR, ITI_SDATARTFLAGS,               DetailedEstimateCost,        "Number,$,.."
+JobBreakdownS,        0,                      30,  9, 13,  1,   COORD_CHRRNG,                             ITI_SLINKCOLOR, ITI_SDATARTFLAGS,               PreliminaryEstimateCost,     "Number,$,.."
+// JobBreakdownS,        0,                   45,  9,  8,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 Name,                        "String"
+// JobBreakdownS,        0,                   45,  9, 13,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 Name,                        "String,~(,)~"
+// JobBreakdownS,        0,                   45,  9, 13,  1,   COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,                 BreakdownEstimationMethodID, "String,~(,)~"
+
+JobBreakdownFundL,      FundCatS,         1,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   FundID,          "String"
+JobBreakdownFundL,          0,                  14,   0,  13,   1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS, AmountFunded,    "Number,$,.."
+JobBreakdownFundL,          0,                  30,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS, PercentFunded,   "Number,%"
+JobBreakdownFundL,      FundCatS,         4,   1,  40,   1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Name,            "String"
+
+JobCommentL,            0,                       1,  0,  10,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, CommentDate,                   "DateTime,mmm d, yyyy"
+JobCommentL,            0,                      12,  0,   8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, CommentTime,                   "DateTime,hh:nn a"
+JobCommentL,            0,                      21,  0,  16,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserID,                        "String"
+JobCommentL,            0,                      38,  0, 255,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, ArchiveCopyFileName,           "String"
+JobCommentL,            0,                       4,  1,   0,  1,   COORD_CHRRELX, ITI_LDATACOLOR,   ITI_LDATAMLFLAGS, ShortText,                   "String"
+// JobCommentL,            0,                       4,  1,   0,  1,   COORD_CHRRELX, ITI_LDATACOLOR,   ITI_LDATAMLFLAGS, LongText,                   "String"
+
+JobFundL,           FundCatS,             1,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   FundID,           "String"
+JobFundL,               0,                      14,   0,  13,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, AmountFunded,     "Number,$,.."
+JobFundL,               0,                      30,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, PercentFunded,    "Number,%"
+JobFundL,           FundCatS,             4,   1,  40,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Name,             "String"
+
+JobItemS,             0,                       1,  1,  12,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   StandardItemNumber,      "String"
+JobItemS,             0,                      13,  1,  12,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, Quantity,                "Number,,..."
+JobItemS,             0,                      26,  1,   4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   CodeValueID,             "String"
+JobItemS,             0,                      31,  1,  14,  1, COORD_CHRRNG, ITI_SLINKCOLOR, ITI_SDATARTFLAGS, UnitPrice,               "Number,$,...."
+JobItemS,             0,                      46,  1,   4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   CodeValueID,             "String"
+JobItemS,             0,                      51,  1,  13,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, ExtendedAmount,          "Number,$,.."
+JobItemS,             0,                      42,  5,  40,  2, COORD_BLKRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ItemEstimationMethod.Name, "String"
+JobItemS,             0,                      18,  4,   1,  2, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAMLFLAGS, EstimationComment,        "String"
+JobItemS,             0,                      25,  6,  16,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, RoundingPrecision, "Precision"
+JobItemS,             0,                      30, 15,   1,  2, TL | BLK | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, ShortDescription,                  "String"
+JobItemS,             0,                      30, 18,   1,  4, TL | BLK | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAMLFLAGS, LongDescription,         "String"
+JobItemS,             0,                      30, 23,   1,  4, TL | BLK | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAMLFLAGS, SupplementalDescription, "String"
+JobItemS,             0,                      10, 14,   6,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, DaysElapsedBeforeStart,  "Number,,"
+JobItemS,             0,                      33, 14,   6,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, Duration,                "Number,,"
+
+JobItemL1,              0,                      2,   2,   52,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, StandardItemNumber,            "String"
+JobItemL1,              0,                      56,  2,   12,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Link,                          "Dependency,s"
+JobItemL1,              0,                      72,  2,   12,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Lag,                           "Number"
+
+JobItemL2,              0,                      2,   2,   52,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, StandardItemNumber,            "String"
+JobItemL2,              0,                      56,  2,   12,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Link,                          "Dependency,s"
+JobItemL2,              0,                      72,  2,   12,  8,   COORD_RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Lag,                           "Number"
+
+JobItemScheduleL,       0,                      1,   0,   11,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,            "String"
+JobItemScheduleL,       0,                     13,   0,   13,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, DaysElapsedBeforeStart,        "Number,,"
+JobItemScheduleL,       0,                     28,   0,    6,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Duration,                      "Number,,"
+JobItemScheduleL,       0,                     35,   0,   12,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity,                      "Number,,..."
+JobItemScheduleL,       0,                     48,   0,    4,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   CodeValueID,                   "String"
+JobItemScheduleL,       0,                      4,   1,   40,  1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ShortDescription,              "String"
+
+JobItemsL,              0,                        1,  0,  12,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,   StandardItemNumber,         "String"
+JobItemsL,              0,                       13,  0,  12,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS, Quantity,                   "Number,,..."
+JobItemsL,              0,                       26,  0,  14,  1,   COORD_CHRRNG, ITI_LLINKCOLOR,  ITI_LDATARTFLAGS, UnitPrice,                  "Number,$,...."
+JobItemsL,              0,                       40,  0,   1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR, ITI_LDATACTRFLAGS, 1,                         "String"
+JobItemsL,              0,                       41,  0,   4,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,   CodeValueID,                "String"
+JobItemsL,              0,                       46,  0,   3,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,   EstimationMethodAbbreviation, "String"
+JobItemsL,              0,                       50,  0,  13,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS, ExtendedAmount,             "Number,$,.."
+JobItemsL,              0,                        4,  1,  40,  1,   COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,   ShortDescription,           "String"
+
+JobUserL,               0,                       1,   0,   15,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, UserID,          "String"
+JobUserL,               0,                       1,   0,   12,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, AccessPrivilege, "Privilege"
+
+ProgramS,             0,                      11,   0,   1,   2, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, Description, "String"
+ProgramS,             0,                      11,   2,  12,   1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   StartDate, "DateTime,mmm d, yyyy"
+ProgramS,             0,                      11,   3,  12,   1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   EndDate,   "DateTime,mmm d, yyyy"
+ProgramS,             ProgramJobS,       11,   4,  10,   1, COORD_CHRRNG, ITI_SLINKCOLOR, ITI_SDATAFLAGS,   1,         "Number,,"
+ProgramS,             ProgramJobS,       42,   3,  16,   1, COORD_CHRRNG, ITI_SLINKCOLOR, ITI_SDATARTFLAGS, TotalCost, "Number,$,.."
+ProgramS,             ProgramJobS,       42,   4,  16,   1, COORD_CHRRNG, ITI_SLINKCOLOR, ITI_SDATARTFLAGS, TotalAdjustedForInflation,     "Number,$,.."
+
+ProgramFundL,      FundCatS,              1,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   FundID,           "String"
+ProgramFundL,          0,                       14,   0,  13,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, AmountFunded,     "Number,$,.."
+ProgramFundL,          0,                       30,   0,   6,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, PercentFunded,    "Number,%"
+ProgramFundL,      FundCatS,              4,   1,  40,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Name,             "String"
+
+ProgramJobL,            JobS,               1,   0,  16,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,                        "String"
+ProgramJobL,            0,                      18,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   LettingDate,                  "DateTime,mmm d, yyyy"
+ProgramJobL,            0,                      29,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   WorkBeginDate,                "DateTime,mmm d, yyyy"
+ProgramJobL,            0,                      40,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   WorkEndDate,                  "DateTime,mmm d, yyyy"
+ProgramJobL,            0,                      51,   0,   3,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Priority,                     "Number"
+ProgramJobL,            JobS,              54,   0,  13,   1, COORD_CHRRNG, ITI_LLINKCOLOR, ITI_LDATARTFLAGS, EstimateTotal,                "Number,$,.."
+ProgramJobL,            JobS,               4,   1,  47,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Job.Description,              "String"
+ProgramJobL,     InflationPredictionS,   54,   1,  13,   1, COORD_CHRRNG, ITI_LLINKCOLOR, ITI_LDATARTFLAGS, EstimateTotalAdjForInflation, "Number,$,.."
+
+ProgramJobPredL,        JobS,               1,   0,  16,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,    JobID,  "String"
+ProgramJobPredL,        0,                      18,   0,   4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS, Link,   "Dependency,s"
+ProgramJobPredL,        0,                      23,   0,   4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,  Lag,    "Number,,"
+
+ProgramJobSucL,         JobS,               1,   0,  16,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,    JobID,  "String"
+ProgramJobSucL,         0,                      18,   0,   4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS, Link,   "Dependency,s"
+ProgramJobSucL,         0,                      23,   0,   4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,  Lag,    "Number,,"
+
+ProgramUserL,           0,                       1,   0,   14,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, UserID,          "String"
+ProgramUserL,           0,                       1,   0,   12,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, AccessPrivilege, "Privilege"
+
+OpenProgramDL,  0,                      1,   0,   16,  1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, ProgramID,  "String"
+OpenProgramDL,  0,                      19,  0,  255,  1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, Description,"String"
+
+OpenJobDL,      0,                      1,   0,   16,  1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, JobID,      "String"
+OpenJobDL,      0,                      19,  0,  255,  1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, Description,"String"
+
+JobNewDL,       0,                      1,   0,   16,  1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, JobID,      "String"
+
+JobBreakdownL,          JobBreakdownS,     1,   0,   11,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, JobBreakdownID,        "String"
+JobBreakdownL,          JobBreakdownS,     13,  0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Description,           "String"
+
+JobAlternateGroupL,     JobAlternateGroupS,1,   0,   11,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobAlternateGroupID, "String"
+JobAlternateGroupL,     JobAlternateGroupS,11,  0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Estimate,            "Number,$,.."
+JobAlternateGroupL,     JobAlternateGroupS,25,  0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String"
+
+DefJobUserCatL,         0,                       1,  0,   25,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   UserID,              "String"
+DefJobUserCatL,         0,                       27, 0,   255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Name,                "String"
+
+ChProgJobL,             0,                       1,  0,   16,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String" 
+ChProgJobL,             0,                       19, 0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String" 
+
+AddProgJobL,            0,                       1,  0,   16,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String" 
+AddProgJobL,            0,                       19, 0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String" 
+                      
+JobBreakFundL,          0,                       1,  0,    8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   FundID,              "String"
+JobBreakFundL,          0,                       12, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Name,                "String"
+
+ItemSchPredL,           0,                       1,  0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+ItemSchPredL,           0,                       15, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,s"
+ItemSchPredL,           0,                       20, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Lag,                 "Number,,"
+/*--- This one is for data matching ---*/
+ItemSchPredL,           0,                       95, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,l"
+
+ItemSchSucL,            0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+ItemSchSucL,            0,                       15, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,s"
+ItemSchSucL,            0,                       20, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Lag,                 "Number,,"
+/*--- This one is for data matching ---*/
+ItemSchSucL,            0,                       95, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,l"
+
+DefltJobUsersL,         0,                        1, 0,    8,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserGrantedPrivilege, "String"
+DefltJobUsersL,         0,                        1, 0,    6,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, AccessPrivilege, "Privilege"
+                                                        
+DefltProgUsersL,        0,                        1, 0,    8,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserGrantedPrivilege, "String"
+DefltProgUsersL,        0,                        1, 0,    6,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, AccessPrivilege, "Privilege"
+
+PredSchedChangeL,       0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+PredSchedChangeL,       0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ShortDescription,    "String"
+
+SuccSchedChangeL,       0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+SuccSchedChangeL,       0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ShortDescription,    "String"
+         
+PredSchedAddL,          0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+PredSchedAddL,          0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ShortDescription,    "String"
+
+SuccSchedAddL,          0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   StandardItemNumber,  "String"
+SuccSchedAddL,          0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ShortDescription,    "String"
+
+ProgramJobSchPredL,     0,                        1,  0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,              "String"
+ProgramJobSchPredL,     0,                       15, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,s"
+ProgramJobSchPredL,     0,                       20, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Lag,                 "Number,,"
+/*--- This one is for data matching ---*/
+ProgramJobSchPredL,     0,                       95, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,l"
+
+ProgramJobSchSuccL,     0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String"
+ProgramJobSchSuccL,     0,                       15, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,s"
+ProgramJobSchSuccL,     0,                       20, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Lag,                 "Number,,"
+/*--- This one is for data matching ---*/
+ProgramJobSchSuccL,     0,                       95, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS,Link,                "Dependency,l"
+
+ProgramJobPredSchChgL,  0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String"
+ProgramJobPredSchChgL,  0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String"
+
+ProgramJobSuccSchChgL,  0,                        1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String"
+ProgramJobSuccSchChgL,  0,                       15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String"
+         
+ProgramJobPredSchAddL,   0,                       1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String"
+ProgramJobPredSchAddL,   0,                      15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String"
+
+ProgramJobSuccSchAddL,   0,                       1, 0,   13,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   JobID,               "String"
+ProgramJobSuccSchAddL,   0,                      15, 0,   40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Description,         "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID                 Next Window xposypos  xsiz ysiz CoordType  Foreground Color  Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+DefaultUserS,           0,           0,   0,  50,   2, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG, ITI_SLABELCOLOR,  ITI_SLABELCTRFLAGS,   "Default Job Users"
+DefaultUserS,           0,          50,   0,   0,   2, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG, ITI_SLABELCOLOR,  ITI_SLABELCTRFLAGS,   "Default Program Users"
+
+DefaultUserL1,            0,           1,   0,   8,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User"
+DefaultUserL1,            0,           0,   0,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Access"
+DefaultUserL1,            0,           0,   1,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Privilege"
+
+DefaultUserL2,            0,           1,   0,   8,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User"
+DefaultUserL2,            0,           0,   0,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Access"
+DefaultUserL2,            0,           0,   1,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Privilege"
+
+JobS,                   0,           0,   0,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Description:"
+JobS,                   0,           0,   1,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Work Type:"
+JobS,                   0,           0,   2,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "County:"
+JobS,                   0,           0,   3,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "District:"
+JobS,                   0,           0,   4,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Letting Month:"
+JobS,                   0,           0,   5,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Base Date:"
+JobS,                   0,           0,   6,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Spec Year:"
+JobS,  WorkingDayCalendarS,  0,   7,  24,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Convert to Calendar Days Using:"
+JobS,                   0,           0,   8,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Duration:"
+JobS,                   0,           0,   9,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Wages:"
+JobS,                   0,           0,  10,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Estimator:"
+JobS,                   0,           0,  11,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Date Created:"
+JobS,                   0,           0,  12,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Checked by:"
+JobS,                   0,           0,  13,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Date Checked:"
+JobS,                   0,           0,  14,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Measurments:"
+JobS,                   0,          28,  11,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Last Update:"
+JobS,                   0,          28,  12,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Approved by:"
+JobS,                   0,          28,  13,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Date Approved:"
+JobS,                   0,          28,  15,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Estimated Cost:"
+JobS,                   0,          29,  16,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Contingencies:"
+JobS,                   0,          29,  17,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Construc Engr:"
+JobS,                   0,          80,  36,  26,   1, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "---------------------------------------"
+JobS,                   0,          58,  37,  22,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Estimate Total:"
+JobS,                   0,          21,  16,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELCTRFLAGS,   "+"
+JobS,                   0,          21,  17,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELCTRFLAGS,   "+"
+JobS,                   0,          16,   8,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,   " Working Days"
+
+JobAlternateGroupS,     0,           0,   0,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Description:"
+JobAlternateGroupS,     0,           0,   2,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Chosen Estimate:"
+
+JobAlternateL,            0,           1,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Job Alternate"
+JobAlternateL,            0,          11,   0,  14,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Description"
+JobAlternateL,            0,           0,   0,  13,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Estimate "
+
+JobBreakdownS,          0,           0,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Description:"
+JobBreakdownS,          0,           0,   1,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Length:"
+JobBreakdownS,          0,          45,   2,  10,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "miles"
+JobBreakdownS,          0,           0,   2,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Road Type:"
+JobBreakdownS,          0,           0,   3,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Pavement Width:"
+JobBreakdownS,          0,          37,   6,   8,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "feet"
+JobBreakdownS,          0,          23,   3,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Pavement Depth:"
+JobBreakdownS,          0,          40,   3,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "inches"
+JobBreakdownS,          0,           0,   4,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Structure Type:"
+JobBreakdownS,          0,           0,   5,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITIWND_HIDE | ITI_SLABELRTFLAGS,   "Structure:"
+JobBreakdownS,          0,           0,   6,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITIWND_HIDE | ITI_SLABELRTFLAGS,   "Structure Length:"
+JobBreakdownS,          0,          41,  12,   8,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITIWND_HIDE | ITI_SLABELFLAGS,     "feet"
+JobBreakdownS,          0,          25,   6,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITIWND_HIDE | ITI_SLABELRTFLAGS,   "Structure Width:"
+JobBreakdownS,          0,          42,   6,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITIWND_HIDE | ITI_SLABELFLAGS,     "feet"
+JobBreakdownS,          0,           0,   7,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Work Type:"
+// JobBreakdownS,     JobItemsS,        0,   8,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Detailed Estimate Total:" //
+JobBreakdownS,          0,           0,   8,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Detailed Estimate Total:"
+JobBreakdownS,          0,           0,   9,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Preliminary Estimate Total:"
+JobBreakdownS,          0,          40,   8,   8,   1, COORD_CHRRNG, ITI_SDATACOLOR,   ITIWND_HIDE | ITI_SLABELRTFLAGS,   "Active"
+JobBreakdownS,          0,          40,   9,   8,   1, COORD_CHRRNG, ITI_SDATACOLOR,   ITIWND_HIDE | ITI_SLABELRTFLAGS,   "Active"
+JobBreakdownS,          0,          45,   2,  15,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "kilometers"
+JobBreakdownS,          0,          37,   6,  12,   2, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "meters"
+JobBreakdownS,          0,          40,   3,  22,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELFLAGS,     "millimeters"
+
+
+JobBreakdownFundL,  FundCatS,   1,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Fund/"
+JobBreakdownFundL,        0,          14,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Amount Fund
+JobBreakdownFundL,        0,          30,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Percent"
+JobBreakdownFundL,        0,          30,   1,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Funded"
+JobBreakdownFundL,  FundCatS,   4,   1,  15,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Description"
+
+JobCommentL,             0,           1,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Date/"
+JobCommentL,             0,          12,   0,   8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Time"
+JobCommentL,             0,          21,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Estimator"
+JobCommentL,             0,          38,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Archive File"
+JobCommentL,             0,           4,   1, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Comment"
+
+JobFundL,           FundCatS,   1,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Fund/"
+JobFundL,                 0,          14,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Amount Funded"
+JobFundL,                 0,          30,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Percent"
+JobFundL,                 0,          30,   1,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Funded"
+JobFundL,           FundCatS,   4,   1,  15,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Description"
+
+JobItemS,               0,           1,   0,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Item Number"
+JobItemS,               0,          13,   0,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Quantity"
+JobItemS,               0,          26,   0,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Unit"
+JobItemS,               0,          31,   0,  14,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Unit Price "
+JobItemS,               0,          45,   0,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,"/"
+JobItemS,               0,          45,   1,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,"/"
+JobItemS,               0,          46,   0,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Unit"
+JobItemS,               0,          51,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Extension "
+JobItemS,               0,           1,   5,  40,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Unit price estimated using "
+JobItemS,               0,           1,   4,  16,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Estimation Comment:"
+JobItemS,               0,           0,   6,  24,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Unit price rounded to the Nearest "
+JobItemS,               0,           1,  15,  28,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Short Description:"
+JobItemS,               0,           1,  18,  28,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Long Description:"
+JobItemS,               0,           1,  23,  28,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Suppl. Description:"
+JobItemS,               0,           1,  14,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Start Time:"
+JobItemS,               0,          25,  14,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Duration:"
+
+JobItemL1,                0,           2,   2,  86,   8, COORD_RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Predecessor Items:"
+
+JobItemL2,                0,           2,   2,  86,   8, COORD_RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Successor Items:"
+
+JobItemScheduleL,         0,           1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number/"
+JobItemScheduleL,         0,          13,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Days Before Start"
+JobItemScheduleL,         0,          28,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Duration"
+JobItemScheduleL,         0,          35,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Quantity"
+JobItemScheduleL,         0,          48,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Unit"
+JobItemScheduleL,         0,           4,   1,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+JobItemsL, CBEstForJobItemS,      1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number/"
+JobItemsL,                0,          13,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Quantity"
+JobItemsL,                0,          26,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Price "
+JobItemsL,                0,          40,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS,"/"
+JobItemsL,                0,          41,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Unit"
+JobItemsL,                0,          46,   0,   5,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Source"
+JobItemsL,                0,          50,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Extension "
+JobItemsL,                0,           4,   1,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+JobUserL,                 0,           1,   0,  15,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "User"
+JobUserL,                 0,           0,   0,  13,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Access Privilege"
+
+ProgramS,               0,           0,   0,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Description:"
+ProgramS,               0,           0,   2,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Start Date:"
+ProgramS,               0,           0,   3,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "End Date:"
+ProgramS,   ProgramJobS,        0,   4,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "No. of Job:"
+ProgramS,   ProgramJobS,       31,   3,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Total Cost:"
+ProgramS,   ProgramJobS,       21,   4,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,   "Total Adjusted for Inflation:"
+
+ProgramFundL,       FundCatS,   1,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,     "Fund/"
+ProgramFundL,             0,          14,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Amount Funded"
+ProgramFundL,             0,          30,   0,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Percent"
+ProgramFundL,             0,          30,   1,   6,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,   "Funded"
+ProgramFundL,       FundCatS,   4,   1,  15,   1, COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,     "Description"
+
+ProgramJobS,            0,   2,  13,   9,   1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Pred of Job "
+ProgramJobS,            0,  23,  13,   9,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Succ of Job "
+ProgramJobS,            0,  12,  13,  16,   1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ""
+ProgramJobS,            0,   6,  13,  16,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ""
+
+ProgramJobL,              JobS,   1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job/"
+ProgramJobL,              0,          18,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Letting Date"
+ProgramJobL,              0,          29,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Work Begin"
+ProgramJobL,              0,          40,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Work End"
+ProgramJobL,              0,          51,   0,   3,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS,"Prty"
+ProgramJobL,              JobS,  54,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Estimated Total/"
+ProgramJobL,              JobS,   4,   1,  47,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+ProgramJobL,  InflationPredictionS, 54,   1,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Adj for Inflation "
+
+ProgramJobPredL,          JobS,   1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Job"
+ProgramJobPredL,          0,          18,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Link"
+ProgramJobPredL,          0,          23,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS,  "Lag"
+
+ProgramJobSucL,           JobS,   1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Job"
+ProgramJobSucL,           0,          18,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Link"
+ProgramJobSucL,           0,          23,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS,  "Lag"
+
+ProgramUserL,             0,           1,   0,  15,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "User"
+ProgramUserL,             0,           0,   0,  13,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Access Privilege"
+
+OpenProgramDL,    0,           1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Program"
+OpenProgramDL,    0,          19,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+OpenJobDL,        0,           1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Job"
+OpenJobDL,        0,          19,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+JobBreakdownL,  JobBreakdownS,    1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Job Breakdown"
+JobBreakdownL,  JobBreakdownS,   13,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+JobAlternateGroupL,  JobAlternateGroupS,   1,   0,   11,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Alternate Group"
+JobAlternateGroupL,  JobAlternateGroupS,   13,  0,   11,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Estimate "
+JobAlternateGroupL,  JobAlternateGroupS,   25,  0,  255,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+DefJobUserCatL,      DefJobUserCatL, 1,  0,   25,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "UserID"
+DefJobUserCatL,      DefJobUserCatL, 27, 0,   255, 1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User Name"
+
+ChProgJobL,          0,                 1,  0,   16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Job ID"
+ChProgJobL,          0,                 19, 0,  255,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+AddProgJobL,         0,                 1,  0,   16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Job ID"
+AddProgJobL,         0,                 19, 0,  255,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+JobBreakFundL,    0,                 1,  0,    8,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Fund ID"
+JobBreakFundL,    0,                 12, 0,   40,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Fund Name"
+
+ItemSchPredL,        0,                 1,  0,   13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Predecessors"
+ItemSchPredL,        0,                 15, 0,    4,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Link"
+ItemSchPredL,        0,                 20, 0,   13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Lag"
+
+ItemSchSucL,         0,                 1,  0,   13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Successors"
+ItemSchSucL,         0,                 15, 0,    4,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Link"
+ItemSchSucL,         0,                 20, 0,   13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Lag"
+
+
+DefltJobUsersL,            0,           1,   0,   8,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User"
+DefltJobUsersL,            0,           0,   0,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Access"
+DefltJobUsersL,            0,           0,   1,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Privilege"
+
+DefltProgUsersL,           0,           1,   0,   8,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User"
+DefltProgUsersL,           0,           0,   0,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Access"
+DefltProgUsersL,           0,           0,   1,   7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Privilege"
+
+PredSchedChangeL,          0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number "
+PredSchedChangeL,          0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+SuccSchedChangeL,          0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number "
+SuccSchedChangeL,          0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+PredSchedAddL,             0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number "
+PredSchedAddL,             0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+SuccSchedAddL,             0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number "
+SuccSchedAddL,             0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+ProgramJobSchPredL,        0,           1,   0,  13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Predecessors"
+ProgramJobSchPredL,        0,          15,   0,   4,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Link"
+ProgramJobSchPredL,        0,          20,   0,  13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Lag"
+
+ProgramJobSchSuccL,        0,           1,   0,  13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Successors"
+ProgramJobSchSuccL,        0,          15,   0,   4,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Link"
+ProgramJobSchSuccL,        0,          20,   0,  13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Lag"
+
+ProgramJobPredSchChgL,     0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job ID      "
+ProgramJobPredSchChgL,     0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+ProgramJobSuccSchChgL,     0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job ID      "
+ProgramJobSuccSchChgL,     0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+ProgramJobPredSchAddL,     0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job ID      "
+ProgramJobPredSchAddL,     0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+ProgramJobSuccSchAddL,     0,           1,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job ID      "
+ProgramJobSuccSchAddL,     0,          15,   0,  40,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID               Query String
+//---------------------------------------------------------------------------------------------------------------
+ItemSchedD,          " SELECT StandardItemNumber, ShortDescription,"
+ItemSchedD,          " DaysElapsedBeforeStart, Duration,"
+ItemSchedD,          " JobItemKey, JobKey"
+ItemSchedD,          " FROM JobItem, StandardItem"
+ItemSchedD,          " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+ItemSchedD,          " AND JobKey = %JobKey"
+ItemSchedD,          " AND JobItemKey = %JobItemKey"
+
+PredecessorsChangeD, " SELECT Link, Lag, JobKey, SuccessorJobItemKey,"
+PredecessorsChangeD, " PredecessorJobItemKey"
+PredecessorsChangeD, " FROM JobItemDependency"
+PredecessorsChangeD, " WHERE JobKey = %JobKey"
+PredecessorsChangeD, " AND PredecessorJobItemKey = %PredecessorJobItemKey"
+PredecessorsChangeD, " AND SuccessorJobItemKey = %SuccessorJobItemKey"
+
+SuccessorsChangeD,   " SELECT Link, Lag, JobKey, PredecessorJobItemKey,"
+SuccessorsChangeD,   " SuccessorJobItemKey"
+SuccessorsChangeD,   " FROM JobItemDependency"
+SuccessorsChangeD,   " WHERE JobKey = %JobKey"
+SuccessorsChangeD,   " AND PredecessorJobItemKey = %PredecessorJobItemKey"
+SuccessorsChangeD,   " AND SuccessorJobItemKey = %SuccessorJobItemKey"
+
+PredecessorsAddD,    " SELECT Link, Lag, JobKey, SuccessorJobItemKey,"
+PredecessorsAddD,    " PredecessorJobItemKey"
+PredecessorsAddD,    " FROM JobItemDependency"
+PredecessorsAddD,    " WHERE JobKey = %JobKey"
+PredecessorsAddD,    " AND PredecessorJobItemKey = %PredecessorJobItemKey"
+PredecessorsAddD,    " AND SuccessorJobItemKey = %SuccessorJobItemKey"
+
+SuccessorsAddD,      " SELECT Link, Lag, JobKey, PredecessorJobItemKey,"
+SuccessorsAddD,      " SuccessorJobItemKey"
+SuccessorsAddD,      " FROM JobItemDependency"
+SuccessorsAddD,      " WHERE JobKey = %JobKey"
+SuccessorsAddD,      " AND PredecessorJobItemKey = %PredecessorJobItemKey"
+SuccessorsAddD,      " AND SuccessorJobItemKey = %SuccessorJobItemKey"
+
+
+PredSchedChangeL,    " SELECT StandardItem.StandardItemKey,"
+PredSchedChangeL,    " StandardItemNumber, ShortDescription, JobItemKey"
+PredSchedChangeL,    " FROM JobItem, StandardItem"
+PredSchedChangeL,    " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+PredSchedChangeL,    " AND JobKey = %JobKey"
+PredSchedChangeL,    " AND JobItemKey NOT IN"
+PredSchedChangeL,    " (SELECT PredecessorJobItemKey"
+PredSchedChangeL,    " FROM JobItemDependency"
+PredSchedChangeL,    " WHERE JobKey = %JobKey"
+PredSchedChangeL,    " AND SuccessorJobItemKey = %JobItemKey)"
+PredSchedChangeL,    " AND NOT JobItem.JobItemKey = %SuccessorJobItemKey"
+PredSchedChangeL,    " ORDER BY StandardItemNumber"
+
+SuccSchedChangeL,    " SELECT StandardItem.StandardItemKey,"
+SuccSchedChangeL,    " StandardItemNumber, ShortDescription, JobItemKey"
+SuccSchedChangeL,    " FROM JobItem, StandardItem"
+SuccSchedChangeL,    " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+SuccSchedChangeL,    " AND JobKey = %JobKey"
+SuccSchedChangeL,    " AND JobItemKey NOT IN"
+SuccSchedChangeL,    " (SELECT SuccessorJobItemKey"
+SuccSchedChangeL,    " FROM JobItemDependency"
+SuccSchedChangeL,    " WHERE JobKey = %JobKey"
+SuccSchedChangeL,    " AND PredecessorJobItemKey = %JobItemKey)"
+SuccSchedChangeL,    " AND NOT JobItem.JobItemKey = %PredecessorJobItemKey"
+SuccSchedChangeL,    " ORDER BY StandardItemNumber"
+
+
+PredSchedAddL,       " SELECT StandardItem.StandardItemKey,"
+PredSchedAddL,       " StandardItemNumber, ShortDescription, JobItemKey"
+PredSchedAddL,       " FROM JobItem, StandardItem"
+PredSchedAddL,       " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+PredSchedAddL,       " AND JobKey = %JobKey"
+PredSchedAddL,       " ORDER BY StandardItemNumber"
+
+SuccSchedAddL,       " SELECT StandardItem.StandardItemKey,"
+SuccSchedAddL,       " StandardItemNumber, ShortDescription, JobItemKey"
+SuccSchedAddL,       " FROM JobItem, StandardItem"
+SuccSchedAddL,       " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+SuccSchedAddL,       " AND JobKey = %JobKey"
+SuccSchedAddL,       " AND JobItemKey NOT IN"
+SuccSchedAddL,       " (SELECT SuccessorJobItemKey"
+SuccSchedAddL,       " FROM JobItemDependency"
+SuccSchedAddL,       " WHERE JobKey = %JobKey"
+SuccSchedAddL,       " AND PredecessorJobItemKey = %JobItemKey)"
+SuccSchedAddL,       " ORDER BY StandardItemNumber"
+
+
+DefaultUserL1,       " SELECT UserGrantedPrivilege, AccessPrivilege, UserKey"
+DefaultUserL1,       " FROM DefaultJobUser"
+DefaultUserL1,       " WHERE UserKey = @CurrentUserKey"
+DefaultUserL1,       " ORDER BY UserGrantedPrivilege"
+
+DefaultUserL2,       " SELECT UserGrantedPrivilege, AccessPrivilege, UserKey"
+DefaultUserL2,       " FROM DefaultProgramUser"
+DefaultUserL2,       " WHERE UserKey = @CurrentUserKey"
+DefaultUserL2,       " ORDER BY UserGrantedPrivilege"
+
+DefaultUserS,        " SELECT UserID, UserKey"
+DefaultUserS,        " FROM User"
+DefaultUserS,        " WHERE UserKey = @CurrentUserKey"
+
+JobS,                " SELECT d.CodeValueID, d.Translation,"
+JobS,                " w.CodeValueID, w.Translation,"
+JobS,                " EstimatedCost * ContingencyPercent,"
+JobS,                " EstimatedCost * ConstructionEngineeringPct,"
+JobS,                " a.UserID, b.UserID, c.UserID,"
+JobS,                " Job.Description, Job.WorkType, CountyID,"
+JobS,                " County.Name, LettingMonth, BaseDate,"
+JobS,                " SpecYear, WorkingDayCalendarID, Duration,"
+JobS,                " DavisBaconWages, DateCreated,"
+JobS,                " DateChecked, LastUpdate, DateApproved,"
+JobS,                " EstimatedCost, ContingencyPercent,"
+JobS,                " ConstructionEngineeringPct,"
+JobS,                " EstimateTotal, Job.JobKey,"
+JobS,                " Job.WorkingDayCalendarKey, JobID, Estimator,"
+JobS,                " District"
+JobS,                ", Job.UnitType "
+JobS,                " FROM Job, County, WorkingDayCalendar,"
+JobS,                " User a, User b, User c,"
+JobS,                " CodeValue w, CodeValue d"
+JobS,                " WHERE Job.PrimaryCountyKey = County.CountyKey"
+JobS,                " AND Job.WorkingDayCalendarKey = WorkingDayCalendar.WorkingDayCalendarKey"
+JobS,                " AND Job.JobKey = %JobKey"
+JobS,                " AND WorkType = w.CodeValueKey"
+JobS,                " AND District = d.CodeValueKey"
+JobS,                " AND a.UserKey = Job.Estimator"
+JobS,                " AND (b.UserKey = Job.CheckedBy"
+JobS,                "      OR (Job.CheckedBy IS NULL and b.UserKey=0))"
+JobS,                " AND (c.UserKey = Job.ApprovedBy"
+JobS,                "      OR (Job.ApprovedBy IS NULL and c.UserKey=0))"
+
+JobAlternateGroupS,  " SELECT JobAlternateGroup.Description,"
+JobAlternateGroupS,  " JobAlternateGroup.Estimate, Job.JobKey,"
+JobAlternateGroupS,  " Job.JobID, JobAlternateGroup.JobAlternateGroupKey,"
+JobAlternateGroupS,  " JobAlternateGroup.JobAlternateGroupID,"
+JobAlternateGroupS,  " JobAlternate.JobAlternateID"
+JobAlternateGroupS,  " FROM JobAlternateGroup JAG, Job, JobAlternate JA"
+JobAlternateGroupS,  " WHERE Job.JobKey = JAG.JobKey"
+JobAlternateGroupS,  " AND Job.JobKey = %JobKey"
+JobAlternateGroupS,  " AND JAG.JobAlternateGroupKey = %JobAlternateGroupKey"
+JobAlternateGroupS,  " AND JAG.JobAlternateGroupKey = JA.JobAlternateGroupKey"
+JobAlternateGroupS,  " AND JAG.JobKey = JA.JobKey"
+JobAlternateGroupS,  " AND JAG.ChosenAlternateKey = JA.JobAlternateKey"
+
+JobAlternateL,       " SELECT JobAlternateID, Description, Estimate, JobAlternateKey"
+JobAlternateL,       " FROM JobAlternate JA"
+JobAlternateL,       " WHERE JA.JobKey = %JobKey"
+JobAlternateL,       " AND JA.JobAlternateGroupKey = %JobAlternateGroupKey"
+JobAlternateL,       " ORDER BY JobAlternateID"
+
+JobBreakdownS,       " SELECT a.CodeValueID, a.Translation,"
+JobBreakdownS,       " b.CodeValueID, b.Translation,"
+JobBreakdownS,       " c.CodeValueID, c.Translation,"
+JobBreakdownS,       " JobBreakdown.Description, Length,"
+JobBreakdownS,       " RoadType, PavementWidth, PavementDepth,"
+JobBreakdownS,       " StructureType, DetailedEstimateCost,"
+JobBreakdownS,       " PreliminaryEstimateCost, JobID, JobBreakdownID,"
+// JobBreakdownS,       " BreakdownEstimationMethodID, StructureID,"
+JobBreakdownS,       " BEM.Name, StructureID,"
+JobBreakdownS,       " StructureLength, StructureWidth,"
+JobBreakdownS,       " JB.JobKey, JB.JobBreakdownKey, JB.WorkType"
+JobBreakdownS,     ", JB.DetailedEstimate "
+JobBreakdownS,     ", J.UnitType "
+JobBreakdownS,       " FROM JobBreakdown JB, CodeValue a, CodeValue b, CodeValue c,"
+JobBreakdownS,       " BreakdownEstimationMethod BEM, Job J "
+JobBreakdownS,       " WHERE JobBreakdown.JobKey = %JobKey"
+JobBreakdownS,       " AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey"
+JobBreakdownS,       " AND RoadType = a.CodeValueKey"
+JobBreakdownS,       " AND StructureType = b.CodeValueKey"
+JobBreakdownS,       " AND JobBreakdown.WorkType = c.CodeValueKey"
+JobBreakdownS,       " AND BreakdownEstimationMethod = BreakdownEstimationMethodKey"
+JobBreakdownS,       " AND Job.JobKey = %JobKey"
+
+JobBreakdownFundS,   " SELECT J.JobID, JB.JobKey, JB.JobBreakdownKey,"
+JobBreakdownFundS,   " JB.JobBreakdownID"
+JobBreakdownFundS,   " FROM Job J, JobBreakdown JB"
+JobBreakdownFundS,   " WHERE  J.JobKey = JB.JobKey"
+JobBreakdownFundS,   " AND J.JobKey = %JobKey"
+JobBreakdownFundS,   " AND JB.JobBreakdownKey = %JobBreakdownKey"
+                    
+JobBreakdownFundL,   " SELECT F.FundID, F.Name, JBF.AmountFunded,"
+JobBreakdownFundL,   " JBF.PercentFunded, JBF.JobBreakdownKey, JBF.JobKey,"
+JobBreakdownFundL,   " JBF.FundKey"
+JobBreakdownFundL,   " FROM JobBreakdownFund JBF, Fund F"
+JobBreakdownFundL,   " WHERE  F.FundKey = JBF.FundKey"
+JobBreakdownFundL,   " AND JBF.JobKey = %JobKey"
+JobBreakdownFundL,   " AND JBF.JobBreakdownKey = %JobBreakdownKey"
+JobBreakdownFundL,   " ORDER BY F.FundID"
+
+JobCommentS,         " SELECT JobKey, JobID"
+JobCommentS,         " FROM Job"
+JobCommentS,         " WHERE JobKey = %JobKey"
+
+JobCommentL,         " SELECT CommentDate, CommentTime, ShortText, JobKey,"
+// JobCommentL,         " SELECT CommentDate, CommentTime, LongText, JobKey,"
+JobCommentL,         " UserID, ArchiveCopyFileName"
+JobCommentL,         " FROM JobComment JC, User, LongText"
+JobCommentL,         " WHERE JC.Estimator = User.UserKey"
+JobCommentL,         " AND JC.JobKey = %JobKey"
+JobCommentL,         " AND Comment = LongTextKey"
+JobCommentL,         " ORDER BY CommentDate DESC, CommentTime DESC "
+
+JobFundS,            " SELECT JobID, JobKey"
+JobFundS,            " FROM Job"
+JobFundS,            " WHERE Job.JobKey = %JobKey"
+
+JobFundL,            " SELECT FundID, Name, AmountFunded, PercentFunded,"
+JobFundL,            " JobFund.FundKey, JobFund.JobKey"                      /* **** */
+JobFundL,            " FROM Fund F, JobFund JF"
+JobFundL,            " WHERE F.FundKey = JF.FundKey"
+JobFundL,            " AND JF.JobKey = %JobKey"
+JobFundL,            " ORDER BY FundID"
+
+JobItemS,            " SELECT StandardItemNumber, Quantity,"
+JobItemS,            " CodeValueID, UnitPrice, ExtendedAmount,"
+JobItemS,            " ItemEstimationMethod.Name, EstimationComment,"
+JobItemS,            " RoundingPrecision, ShortDescription,"
+JobItemS,            " LongDescription, SupplementalDescription,"
+JobItemS,            " DaysElapsedBeforeStart, JobItem.Duration,"
+JobItemS,            " JobItem.JobBreakdownKey, JobItem.JobKey,"
+JobItemS,            " JobItemKey, JobID, Job.BaseDate,"
+JobItemS,            " JI.JobBreakdownKey, JI.JobAlternateGroupKey,"
+JobItemS,            " IEM.ItemEstimationMethodID, SI.StandardItemKey"
+JobItemS,      ", J.UnitType "
+JobItemS,            " FROM StandardItem SI, JobItem JI, ItemEstimationMethod IEM,"
+JobItemS,            " CodeValue CV, Job J, JobBreakdown JB"
+JobItemS,            " WHERE JI.StandardItemKey = SI.StandardItemKey"
+JobItemS,            " AND JI.ItemEstimationMethodKey = IEM.ItemEstimationMethodKey"
+JobItemS,            " AND JI.JobKey = %JobKey"
+JobItemS,            " AND JI.JobItemKey = %JobItemKey"
+JobItemS,            " AND J.JobKey = %JobKey"
+JobItemS,            " AND JB.JobKey = %JobKey"
+JobItemS,            " AND JB.JobBreakdownKey = %JobBreakdownKey"
+JobItemS,            " AND Unit = CodeValueKey"
+
+JobItemL1,           " SELECT StandardItemNumber, Link, Lag"
+JobItemL1,           " FROM JobItem A, JobItem B, StandardItem,"
+JobItemL1,           " JobItemDependency"
+JobItemL1,           " WHERE A.JobKey = JobItemDependency.JobKey"
+JobItemL1,           " AND A.JobItemKey = JobItemDependency.SuccessorJobItemKey"
+JobItemL1,           " AND JobItemDependency.PredecessorJobItemKey = B.JobItemKey"
+JobItemL1,           " AND B.StandardItemKey = StandardItem.StandardItemKey"
+JobItemL1,           " AND JobItem.JobKey = %JobKey"
+JobItemL1,           " AND JobItem.JobItemKey = %JobItemKey"
+JobItemL1,           " AND JobItem.JobBreakdownKey = %JobBreakdownKey"
+JobItemL1,           " ORDER BY StandardItemNumber"
+
+JobItemL2,           " SELECT StandardItemNumber, Link, Lag"
+JobItemL2,           " FROM JobItem A, JobItem B, StandardItem,"
+JobItemL2,           " JobItemDependency"
+JobItemL2,           " WHERE A.JobKey = JobItemDependency.JobKey"
+JobItemL2,           " AND A.JobItemKey = JobItemDependency.PredecessorJobItemKey"
+JobItemL2,           " AND JobItemDependency.SuccessorJobItemKey = B.JobItemKey"
+JobItemL2,           " AND B.StandardItemKey = StandardItem.StandardItemKey"
+JobItemL2,           " AND JobItem.JobKey = %JobKey"
+JobItemL2,           " AND JobItem.JobItemKey = %JobItemKey"
+JobItemL2,           " AND JobItem.JobBreakdownKey = %JobBreakdownKey"
+JobItemL2,           " ORDER BY StandardItemNumber"
+
+JobItemScheduleS,    " SELECT JobID, Job.JobKey, JobBreakdownKey,"
+JobItemScheduleS,    " JobBreakdownID"
+JobItemScheduleS,    " FROM Job, JobBreakdown"
+JobItemScheduleS,    " WHERE Job.JobKey = %JobKey"
+JobItemScheduleS,    " AND JobBreakdown.JobKey = Job.JobKey"
+
+JobItemScheduleL,    " SELECT StandardItemNumber, ShortDescription,"
+JobItemScheduleL,    " DaysElapsedBeforeStart, JobItem.Duration,"
+JobItemScheduleL,    " Quantity, CodeValueID, Job.JobKey, JobID,"
+JobItemScheduleL,    " JobItem.JobItemKey, JobItem.JobBreakdownKey,"
+JobItemScheduleL,    " StandardItem.StandardItemKey"
+JobItemScheduleL,    " FROM StandardItem, JobItem, CodeValue, Job"
+JobItemScheduleL,    " WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey"
+JobItemScheduleL,    " AND JobItem.JobKey = Job.JobKey"
+JobItemScheduleL,    " AND Job.JobKey = %JobKey"
+JobItemScheduleL,    " AND CodeValueKey = Unit"
+JobItemScheduleL,    " ORDER BY StandardItemNumber"
+
+JobItemsS,           " SELECT JobID, Job.JobKey, JobBreakdownKey,"
+JobItemsS,           " JobBreakdownID, BaseDate, Job.UnitType"
+JobItemsS,           " FROM Job, JobBreakdown"
+JobItemsS,           " WHERE Job.JobKey = %JobKey"
+JobItemsS,           " AND JobBreakdown.JobKey = Job.JobKey"
+JobItemsS,           " AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey"
+
+JobItemsL,           " /* bamsces\query.bin */ "
+JobItemsL,           " SELECT '/', StandardItemNumber, Quantity,"
+JobItemsL,           " UnitPrice, CodeValueID, SI.StandardItemKey,"
+JobItemsL,           " EstimationMethodAbbreviation,"
+JobItemsL,           " ExtendedAmount, ShortDescription,"
+JobItemsL,           " JobItem.JobKey, JobItemKey,"
+JobItemsL,           " JobBreakdown.JobBreakdownKey, JobID,"
+JobItemsL,           " JobAlternateGroupKey, JobAlternateKey,"
+JobItemsL,           " ItemEstimationMethodID, J.BaseDate"
+JobItemsL,       ", J.UnitType "
+JobItemsL,           " FROM StandardItem SI, JobItem JI,"
+JobItemsL,           " ItemEstimationMethod IEM, JobBreakdown JB,"
+JobItemsL,           " CodeValue CV, Job J"
+JobItemsL,           " WHERE JI.StandardItemKey = SI.StandardItemKey"
+JobItemsL,           " AND JI.ItemEstimationMethodKey = IEM.ItemEstimationMethodKey"
+JobItemsL,           " AND JB.JobBreakdownKey = JI.JobBreakdownKey"
+JobItemsL,           " AND JB.JobKey = JI.JobKey"
+JobItemsL,           " AND JB.JobKey = %JobKey"
+JobItemsL,           " AND JB.JobBreakdownKey = %JobBreakdownKey"
+JobItemsL,           " AND Unit = CodeValueKey"
+JobItemsL,           " AND Job.JobKey = %JobKey"
+JobItemsL,           " ORDER BY StandardItemNumber"
+
+JobUserL,            " SELECT UserID, AccessPrivilege"
+JobUserL,            " FROM JobUser"
+JobUserL,            " WHERE JobKey = %JobKey"
+JobUserL,            " ORDER BY UserID"
+
+JobUserS,            " SELECT JobKey, JobID"
+JobUserS,            " FROM Job"
+JobUserS,            " WHERE JobKey = %JobKey"
+
+ProgramS,            " SELECT (SELECT COUNT (*) FROM ProgramJob WHERE ProgramKey=%ProgramKey),"
+ProgramS,            " Description, StartDate, EndDate,"
+ProgramS,            " TotalCost, TotalAdjustedForInflation,"
+ProgramS,            " ProgramKey, ProgramID"
+ProgramS,            " FROM Program"
+ProgramS,            " WHERE ProgramKey = %ProgramKey"
+
+ProgramFundS,        " SELECT ProgramKey, ProgramID"
+ProgramFundS,        " FROM Program"
+ProgramFundS,        " WHERE ProgramKey = %ProgramKey"
+
+ProgramFundL,        " SELECT FundID, Name, AmountFunded,"
+ProgramFundL,        " PercentFunded"
+ProgramFundL,        " FROM  ProgramFund, Fund"
+ProgramFundL,        " WHERE Fund.FundKey = ProgramFund.FundKey"
+ProgramFundL,        " AND ProgramKey = %ProgramKey"
+ProgramFundL,        " ORDER BY FundID"
+
+ProgramJobS,         " SELECT ProgramKey, ProgramID"
+ProgramJobS,         " FROM Program"
+ProgramJobS,         " WHERE ProgramKey = %ProgramKey"
+
+ProgramJobL,         " SELECT JobID, Job.Description, LettingDate,"
+ProgramJobL,         " WorkBeginDate, WorkEndDate, Priority,"
+ProgramJobL,         " EstimateTotal, EstimateTotalAdjForInflation,"
+ProgramJobL,         " ProgramJob.JobKey,"
+ProgramJobL,         " ProgramJob.InflationPredictionKey,"
+ProgramJobL,         " InflationPredictionID,"
+ProgramJobL,         " ProgramJob.ProgramKey, Duration"
+ProgramJobL,         " FROM ProgramJob, Job, InflationPrediction"
+ProgramJobL,         " WHERE ProgramJob.JobKey = Job.JobKey"
+ProgramJobL,         " AND ProgramJob.InflationPredictionKey = InflationPrediction.InflationPredictionKey"
+ProgramJobL,         " AND ProgramJob.ProgramKey = %ProgramKey"
+ProgramJobL,         " ORDER BY Priority, WorkBeginDate, WorkEndDate"
+
+ProgramJobPredL,     " /* ProgramJobPredL */ "
+ProgramJobPredL,     " SELECT JobID, Link, Lag, Job.JobKey, WorkBeginDate, WorkEndDate"
+ProgramJobPredL,     " FROM Job, ProgramJob, ProgramJobDependency"
+ProgramJobPredL,     " WHERE ProgramJobDependency.PredecessorJobKey = Job.JobKey"
+ProgramJobPredL,     " AND Job.JobKey = ProgramJob.JobKey"
+ProgramJobPredL,     " AND ProgramKey = %ProgramKey"
+ProgramJobPredL,     " AND ProgramJobDependency.SuccessorJobKey = %JobKey"
+ProgramJobPredL,     " ORDER BY JobID"
+
+ProgramJobSucL,      " /* ProgramJobSucL */ "
+ProgramJobSucL,      " SELECT JobID, Link, Lag, Job.JobKey, WorkBeginDate, WorkEndDate"
+ProgramJobSucL,      " FROM Job, ProgramJob, ProgramJobDependency"
+ProgramJobSucL,      " WHERE ProgramJobDependency.SuccessorJobKey = Job.JobKey"
+ProgramJobSucL,      " AND Job.JobKey = ProgramJob.JobKey"
+ProgramJobSucL,      " AND ProgramKey = %ProgramKey"
+ProgramJobSucL,      " AND ProgramJobDependency.PredecessorJobKey = %JobKey"
+ProgramJobSucL,      " ORDER BY JobID"
+
+ProgramJobSchedD,        " /* ProgramJobSchedD */ "
+ProgramJobSchedD,        " SELECT JobID, Description,"
+ProgramJobSchedD,        " ProgramKey, ProgramJob.JobKey, WorkBeginDate, WorkEndDate"
+ProgramJobSchedD,        " FROM Job, ProgramJob"
+ProgramJobSchedD,        " WHERE ProgramJob.JobKey = Job.JobKey"
+ProgramJobSchedD,        " AND ProgramKey = %ProgramKey"
+ProgramJobSchedD,        " AND Job.JobKey = %JobKey"
+
+ProgramJobSchPredL,      " /* ProgramJobSchPredL */ "
+ProgramJobSchPredL,      " SELECT JobID, Link, Lag,"
+ProgramJobSchPredL,      " Job.JobKey, SuccessorJobKey,"
+ProgramJobSchPredL,      " PredecessorJobKey, WorkBeginDate, WorkEndDate"
+ProgramJobSchPredL,      " FROM  Job, ProgramJob, ProgramJobDependency"
+ProgramJobSchPredL,      " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobSchPredL,      " AND   Job.JobKey = PredecessorJobKey"
+ProgramJobSchPredL,      " AND   ProgramKey = %ProgramKey"
+ProgramJobSchPredL,      " AND   SuccessorJobKey = %JobKey"
+ProgramJobSchPredL,      " ORDER BY JobID"
+
+ProgramJobSchSuccL,      " /* ProgramJobSchSuccL */ "
+ProgramJobSchSuccL,      " SELECT JobID, Link, Lag,"
+ProgramJobSchSuccL,      " Job.JobKey, SuccessorJobKey,"
+ProgramJobSchSuccL,      " PredecessorJobKey, WorkBeginDate, WorkEndDate"
+ProgramJobSchSuccL,      " FROM  Job, ProgramJob, ProgramJobDependency"
+ProgramJobSchSuccL,      " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobSchSuccL,      " AND   Job.JobKey = SuccessorJobKey"
+ProgramJobSchSuccL,      " AND   ProgramKey = %ProgramKey"
+ProgramJobSchSuccL,      " AND   PredecessorJobKey = %JobKey"
+ProgramJobSchSuccL,      " ORDER BY JobID"
+
+ProgramJobPredChangeD,   " /* ProgramJobPredChangeD */ "
+ProgramJobPredChangeD,   " SELECT Link, Lag, SuccessorJobKey,"
+ProgramJobPredChangeD,   " PredecessorJobKey, Job.JobKey, ProgramKey,"
+ProgramJobPredChangeD,   " WorkBeginDate, WorkEndDate"
+ProgramJobPredChangeD,   " FROM ProgramJobDependency, Job, ProgramJob"
+ProgramJobPredChangeD,   " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobPredChangeD,   " AND Job.JobKey = %JobKey"
+ProgramJobPredChangeD,   " AND ProgramKey = %ProgramKey"
+ProgramJobPredChangeD,   " AND PredecessorJobKey = %PredecessorJobKey"
+ProgramJobPredChangeD,   " AND SuccessorJobKey = %SuccessorJobKey"
+
+ProgramJobSuccChangeD,   " /* ProgramJobSuccChangeD */ "          
+ProgramJobSuccChangeD,   " SELECT Link, Lag, PredecessorJobKey,"
+ProgramJobSuccChangeD,   " SuccessorJobKey, Job.JobKey, ProgramKey,"
+ProgramJobSuccChangeD,   " WorkBeginDate, WorkEndDate"
+ProgramJobSuccChangeD,   " FROM ProgramJobDependency, Job, ProgramJob"
+ProgramJobSuccChangeD,   " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobSuccChangeD,   " AND Job.JobKey = %JobKey"
+ProgramJobSuccChangeD,   " AND ProgramKey = %ProgramKey"
+ProgramJobSuccChangeD,   " AND PredecessorJobKey = %PredecessorJobKey"
+ProgramJobSuccChangeD,   " AND SuccessorJobKey = %SuccessorJobKey"
+
+ProgramJobPredAddD,      " /* ProgramJobPredAddD */ "
+ProgramJobPredAddD,      " SELECT Link, Lag, Job.JobKey, SuccessorJobKey,"
+ProgramJobPredAddD,      " PredecessorJobKey, ProgramKey,"                  
+ProgramJobPredAddD,      " WorkBeginDate, WorkEndDate"
+ProgramJobPredAddD,      " FROM ProgramJobDependency, Job, ProgramJob"
+ProgramJobPredAddD,      " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobPredAddD,      " AND ProgramKey = %ProgramKey"
+ProgramJobPredAddD,      " AND Job.JobKey = %JobKey"
+
+ProgramJobSuccAddD,      " /* ProgramJobSuccAddD */ "
+ProgramJobSuccAddD,      " SELECT Link, Lag, Job.JobKey, SuccessorJobKey,"
+ProgramJobSuccAddD,      " PredecessorJobKey, ProgramKey,"
+ProgramJobSuccAddD,      " WorkBeginDate, WorkEndDate"
+ProgramJobSuccAddD,      " FROM ProgramJobDependency, Job, ProgramJob"
+ProgramJobSuccAddD,      " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobSuccAddD,      " AND ProgramKey = %ProgramKey"
+ProgramJobSuccAddD,      " AND Job.JobKey = %JobKey"
+                     
+ProgramJobPredSchChgL,   " /* ProgramJobPredSchChgL */ "
+ProgramJobPredSchChgL,   " SELECT Job.JobKey,"
+ProgramJobPredSchChgL,   " JobID, Description, ProgramKey, WorkBeginDate, WorkEndDate"
+ProgramJobPredSchChgL,   " FROM Job, ProgramJob"
+ProgramJobPredSchChgL,   " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobPredSchChgL,   " AND ProgramKey = %ProgramKey"
+ProgramJobPredSchChgL,   " AND Job.JobKey NOT IN"
+ProgramJobPredSchChgL,   " (SELECT PredecessorJobKey"
+ProgramJobPredSchChgL,   " FROM  ProgramJobDependency"
+ProgramJobPredSchChgL,   " WHERE SuccessorJobKey = %JobKey)"
+ProgramJobPredSchChgL,   " AND NOT Job.JobKey = %SuccessorJobKey"
+ProgramJobPredSchChgL,   " ORDER BY JobID"
+
+ProgramJobSuccSchChgL,   " /* ProgramJobSuccSchChgL */ "
+ProgramJobSuccSchChgL,   " SELECT Job.JobKey,"
+ProgramJobSuccSchChgL,   " JobID, Description, ProgramKey, WorkBeginDate, WorkEndDate"
+ProgramJobSuccSchChgL,   " FROM Job, ProgramJob"
+ProgramJobSuccSchChgL,   " WHERE Job.JobKey = ProgramJob.JobKey"
+ProgramJobSuccSchChgL,   " AND ProgramKey = %ProgramKey"
+ProgramJobSuccSchChgL,   " AND Job.JobKey NOT IN"
+ProgramJobSuccSchChgL,   " (SELECT SuccessorJobKey"
+ProgramJobSuccSchChgL,   " FROM  ProgramJobDependency"
+ProgramJobSuccSchChgL,   " WHERE PredecessorJobKey = %JobKey)"
+ProgramJobSuccSchChgL,   " AND NOT Job.JobKey = %PredecessorJobKey"
+ProgramJobSuccSchChgL,   " ORDER BY JobID"
+
+ProgramJobPredSchAddL,   " /* ProgramJobPredSchAddL */ "
+ProgramJobPredSchAddL,   " SELECT JobID, Description,"
+ProgramJobPredSchAddL,   " Job.JobKey, ProgramKey, WorkBeginDate, WorkEndDate"
+ProgramJobPredSchAddL,   " FROM Job, ProgramJob"
+ProgramJobPredSchAddL,   " WHERE Job.JobKey NOT IN"
+ProgramJobPredSchAddL,   " (SELECT SuccessorJobKey"
+ProgramJobPredSchAddL,   "  FROM   ProgramJobDependency"
+ProgramJobPredSchAddL,   "  WHERE  PredecessorJobKey = %JobKey)"
+ProgramJobPredSchAddL,   " AND Job.JobKey = ProgramJob.JobKey"
+ProgramJobPredSchAddL,   " AND ProgramKey = %ProgramKey"
+ProgramJobPredSchAddL,   " AND Job.JobKey <> %JobKey"
+ProgramJobPredSchAddL,   " ORDER BY JobID"
+
+ProgramJobSuccSchAddL,   " /* ProgramJobSuccSchAddL */ "
+ProgramJobSuccSchAddL,   " SELECT JobID, Description,"
+ProgramJobSuccSchAddL,   " Job.JobKey, ProgramKey, WorkBeginDate, WorkEndDate"
+ProgramJobSuccSchAddL,   " FROM Job, ProgramJob"
+ProgramJobSuccSchAddL,   " WHERE Job.JobKey NOT IN"
+ProgramJobSuccSchAddL,   " (SELECT PredecessorJobKey"
+ProgramJobSuccSchAddL,   "  FROM   ProgramJobDependency"
+ProgramJobSuccSchAddL,   "  WHERE  SuccessorJobKey = %JobKey)"
+ProgramJobSuccSchAddL,   " AND Job.JobKey = ProgramJob.JobKey"
+ProgramJobSuccSchAddL,   " AND ProgramKey = %ProgramKey"
+ProgramJobSuccSchAddL,   " AND Job.JobKey <> %JobKey"
+ProgramJobSuccSchAddL,   " ORDER BY JobID"
+
+ProgramUserS,        " SELECT ProgramKey, ProgramID"
+ProgramUserS,        " FROM Program"
+ProgramUserS,        " WHERE ProgramKey = %ProgramKey"
+
+ProgramUserL,        " SELECT UserID, AccessPrivilege"
+ProgramUserL,        " FROM ProgramUser"
+ProgramUserL,        " WHERE ProgramUser.ProgramKey = %ProgramKey"
+ProgramUserL,        " ORDER BY UserID"
+
+JobBreakdownListS,   " SELECT JobID, JobKey"
+JobBreakdownListS,   " FROM Job"
+JobBreakdownListS,   " WHERE JobKey = %JobKey"
+
+JobBreakdownL,       " SELECT JobBreakdownID, JobBreakdown.Description,"
+JobBreakdownL,       " JobBreakdownKey, JobID, Job.JobKey,"
+JobBreakdownL,       " RoadType, StructureType, JobBreakdown.WorkType"
+JobBreakdownL,       " FROM JobBreakdown, Job"
+JobBreakdownL,       " WHERE JobBreakdown.JobKey = %JobKey"
+JobBreakdownL,       " AND Job.JobKey = %JobKey"
+JobBreakdownL,       " ORDER BY JobBreakdownID"
+
+JobAlternateGroupListS, " SELECT JobKey, JobID"
+JobAlternateGroupListS, " FROM Job"
+JobAlternateGroupListS, " WHERE JobKey = %JobKey"
+
+JobAlternateGroupL,  " SELECT JobAlternateGroupID,"
+JobAlternateGroupL,  " JobAlternateGroup.Estimate,"
+JobAlternateGroupL,  " JobAlternateGroup.Description,"
+JobAlternateGroupL,  " JobAlternateGroupKey, JobID, Job.JobKey"
+JobAlternateGroupL,  " FROM JobAlternateGroup, Job"
+JobAlternateGroupL,  " WHERE JobAlternateGroup.JobKey = %JobKey"
+JobAlternateGroupL,  " AND Job.JobKey = %JobKey"
+JobAlternateGroupL,  " ORDER BY JobAlternateGroupID"
+
+DefJobUserCatL,      " SELECT UserID, Name, UserKey"
+DefJobUserCatL,      " FROM User"
+DefJobUserCatL,      " ORDER BY UserID"
+
+
+
+ChJobUserD,          " SELECT UserID, AccessPrivilege"
+ChJobUserD,          " FROM JobUser"
+ChJobUserD,          " WHERE JobKey = %JobKey"
+ChJobUserD,          " AND UserID = '%UserID'"
+
+AddJobUserD,         " SELECT UserID, AccessPrivilege"
+AddJobUserD,         " FROM JobUser"
+AddJobUserD,         " WHERE JobKey = %JobKey"
+AddJobUserD,         " AND UserID = 'UserID'"
+
+JobItemD,            " SELECT JI.Quantity, JI.UnitPrice, "
+JobItemD,            " JI.SupplementalDescription, JI.Duration,"
+JobItemD,            " JI.DaysElapsedBeforeStart, SI.StandardItemNumber,"
+JobItemD,            " SI.ShortDescription, CVU.CodeValueID,"
+JobItemD,            " JI.JobAlternateGroupKey, JI.JobAlternateKey, "
+JobItemD,            " JI.ItemEstimationMethodKey,"
+JobItemD,            " SI.StandardItemKey, JI.JobItemKey, JI.JobKey,"
+JobItemD,            " JI.JobBreakdownKey, JI.EstimationComment , J.BaseDate"
+JobItemD,            " FROM JobItem JI, StandardItem SI, CodeValue CVU, Job J"
+JobItemD,            " WHERE JI.JobKey         = %JobKey"
+JobItemD,            " AND JI.JobBreakdownKey  = %JobBreakdownKey"
+JobItemD,            " AND JI.JobItemKey       = %JobItemKey"
+JobItemD,            " AND JI.StandardItemKey  = SI.StandardItemKey"
+JobItemD,            " AND SI.Unit             = CVU.CodeValueKey "
+JobItemD,            "  AND J.JobKey  = %JobKey"
+
+JobItemEditAltGroup, " SELECT JobAlternateGroupID, JobAlternateGroupKey"
+JobItemEditAltGroup, " FROM JobAlternateGroup"
+JobItemEditAltGroup, " WHERE JobKey=%JobKey"
+JobItemEditAltGroup, " ORDER BY JobAlternateGroupID"
+
+JobItemEditAlt,      " SELECT JobAlternateID, JobAlternateKey, JobAlternateGroupKey"
+JobItemEditAlt,      " FROM JobAlternate"
+JobItemEditAlt,      " WHERE JobKey=%JobKey"
+//JobItemEditAlt,    " AND JobAlternateGroupKey=%JobAlternateGroupKey"
+JobItemEditAlt,      " ORDER BY JobAlternateID"
+
+JobItemEditMethod,   " SELECT IEM.ItemEstimationMethodID,"
+JobItemEditMethod,   " IEM.ItemEstimationMethodKey"
+JobItemEditMethod,   " FROM ItemEstimationMethod IEM"
+JobItemEditMethod,   " ORDER BY IEM.ItemEstimationMethodID"
+
+ProgramD,            " SELECT ProgramID, StartDate, EndDate, Description"
+ProgramD,            " FROM Program"
+ProgramD,            " WHERE ProgramKey = %ProgramKey"
+
+ChProgJobD,          " SELECT LettingDate, WorkBeginDate, WorkEndDate,"
+ChProgJobD,          " Priority, InflationPredictionKey, JobKey, ProgramKey"
+ChProgJobD,          " FROM ProgramJob"
+ChProgJobD,          " WHERE JobKey = %JobKey"
+
+AddProgJobD,         " SELECT LettingDate, WorkBeginDate, WorkEndDate,"
+AddProgJobD,         " Priority, InflationPredictionKey, JobKey, ProgramKey"
+AddProgJobD,         " FROM ProgramJob"
+AddProgJobD,         " WHERE JobKey = %JobKey"
+
+ChProgJobL,          " /* ChProgJobL */"
+ChProgJobL,          " SELECT Job.JobKey, JobID, Description, Duration"
+ChProgJobL,          " FROM Job, ProgramJob"
+ChProgJobL,          " WHERE Job.JobKey NOT IN
+ChProgJobL,          " (SELECT JobKey"
+ChProgJobL,          " FROM ProgramJob)"
+ChProgJobL,          " or Job.JobKey = %JobKey"
+ChProgJobL,          " AND Job.UnitType = %CurUnitType "
+// ChProgJobL,          " AND Job.UnitType = (SELECT UnitType FROM UnitTypeSystem) "
+ChProgJobL,          " ORDER BY JobID"
+
+AddProgJobL,         " SELECT Job.JobKey, JobID, Description, Duration"
+AddProgJobL,         " FROM Job, ProgramJob"
+AddProgJobL,         " WHERE Job.JobKey NOT IN"
+AddProgJobL,         " (SELECT JobKey"
+AddProgJobL,         " FROM ProgramJob)"
+AddProgJobL,         " AND Job.UnitType = %CurUnitType "
+// AddProgJobL,         " AND Job.UnitType = (SELECT UnitType FROM UnitTypeSystem) "
+AddProgJobL,         " ORDER BY JobID"
+
+ProgJobInflPredC,    " SELECT InflationPredictionKey, InflationPredictionID"
+ProgJobInflPredC,    " FROM InflationPrediction"
+ProgJobInflPredC,    " ORDER BY InflationPredictionID"
+
+AddProgUserD,        " SELECT UserID, AccessPrivilege"
+AddProgUserD,        " FROM ProgramUser"
+AddProgUserD,        " WHERE ProgramKey = %ProgramKey"
+AddProgUserD,        " AND UserID = 'UserID'"
+
+ChProgUserD,         " SELECT UserID, AccessPrivilege"
+ChProgUserD,         " FROM ProgramUser"
+ChProgUserD,         " WHERE ProgramKey = %ProgramKey"
+ChProgUserD,         " AND UserID = '%UserID'"
+
+
+ChJobBreakFundD,     " SELECT PercentFunded"
+ChJobBreakFundD,     " FROM JobBreakdownFund"
+ChJobBreakFundD,     " WHERE JobKey = %JobKey"
+ChJobBreakFundD,     " AND JobBreakdownKey = %JobBreakdownKey"
+ChJobBreakFundD,     " AND FundKey = %FundKey"
+
+AddJobBreakFundD,    " SELECT FundID, PercentFunded, JobKey,"
+AddJobBreakFundD,    " JobBreakdownKey"
+AddJobBreakFundD,    " FROM Fund, JobBreakdownFund"
+AddJobBreakFundD,    " WHERE JobBreakdownFund.FundKey = Fund.FundKey"
+AddJobBreakFundD,    " AND JobBreakdownKey = %JobBreakdownKey"
+AddJobBreakFundD,    " AND JobKey = %JobKey"
+AddJobBreakFundD,    " AND JobBreakdownFund.FundKey = %FundKey"
+
+JobBreakFundL,       " SELECT FundKey, FundID, Name"
+JobBreakFundL,       " FROM Fund"
+JobBreakFundL,       " WHERE FundKey != 1"
+JobBreakFundL,       " ORDER BY FundID"
+
+ItemSchPredL,        " SELECT StandardItemNumber, Link, Lag,"
+ItemSchPredL,        " StandardItem.StandardItemKey, PredecessorJobItemKey, SuccessorJobItemKey,"
+ItemSchPredL,        " A.JobKey, A.JobBreakdownKey, B.JobItemKey"
+ItemSchPredL,        " FROM JobItem A, JobItem B, StandardItem,"
+ItemSchPredL,        " JobItemDependency"
+ItemSchPredL,        " WHERE A.JobKey = JobItemDependency.JobKey"
+ItemSchPredL,        " AND A.JobItemKey = JobItemDependency.SuccessorJobItemKey"
+ItemSchPredL,        " AND JobItemDependency.PredecessorJobItemKey = B.JobItemKey"
+ItemSchPredL,        " AND B.StandardItemKey = StandardItem.StandardItemKey"
+ItemSchPredL,        " AND JobItem.JobKey = %JobKey"
+ItemSchPredL,        " AND JobItem.JobItemKey = %JobItemKey"
+ItemSchPredL,        " ORDER BY StandardItemNumber"
+
+ItemSchSucL,         " SELECT StandardItemNumber, Link, Lag,"
+ItemSchSucL,         " StandardItem.StandardItemKey, PredecessorJobItemKey, SuccessorJobItemKey,"
+ItemSchSucL,         " B.JobItemKey, A.JobKey, A.JobBreakdownKey"
+ItemSchSucL,         " FROM JobItem A, JobItem B, StandardItem,"
+ItemSchSucL,         " JobItemDependency"
+ItemSchSucL,         " WHERE A.JobKey = JobItemDependency.JobKey"
+ItemSchSucL,         " AND A.JobItemKey = JobItemDependency.PredecessorJobItemKey"
+ItemSchSucL,         " AND JobItemDependency.SuccessorJobItemKey = B.JobItemKey"
+ItemSchSucL,         " AND B.StandardItemKey = StandardItem.StandardItemKey"
+ItemSchSucL,         " AND JobItem.JobKey = %JobKey"
+ItemSchSucL,         " AND JobItem.JobItemKey = %JobItemKey"
+ItemSchSucL,         " ORDER BY StandardItemNumber"
+
+DefltJobUsersL,      " SELECT UserGrantedPrivilege, AccessPrivilege, UserKey"
+DefltJobUsersL,      " FROM DefaultJobUser"
+DefltJobUsersL,      " WHERE UserKey = %UserKey"
+DefltJobUsersL,      " ORDER BY UserGrantedPrivilege"
+
+DefltProgUsersL,     " SELECT UserGrantedPrivilege, AccessPrivilege, UserKey"
+DefltProgUsersL,     " FROM DefaultProgramUser"
+DefltProgUsersL,     " WHERE UserKey = %UserKey"
+DefltProgUsersL,     " ORDER BY UserGrantedPrivilege"
+
+DeclareBaseDate,     " SELECT LongTextKey, ShortText"
+DeclareBaseDate,     " FROM LongText"
+DeclareBaseDate,     " WHERE LongTextKey = -1"
+
+UpdateBaseDate,      " SELECT JobKey, BaseDate"
+UpdateBaseDate,      " FROM Job"
+UpdateBaseDate,      " WHERE JobKey = %JobKey  "
+
+CopyJobD,            " /* CopyJobD query.bin */ "
+CopyJobD,            " SELECT J.JobID, J.JobKey"
+CopyJobD,            " FROM Job J"
+CopyJobD,            " WHERE J.JobKey = %JobKey"
+
+OpenJobDL,           " /* OpenJobDL */"
+OpenJobDL,           " SELECT JobID, Description, JobKey"
+OpenJobDL,           " FROM Job"
+OpenJobDL,           " WHERE UnitType = %CurUnitType "
+// OpenJobDL,              " OR UnitType = NULL)  "
+OpenJobDL,           " AND SpecYear = %CurSpecYear "
+OpenJobDL,           " ORDER BY UnitType, JobID "
+
+JobNewDL,            " SELECT JobID, JobKey"
+JobNewDL,            " FROM Job"
+JobNewDL,            " ORDER BY JobKey DESC"
+
+OpenProgramDL,       " SELECT ProgramID, Description, ProgramKey"
+OpenProgramDL,       " FROM Program"
+OpenProgramDL,       " ORDER BY ProgramID"
+
+JobD,                " SELECT JobID, CheckedBy, ApprovedBy,"
+JobD,                " Estimator, LettingMonth,"
+JobD,                " DateChecked, DateApproved, Description,"
+JobD,                " Location, PrimaryCountyKey, ConstructionEngineeringPct,"
+JobD,                " DavisBaconWages, ContingencyPercent,"
+JobD,                " WorkType, District, WorkingDayCalendarKey"
+JobD,          " , UnitType "
+JobD,                " FROM Job "
+JobD,                " WHERE JobKey = %Job.JobKey"
+
+JobNewD,             " SELECT JobID, CheckedBy, ApprovedBy,"
+JobNewD,             " Estimator, LettingMonth,"
+JobNewD,             " DateChecked, DateApproved, Description,"
+JobNewD,             " Location, PrimaryCountyKey, ConstructionEngineeringPct,"
+JobNewD,             " DavisBaconWages, ContingencyPercent,"
+JobNewD,             " WorkType, District, WorkingDayCalendarKey"
+JobNewD,       " , UnitType "
+JobNewD,             " FROM Job "
+JobNewD,             " WHERE JobKey = 1"
+
+JobEditDlgUserC,     " SELECT UserID, UserKey"
+JobEditDlgUserC,     " FROM User"
+JobEditDlgUserC,     " WHERE Deleted IS NULL"
+JobEditDlgUserC,     " ORDER BY UserID"
+
+JobWrkTypeC,         " /* bamsces.met.JobWrkTypeC */"
+JobWrkTypeC,         " SELECT CodeValueID, CodeValueKey"
+JobWrkTypeC,         " FROM CodeValue CV, CodeTable CT"
+JobWrkTypeC,         " WHERE CV.CodeTableKey = CT.CodeTableKey"
+JobWrkTypeC,         " AND CodeTableID = 'WRKTYP'"
+JobWrkTypeC,         " AND (CV.UnitType = %CurUnitType "
+JobWrkTypeC,              " OR CV.UnitType = NULL) "
+JobWrkTypeC,         " AND (CV.Deleted is NULL"
+JobWrkTypeC,         " OR CodeValueKey = %WorkType)"
+JobWrkTypeC,         " ORDER BY CodeValueID"
+
+JobWrkDayCalC,       " SELECT WorkingDayCalendarID, WorkingDayCalendarKey"
+JobWrkDayCalC,       " FROM WorkingDayCalendar"
+JobWrkDayCalC,       " ORDER BY WorkingDayCalendarID"
+
+JobDistrictCombo,    " SELECT CodeValueID, CodeValueKey"
+JobDistrictCombo,    " FROM CodeValue CV, CodeTable CT"
+JobDistrictCombo,    " WHERE CV.CodeTableKey = CT.CodeTableKey"
+JobDistrictCombo,    " AND CodeTableID = 'DISTRIC'"
+JobDistrictCombo,    " AND (CV.UnitType = %CurUnitType "
+JobDistrictCombo,         " OR CV.UnitType = NULL) "
+JobDistrictCombo,    " AND (CV.Deleted is null"
+JobDistrictCombo,    " OR CodeValueKey = %District)"
+JobDistrictCombo,    " ORDER BY CodeValueID"
+
+JobCountyCombo,      " SELECT Name, CountyKey"
+JobCountyCombo,      " FROM County"
+JobCountyCombo,      " WHERE Deleted IS NULL"
+JobCountyCombo,      " ORDER BY Name"
+
+JobAltGroupD,        " SELECT JobAlternateGroupID, Description, JobKey"
+JobAltGroupD,        " FROM JobAlternateGroup"
+JobAltGroupD,        " WHERE JobKey = %JobKey"
+JobAltGroupD,        " AND JobAlternateGroupKey = %JobAlternateGroupKey"
+
+JobAltD,             " SELECT JobAlternateID, Description"
+JobAltD,             " FROM JobAlternate"
+JobAltD,             " WHERE JobAlternateKey = %JobAlternateKey"
+
+JobCommentD,         " SELECT ShortText, CommentDate, CommentTime"
+// JobCommentD,         " SELECT LongText, CommentDate, CommentTime"
+JobCommentD,         " FROM JobComment, LongText"
+JobCommentD,         " WHERE Comment = LongTextKey"
+JobCommentD,         " AND JobKey = %JobKey "
+
+JobBreakdownD,       " SELECT JobBreakdownID, Length, PavementWidth,"
+JobBreakdownD,       " PavementDepth, StructureID, StructureLength,"
+JobBreakdownD,       " StructureWidth, Description, DetailedEstimate,"
+JobBreakdownD,       " RoadType, StructureType, WorkType, JobKey"
+JobBreakdownD,       " FROM JobBreakdown"
+JobBreakdownD,       " WHERE JobKey = %JobKey"
+JobBreakdownD,       " AND JobBreakdownKey = %JobBreakdownKey"
+
+RoadTypeC,           " /* bamsces.met.RoadTypeC */ "
+RoadTypeC,           " SELECT CodeValueID, CodeValueKey"
+RoadTypeC,           " FROM CodeValue CV, CodeTable CT"
+RoadTypeC,           " WHERE CT.CodeTableKey = CV.CodeTableKey"
+RoadTypeC,           " AND CodeTableID = 'HWYTYPE'"
+// RoadTypeC,           " AND CodeTableID = 'ROADSYS'"              APR 95
+// All refs to RoadSys should be HwyType for parametric estimation  APR 95
+RoadTypeC,           " AND (CV.UnitType = %CurUnitType "
+RoadTypeC,                " OR CV.UnitType = NULL) "
+RoadTypeC,           " AND (CV.Deleted is null"
+RoadTypeC,                " OR CodeValueKey = %RoadType)"
+RoadTypeC,           " ORDER BY CodeValueID"
+
+StructTypeC,         " /* bamsces.met.StructTypeC */ "
+StructTypeC,         " SELECT CodeValueID, CodeValueKey"
+StructTypeC,         " FROM CodeValue CV, CodeTable CT"
+StructTypeC,         " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey"
+StructTypeC,         " AND CodeTableID = 'BRDGTYP'"
+StructTypeC,         " AND (CV.UnitType = %CurUnitType "
+StructTypeC,              " OR CV.UnitType = NULL) "
+StructTypeC,         " AND (CodeValue.Deleted is null"
+StructTypeC,              " OR CodeValueKey = %StructureType)"
+StructTypeC,         " ORDER BY CodeValueID"
+
+WorkTypeC,           " /* bamsces.met.WorkTypeC */ "
+WorkTypeC,           " SELECT CodeValueID, CodeValueKey"
+WorkTypeC,           " FROM CodeValue CV, CodeTable CT"
+WorkTypeC,           " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey"
+WorkTypeC,           " AND CodeTableID = 'WRKTYP'"
+WorkTypeC,           " AND (CV.UnitType = %CurUnitType "
+WorkTypeC,                " OR CV.UnitType = NULL) "
+WorkTypeC,           " AND (CodeValue.Deleted is null"
+WorkTypeC,                " OR CodeValueKey = %WorkType)"
+WorkTypeC,           " ORDER BY CodeValueID"
+
+DefJobUsersD,        " SELECT UserGrantedPrivilege, AccessPrivilege"
+DefJobUsersD,        " FROM DefaultJobUser"
+DefJobUsersD,        " WHERE UserKey = %UserKey"
+DefJobUsersD,        " AND UserGrantedPrivilege = '%UserGrantedPrivilege'"
+
+DefProgUsersD,       " SELECT UserGrantedPrivilege, AccessPrivilege"
+DefProgUsersD,       " FROM DefaultProgramUser"
+DefProgUsersD,       " WHERE UserKey = %UserKey"
+DefProgUsersD,       " AND UserGrantedPrivilege = '%UserGrantedPrivilege'"
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+DefaultUserS,         "Default Users for User %UserID"
+JobS,                 "Job %JobID"
+JobAlternateGroupS,   "Job Alternate Group %JobAlternateGroupID for Job %JobID"
+JobBreakdownS,        "Job Breakdown %JobBreakdownID for Job %JobID"
+JobBreakdownFundS,    "Funds for Job Breakdown %JobBreakdownID Job %JobID"
+JobCommentS,          "Comment for Job %JobID"
+JobFundS,             "Funds for Job %JobID"
+JobItemS,             "Job Item %StandardItemNumber, Job %JobID"
+JobItemScheduleS,     "Item Schedule for Job %JobID"
+JobItemsS,            "Items for Job Breakdown %JobBreakdownID, Job %JobID"
+JobUserS,             "Users for Job %JobID"
+ProgramS,             "Program %ProgramID"
+ProgramFundS,         "Funds for Program %ProgramID"
+ProgramJobS,          "Jobs for Program %ProgramID"
+ProgramUserS,         "Users for Program %ProgramID"
+JobBreakdownListS,    "Job Breakdowns for Job %JobID"
+JobAlternateGroupListS,"Job Alternate Groups for Job %JobID"
+
+
+
+
+
+
+:dialog  dialog.bin  dlgfmat.bin
+//
+//
+//Dialog  ID       Add  QueryID        Change  QueryID   Column  name                 Control  ID           Format                  Input  Fmt
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OpenJobD,          ITIWND_LIST,        ITIWND_LIST,      JobKey,                      OpenJobDL,           "Number",                "Number"
+OpenProgramD,      ITIWND_LIST,        ITIWND_LIST,      ProgramKey,                  OpenProgramDL,       "Number",                "Number"
+//UpdateBaseDate,    0,                  UpdateBaseDate,   BaseDate,                    DID_BASEDATE,        "DateTime,mmm d,yyyy hh:nn:ss", "DateTime,mmm d,yyyy hh:nn:ss"
+UpdateBaseDate,    0,                  UpdateBaseDate,   BaseDate,                    DID_BASEDATE,        "DateTime,mmm d yyyy hh:nn:ss", "DateTime,mmm d yyyy hh:nn:ss"
+JobCommentD,       JobCommentD,        JobCommentD,      Comment,                     DID_COMMENT,         "String",                "String"
+ChJobBreakFundD,   ChJobBreakFundD,    ChJobBreakFundD,  PercentFunded,               DID_PCTFUNDED,       "Number,%..",            "Number,...."
+DeclareBaseDate,   DeclareBaseDate,    DeclareBaseDate,  ShortText,                   DID_COMMENT,         "String",                "String"
+CopyJobD,          CopyJobD,           CopyJobD,         JobID,                       DID_OLDJOBID,        "String",                "String"
+                                                               
+JobD,              JobD,               JobD,             JobID,                       DID_JOBID,           "String",                "String"
+JobD,              JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_CHECKEDBY,       "String",                "*Number"
+JobD,              JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_APPROVEDBY,      "String",                "*Number"
+JobD,              JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_ESTIMATOR,       "String",                "Number"
+JobD,              JobD,               JobD,             DateChecked,                 DID_DATECHECKED,     "DateTime,mmm d,yyyy",   "*DateTime"
+JobD,              JobD,               JobD,             DateApproved,                DID_DATEAPPROVED,    "DateTime,mmm d,yyyy",   "*DateTime"
+JobD,              JobD,               JobD,             Description,                 DID_JOBDESCR,        "String",                "String"
+JobD,              JobD,               JobD,             Location,                    DID_LOCATION,        "Position,Long<long> <deg>D <min>M <sec>S, Lat<lat> <deg>D <min>M <sec>S", "Position"
+JobD,              JobD,               JobD,             ConstructionEngineeringPct,  DID_CONSTRPCT,       "Number,%..",            "Number,...."
+JobD,              JobD,               JobD,             ContingencyPercent,          DID_CONTINGPCT,      "Number,%..",            "Number,...."
+JobD,              JobD,               JobD,             DavisBaconWages,             DID_DAVISBACON,      "Flag,0,1",              "Flag"
+JobD,              JobWrkTypeC,        JobWrkTypeC,      CodeValueID,                 DID_WORKTYPE,        "String",                "Number"
+JobD,              JobWrkDayCalC,      JobWrkDayCalC,    WorkingDayCalendarID,        DID_WORKDAYCAL,      "String",                "Number"
+JobD,              JobDistrictCombo,   JobDistrictCombo, CodeValueID,                 DID_DISTRICT,        "String",                "Number"
+JobD,              JobCountyCombo,     JobCountyCombo,   Name,                        DID_COUNTYCAT,       "String",                "Number"                        
+JobD,              ITIWND_ENUM,        ITIWND_ENUM,      LettingMonth,                DID_LETTINGMONTH,    "Month",                 "Month,m"
+JobD,              JobD,               JobD,             UnitType,                      DID_UNITSYS,         "Flag,0,1",              "Flag"
+
+JobNewD,           JobNewD,            JobNewD,          JobID,                       DID_JOBID,           "String",                "String"
+JobNewD,           JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_CHECKEDBY,       "String",                "*Number"
+JobNewD,           JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_APPROVEDBY,      "String",                "*Number"
+JobNewD,           JobEditDlgUserC,    JobEditDlgUserC,  UserID,                      DID_ESTIMATOR,       "String",                "Number"
+JobNewD,           JobNewD,            JobNewD,          DateChecked,                 DID_DATECHECKED,     "DateTime,mmm d,yyyy",   "*DateTime"
+JobNewD,           JobNewD,            JobNewD,          DateApproved,                DID_DATEAPPROVED,    "DateTime,mmm d,yyyy",   "*DateTime"
+JobNewD,           JobNewD,            JobNewD,          Description,                 DID_JOBDESCR,        "String",                "String"
+JobNewD,           JobNewD,            JobNewD,          Location,                    DID_LOCATION,        "Position,Long<long> <deg>D <min>M <sec>S, Lat<lat> <deg>D <min>M <sec>S", "Position"
+JobNewD,           JobNewD,            JobNewD,          ConstructionEngineeringPct,  DID_CONSTRPCT,       "Number,%..",            "Number,...."
+JobNewD,           JobNewD,            JobNewD,          ContingencyPercent,          DID_CONTINGPCT,      "Number,%..",            "Number,...."
+JobNewD,           JobNewD,            JobNewD,          DavisBaconWages,             DID_DAVISBACON,      "Flag,0,1",              "Flag"
+JobNewD,           JobWrkTypeC,        JobWrkTypeC,      CodeValueID,                 DID_WORKTYPE,        "String",                "Number"
+JobNewD,           JobWrkDayCalC,      JobWrkDayCalC,    WorkingDayCalendarID,        DID_WORKDAYCAL,      "String",                "Number"
+JobNewD,           JobDistrictCombo,   JobDistrictCombo, CodeValueID,                 DID_DISTRICT,        "String",                "Number"
+JobNewD,           JobCountyCombo,     JobCountyCombo,   Name,                        DID_COUNTYCAT,       "String",                "Number"                        
+JobNewD,           ITIWND_ENUM,        ITIWND_ENUM,      LettingMonth,                DID_LETTINGMONTH,    "Month",                 "Month,m"
+JobNewD,           ITIWND_LIST,        ITIWND_LIST,      JobKey,                      JobNewDL,            "Number",                "Number"
+JobNewD,           JobNewD,            JobNewD,          UnitType,                     DID_UNITSYS,         "Flag,0,1",              "Flag"
+
+JobAltGroupD,      JobAltGroupD,       JobAltGroupD,     JobAlternateGroupID,         DID_JOBALTGRID,      "String",                "String"
+JobAltGroupD,      JobAltGroupD,       JobAltGroupD,     Description,                 DID_DESCRIP,         "String",                "String"
+                                                               
+JobAltD,           JobAltD,            JobAltD,          JobAlternateID,              DID_JOBALTID,        "String",                "String"
+JobAltD,           JobAltD,            JobAltD,          Description,                 DID_DESCRIP,         "String",                "String"
+                                                               
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    JobBreakdownID,              DID_JOBBREAKID,      "String",                "String"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    Length,                      DID_LENGTH,          "Number,,....",          "Number,...."
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    PavementWidth,               DID_PAVEMENTWIDTH,   "Number,,",              "Number"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    PavementDepth,               DID_PAVEMENTDEPTH,   "Number",                "Number"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    StructureID,                 DID_STRUCTID,        "String",                "String"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    StructureLength,             DID_STRUCTLENGTH,    "Number,,",              "Number"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    StructureWidth,              DID_STRUCTWIDTH,     "Number,,",              "Number"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    Description,                 DID_DESCRIP,         "String",                "String"
+JobBreakdownD,     JobBreakdownD,      JobBreakdownD,    DetailedEstimate,            DID_DETAILEDEST,     "Flag,0,1",              "Flag,0,1"
+JobBreakdownD,     RoadTypeC,          RoadTypeC,        CodeValueID,                 DID_ROADTYPE,        "String",                "Number"
+JobBreakdownD,     StructTypeC,        StructTypeC,      CodeValueID,                 DID_STRUCTTYPE,      "String",                "Number"
+JobBreakdownD,     WorkTypeC,          WorkTypeC,        CodeValueID,                 DID_WORKTYPE,        "String",                "Number"
+
+JobItemD,          JobItemD,           JobItemD,         StandardItemNumber,          DID_ITEM_NUMBER,     "String",                "String"
+JobItemD,          JobItemD,           JobItemD,         ShortDescription,            DID_DESCRIPTION,     "String",                "String"
+JobItemD,          JobItemD,           JobItemD,         CodeValueID,                 DID_UNIT,            "String",                "String"
+JobItemD,          JobItemD,           JobItemD,         Quantity,                    DID_QUANTITY,        "Number,,...",           "Number,$,..."
+JobItemD,          JobItemD,           JobItemD,         UnitPrice,                   DID_UNIT_PRICE,      "Number,$,....",         "Number,$,...."
+JobItemD,          JobItemD,           JobItemD,         SupplementalDescription,     DID_SUPPLEMENTAL,    "String",                "*String"
+JobItemD,          JobItemD,           JobItemD,         Duration,                    DID_DURATION,        "Number,,....",          "Number,...."
+JobItemD,          JobItemD,           JobItemD,         DaysElapsedBeforeStart,      DID_DELAY,           "Number,,....",          "Number,$...."
+JobItemD,          JobItemD,           JobItemD,         EstimationComment,           DID_COMMENT,         "String",                "*String"
+JobItemD,          JobItemEditMethod,  JobItemEditMethod,ItemEstimationMethodID,      DID_METHOD,          "String",                "Number"
+JobItemD,          JobItemEditAltGroup,JobItemEditAltGroup,JobAlternateGroupID,       DID_ALT_GROUP,       "String",                "Number"
+JobItemD,          JobItemEditAlt,     JobItemEditAlt,   JobAlternateID,              DID_ALT,             "String",                "Number"
+JobItemD,          ITIWND_LIST,        ITIWND_LIST,      StandardItemKey,             StandardItemCatL,    "Number",                "Number"
+// JobItemD,          JobItemD,           JobItemD,         JobItemKey,                  DID_JOBITEMKEY,      "Number",                "Number"
+
+DefJobUsersD,      DefJobUsersD,       DefJobUsersD,     UserGrantedPrivilege,        DID_USRGRPRIV,       "String",                "String"
+DefJobUsersD,      ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+DefJobUsersD,      ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                      
+DefProgUsersD,     DefProgUsersD,      DefProgUsersD,    UserGrantedPrivilege,        DID_USRGRPRIV,       "String",                "String"
+DefProgUsersD,     ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+DefProgUsersD,     ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                                                    
+ChJobUserD,        ChJobUserD,         ChJobUserD,       UserID,                      DID_USERID,          "String",                "String"
+ChJobUserD,        ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+ChJobUserD,        ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                                                    
+AddJobUserD,       AddJobUserD,        AddJobUserD,      UserID,                      DID_USERID,          "String",                "String"
+AddJobUserD,       ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+AddJobUserD,       ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                                                    
+ProgramD,          ProgramD,           ProgramD,         ProgramID,                   DID_PROGRAMID,       "String",                "String"                                                                                                        
+ProgramD,          ProgramD,           ProgramD,         StartDate,                   DID_STARTDATE,       "DateTime,mmm d,yyyy",   "DateTime"
+ProgramD,          ProgramD,           ProgramD,         EndDate,                     DID_ENDDATE,         "DateTime,mmm d,yyyy",   "DateTime"
+ProgramD,          ProgramD,           ProgramD,         Description,                 DID_DESCRIP,         "String",                "String"
+                                                                                    
+ChProgJobD,        ChProgJobD,         ChProgJobD,       LettingDate,                 DID_LETTINGDATE,     "DateTime,mmm d,yyyy",   "DateTime"
+ChProgJobD,        ChProgJobD,         ChProgJobD,       Priority,                    DID_PRIORITY,        "Number",                "Number"
+ChProgJobD,        ChProgJobD,         ChProgJobD,       WorkBeginDate,               DID_WORKBEGINDATE,   "DateTime,mmm d,yyyy",   "DateTime"
+ChProgJobD,        ChProgJobD,         ChProgJobD,       WorkEndDate,                 DID_WORKENDDATE,     "DateTime,mmm d,yyyy",   "DateTime"
+ChProgJobD,        ProgJobInflPredC,   ProgJobInflPredC, InflationPredictionID,       DID_INFLPRED,        "String",                "Number"
+ChProgJobD,        0,                  0,                0,                           ChProgJobL,          "",                           ""
+
+AddProgJobD,       AddProgJobD,        AddProgJobD,      LettingDate,                 DID_LETTINGDATE,     "DateTime,mmm d,yyyy",   "DateTime"
+AddProgJobD,       AddProgJobD,        AddProgJobD,      WorkBeginDate,               DID_WORKBEGINDATE,   "DateTime,mmm d,yyyy",   "DateTime"
+AddProgJobD,       ProgJobInflPredC,   ProgJobInflPredC, InflationPredictionID,       DID_INFLPRED,        "String",                "Number"
+AddProgJobD,       AddProgJobD,        AddProgJobD,      Priority,                    DID_PRIORITY,        "Number",                "Number"
+AddProgJobD,       AddProgJobD,        AddProgJobD,      WorkEndDate,                 DID_WORKENDDATE,     "DateTime,mmm d,yyyy",   "DateTime"
+AddProgJobD,       0,                  0,                0,                           AddProgJobL,         "",                      ""
+                        
+ChProgUserD,       ChProgUserD,        ChProgUserD,      UserID,                      DID_USERID,          "String",                "String"
+ChProgUserD,       ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+ChProgUserD,       ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                                        
+AddProgUserD,      AddProgUserD,       AddProgUserD,     UserID,                      DID_USERID,          "String",                "String"
+AddProgUserD,      ITIWND_LIST,        ITIWND_LIST,      UserID,                      DefJobUserCatL,      "String",                "String"
+AddProgUserD,      ITIWND_ENUM,        ITIWND_ENUM,      AccessPrivilege,             DID_ACCESSPRIV,      "Privilege",             "Privilege"
+                                                                        
+
+AddJobBreakFundD,  AddJobBreakFundD,   AddJobBreakFundD, FundID,                      DID_FUNDID,          "String",                "String"    
+AddJobBreakFundD,  AddJobBreakFundD,   AddJobBreakFundD, PercentFunded,               DID_PCTFUNDED,       "Number,%..",            "Number,...."    
+AddJobBreakFundD,  ITIWND_LIST,        ITIWND_LIST,      FundKey,                     JobBreakFundL,       "Number",                "Number"
+
+DefltJobProgUsersD, ITIWND_LIST,        ITIWND_LIST,      UserKey,                     DefltJobUsersL,      "Number",                "Number"
+DefltJobProgUsersD, ITIWND_LIST,        ITIWND_LIST,      UserKey,                     DefltProgUsersL,     "Number",                "Number"
+
+
+PredecessorsChangeD, ITIWND_ENUM,        ITIWND_ENUM,      Link,                DID_LINK,         "Dependency",            "Dependency,l"
+PredecessorsChangeD, PredecessorsChangeD, PredecessorsChangeD, Lag,             DID_LAG,          "Number,,",              "Number,,"
+PredecessorsChangeD, ITIWND_LIST,         ITIWND_LIST,         StandardItemKey, PredSchedChangeL, "Number",                "Number"
+
+
+SuccessorsChangeD,   ITIWND_ENUM,         ITIWND_ENUM,         Link,            DID_LINK,         "Dependency",            "Dependency,l"
+SuccessorsChangeD,   SuccessorsChangeD,   SuccessorsChangeD,   Lag,             DID_LAG,          "Number,,",              "Number,,"
+SuccessorsChangeD,   ITIWND_LIST,         ITIWND_LIST,         StandardItemKey, SuccSchedChangeL, "Number",                "Number"
+
+PredecessorsAddD,    ITIWND_ENUM,         ITIWND_ENUM,         Link,            DID_LINK,         "Dependency",            "Dependency,l"
+PredecessorsAddD,    PredecessorsAddD,    PredecessorsAddD,    Lag,             DID_LAG,          "Number,,",              "Number,,"
+PredecessorsAddD,    ITIWND_LIST,         ITIWND_LIST,         StandardItemKey, PredSchedAddL,    "Number",                "Number"
+
+SuccessorsAddD,      ITIWND_ENUM,         ITIWND_ENUM,         Link,            DID_LINK,         "Dependency",            "Dependency,l"
+SuccessorsAddD,      SuccessorsAddD,      SuccessorsAddD,      Lag,             DID_LAG,          "Number,,",              "Number,,"
+SuccessorsAddD,      ITIWND_LIST,         ITIWND_LIST,         StandardItemKey, SuccSchedAddL,    "Number",                "Number"
+
+ItemSchedD,        ItemSchedD,         ItemSchedD,       StandardItemNumber,          DID_ITEM_NUMBERST,   "String",                "String"
+ItemSchedD,        ItemSchedD,         ItemSchedD,       ShortDescription,            DID_DESCRIPTIONST,   "String",                "String"
+ItemSchedD,        ITIWND_LIST,        ITIWND_LIST,      StandardItemKey,             ItemSchPredL,        "Number",                "Number"
+ItemSchedD,        ITIWND_LIST,        ITIWND_LIST,      StandardItemKey,             ItemSchSucL,         "Number",                "Number"
+
+ProgramJobPredChangeD, ITIWND_ENUM,           ITIWND_ENUM,           Link,        DID_LINK,              "Dependency",     "Dependency,l"
+ProgramJobPredChangeD, ProgramJobPredChangeD, ProgramJobPredChangeD, Lag,         DID_LAG,               "Number,,",       "Number,,"
+ProgramJobPredChangeD, ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobPredSchChgL, "Number",         "Number"
+
+ProgramJobSuccChangeD, ITIWND_ENUM,           ITIWND_ENUM,           Link,        DID_LINK,              "Dependency",     "Dependency,l"
+ProgramJobSuccChangeD, ProgramJobSuccChangeD, ProgramJobSuccChangeD, Lag,         DID_LAG,               "Number,,",       "Number,,"
+ProgramJobSuccChangeD, ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobSuccSchChgL, "Number",         "Number"
+
+ProgramJobPredAddD,    ITIWND_ENUM,           ITIWND_ENUM,           Link,        DID_LINK,              "Dependency",     "Dependency,l"
+ProgramJobPredAddD,    ProgramJobPredAddD,    ProgramJobPredAddD,    Lag,         DID_LAG,               "Number,,",       "Number,,"
+ProgramJobPredAddD,    ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobPredSchAddL, "Number",         "Number"
+
+ProgramJobSuccAddD,    ITIWND_ENUM,           ITIWND_ENUM,           Link,        DID_LINK,              "Dependency",     "Dependency,l"
+ProgramJobSuccAddD,    ProgramJobSuccAddD,    ProgramJobSuccAddD,    Lag,         DID_LAG,               "Number,,",       "Number,,"
+ProgramJobSuccAddD,    ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobSuccSchAddL, "Number",         "Number"
+
+ProgramJobSchedD,      ProgramJobSchedD,      ProgramJobSchedD,      JobID,       DID_JOBIDST,           "String",         "String"
+ProgramJobSchedD,      ProgramJobSchedD,      ProgramJobSchedD,      Description, DID_JOBDESCRST,        "String",         "String"
+ProgramJobSchedD,      ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobSchPredL,    "Number",         "Number"
+ProgramJobSchedD,      ITIWND_LIST,           ITIWND_LIST,           JobKey,      ProgramJobSchSuccL,    "Number",         "Number"
+
+
+//JobCBESTAdd,     JobCBESTAdd,        JobCBESTAdd,      CostBasedEstimateID,         DID_CBESTID,         "String",                "String"
+//JobCBESTAdd,     JobCBESTAdd,        JobCBESTAdd,      CostBasedEstimateID,         DID_DESCRIPTION,     "String",                "String"
+
+//ChDefJobUsersEditDlg, ChDefJobUsersEditDlg,ChDefJobUsersEditDlg,UserGrantedPrivilege,DID_USRGRPRIV,    "String",                "String"
+//ChDefJobUsersEditDlg, ITIWND_ENUM, ITIWND_ENUM, AccessPrivilege, DID_ACCESSPRIV,   "Privilege",             "Privilege"
+//ChDefJobUsersEditDlg, ITIWND_LIST, ITIWND_LIST, UserID,          DefJobUserCatL,   "String",                "String"
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+JobD,            "UPDATE Job "
+JobD,            "SET JobID = @JobID, "
+JobD,            "Description = @Description, "
+JobD,            "Location = @Location, "
+JobD,            "PrimaryCountyKey = @"DID_COUNTYCAT"CountyKey, "
+JobD,            "District = @"DID_DISTRICT"CodeValueKey, "
+JobD,            "DavisBaconWages = @DavisBaconWages, "
+JobD,            "LettingMonth = @LettingMonth, "
+JobD,            "WorkType = @"DID_WORKTYPE"CodeValueKey, "
+JobD,            "ConstructionEngineeringPct = @ConstructionEngineeringPct, "
+JobD,            "ContingencyPercent = @ContingencyPercent, "
+JobD,            "WorkingDayCalendarKey = @"DID_WORKDAYCAL"WorkingDayCalendarKey, "
+JobD,            "Estimator = @"DID_ESTIMATOR"UserKey, "
+JobD,            "DateChecked = @DateChecked, "
+JobD,            "DateApproved = @DateApproved, "
+JobD,            "CheckedBy = @"DID_CHECKEDBY"UserKey, "
+JobD,            "ApprovedBy = @"DID_APPROVEDBY"UserKey "
+JobD,            ",UnitType = @CURUNITSYS "
+JobD,            "WHERE JobKey = %JobKey "
+
+UpdateBaseDate,  "UPDATE Job "
+UpdateBaseDate,  "SET BaseDate = @MAXBASEDATE "
+UpdateBaseDate,  "WHERE JobKey = %JobKey "
+
+JobAltGroupD,    "/* bamsces.met */ "
+JobAltGroupD,    "UPDATE JobAlternateGroup "
+JobAltGroupD,    "SET JobAlternateGroupID = @JobAlternateGroupID, "
+JobAltGroupD,    "Description = @Description "
+JobAltGroupD,    "WHERE JobKey = %JobKey "
+JobAltGroupD,    "AND JobAlternateGroupKey = %JobAlternateGroupKey "
+
+JobAltD,         "/* bamsces.met */ "
+JobAltD,         "UPDATE JobAlternate "
+JobAltD,         "SET JobAlternateID = @JobAlternateID, "
+JobAltD,         "Description = @Description "
+JobAltD,         "WHERE JobKey = %JobKey "
+JobAltD,         "AND JobAlternateGroupKey = %JobAlternateGroupKey "
+JobAltD,         "AND JobAlternateKey = %JobAlternateKey "
+
+JobBreakdownD,   "UPDATE JobBreakdown "
+JobBreakdownD,   "SET JobBreakdownID = @JobBreakdownID, "
+JobBreakdownD,   "Description = @Description, "
+JobBreakdownD,   "PavementWidth = @PavementWidth, "
+JobBreakdownD,   "Length = @Length, "
+JobBreakdownD,   "PavementDepth = @PavementDepth, "
+JobBreakdownD,   "RoadType = @"DID_ROADTYPE"CodeValueKey, "
+JobBreakdownD,   "StructureType = @"DID_STRUCTTYPE"CodeValueKey, "
+JobBreakdownD,   "StructureID = @StructureID, "
+JobBreakdownD,   "StructureLength = @StructureLength, "
+JobBreakdownD,   "StructureWidth = @StructureWidth, "
+JobBreakdownD,   "WorkType = @"DID_WORKTYPE"CodeValueKey, "
+JobBreakdownD,   "DetailedEstimate = @DetailedEstimate "
+JobBreakdownD,   "WHERE JobKey = %JobKey "
+JobBreakdownD,   "AND JobBreakdownKey = %JobBreakdownKey "
+//  
+JobBreakdownD,   "/* REVISED MetaData */ " 
+JobBreakdownD,   " BEGIN"
+JobBreakdownD,       " UPDATE Job "
+JobBreakdownD,       " SET EstimatedCost = 0.0 "
+JobBreakdownD,             " WHERE JobKey = %JobKey "
+JobBreakdownD,       " END "
+//
+JobBreakdownD,   "IF (NULL != (SELECT SUM(PreliminaryEstimateCost) "
+JobBreakdownD,              " FROM JobBreakdown"
+JobBreakdownD,              " WHERE JobKey = %JobKey"
+JobBreakdownD,              " AND DetailedEstimate = 0 )) "
+JobBreakdownD,       " BEGIN"
+JobBreakdownD,           " UPDATE Job "
+JobBreakdownD,           " SET EstimatedCost = "
+JobBreakdownD,                 " (SELECT SUM(PreliminaryEstimateCost) "
+JobBreakdownD,                 " FROM JobBreakdown"
+JobBreakdownD,                 " WHERE JobKey = %JobKey"
+JobBreakdownD,                 " AND DetailedEstimate = 0 ) "
+JobBreakdownD,           " WHERE JobKey = %JobKey "
+JobBreakdownD,       " END "
+//
+JobBreakdownD,   "IF (NULL != (SELECT SUM(DetailedEstimateCost) "
+JobBreakdownD,              " FROM JobBreakdown"
+JobBreakdownD,              " WHERE JobKey = %JobKey"
+JobBreakdownD,              " AND DetailedEstimate = 1 )) "
+JobBreakdownD,       " BEGIN"
+JobBreakdownD,           " UPDATE Job "
+JobBreakdownD,           " SET EstimatedCost = EstimatedCost + "
+JobBreakdownD,                 " (SELECT SUM(DetailedEstimateCost) "
+JobBreakdownD,                 "  FROM JobBreakdown"
+JobBreakdownD,                 "  WHERE JobKey = %JobKey"
+JobBreakdownD,                 "  AND DetailedEstimate = 1 ) "
+JobBreakdownD,           " WHERE JobKey = %JobKey "
+JobBreakdownD,       " END "
+//
+JobBreakdownD,   " UPDATE Job "
+JobBreakdownD,   " SET EstimateTotal = "
+JobBreakdownD,   " (EstimatedCost * (1.00 "
+JobBreakdownD,   " + ConstructionEngineeringPct "
+JobBreakdownD,   " + ContingencyPercent) ) "
+JobBreakdownD,   " WHERE JobKey = %JobKey "
+
+
+ChJobUserD,      "UPDATE JobUser "
+ChJobUserD,      "SET UserID = @UserID, "
+ChJobUserD,      "AccessPrivilege = @"DID_ACCESSPRIV"AccessPrivilege "
+ChJobUserD,      "WHERE JobKey = %JobKey "
+ChJobUserD,      "AND UserID = '%UserID' "
+
+JobItemD,        "/* JobItemD */ "
+JobItemD,        "UPDATE JobItem "
+JobItemD,        "SET "
+JobItemD,        "StandardItemKey=@"StandardItemCatL"StandardItemKey, "
+JobItemD,        "JobAlternateGroupKey=@"DID_ALT_GROUP"JobAlternateGroupKey, "
+JobItemD,        "JobAlternateKey=@"DID_ALT"JobAlternateKey, "
+JobItemD,        "Quantity=@Quantity, "
+JobItemD,        "UnitPrice=@UnitPrice, "
+JobItemD,        "ExtendedAmount=@Quantity * @UnitPrice, "
+JobItemD,        "ItemEstimationMethodKey=@"DID_METHOD"ItemEstimationMethodKey, "
+JobItemD,        "EstimationComment=@EstimationComment, "
+JobItemD,        "SupplementalDescription=@SupplementalDescription, "
+// JobItemD,        "Duration=@Duration, "
+JobItemD,        "DaysElapsedBeforeStart=@DaysElapsedBeforeStart "
+JobItemD,        "WHERE JobKey = %JobKey "
+JobItemD,        "AND JobBreakdownKey=%JobBreakdownKey "
+JobItemD,        "AND JobItemKey=%JobItemKey "
+// JobItemD, " IF ( (select ItemEstimationMethodKey "
+// JobItemD,     " from ItemEstimationMethod"
+// JobItemD,     " where EstimationMethodAbbreviation = 'Cst' )"
+JobItemD, " IF ( 1000001 "
+JobItemD,      " != "
+JobItemD,      "(SELECT ItemEstimationMethodKey" 
+JobItemD,      " FROM JobItem"
+JobItemD,      " WHERE JobKey = %JobKey "
+JobItemD,      " AND JobBreakdownKey = %JobBreakdownKey "
+JobItemD,      " AND JobItemKey = %JobItemKey )"
+JobItemD,     ")"
+JobItemD, " UPDATE JobItem"
+JobItemD, " SET Duration=@Duration"
+JobItemD, " WHERE JobKey = %JobKey "
+JobItemD, " AND JobBreakdownKey = %JobBreakdownKey "
+JobItemD, " AND JobItemKey = %JobItemKey "
+
+
+
+
+ProgramD,        "UPDATE Program "
+ProgramD,        "SET "
+ProgramD,        "ProgramID = @ProgramID, "
+ProgramD,        "Description = @Description, "
+ProgramD,        "StartDate = @StartDate, "
+ProgramD,        "EndDate = @EndDate "
+ProgramD,        "WHERE ProgramKey = %ProgramKey "
+
+ChProgJobD,      "UPDATE ProgramJob "
+ChProgJobD,      "SET "
+ChProgJobD,      "JobKey = @"ChProgJobL"JobKey, "
+ChProgJobD,      "LettingDate = @LettingDate, "
+ChProgJobD,      "WorkBeginDate = @WorkBeginDate, "
+ChProgJobD,      "WorkEndDate = @WorkEndDate, "
+ChProgJobD,      "Priority = @Priority, "
+ChProgJobD,      "InflationPredictionKey = @"DID_INFLPRED"InflationPredictionKey, "
+ChProgJobD,      "EstimateTotalAdjForInflation = 0 "
+ChProgJobD,      "WHERE JobKey = %JobKey "
+
+
+ChProgUserD,     "UPDATE ProgramUser "
+ChProgUserD,     "SET UserID = @UserID, "
+ChProgUserD,     "AccessPrivilege = @"DID_ACCESSPRIV"AccessPrivilege "
+ChProgUserD,     "WHERE ProgramKey = %ProgramKey "
+ChProgUserD,     "AND UserID = '%UserID' "
+
+DefJobUsersD,  "UPDATE DefaultJobUser "
+DefJobUsersD,  "SET UserGrantedPrivilege = @UserGrantedPrivilege, "
+DefJobUsersD,  "AccessPrivilege = @"DID_ACCESSPRIV"AccessPrivilege "
+DefJobUsersD,  "WHERE UserKey = %UserKey "
+DefJobUsersD,  "AND UserGrantedPrivilege = '%UserGrantedPrivilege' "
+
+DefProgUsersD,  "UPDATE DefaultProgramUser "
+DefProgUsersD,  "SET UserGrantedPrivilege = @UserGrantedPrivilege, "
+DefProgUsersD,  "AccessPrivilege = @"DID_ACCESSPRIV"AccessPrivilege "
+DefProgUsersD,  "WHERE UserKey = %UserKey "
+DefProgUsersD,  "AND UserGrantedPrivilege = '%UserGrantedPrivilege' "
+
+
+ChJobBreakFundD, "UPDATE JobBreakdownFund "
+ChJobBreakFundD, "SET PercentFunded = @"DID_PCTFUNDED"PercentFunded, "
+ChJobBreakFundD, "AmountFunded = @"DID_PCTFUNDED"PercentFunded * "
+ChJobBreakFundD, "(Select (((1- DetailedEstimate) * PreliminaryEstimateCost) "
+ChJobBreakFundD, "+ (convert(int, DetailedEstimate) * DetailedEstimateCost)) "
+ChJobBreakFundD, "FROM JobBreakdown "
+ChJobBreakFundD, "WHERE JobBreakdown.JobKey = %JobKey "
+ChJobBreakFundD, "AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey) "
+ChJobBreakFundD, "WHERE JobKey = %JobKey "
+ChJobBreakFundD, "AND JobBreakdownKey = %JobBreakdownKey "
+ChJobBreakFundD, "AND FundKey = %FundKey "
+
+ItemSchedD,    "UPDATE JobItem "
+ItemSchedD,    "SET Duration = @Duration, "
+ItemSchedD,    "DaysElapsedBeforeStart = @DaysElapsedBeforeStart "
+ItemSchedD,    "WHERE JobKey = %JobKey "
+ItemSchedD,    "AND JobItemKey = %JobItemKey " 
+
+
+PredecessorsChangeD, "UPDATE JobItemDependency "
+PredecessorsChangeD, "SET PredecessorJobItemKey = @"PredSchedChangeL"JobItemKey, "
+PredecessorsChangeD, "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, Delay=0 "
+PredecessorsChangeD, "WHERE JobKey = %JobKey "
+PredecessorsChangeD, "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+PredecessorsChangeD, "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+SuccessorsChangeD,   "UPDATE JobItemDependency "
+SuccessorsChangeD,   "SET SuccessorJobItemKey = @"SuccSchedChangeL"JobItemKey, "
+SuccessorsChangeD,   "Link=@Link, Lag=@Lag, Delay=0 "
+SuccessorsChangeD,   "WHERE JobKey = %JobKey "
+SuccessorsChangeD,   "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+SuccessorsChangeD,   "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+ 
+PredecessorsAddD,    "UPDATE JobItemDependency "
+PredecessorsAddD,    "SET PredecessorJobItemKey = @"PredSchedL"JobItemKey, "
+PredecessorsAddD,    "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, Delay=0 "
+PredecessorsAddD,    "WHERE JobKey = %JobKey "
+PredecessorsAddD,    "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+PredecessorsAddD,    "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+SuccessorsAddD,      "UPDATE JobItemDependency "
+SuccessorsAddD,      "SET SuccessorJobItemKey = @"SuccSchedL"JobItemKey, "
+SuccessorsAddD,      "Link=@Link, Lag=@Lag, Delay=0 "
+SuccessorsAddD,      "WHERE JobKey = %JobKey "
+SuccessorsAddD,      "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+SuccessorsAddD,      "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+ProgramJobPredChangeD, " /* ProgramJobPredChangeD */ "
+ProgramJobPredChangeD, "BEGIN "
+ProgramJobPredChangeD, "UPDATE ProgramJobDependency "
+ProgramJobPredChangeD, "SET PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey, "
+ProgramJobPredChangeD, "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, "
+ProgramJobPredChangeD, " Delay = (SELECT WorkBeginDate from "
+ProgramJobPredChangeD, " ProgramJob "
+ProgramJobPredChangeD, " WHERE ProgramKey = %ProgramKey  "
+ProgramJobPredChangeD, " AND   JobKey = @"ProgramJobPredSchChgL"JobKey) " 
+ProgramJobPredChangeD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobPredChangeD, "AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobPredChangeD, "END "
+//
+ProgramJobPredChangeD, "IF (0 != (SELECT Link "
+ProgramJobPredChangeD,     " FROM ProgramJobDependency "
+ProgramJobPredChangeD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,     " AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobPredChangeD,     " AND   Link IN (3, 4))) "
+ProgramJobPredChangeD,       " UPDATE ProgramJobDependency "
+ProgramJobPredChangeD,       " SET Delay = (SELECT WorkEndDate from "
+ProgramJobPredChangeD,       " ProgramJob "
+ProgramJobPredChangeD,       " WHERE ProgramKey = %ProgramKey  "
+ProgramJobPredChangeD,       " AND   JobKey = @"ProgramJobPredSchChgL"JobKey) " 
+ProgramJobPredChangeD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,       " AND   SuccessorJobKey = %SuccessorJobKey "
+//
+
+ProgramJobSuccChangeD, " /* ProgramJobSuccChangeD */ "
+ProgramJobSuccChangeD, "BEGIN "
+ProgramJobSuccChangeD, "UPDATE ProgramJobDependency "
+ProgramJobSuccChangeD, "SET SuccessorJobKey = @"ProgramJobSuccSchChgL"JobKey, "
+ProgramJobSuccChangeD, "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, "
+ProgramJobSuccChangeD, " Delay = (SELECT WorkBeginDate from "
+ProgramJobSuccChangeD, " ProgramJob "
+ProgramJobSuccChangeD, " WHERE ProgramKey = %ProgramKey  "
+ProgramJobSuccChangeD, " AND   JobKey = %PredecessorJobKey) " 
+ProgramJobSuccChangeD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccChangeD, "AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobSuccChangeD, "END "
+//
+ProgramJobSuccChangeD, "IF (0 != (SELECT Link "
+ProgramJobSuccChangeD,     " FROM ProgramJobDependency "
+ProgramJobSuccChangeD,     " WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccChangeD,     " AND   SuccessorJobKey = @"ProgramJobSuccSchChgL"JobKey "
+ProgramJobSuccChangeD,     " AND   Link IN (3, 4))) "
+ProgramJobSuccChangeD,       " UPDATE ProgramJobDependency "
+ProgramJobSuccChangeD,       " SET Delay = (SELECT WorkEndDate from "
+ProgramJobSuccChangeD,       " ProgramJob "
+ProgramJobSuccChangeD,       " WHERE ProgramKey = %ProgramKey  "
+ProgramJobSuccChangeD,       " AND   JobKey = %PredecessorJobKey) " 
+ProgramJobSuccChangeD,       " WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccChangeD,       " AND   SuccessorJobKey = @"ProgramJobSuccSchChgL"JobKey "
+//
+
+ProgramJobPredAddD,    " /* ProgramJobPredAddD */ "
+ProgramJobPredAddD, "BEGIN "
+ProgramJobPredAddD, "UPDATE ProgramJobDependency "
+ProgramJobPredAddD, "SET PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey, "
+ProgramJobPredAddD, "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, "
+ProgramJobPredAddD, " Delay = (SELECT WorkBeginDate from "
+ProgramJobPredAddD, " ProgramJob "
+ProgramJobPredAddD, " WHERE ProgramKey = %ProgramKey  "
+ProgramJobPredAddD, " AND   JobKey = @"ProgramJobPredSchAddL"JobKey) " 
+ProgramJobPredAddD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobPredAddD, "AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobPredAddD, "END "
+//
+ProgramJobPredAddD, "IF (0 != (SELECT Link "
+ProgramJobPredAddD,     " FROM ProgramJobDependency "
+ProgramJobPredAddD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,     " AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobPredAddD,     " AND   Link IN (3, 4))) "
+ProgramJobPredAddD,       " UPDATE ProgramJobDependency "
+ProgramJobPredAddD,       " SET Delay = (SELECT WorkEndDate from "
+ProgramJobPredAddD,       " ProgramJob "
+ProgramJobPredAddD,       " WHERE ProgramKey = %ProgramKey  "
+ProgramJobPredAddD,       " AND   JobKey = @"ProgramJobPredSchAddL"JobKey) " 
+ProgramJobPredAddD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,       " AND   SuccessorJobKey = %SuccessorJobKey "
+//
+
+ProgramJobSuccAddD,    " /* ProgramJobSuccAddD */ "
+ProgramJobSuccAddD, "BEGIN "
+ProgramJobSuccAddD, "UPDATE ProgramJobDependency "
+ProgramJobSuccAddD, "SET SuccessorJobKey = @"ProgramJobSuccSchAddL"JobKey, "
+ProgramJobSuccAddD, "Link=@"DID_LINK"Link, Lag=@"DID_LAG"Lag, "
+ProgramJobSuccAddD, " Delay = (SELECT WorkBeginDate from "
+ProgramJobSuccAddD, " ProgramJob "
+ProgramJobSuccAddD, " WHERE ProgramKey = %ProgramKey  "
+ProgramJobSuccAddD, " AND   JobKey = %PredecessorJobKey) " 
+ProgramJobSuccAddD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccAddD, "AND   SuccessorJobKey = %SuccessorJobKey "
+ProgramJobSuccAddD, "END "
+//
+ProgramJobSuccAddD, "IF (0 != (SELECT Link "
+ProgramJobSuccAddD,     " FROM ProgramJobDependency "
+ProgramJobSuccAddD,     " WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccAddD,     " AND   SuccessorJobKey = @"ProgramJobSuccSchAddL"JobKey "
+ProgramJobSuccAddD,     " AND   Link IN (3, 4))) "
+ProgramJobSuccAddD,       " UPDATE ProgramJobDependency "
+ProgramJobSuccAddD,       " SET Delay = (SELECT WorkEndDate from "
+ProgramJobSuccAddD,       " ProgramJob "
+ProgramJobSuccAddD,       " WHERE ProgramKey = %ProgramKey  "
+ProgramJobSuccAddD,       " AND   JobKey = %PredecessorJobKey) " 
+ProgramJobSuccAddD,       " WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccAddD,       " AND   SuccessorJobKey = @"ProgramJobSuccSchAddL"JobKey "
+//
+
+BasedateStat, " UPDATE STATISTICS MajorItemPriceAdjustment "
+BasedateStat, " UPDATE STATISTICS MajorItemPriceRegression "
+BasedateStat, " UPDATE STATISTICS MajorItemPriceVariable "
+BasedateStat, " UPDATE STATISTICS MajorItemQuantityAdjustment "
+BasedateStat, " UPDATE STATISTICS MajorItemQuantityRegression "
+BasedateStat, " UPDATE STATISTICS MajorItemQuantityVariable "
+BasedateStat, " UPDATE STATISTICS MaterialPrice "
+BasedateStat, " UPDATE STATISTICS EquipmentRate "
+BasedateStat, " UPDATE STATISTICS LaborerWageAndBenefits "
+
+BasedateStat2, " UPDATE STATISTICS StdItemDefaultPrices "
+BasedateStat2, " UPDATE STATISTICS WorkingDayPrediction "
+BasedateStat2, " UPDATE STATISTICS ZoneMap "
+BasedateStat2, " UPDATE STATISTICS PEMETHAverage "
+BasedateStat2, " UPDATE STATISTICS PEMETHRegression "
+BasedateStat2, " UPDATE STATISTICS StandardItemPEMETHAverage "
+BasedateStat2, " UPDATE STATISTICS StandardItemPEMETHRegression "
+BasedateStat2, " UPDATE STATISTICS AreaCounty "
+
+ 
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+JobD,            "SELECT JobID, Description, Location, PrimaryCountyKey, "
+JobD,            "DavisBaconWages, LettingMonth, WorkType, "
+JobD,            "ConstructionEngineeringPct, ContingencyPercent, "
+JobD,            "WorkingDayCalendarKey, District, Estimator, "
+JobD,            "DateChecked, DateApproved, CheckedBy, ApprovedBy "
+JobD,            "FROM Job HOLDLOCK "
+JobD,            "WHERE JobKey = %JobKey "
+
+UpdateBaseDate,  "SELECT JobID, Description, Location, PrimaryCountyKey, "
+UpdateBaseDate,  "DavisBaconWages, LettingMonth, WorkType, "
+UpdateBaseDate,  "ConstructionEngineeringPct, ContingencyPercent, "
+UpdateBaseDate,  "WorkingDayCalendarKey, District, Estimator, "
+UpdateBaseDate,  "DateChecked, DateApproved, CheckedBy, ApprovedBy "
+UpdateBaseDate,  "FROM Job HOLDLOCK "
+UpdateBaseDate,  "WHERE JobKey = %JobKey "
+
+JobAltGroupD,    "SELECT JobAlternateGroupID, Description "
+JobAltGroupD,    "FROM JobAlternateGroup HOLDLOCK "
+JobAltGroupD,    "WHERE JobKey = %JobKey "
+JobAltGroupD,    "AND JobAlternateGroupKey = %JobAlternateGroupKey "
+
+JobAltD,         "SELECT JobAlternateID, Description "
+JobAltD,         "FROM JobAlternate HOLDLOCK "
+JobAltD,         "WHERE JobKey = %JobKey "
+JobAltD,         "AND JobAlternateGroupKey = %JobAlternateGroupKey "
+JobAltD,         "AND JobAlternateKey = %JobAlternateKey "
+
+JobItemD,        "SELECT JobKey, JobBreakdownKey, JobItemKey, "
+JobItemD,        "StandardItemKey, JobAlternateGroupKey, JobAlternateKey, "
+JobItemD,        "Quantity, UnitPrice, ExtendedAmount, "
+JobItemD,        "ItemEstimationMethodKey, LongEstimationComment, "
+JobItemD,        "SupplementalDescription, Duration, "
+JobItemD,        "DaysElapsedBeforeStart "
+JobItemD,        "FROM JobItem HOLDLOCK " 
+JobItemD,        "WHERE JobKey = %JobKey "
+JobItemD,        "AND JobBreakdownKey=%JobBreakdownKey "
+JobItemD,        "AND JobItemKey=%JobItemKey "
+
+JobBreakdownD,   "SELECT JobBreakdownID, Description, "
+JobBreakdownD,   "Length, PavementWidth, PavementDepth, "
+JobBreakdownD,   "StructureID, StructureLength, StructureWidth, "
+JobBreakdownD,   "RoadType, StructureType, WorkType, DetailedEstimate "
+JobBreakdownD,   "FROM JobBreakdown HOLDLOCK "
+JobBreakdownD,   "WHERE JobKey = %JobKey "
+JobBreakdownD,   "AND JobBreakdownKey = %JobBreakdownKey "
+
+
+ChJobUserD,      "SELECT UserID, AccessPrivilege "
+ChJobUserD,      "FROM JobUser HOLDLOCK "
+ChJobUserD,      "WHERE JobKey = %JobKey "
+ChJobUserD,      "AND UserID = '%UserID' "
+
+
+ProgramD,        "SELECT ProgramID, Description, StartDate, EndDate "
+ProgramD,        "FROM Program HOLDLOCK "
+ProgramD,        "WHERE ProgramKey = %ProgramKey "
+
+ChProgJobD,      "SELECT LettingDate, WorkBeginDate, WorkEndDate, "
+ChProgJobD,      "Priority, InflationPredictionKey, EstimateTotalAdjForInflation "
+ChProgJobD,      "FROM ProgramJob HOLDLOCK "
+ChProgJobD,      "WHERE JobKey = %JobKey "
+
+
+ChProgUserD,     "SELECT UserID, AccessPrivilege "
+ChProgUserD,     "FROM ProgramUser HOLDLOCK "
+ChProgUserD,     "WHERE ProgramKey = %ProgramKey "
+ChProgUserD,     "AND UserID = '%UserID' "
+
+
+DefJobUsersD,  "SELECT UserGrantedPrivilege, AccessPrivilege "
+DefJobUsersD,  "FROM DefaultJobUser HOLDLOCK "
+DefJobUsersD,  "WHERE UserKey = %UserKey "
+DefJobUsersD,  "AND UserGrantedPrivilege = '%UserGrantedPrivilege' "
+
+
+DefProgUsersD,  "SELECT UserGrantedPrivilege, AccessPrivilege "
+DefProgUsersD,  "FROM DefaultProgramUser HOLDLOCK "
+DefProgUsersD,  "WHERE UserKey = %UserKey "
+DefProgUsersD,  "AND UserGrantedPrivilege = '%UserGrantedPrivilege' "
+
+
+ChJobBreakFundD, "SELECT PercentFunded "
+ChJobBreakFundD, "FROM JobBreakdownFund HOLDLOCK "
+ChJobBreakFundD, "WHERE JobKey = %JobKey "
+ChJobBreakFundD, "AND JobBreakdownKey = %JobBreakdownKey "
+ChJobBreakFundD, "AND FundKey = %FundKey "
+
+ItemSchedD,    "SELECT Duration, DaysElapsedBeforeStart "
+ItemSchedD,    "FROM JobItem HOLDLOCK "
+ItemSchedD,    "WHERE JobKey = %JobKey "
+ItemSchedD,    "AND JobItemKey = %JobItemKey "
+
+
+PredecessorsChangeD,   "SELECT PredecessorJobItemKey, Link, Lag, Delay "
+PredecessorsChangeD,   "FROM JobItemDependency HOLDLOCK "
+PredecessorsChangeD,   "WHERE JobKey = %JobKey "
+PredecessorsChangeD,   "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+PredecessorsChangeD,   "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+SuccessorsChangeD,     "SELECT SuccessorJobItemKey, Link, Lag, Delay "
+SuccessorsChangeD,     "FROM JobItemDependency HOLDLOCK "
+SuccessorsChangeD,     "WHERE JobKey = %JobKey "
+SuccessorsChangeD,     "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+SuccessorsChangeD,     "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+PredecessorsAddD,   "SELECT PredecessorJobItemKey, Link, Lag, Delay "
+PredecessorsAddD,   "FROM JobItemDependency HOLDLOCK "
+PredecessorsAddD,   "WHERE JobKey = %JobKey "
+PredecessorsAddD,   "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+PredecessorsAddD,   "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+SuccessorsAddD,     "SELECT SuccessorJobItemKey, Link, Lag, Delay "
+SuccessorsAddD,     "FROM JobItemDependency HOLDLOCK "
+SuccessorsAddD,     "WHERE JobKey = %JobKey "
+SuccessorsAddD,     "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+SuccessorsAddD,     "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+
+ProgramJobPredChangeD, " /* ProgramJobPredChangeD */ "
+ProgramJobPredChangeD, "SELECT PredecessorJobKey, Link, Lag, Delay "
+ProgramJobPredChangeD, "FROM ProgramJobDependency HOLDLOCK "
+ProgramJobPredChangeD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobPredChangeD, "AND   SuccessorJobKey = %SuccessorJobKey "
+
+ProgramJobSuccChangeD, " /* ProgramJobSuccChangeD */ "
+ProgramJobSuccChangeD, "SELECT SuccessorJobKey, Link, Lag, Delay "
+ProgramJobSuccChangeD, "FROM ProgramJobDependency HOLDLOCK "
+ProgramJobSuccChangeD, "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccChangeD, "AND   SuccessorJobKey = %SuccessorJobKey "
+
+ProgramJobPredAddD,    " /* ProgramJobPredAddD */ "
+ProgramJobPredAddD,    "SELECT PredecessorJobKey, Link, Lag, Delay "
+ProgramJobPredAddD,    "FROM ProgramJobDependency HOLDLOCK "
+ProgramJobPredAddD,    "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobPredAddD,    "AND   SuccessorJobKey = %SuccessorJobKey "
+
+ProgramJobSuccAddD,    " /* ProgramJobSuccAddD */ "
+ProgramJobSuccAddD,    "SELECT SuccessorJobKey, Link, Lag, Delay "
+ProgramJobSuccAddD,    "FROM ProgramJobDependency HOLDLOCK "
+ProgramJobSuccAddD,    "WHERE PredecessorJobKey = %PredecessorJobKey "
+ProgramJobSuccAddD,    "AND   SuccessorJobKey = %SuccessorJobKey "
+
+DeclareBaseDate,       "SELECT LongTextKey, ShortText "
+DeclareBaseDate,       "FROM LongText "
+DeclareBaseDate,       "WHERE LongTextKey = -1 "
+
+//JobCBESTAdd,           "SELECT CostBasedEstimateID,Description "
+//JobCBESTAdd,           "FROM JobCostBasedEstimate "
+//JobCBESTAdd,           "WHERE JobKey = -1 "
+//JobCBESTAdd,           "AND JobBreakdownKey = -1 "
+//
+
+CopyJobD,         " /* CopyJobD lock.bin */ "
+CopyJobD,         " SELECT J.JobID"
+CopyJobD,         " FROM Job J"
+CopyJobD,         " WHERE J.JobKey = %JobKey"
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+JobNewD,          " /* bamsces.met.JobNewD */ "
+JobNewD,          "INSERT INTO Job "
+JobNewD,          "(JobKey, JobID, Description, "
+JobNewD,          " SpecYear, Location, PrimaryCountyKey,  "
+JobNewD,          " District, DavisBaconWages, BaseDate,  "
+JobNewD,          " LettingMonth, WorkType, ConstructionEngineeringPct,  "
+JobNewD,          " ContingencyPercent, EstimatedCost, EstimateTotal, "
+JobNewD,          " Duration, WorkingDayCalendarKey, Estimator,  "
+JobNewD,          " DateCreated, LastUpdate, CheckedBy, "
+JobNewD,          " DateChecked, ApprovedBy, DateApproved, UnitType)  "
+JobNewD,          "VALUES "
+JobNewD,          "(@NewKey, @JobID, @Description, "
+JobNewD,          " @CURSPECYEAR, @Location, @"DID_COUNTYCAT"CountyKey,  "
+JobNewD,          " @"DID_DISTRICT"CodeValueKey, @DavisBaconWages, @MAXBASEDATE, "
+JobNewD,          " @LettingMonth, @"DID_WORKTYPE"CodeValueKey,@ConstructionEngineeringPct,  "
+JobNewD,          " @ContingencyPercent, 0, 0, "
+JobNewD,          " 0, @"DID_WORKDAYCAL"WorkingDayCalendarKey,  @"DID_ESTIMATOR"UserKey, "
+JobNewD,          " @CurrentDate, @CurrentDate, @"DID_CHECKEDBY"UserKey, "
+//JobNewD,          " @DateChecked, @"DID_APPROVEDBY"UserKey, @DateApproved, @UnitType) "
+JobNewD,          " @DateChecked, @"DID_APPROVEDBY"UserKey, @DateApproved, @CURUNITSYS) "
+// The above line would use the current unit system rather
+// than let the "Is Metric" check box of the dialog box.      -- tlb 95MAR
+
+JobAltGroupD,     "INSERT INTO JobAlternateGroup "
+JobAltGroupD,     "(JobKey, JobAlternateGroupKey, JobAlternateGroupID, Description, "
+JobAltGroupD,     "ChosenAlternateKey, Estimate) "
+JobAltGroupD,     "VALUES "
+JobAltGroupD,     "(%JobKey, @NewKey, @JobAlternateGroupID, @Description,
+JobAltGroupD,     "0,0) "
+                  
+JobAltD,          "INSERT INTO JobAlternate "
+JobAltD,          "(JobKey, JobAlternateGroupKey, JobAlternateKey, "
+JobAltD,          "JobAlternateID, Description, Estimate) "
+JobAltD,          "VALUES "
+JobAltD,          "(%JobKey, %JobAlternateGroupKey, @NewKey, "
+JobAltD,          "@JobAlternateID, @Description, 0) "
+                  
+JobCommentD,      "INSERT INTO JobComment "
+JobCommentD,      "(JobKey, CommentDate, CommentTime, "
+JobCommentD,      "Estimator, Comment, ArchiveCopyFileName) "
+JobCommentD,      "VALUES "
+JobCommentD,      "(%JobKey, @CurrentDate, @CurrentTime, @CurrentUserKey, "
+JobCommentD,      "@NewKey, "
+JobCommentD,      "'0') "
+
+JobBreakdownD,    "INSERT INTO JobBreakdown "
+JobBreakdownD,    "(JobKey, JobBreakdownKey, JobBreakdownID, "
+JobBreakdownD,    "Description, PreliminaryEstimateCost, DetailedEstimate, "
+JobBreakdownD,    "DetailedEstimateCost, BreakdownEstimationMethod, "
+JobBreakdownD,    "Length, PavementWidth, PavementDepth, "
+JobBreakdownD,    "RoadType, "
+JobBreakdownD,    "StructureType, StructureID, StructureLength, "
+JobBreakdownD,    "StructureWidth, WorkType) "
+JobBreakdownD,    "VALUES "
+JobBreakdownD,    "(%JobKey, @NewKey, "
+JobBreakdownD,    "@JobBreakdownID, @Description, 0, @DetailedEstimate,  "
+JobBreakdownD,    "0, 0, @Length, @PavementWidth, @PavementDepth, "
+JobBreakdownD,    "@"DID_ROADTYPE"CodeValueKey, "
+JobBreakdownD,    "@"DID_STRUCTTYPE"CodeValueKey, @StructureID, "
+JobBreakdownD,    "@StructureLength, @StructureWidth, "
+JobBreakdownD,    "@"DID_WORKTYPE"CodeValueKey) "
+                  
+                  
+AddJobUserD,      "INSERT INTO JobUser "
+AddJobUserD,      "(JobKey, UserID, AccessPrivilege) "
+AddJobUserD,      "VALUES "
+AddJobUserD,      "(%JobKey, @UserID, @AccessPrivilege) "
+                  
+                  
+JobItemD,         "/* bamsces.met.JobItemD */ "
+JobItemD,         "INSERT INTO JobItem "
+JobItemD,         "(JobKey, JobBreakdownKey, JobItemKey, "
+JobItemD,         "StandardItemKey, JobAlternateGroupKey, JobAlternateKey, "
+JobItemD,         "Quantity, UnitPrice, ExtendedAmount, "
+JobItemD,         "ItemEstimationMethodKey, LongEstimationComment,  "
+JobItemD,         "SupplementalDescription, Duration, "
+JobItemD,         "DaysElapsedBeforeStart,Slack) "
+JobItemD,         "VALUES "
+JobItemD,         "(%JobKey, %JobBreakdownKey, @NewKey, "
+JobItemD,         "@"StandardItemCatL"StandardItemKey, "
+JobItemD,         "@"DID_ALT_GROUP"JobAlternateGroupKey, "
+JobItemD,         "@"DID_ALT"JobAlternateKey, "
+JobItemD,         "@Quantity, @UnitPrice, @Quantity * @UnitPrice, "
+JobItemD,         "@"DID_METHOD"ItemEstimationMethodKey, "
+//JobItemD,         "@LongEstimationComment,  "
+JobItemD,         "0, "
+JobItemD,         "@SupplementalDescription, @Duration, "
+JobItemD,         "@DaysElapsedBeforeStart,0)  "
+                  
+                  
+AddProgJobD,      "INSERT INTO ProgramJob "
+AddProgJobD,      "(JobKey, ProgramKey, LettingDate, WorkBeginDate, "
+AddProgJobD,      "WorkEndDate, Priority, InflationPredictionKey, "
+AddProgJobD,      "EstimateTotalAdjForInflation, Slack) "
+AddProgJobD,      "VALUES "
+AddProgJobD,      "(@"AddProgJobL"JobKey, %ProgramKey, @LettingDate, @WorkBeginDate, "
+AddProgJobD,      "@WorkEndDate, @Priority, @"DID_INFLPRED"InflationPredictionKey, "
+AddProgJobD,      "0, 0 )" 
+                  
+AddProgUserD,     "INSERT INTO ProgramUser "
+AddProgUserD,     "(ProgramKey, UserID, AccessPrivilege) "
+AddProgUserD,     "VALUES "
+AddProgUserD,     "(%ProgramKey, @UserID, @AccessPrivilege) "
+
+
+DefJobUsersD,     "INSERT INTO DefaultJobUser "
+DefJobUsersD,     "(UserKey, UserGrantedPrivilege, AccessPrivilege) "
+DefJobUsersD,     "VALUES "
+DefJobUsersD,     "(%UserKey, @UserGrantedPrivilege, @AccessPrivilege) "
+
+DefProgUsersD,    "INSERT INTO DefaultProgramUser "
+DefProgUsersD,    "(UserKey, UserGrantedPrivilege, AccessPrivilege) "
+DefProgUsersD,    "VALUES "
+DefProgUsersD,    "(%UserKey, @UserGrantedPrivilege, @AccessPrivilege) "
+
+
+AddJobBreakFundD, "INSERT INTO JobBreakdownFund "
+AddJobBreakFundD, "(JobKey, JobBreakdownKey, FundKey, PercentFunded, AmountFunded) "
+AddJobBreakFundD, "VALUES "
+AddJobBreakFundD, "(%JobKey, %JobBreakdownKey, @"JobBreakFundL"FundKey, @"DID_PCTFUNDED"PercentFunded, "
+AddJobBreakFundD, "0 )"
+
+ProgramD,         "INSERT INTO Program "
+ProgramD,         "(ProgramKey, ProgramID, StartDate, EndDate, Description, "
+ProgramD,         "TotalCost, TotalAdjustedForInflation )"
+ProgramD,         "VALUES "
+ProgramD,         "(@NewKey, @ProgramID, @StartDate, @EndDate, @Description, 0, 0) "
+
+PredecessorsChangeD,    "INSERT INTO JobItemDependency "
+PredecessorsChangeD,    "(JobKey, PredecessorJobItemKey, SuccessorJobItemKey, Link, Lag, Delay)"
+PredecessorsChangeD,    "VALUES "
+PredecessorsChangeD,    "(%JobKey, @"PredSchedChangeL"JobItemKey, %JobItemKey, @Link, @Lag, 0) "
+
+SuccessorsChangeD,      "INSERT INTO JobItemDependency "
+SuccessorsChangeD,      "(JobKey, PredecessorJobItemKey, SuccessorJobItemKey, Link, Lag, Delay)"
+SuccessorsChangeD,      "VALUES "
+SuccessorsChangeD,      "(%JobKey, %JobItemKey, @"SuccSchedChangeL"JobItemKey, @Link, @Lag, 0) "
+
+PredecessorsAddD,    "INSERT INTO JobItemDependency "
+PredecessorsAddD,    "(JobKey, PredecessorJobItemKey, SuccessorJobItemKey, Link, Lag, Delay)"
+PredecessorsAddD,    "VALUES "
+PredecessorsAddD,    "(%JobKey, @"PredSchedAddL"JobItemKey, %JobItemKey, @Link, @Lag, 0) "
+
+SuccessorsAddD,      "INSERT INTO JobItemDependency "
+SuccessorsAddD,      "(JobKey, PredecessorJobItemKey, SuccessorJobItemKey, Link, Lag, Delay)"
+SuccessorsAddD,      "VALUES "
+SuccessorsAddD,      "(%JobKey, %JobItemKey, @"SuccSchedAddL"JobItemKey, @Link, @Lag, 0) "
+
+ProgramJobPredChangeD, " /* ProgramJobPredChangeD */ "
+ProgramJobPredChangeD, "INSERT INTO ProgramJobDependency "
+ProgramJobPredChangeD, "(PredecessorJobKey, SuccessorJobKey, Link, Lag, Delay)"
+ProgramJobPredChangeD, "VALUES "
+ProgramJobPredChangeD, "(@"ProgramJobPredSchChgL"JobKey, %JobKey, @Link, @Lag, '%WorkBeginDate') "
+//
+ProgramJobPredChangeD, "IF (0 != (SELECT Link "
+ProgramJobPredChangeD,     " FROM ProgramJobDependency "
+ProgramJobPredChangeD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,     " AND   SuccessorJobKey = %JobKey "
+ProgramJobPredChangeD,     " AND   Link IN (3, 4))) "
+ProgramJobPredChangeD,       " UPDATE ProgramJobDependency "
+ProgramJobPredChangeD,       " SET Delay = (SELECT WorkEndDate "
+ProgramJobPredChangeD,       " FROM ProgramJob "
+ProgramJobPredChangeD,       " WHERE ProgramKey = %ProgramKey " 
+ProgramJobPredChangeD,       " AND   JobKey = @"ProgramJobPredSchChgL"JobKey) "
+ProgramJobPredChangeD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,       " AND   SuccessorJobKey = %JobKey "
+//
+ProgramJobPredChangeD, "IF (0 != (SELECT Link "
+ProgramJobPredChangeD,     " FROM ProgramJobDependency "
+ProgramJobPredChangeD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,     " AND   SuccessorJobKey = %JobKey "
+ProgramJobPredChangeD,     " AND   Link IN (1, 2))) "
+ProgramJobPredChangeD,       " UPDATE ProgramJobDependency "
+ProgramJobPredChangeD,       " SET Delay = (SELECT WorkBeginDate "
+ProgramJobPredChangeD,       " FROM ProgramJob "
+ProgramJobPredChangeD,       " WHERE ProgramKey = %ProgramKey " 
+ProgramJobPredChangeD,       " AND   JobKey = @"ProgramJobPredSchChgL"JobKey) "
+ProgramJobPredChangeD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchChgL"JobKey "
+ProgramJobPredChangeD,       " AND   SuccessorJobKey = %JobKey "
+//
+
+ProgramJobSuccChangeD, " /* ProgramJobSuccChangeD */ "
+ProgramJobSuccChangeD, "INSERT INTO ProgramJobDependency "
+ProgramJobSuccChangeD, "(SuccessorJobKey, PredecessorJobKey, Link, Lag, Delay)"
+ProgramJobSuccChangeD, "VALUES "
+ProgramJobSuccChangeD, "(@"ProgramJobSuccSchChgL"JobKey, %JobKey, @Link, @Lag, '%WorkBeginDate') "
+//
+ProgramJobSuccChangeD, "IF (0 != (SELECT Link "
+ProgramJobSuccChangeD,     " FROM ProgramJobDependency "
+ProgramJobSuccChangeD,     " WHERE SuccessorJobKey = @"ProgramJobSuccSchChgL"JobKey "
+ProgramJobSuccChangeD,     " AND   PredecessorJobKey = %JobKey "
+ProgramJobSuccChangeD,     " AND   Link IN (3, 4))) "
+ProgramJobSuccChangeD,       " UPDATE ProgramJobDependency "
+ProgramJobSuccChangeD,       " SET Delay = '%WorkEndDate' "
+ProgramJobSuccChangeD,       " WHERE SuccessorJobKey = @"ProgramJobSuccSchChgL"JobKey "
+ProgramJobSuccChangeD,       " AND   PredecessorJobKey = %JobKey "
+//
+
+ProgramJobPredAddD, " /* ProgramJobPredAddD */ "
+ProgramJobPredAddD, "INSERT INTO ProgramJobDependency "
+ProgramJobPredAddD, "(PredecessorJobKey, SuccessorJobKey, Link, Lag, Delay)"
+ProgramJobPredAddD, "VALUES "
+ProgramJobPredAddD, "(@"ProgramJobPredSchAddL"JobKey, %JobKey, @Link, @Lag, '%WorkBeginDate') "
+//
+ProgramJobPredAddD, "IF (0 != (SELECT Link "
+ProgramJobPredAddD,     " FROM ProgramJobDependency "
+ProgramJobPredAddD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,     " AND   SuccessorJobKey = %JobKey "
+ProgramJobPredAddD,     " AND   Link IN (3, 4))) "
+ProgramJobPredAddD,       " UPDATE ProgramJobDependency "
+ProgramJobPredAddD,       " SET Delay = (SELECT WorkEndDate "
+ProgramJobPredAddD,       " FROM ProgramJob "
+ProgramJobPredAddD,       " WHERE ProgramKey = %ProgramKey " 
+ProgramJobPredAddD,       " AND   JobKey = @"ProgramJobPredSchAddL"JobKey) "
+ProgramJobPredAddD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,       " AND   SuccessorJobKey = %JobKey "
+//
+ProgramJobPredAddD, "IF (0 != (SELECT Link "
+ProgramJobPredAddD,     " FROM ProgramJobDependency "
+ProgramJobPredAddD,     " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,     " AND   SuccessorJobKey = %JobKey "
+ProgramJobPredAddD,     " AND   Link IN (1, 2))) "
+ProgramJobPredAddD,       " UPDATE ProgramJobDependency "
+ProgramJobPredAddD,       " SET Delay = (SELECT WorkBeginDate "
+ProgramJobPredAddD,       " FROM ProgramJob "
+ProgramJobPredAddD,       " WHERE ProgramKey = %ProgramKey " 
+ProgramJobPredAddD,       " AND   JobKey = @"ProgramJobPredSchAddL"JobKey) "
+ProgramJobPredAddD,       " WHERE PredecessorJobKey = @"ProgramJobPredSchAddL"JobKey "
+ProgramJobPredAddD,       " AND   SuccessorJobKey = %JobKey "
+//
+
+ProgramJobSuccAddD, " /* ProgramJobSuccAddD */ "
+ProgramJobSuccAddD, "INSERT INTO ProgramJobDependency "
+ProgramJobSuccAddD, "(SuccessorJobKey, PredecessorJobKey, Link, Lag, Delay)"
+ProgramJobSuccAddD, "VALUES "
+ProgramJobSuccAddD, "(@"ProgramJobSuccSchAddL"JobKey, %JobKey, @Link, @Lag, '%WorkBeginDate') "
+//
+ProgramJobSuccAddD, "IF (0 != (SELECT Link "
+ProgramJobSuccAddD,     " FROM ProgramJobDependency "
+ProgramJobSuccAddD,     " WHERE SuccessorJobKey = @"ProgramJobSuccSchAddL"JobKey "
+ProgramJobSuccAddD,     " AND   PredecessorJobKey = %JobKey "
+ProgramJobSuccAddD,     " AND   Link IN (3, 4))) "
+ProgramJobSuccAddD,       " UPDATE ProgramJobDependency "
+ProgramJobSuccAddD,       " SET Delay = '%WorkEndDate' "
+ProgramJobSuccAddD,       " WHERE SuccessorJobKey = @"ProgramJobSuccSchAddL"JobKey "
+ProgramJobSuccAddD,       " AND   PredecessorJobKey = %JobKey "
+//
+
+DeclareBaseDate,  "INSERT INTO LongText "
+DeclareBaseDate,  "(LongTextKey, ShortText) "
+DeclareBaseDate,  "VALUES "
+DeclareBaseDate,  "(@NewKey, @ShortText) "
+
+
+//JobCBESTAdd,    "INSERT INTO JobCostBasedEstimate "
+//JobCBESTAdd,    "(JobKey,JobItemKey,JobItemCostBasedEstimateKey,"
+//JobCBESTAdd,    "CostBasedEstimateID,Description,Active) "
+//JobCBESTAdd,    "VALUES "
+//JobCBESTAdd,    "(%JobKey, %JobItemKey, @NewKey, '@CostBasedEstimateID',"
+//JobCBESTAdd,    "'@Description',0) "
+//
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+JobBreakdownL,    "DELETE FROM JobBreakdown "
+JobBreakdownL,    "WHERE JobBreakdownKey IN (%JobBreakdownKey{,%JobBreakdownKey}) "
+JobBreakdownL,    "AND JobKey=%JobKey "
+JobBreakdownL,    "DELETE FROM JobItem "
+JobBreakdownL,    "WHERE JobKey = %JobKey "
+JobBreakdownL,    "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownL,    "DELETE FROM JobBreakdownFund "
+JobBreakdownL,    "WHERE JobKey = %JobKey "
+JobBreakdownL,    "AND JobBreakdownKey = %JobBreakdownKey "
+
+JobItemsL,        "DELETE FROM JobItem "
+JobItemsL,        "WHERE JobBreakdownKey=%JobBreakdownKey "
+JobItemsL,        "AND JobKey=%JobKey "
+JobItemsL,        "AND JobItemKey IN (%JobItemKey{,%JobItemKey}) "
+
+
+JobUserL,         "DELETE FROM  JobUser "
+JobUserL,         "WHERE UserID IN ('%UserID'{,'%UserID'}) "
+JobUserL,         "AND JobKey = %JobKey "
+
+
+ProgramUserL,     "DELETE FROM ProgramUser "
+ProgramUserL,     "WHERE UserID IN ('%UserID'{,'%UserID'}) "
+ProgramUserL,     "AND ProgramKey = %ProgramKey "
+
+
+DefltJobUsersL,   "DELETE FROM DefaultJobUser "
+DefltJobUsersL,   "WHERE UserGrantedPrivilege IN ('%UserGrantedPrivilege'{,'%UserGrantedPrivilege'}) "
+DefltJobUsersL,   "AND UserKey = %UserKey "
+
+DefltProgUsersL,  "DELETE FROM DefaultProgramUser "
+DefltProgUsersL,  "WHERE UserGrantedPrivilege IN ('%UserGrantedPrivilege'{,'%UserGrantedPrivilege'}) "
+DefltProgUsersL,  "AND UserKey = %UserKey "
+
+ItemSchPredL,     "DELETE FROM JobItemDependency "
+ItemSchPredL,     "WHERE PredecessorJobItemKey IN(%PredecessorJobItemKey{,%PredecessorJobItemKey}) "
+ItemSchPredL,     "AND SuccessorJobItemKey = %SuccessorJobItemKey "
+ItemSchPredL,     "AND JobKey = %JobKey "
+                     
+ItemSchSucL,      "DELETE FROM JobItemDependency "
+ItemSchSucL,      "WHERE SuccessorJobItemKey IN (%SuccessorJobItemKey{,%SuccessorJobItemKey}) "
+ItemSchSucL,      "AND PredecessorJobItemKey = %PredecessorJobItemKey "
+ItemSchSucL,      "AND JobKey = %JobKey "
+                     
+ProgramJobL,      "DELETE FROM ProgramJob "
+ProgramJobL,      "WHERE JobKey IN (%JobKey{,%JobKey}) "
+
+ProgramJobL,      "DELETE FROM ProgramJobDependency "
+ProgramJobL,      "WHERE PredecessorJobKey IN (%JobKey{,%JobKey}) "
+ProgramJobL,      "OR SuccessorJobKey IN (%JobKey{,%JobKey}) "
+
+ProgramJobSchPredL, " /* ProgramJobSchPredL */ "
+ProgramJobSchPredL, "DELETE FROM ProgramJobDependency "
+ProgramJobSchPredL, "WHERE PredecessorJobKey IN(%PredecessorJobKey{,%PredecessorJobKey}) "
+ProgramJobSchPredL, "AND SuccessorJobKey = %SuccessorJobKey "
+                 
+ProgramJobSchSuccL, " /* ProgramJobSchSuccL */ "
+ProgramJobSchSuccL, "DELETE FROM ProgramJobDependency "
+ProgramJobSchSuccL, "WHERE SuccessorJobKey IN (%SuccessorJobKey{,%SuccessorJobKey}) "
+ProgramJobSchSuccL, "AND PredecessorJobKey = %PredecessorJobKey "
+
+JobBreakdownFundL,"DELETE FROM JobBreakdownFund "
+JobBreakdownFundL,"WHERE JobKey = %JobKey "
+JobBreakdownFundL,"AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownFundL,"AND FundKey IN (%FundKey{,%FundKey}) "
+                                                     
+OpenJobDL,        "DELETE FROM Job WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobUser WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobFund WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobBreakdown WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobBreakdownFund WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobItem WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobItemDependency WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobComment WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobAlternate WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobAlternateGroup WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobBreakdownProfile WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobBreakdownMajorItem WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobCostBasedEstimate WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobCostSheet WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobCrewEquipmentUsed WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobCrewLaborUsed WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobCrewUsed WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobMaterialUsed WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobZone WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobProject WHERE JobKey = %JobKey "
+OpenJobDL,        "DELETE FROM JobItemProjectItem WHERE JobKey = %JobKey "
+
+OpenProgramDL,    "DELETE FROM Program WHERE ProgramKey = %ProgramKey "
+OpenProgramDL,    "DELETE FROM ProgramUser WHERE ProgramKey = %ProgramKey "
+OpenProgramDL,    "DELETE FROM ProgramJobDependency WHERE PredecessorJobKey "
+OpenProgramDL,      " IN (SELECT JobKey FROM ProgramJob WHERE ProgramKey = %ProgramKey) "
+OpenProgramDL,      " AND SuccessorJobKey IN (SELECT JobKey FROM ProgramJob WHERE ProgramKey = %ProgramKey) "
+OpenProgramDL,    "DELETE FROM ProgramJob WHERE ProgramKey = %ProgramKey "
+
+
+PurgeBasedateD, " CHECKPOINT "
+//PurgeBasedateD, " create table #BaseDateList (BaseDate datetime)   "
+//PurgeBasedateD, " INSERT INTO  #BaseDateList select BaseDate from BaseDate WHERE BaseDate > '1/1/1900' AND BaseDate < (select MAX(BaseDate) from BaseDate)  AND BaseDate NOT IN (select DISTINCT BaseDate from Job)  "
+//PurgeBasedateD, " create table #RegImportDateList (ImportDate datetime) "
+//PurgeBasedateD, " INSERT INTO  #RegImportDateList select distinct ImportDate from StandardItemPEMETHRegression WHERE BaseDate IN (select BaseDate from BaseDate WHERE BaseDate > '1/1/1900' AND BaseDate < (select MAX(BaseDate) from BaseDate)  AND BaseDate NOT IN (select DISTINCT BaseDate from Job)) "
+//PurgeBasedateD, " create table #AvgImportDateList (ImportDate datetime) "
+//PurgeBasedateD, " INSERT INTO  #AvgImportDateList select distinct ImportDate from StandardItemPEMETHAverage WHERE BaseDate IN (select BaseDate from BaseDate WHERE BaseDate > '1/1/1900' AND BaseDate < (select MAX(BaseDate) from BaseDate)  AND BaseDate NOT IN (select DISTINCT BaseDate from Job)) "
+
+PurgeBasedateD_01, "DELETE FROM MaterialPrice WHERE BaseDate = '"
+
+PurgeBasedateD_02, "DELETE FROM LaborerWageAndBenefits WHERE BaseDate = '"
+
+PurgeBasedateD_03, "DELETE FROM StdItemDefaultPrices WHERE BaseDate = '"
+
+PurgeBasedateD_04, "DELETE FROM WorkingDayPrediction WHERE BaseDate = '"
+
+PurgeBasedateD_05, "DELETE FROM AreaCounty WHERE BaseDate = '"
+
+PurgeBasedateD_06, "DELETE FROM EquipmentRate WHERE BaseDate = '"
+
+PurgeBasedateD_07, "DELETE FROM ZoneMap WHERE BaseDate = '"
+
+PurgeBasedateD_08, "DELETE FROM PEMETHAverage    WHERE ImportDate IN (select distinct ImportDate from StandardItemPEMETHAverage WHERE BaseDate = '"
+PurgeBasedateD_09, "DELETE FROM PEMETHRegression WHERE ImportDate IN (select distinct ImportDate from StandardItemPEMETHRegression WHERE BaseDate = '"
+PurgeBasedateD_10, "DELETE FROM StandardItemPEMETHAverage WHERE BaseDate = '"
+PurgeBasedateD_11, "DELETE FROM StandardItemPEMETHRegression WHERE BaseDate = '"
+
+PurgeBasedateD_12, "DELETE FROM MajorItemPriceRegression WHERE BaseDate = '"
+
+PurgeBasedateD_13, "DELETE FROM MajorItemPriceVariable WHERE BaseDate = '"
+
+PurgeBasedateD_14, "DELETE FROM MajorItemQuantityAdjustment WHERE BaseDate = '"
+
+PurgeBasedateD_15, "DELETE FROM MajorItemQuantityRegression WHERE BaseDate = '"
+
+PurgeBasedateD_16, "DELETE FROM MajorItemQuantityVariable WHERE BaseDate = '"
+
+PurgeBasedateD_17, "DELETE FROM MajorItemPriceAdjustment WHERE BaseDate = '"
+
+                
+
+PurgeBasedateD_18, "create table #BaseDateList (BaseDate datetime, CmntKey int) "
+PurgeBasedateD_18, " INSERT INTO  #BaseDateList select BD.BaseDate, LT.LongTextKey from BaseDate "
+PurgeBasedateD_18, UNREF_BD
+PurgeBasedateD_18, " UPDATE LongText "
+PurgeBasedateD_18, " SET ShortText = 'Unreferenced basedate. ' + ShortText "
+PurgeBasedateD_18, " FROM LongText W "
+PurgeBasedateD_18, " WHERE W.LongTextKey IN "
+PurgeBasedateD_18, " ( select distinct CmntKey from  #BaseDateList ) "
+PurgeBasedateD_18, " DROP TABLE #BaseDateList "
+
+
+PurgeBasedateD_19, " DROP TABLE #BaseDateList "
+PurgeBasedateD_20, " DROP TABLE #RegImportDateList "
+PurgeBasedateD_21, " DROP TABLE #AvgImportDateList "
+
+
+/* copy metadata */
+:query copy.bin
+tJob,                " INSERT INTO Job "
+tJob,                " (JobKey,JobID,DateCreated,Description,SpecYear,Location,"
+tJob,                "  PrimaryCountyKey,District,DavisBaconWages,BaseDate,"
+tJob,                "  LettingMonth,WorkType,ConstructionEngineeringPct,"
+tJob,                "  ContingencyPercent,EstimatedCost,EstimateTotal,Duration,"
+tJob,                "  WorkingDayCalendarKey,Estimator,LastUpdate,CheckedBy,"
+tJob,                "  DateChecked,ApprovedBy,DateApproved, UnitType)"
+tJob,                " SELECT %JobKey,'%JobID',@CurrentDate,"
+tJob,                " Description,SpecYear,Location,"
+tJob,                " PrimaryCountyKey,District,DavisBaconWages,BaseDate,"
+tJob,                " LettingMonth,WorkType,ConstructionEngineeringPct,"
+tJob,                " ContingencyPercent,EstimatedCost,EstimateTotal,Duration,"
+tJob,                " WorkingDayCalendarKey,Estimator,LastUpdate,CheckedBy,"
+tJob,                " DateChecked,ApprovedBy,DateApproved"
+tJob,                " , UnitType "
+tJob,                " FROM Job"
+tJob,                " WHERE JobKey = %OldJobKey"
+
+tJobFund,            " INSERT INTO JobFund"
+tJobFund,            " (JobKey, FundKey, PercentFunded, "
+tJobFund,            " AmountFunded)"
+tJobFund,            " SELECT %JobKey, FundKey, PercentFunded, "
+tJobFund,            " AmountFunded"
+tJobFund,            " FROM JobFund"
+tJobFund,            " WHERE JobKey = %OldJobKey"
+
+tJobUser,            " INSERT INTO JobUser"
+tJobUser,            " (JobKey, UserID, AccessPrivilege)"
+tJobUser,            " SELECT %JobKey, UserID, AccessPrivilege"
+tJobUser,            " FROM JobUser"
+tJobUser,            " WHERE JobKey = %OldJobKey"
+
+tJobBreakdown,       " INSERT INTO JobBreakdown"
+tJobBreakdown,       " (JobKey, JobBreakdownKey, JobBreakdownID,"
+tJobBreakdown,       " Description, PreliminaryEstimateCost, DetailedEstimate,"
+tJobBreakdown,       " DetailedEstimateCost, BreakdownEstimationMethod,"
+tJobBreakdown,       " Length, PavementWidth, PavementDepth,"
+tJobBreakdown,       " RoadType,StructureType, StructureID, StructureLength,"
+tJobBreakdown,       " StructureWidth, WorkType)"
+tJobBreakdown,       " SELECT %JobKey, JobBreakdownKey,JobBreakdownID,"
+tJobBreakdown,       " Description, PreliminaryEstimateCost, DetailedEstimate,"
+tJobBreakdown,       " DetailedEstimateCost, BreakdownEstimationMethod,"
+tJobBreakdown,       " Length, PavementWidth, PavementDepth,"
+tJobBreakdown,       " RoadType,StructureType, StructureID, StructureLength,"
+tJobBreakdown,       " StructureWidth, WorkType"
+tJobBreakdown,       " FROM JobBreakdown"
+tJobBreakdown,       " WHERE JobKey = %OldJobKey"
+
+tJobBreakdownFund,   " INSERT INTO JobBreakdownFund"
+tJobBreakdownFund,   " (JobKey, JobBreakdownKey, FundKey, PercentFunded,"
+tJobBreakdownFund,   " AmountFunded)"
+tJobBreakdownFund,   " SELECT %JobKey, JobBreakdownKey, FundKey,"
+tJobBreakdownFund,   " PercentFunded, AmountFunded"
+tJobBreakdownFund,   " FROM JobBreakdownFund"
+tJobBreakdownFund,   " WHERE JobKey = %OldJobKey"
+
+tJobAlternateGroup,  " INSERT INTO JobAlternateGroup"
+tJobAlternateGroup,  " (JobKey, JobAlternateGroupKey,"
+tJobAlternateGroup,  " JobAlternateGroupID, Description,"
+tJobAlternateGroup,  " ChosenAlternateKey, Estimate)"
+tJobAlternateGroup,  " SELECT %JobKey, JobAlternateGroupKey,"
+tJobAlternateGroup,  " JobAlternateGroupID, Description,"
+tJobAlternateGroup,  " ChosenAlternateKey, Estimate"
+tJobAlternateGroup,  " FROM JobAlternateGroup"
+tJobAlternateGroup,  " WHERE JobKey = %OldJobKey"
+
+tJobAlternate,       " INSERT INTO JobAlternate"
+tJobAlternate,       " (JobKey, JobAlternateGroupKey, JobAlternateKey,"
+tJobAlternate,       " JobAlternateID, Description, Estimate)"
+tJobAlternate,       " SELECT %JobKey, JobAlternateGroupKey, JobAlternateKey,"
+tJobAlternate,       " JobAlternateID, Description, Estimate"
+tJobAlternate,       " FROM JobAlternate"
+tJobAlternate,       " WHERE JobKey = %OldJobKey"
+
+tJobItem,            " INSERT INTO JobItem"
+tJobItem,            " (JobKey, JobBreakdownKey, JobItemKey,"
+tJobItem,            " StandardItemKey, JobAlternateGroupKey,"
+tJobItem,            " JobAlternateKey, Quantity, UnitPrice,"
+tJobItem,            " ExtendedAmount, ItemEstimationMethodKey,"
+tJobItem,            " LongEstimationComment, SupplementalDescription,"
+tJobItem,            " Duration,DaysElapsedBeforeStart,Slack)"
+tJobItem,            " SELECT %JobKey, JobBreakdownKey, JobItemKey,"
+tJobItem,            " StandardItemKey, JobAlternateGroupKey,"
+tJobItem,            " JobAlternateKey, Quantity, UnitPrice,"
+tJobItem,            " ExtendedAmount, ItemEstimationMethodKey,"
+tJobItem,            " LongEstimationComment, SupplementalDescription,"
+tJobItem,            " Duration,DaysElapsedBeforeStart,Slack"
+tJobItem,            " FROM JobItem"
+tJobItem,            " WHERE JobKey = %OldJobKey"
+
+tJobItemDependency,  " INSERT INTO JobItemDependency"
+tJobItemDependency,  " (JobKey, PredecessorJobItemKey,"
+tJobItemDependency,  " SuccessorJobItemKey,Link,Lag,Delay)"
+tJobItemDependency,  " SELECT %JobKey, PredecessorJobItemKey,"
+tJobItemDependency,  " SuccessorJobItemKey,Link,Lag,Delay"
+tJobItemDependency,  " FROM JobItemDependency"
+tJobItemDependency,  " WHERE JobKey = %OldJobKey"
+
+tJobCostBasedEstimate,  " INSERT INTO JobCostBasedEstimate"
+tJobCostBasedEstimate,  " (JobKey,JobItemKey,JobItemCostBasedEstimateKey,"
+tJobCostBasedEstimate,  " CostBasedEstimateID,Description,Active)"
+tJobCostBasedEstimate,  " SELECT %JobKey,JobItemKey,JobItemCostBasedEstimateKey,"
+tJobCostBasedEstimate,  " CostBasedEstimateID,Description,Active"
+tJobCostBasedEstimate,  " FROM JobCostBasedEstimate"
+tJobCostBasedEstimate,  " WHERE JobKey = %OldJobKey"
+
+tJobCostSheet,       "/* bamsces.met tJobCostSheet */ "
+tJobCostSheet,       " INSERT INTO JobCostSheet"
+tJobCostSheet,       " (JobKey, JobCostSheetKey, JobItemCostBasedEstimateKey,"
+tJobCostSheet,       " JobItemKey, TaskID, TaskDescription, CostSheetID,"
+tJobCostSheet,       " Description, ProductionRate, Duration,"
+tJobCostSheet,       " ProductionGranularity,HoursPerDay,"
+tJobCostSheet,       " OvertimeHoursPerDay, LaborDailyCost,"
+tJobCostSheet,       " EquipmentDailyCost, MaterialsUnitCost, MarkUpPct,"
+tJobCostSheet,       " LaborOverheadPct, EquipmentOverheadPct,"
+tJobCostSheet,       " MaterialsOverheadPct, QuantityPerItemUnit, Unit,"
+tJobCostSheet,       " UnitPrice, DisplayedProductionRate)"
+tJobCostSheet,       " SELECT %JobKey, JobCostSheetKey, JobItemCostBasedEstimateKey,"
+tJobCostSheet,       " JobItemKey, TaskID, TaskDescription, CostSheetID,"
+tJobCostSheet,       " Description, ProductionRate, Duration,"
+tJobCostSheet,       " ProductionGranularity,HoursPerDay,"
+tJobCostSheet,       " OvertimeHoursPerDay, LaborDailyCost,"
+tJobCostSheet,       " EquipmentDailyCost, MaterialsUnitCost, MarkUpPct,"
+tJobCostSheet,       " LaborOverheadPct, EquipmentOverheadPct,"
+tJobCostSheet,       " MaterialsOverheadPct, QuantityPerItemUnit, Unit,"
+tJobCostSheet,       " UnitPrice, DisplayedProductionRate"
+tJobCostSheet,       " FROM JobCostSheet"
+tJobCostSheet,       " WHERE JobKey = %OldJobKey"
+
+
+tJobCrewUsed,        " INSERT INTO JobCrewUsed"
+tJobCrewUsed,        " (JobKey, JobCostSheetKey, JobCrewKey, CrewID,"
+tJobCrewUsed,        " Description)"
+tJobCrewUsed,        " SELECT %JobKey, JobCostSheetKey, JobCrewKey, CrewID,"
+tJobCrewUsed,        " Description"
+tJobCrewUsed,        " FROM JobCrewUsed"
+tJobCrewUsed,        " WHERE JobKey = %OldJobKey"
+
+tJobCrewEquipmentUsed,  " INSERT INTO JobCrewEquipmentUsed"
+tJobCrewEquipmentUsed,  " (JobKey, JobCostSheetKey, JobCrewKey, "
+tJobCrewEquipmentUsed,  " EquipmentKey, Quantity,Rate, OvertimeRate)"
+tJobCrewEquipmentUsed,  " SELECT %JobKey, JobCostSheetKey, JobCrewKey, "
+tJobCrewEquipmentUsed,  " EquipmentKey, Quantity,Rate, OvertimeRate"
+tJobCrewEquipmentUsed,  " FROM JobCrewEquipmentUsed"
+tJobCrewEquipmentUsed,  " WHERE JobKey = %OldJobKey"
+
+tJobCrewLaborUsed,   " INSERT INTO JobCrewLaborUsed"
+tJobCrewLaborUsed,   " (JobKey, JobCostSheetKey, JobCrewKey,"
+tJobCrewLaborUsed,   " LaborerKey, Quantity,Rate, OvertimeRate)"
+tJobCrewLaborUsed,   " SELECT %JobKey, JobCostSheetKey, JobCrewKey,"
+tJobCrewLaborUsed,   " LaborerKey, Quantity,Rate, OvertimeRate"
+tJobCrewLaborUsed,   " FROM JobCrewLaborUsed"
+tJobCrewLaborUsed,   " WHERE JobKey = %OldJobKey"
+
+tJobMaterialUsed,    " INSERT INTO JobMaterialUsed"
+tJobMaterialUsed,    " (JobKey, JobCostSheetKey, MaterialKey,"
+tJobMaterialUsed,    " Quantity, Unit, UnitPrice) "
+tJobMaterialUsed,    " SELECT %JobKey, JobCostSheetKey, MaterialKey,"
+tJobMaterialUsed,    " Quantity, Unit, UnitPrice"
+tJobMaterialUsed,    " FROM JobMaterialUsed"
+tJobMaterialUsed,    " WHERE JobKey = %OldJobKey
+
+tJobZone,            " INSERT INTO JobZone"
+tJobZone,            " (JobKey,ZoneTypeKey,ZoneKey)"
+tJobZone,            " SELECT %JobKey, ZoneTypeKey, ZoneKey"
+tJobZone,            " FROM JobZone"
+tJobZone,            " WHERE JobKey = %OldJobKey"
+
+tJobBreakdownProfile,    "INSERT INTO JobBreakdownProfile "
+tJobBreakdownProfile,    "(JobKey, JobBreakdownKey, ProfileKey) "
+tJobBreakdownProfile,    " SELECT %JobKey, JobBreakdownKey, ProfileKey"
+tJobBreakdownProfile,    " FROM JobBreakdownProfile "
+tJobBreakdownProfile,    " WHERE JobKey = %OldJobKey"
+
+tJobBreakdownMajorItem,    "INSERT INTO JobBreakdownMajorItem "
+tJobBreakdownMajorItem,    "(JobKey, JobBreakdownKey, MajorItemKey, Quantity, "
+tJobBreakdownMajorItem,    "QuantityLock,UnitPrice,UnitPriceLock,ExtendedAmount) "
+tJobBreakdownMajorItem,    " SELECT %JobKey, JobBreakdownKey, MajorItemKey, Quantity," 
+tJobBreakdownMajorItem,           " QuantityLock,UnitPrice,UnitPriceLock,ExtendedAmount"
+tJobBreakdownMajorItem,    " FROM JobBreakdownMajorItem "
+tJobBreakdownMajorItem,    " WHERE JobKey = %OldJobKey "
+

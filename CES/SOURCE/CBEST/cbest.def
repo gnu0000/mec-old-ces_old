@@ -1,0 +1,114 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+;|                                                                          |
+;|       This program module is part of BAMS/CES, a module of BAMS,         |
+;|       The American Association of State Highway and Transportation       |
+;|       Officials' (AASHTO) Information System for Managing Transportation |
+;|       Programs, a proprietary product of AASHTO, no part of which may be |
+;|       reproduced or transmitted in any form or by any means, electronic, |
+;|       mechanical, or otherwise, including photocopying and recording     |
+;|       or in connection with any information storage or retrieval         |
+;|       system, without permission in writing from AASHTO.                 |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+LIBRARY         CBEst         INITINSTANCE
+DESCRIPTION     'Cost Based Estimation. Copyright (C) 1991-1994 AASHTO'
+DATA            MULTIPLE        
+EXPORTS         CALCCOSTSHEETDURATION
+                CALCEQUIPMENTDAILYCOST
+                CALCEQUIPMENTRATE
+                CALCJOBCOSTSHTDURATION
+                CALCJOBCOSTSHTPRODUCTIONRATE
+                CALCJOBCOSTSHTUNITPRICE
+                CALCJOBITEM
+                CALCLABORDAILYCOST
+                CALCLABORRATE
+                CALCLBEQDAILYCOST
+                CALCMATERIALSUNITCOST
+                CALCMATERIALSUNITPRICE
+                CBESTFORJOBITEMSTATICPROC
+                CBESTFORSTDITEMSTATICPROC
+                COPYCBEFORJOBITEM
+                COPYCBETOJOBCBE
+                COPYCOSTSHTTOAJOBCOSTSHT
+                COPYCREWSFORNEWTASK
+                COSTSHTCREWPROC
+                CREATEJOBCOSTSHEETFORCBE
+                CREATEJOBMATERIALSUSED
+                CREWFORCOSTSHTSTATICPROC
+                CREWFORJOBSTATICPROC
+                DELCBEFORJOBITEM
+                DOADDJOBCOSTSHTCALC
+                DOCALCJOBCREWEQUIPRATE
+                DOCALCJOBCREWLABORRATE
+                DOCHGJOBBREAKKEYANDRECALC
+                DOCHGJOBCOSTSHTCALC
+                DODELCOSTBASEDESTFORJOBITEM
+                DODELJOBCOSTSHEETSFORCBE
+                DODELJOBMATERIALSUSEDRECALC
+                DOESEQUIPEXIST
+                DOJOBANDJOBBREAKRECALCCBEST
+                DOJOBCOSTSHTRECALC
+                DOJOBCREWSEXIST
+                DOJOBITEMRECALCCBEST
+                DOJOBMATERIALSEXIST
+                DOJOBMATERIALSUSEDRECALC
+                DOLABORERSEXIST
+                DOSETJOBITEMUNITPRICETOZERO
+                EDITADDJOBTASKLISTPROC
+                EDITCHJOBTASKLISTPROC
+                EDITCOSTBASEDESTIMATEPROC
+                EDITCOSTSHTFORTASKPROC
+                EDITCREWCSHTEQUIPPROC
+                EDITCREWCSHTLABORPROC
+                EDITCREWCSHTLBEQPROC
+                EDITCREWFORCOSTSHTPROC
+                EDITCREWFORJOBPROC
+                EDITCREWJOBEQUIPPROC
+                EDITCREWJOBLABORPROC
+                EDITCREWJOBLBEQPROC
+                EDITJOBCOSTBASEDESTPROC
+                EDITJOBCOSTSHEETPROC
+                EDITJOBMATERIALSPROC
+                EDITMATFORCOSTSHTPROC
+                EDITTASKSFORSTDITEMPROC
+                GETJOBCOSTSHEETSFORJOBITEM
+                ITICESQUERYJOBCBESTACTIVE
+                ITIDLLINITDLL
+                ITIDLLQUERYCOMPATIBILITY
+                ITIDLLQUERYVERSION
+                ITIESTDEINSTALL
+                ITIESTINSTALL
+                ITIESTITEM
+                ITIESTQUERYAVAIL
+                ITIESTQUERYJOBAVAIL
+                ITIESTQUERYMENUNAME
+                ITIESTTABLECHANGED
+                JOBCOSTSHTSTATICPROC
+                JOBCREWSTATICPROC
+                JOBMATERIALSSTATICPROC
+                JOBTASKPROC
+                JOBZONESTATICPROC
+                MATERIALPROC
+                RECALCCBEJOBITEMUNITPRICE
+                RECALCJOBCOSTSHEET
+                RECALCJOBCSTSHTCREW
+                RECALCJOBCSTSHTCREWEQUIPMENT
+                RECALCJOBCSTSHTCREWLABOR
+                RECALCJOBCSTSHTMATERIALS
+                RECALCTOTALFORJCSCREWS
+                RECALCTOTALFORJCSMATERIALS
+                RESETPRODRATE
+                ROUND
+                SETEQUIPMENTDAILYCOSTTOZERO
+                SETJOBITEMUNITPRICETOZERO
+                SETLABORDAILYCOSTTOZERO
+                SETMATERIALSUNITCOSTTOZERO
+                TASKCOSTSHTSTATICPROC
+                TASKPROC
+                UPDATEJOBITEMCOSTBASEDESTIMATE
+                UPDATEJOBITEMESTMETHOD
+

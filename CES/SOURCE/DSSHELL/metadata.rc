@@ -1,0 +1,36 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * metadata.rc
+ *
+ * These resources are for the metadata
+ *
+ */
+
+#include <os2.h>
+#include "..\include\itimbase.h"
+
+
+RESOURCE ITIRT_CHILD    1  child.bin
+RESOURCE ITIRT_LABEL    1  label.bin
+RESOURCE ITIRT_LABELTXT 1  labeltxt.bin
+RESOURCE ITIRT_DATA     1  data.bin
+RESOURCE ITIRT_FORMAT   1  format.bin
+RESOURCE ITIRT_SWMET    1  static.bin
+RESOURCE ITIRT_LWMET    1  list.bin
+RESOURCE ITIRT_QUERY    1  query.bin
+RESOURCE ITIRT_TITLE    1  title.bin
+

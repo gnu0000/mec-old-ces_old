@@ -1,0 +1,350 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * facility.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                      RECTS               USHORT     LONG               LONG
+// Static Window ID        add  change            xpos ypos xsiz ysiz CoordType  Window Options     Background Color
+//-----------------------------------------------------------------------------------------------------------------
+FacilityCatS,        0, FacilityD, 4,  2,  55, 9,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+FacilityForVendorS,   0,  0,               5,  3,  55, 12, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+FacilityForMaterialS, 0,  0,               5,  3,  55, 12, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+FacilityS,            0,  0,               5,  3,  55, 16, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                 USHORT                      USHORT                          RECTS               USHORT
+// Parents Window ID      Type Child Window ID        uKind      add  change          <-   ^    ->   v    Coord
+//---------------------------------------------------------------------------------------------------------------------
+FacilityCatS,        FacilityCatL,        ITIWC_LIST, 0, FacilityD, 0,  0,   0,   0,   COORD_REL
+FacilityForVendorS,   FacilityForVendorL,   ITIWC_LIST, 0, 0,                0,  8,   0,   0,   COORD_REL
+FacilityForMaterialS, FacilityForMaterialL, ITIWC_LIST, 0, 0,                0,  8,   0,   0,   COORD_REL
+FacilityS,            FacilityL,            ITIWC_LIST, 0, 0,                0, 48,   0,   0,   COORD_REL
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                 LONG                LONG                 LONG                     USHORT USHORT   USHORT
+// List Window ID         Window Options      Background Color     Label Bkg Color           Label ydata    Button Window ID
+//--------------------------------------------------------------------------------------------------------------------------------
+FacilityCatL,        ITI_LISTOPTIONSV,   ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,       0,   0,  0
+FacilityForVendorL,   ITI_LISTOPTIONSHV,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,       0,   0,  0
+FacilityForMaterialL, ITI_LISTOPTIONSHV,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,       0,   0,  0
+FacilityL,            ITI_LISTOPTIONSHV,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,       0,   0,  0
+
+
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                 USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME           PSZ
+// Window ID              Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name       Format String
+//----------------------------------------------------------------------------------------------------------------------------------------
+FacilityCatL,      FacilityForVendorS, 1,  0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, VendorID,        "String"
+FacilityCatL,          FacilityS,      16, 0, 10,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, FacilityNumber,  "String"
+FacilityCatL,          FacilityS,      31, 0, 26,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, County.Name,     "String"
+
+FacilityS,            VendorS,        13, 0, 40,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, VendorID,        "String"
+FacilityS,            VendorS,        13, 1, 40,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, DateOpened,      "DateTime,mmm d, yyyy"
+FacilityS,            VendorS,        13, 2, 40,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, DateClosed,      "DateTime,mmm d, yyyy"
+FacilityS,            VendorS,        13, 3, 40,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, Location,        "String"
+FacilityS,            VendorS,        13, 4, 40,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, Name,            "String"
+
+FacilityL,              FacilityS,      1,  0, 9,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, MaterialID,       "String"
+FacilityL,              FacilityS,      12, 0, 9,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Capacity,         "Number,,"
+FacilityL,              FacilityS,      23, 0, 5,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,      "String"
+FacilityL,              FacilityS,      29, 0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ProductionMethod, "String"
+FacilityL,              FacilityS,      45, 0, 12,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, StateApproved,    "Flag,No,Yes"
+FacilityL,              FacilityS,      3,  1, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Description,      "String"
+
+FacilityForVendorS,   VendorS,        7, 0, 1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, ShortName,      "String"
+
+FacilityForVendorL,     FacilityS,      1,  0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, FacilityNumber, "String"
+FacilityForVendorL,     FacilityS,      12, 0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, DateOpened,     "DateTime,mmm d, yyyy"
+FacilityForVendorL,     FacilityS,      27, 0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, DateClosed,     "DateTime,mmm d, yyyy"
+FacilityForVendorL,     FacilityS,      38, 0,  8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, PortableFlag,   "Flag,No,Yes"
+FacilityForVendorL,     FacilityS,      45, 0, 26,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Name,           "String"
+
+FacilityForMaterialS, MaterialCatS,  10, 0, 1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, Description,    "String"
+
+FacilityForMaterialL,   FacilityS,      1,  0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, FacilityNumber,  "String"
+FacilityForMaterialL,   FacilityS,      16, 0, 10,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, DateOpened,      "DateTime,mmm d, yyyy"
+FacilityForMaterialL,   FacilityS,      27, 0, 14,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, DateClosed,      "DateTime,mmm d, yyyy"
+FacilityForMaterialL,   FacilityS,      38, 0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, PortableFlag,    "Flag,No,Yes"
+FacilityForMaterialL,   FacilityS,      45, 0, 26,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Name,            "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                  USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID               Next Window ID          xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+FacilityCatL,        FacilityD,         1,  0,  14,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Vendor"
+FacilityCatL,        FacilityForVendorS, 16, 0,  14,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Facility Number"
+FacilityCatL,        FacilityS,          31, 0,  26,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "County"
+
+FacilityS,          VendorS,            1,  0,  11,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Vendor:"
+FacilityS,          VendorS,            1,  1,  11,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Date Opened:"
+FacilityS,          VendorS,            1,  2,  11,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Date Closed:"
+FacilityS,          VendorS,            1,  3,  11,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Location:"
+FacilityS,          VendorS,            1,  4,  11,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "County:"
+FacilityS,          VendorS,            26, 11, 30,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "This facility is not portable"
+
+FacilityL,            FacilityS,          1,  0,  9,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Material /"
+FacilityL,            FacilityS,          12, 0,  9,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Capacity /"
+FacilityL,            FacilityS,          23, 0,  5,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Unit"
+FacilityL,            FacilityS,          29, 0,  14,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Production Method"
+FacilityL,            FacilityS,          45, 0,  12,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "State Approved"
+FacilityL,            FacilityS,          3,  1,  255, 1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+FacilityForVendorS, VendorS,            1,  0,  6,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS, "Vendor:",     "*"
+
+FacilityForVendorL,   FacilityS,          1,  0,  14,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Facility",    "*"
+FacilityForVendorL,   FacilityS,          12, 0,  14,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Date Opened", "*"
+FacilityForVendorL,   FacilityS,          27, 0,  14,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Date Closed", "*"
+FacilityForVendorL,   FacilityS,          38, 0,   8,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Portable",    "*"
+FacilityForVendorL,   FacilityS,          45, 0,  26,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "County",      "*"
+
+FacilityForMaterialS, MaterialCatS,    1,  0,  9,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS, "Material:",   "*"
+
+FacilityForMaterialL, FacilityS,          1,  0,  14,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Facility",    "*"
+FacilityForMaterialL, FacilityS,          16, 0,  10,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Date Opened", "*"
+FacilityForMaterialL, FacilityS,          27, 0,  10,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Date Closed", "*"
+FacilityForMaterialL, FacilityS,          38, 0,  3,   1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Portable",    "*"
+FacilityForMaterialL, FacilityS,          42, 0,  26,  1, COORD_CHRRNG,                             ITI_LLABELCOLOR, ITI_LLABELFLAGS, "County",      "*"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                 char []
+// Window ID              Query String
+//----------------------------------------------------------------------------------------------------------------
+FacilityCatL,        "SELECT VendorID, FacilityNumber, County.Name, "
+FacilityCatL,        "Vendor.VendorKey "
+FacilityCatL,        "FROM Vendor, VendorFacility, County "
+FacilityCatL,        "WHERE Vendor.VendorKey = VendorFacility.VendorKey "
+FacilityCatL,        "AND VendorFacility.CountyKey = County.CountyKey "
+FacilityCatL,        "ORDER BY VendorID "
+
+FacilityForVendorS, "SELECT ShortName, VendorID, VendorKey "
+FacilityForVendorS, "FROM Vendor "
+FacilityForVendorS, "WHERE VendorKey = %VendorKey "
+
+FacilityForVendorL,   "SELECT FacilityNumber, DateOpened, DateClosed, "
+FacilityForVendorL,   "PortableFlag, Name, VendorKey "
+FacilityForVendorL,   "FROM VendorFacility, County "
+FacilityForVendorL,   "WHERE VendorFacility.CountyKey = County.CountyKey "
+FacilityForVendorL,   "AND VendorKey = %VendorKey "
+FacilityForVendorL,   "ORDER BY FacilityNumber "
+
+FacilityD,         "SELECT VendorID, FacilityNumber "
+FacilityD,         "FROM Vendor, VendorFacility "
+FacilityD,         "WHERE Vendor.VendorKey = VendorFacility.VendorKey "
+FacilityD,         "AND Vendor.VendorKey = %Vendor.VendorKey "
+
+FacilityCtyD,     "SELECT Name, CountyKey "
+FacilityCtyD,     "FROM County "
+FacilityCtyD,     "ORDER BY Name "
+
+FacilityS,          "SELECT VendorFacility.VendorKey, VendorID, FacilityNumber, "
+FacilityS,          "DateOpened, DateClosed, Location, County.Name, PortableFlag "
+FacilityS,          "FROM Vendor, VendorFacility, County "
+FacilityS,          "WHERE Vendor.VendorKey = VendorFacility.VendorKey "
+FacilityS,          "AND VendorFacility.CountyKey = County.CountyKey "
+FacilityS,          "AND Vendor.VendorKey = %VendorKey "
+FacilityS,          "AND FacilityNumber = '%FacilityNumber' "
+
+FacilityL,            "SELECT MaterialID, Capacity, CodeValueID, "
+FacilityL,            "ProductionMethod, StateApproved, Description, "
+FacilityL,            "FacilityMaterial.VendorKey, "
+FacilityL,            "FacilityMaterial.MaterialKey "
+FacilityL,            "FROM Material, FacilityMaterial, CodeValue "
+FacilityL,            "WHERE FacilityMaterial.MaterialKey = Material.MaterialKey "
+FacilityL,            "AND Material.Unit = CodeValueKey "
+FacilityL,            "AND FacilityMaterial.VendorKey = %VendorKey "
+FacilityL,            "AND FacilityMaterial.FacilityNumber = '%FacilityNumber' "
+FacilityL,            "ORDER BY MaterialID "
+
+
+FacilityForMaterialS, "SELECT MaterialKey, MaterialID, Description "
+FacilityForMaterialS, "FROM Material "
+FacilityForMaterialS, "WHERE MaterialKey = %MaterialKey "
+
+
+
+FacilityForMaterialL,   "SELECT VendorFacility.FacilityNumber, "
+FacilityForMaterialL,   "DateOpened, DateClosed, "
+FacilityForMaterialL,   "PortableFlag, Name, MaterialKey "
+FacilityForMaterialL,   "FROM VendorFacility, County, FacilityMaterial "
+FacilityForMaterialL,   "WHERE VendorFacility.CountyKey = County.CountyKey "
+FacilityForMaterialL,   "AND FacilityMaterial.VendorKey = VendorFacility.VendorKey "
+FacilityForMaterialL,   "AND FacilityMaterial.FacilityNumber = VendorFacility.FacilityNumber "
+FacilityForMaterialL,   "AND FacilityMaterial.VendorKey = %VendorKey "
+FacilityForMaterialL,   "AND FacilityMaterial.MaterialKey = %MaterialKey "
+FacilityForMaterialL,   "ORDER BY FacilityMaterial.FacilityNumber "
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+FacilityCatS,          "Facility Catalog"
+FacilityForVendorS,     "Facilities for Vendor %VendorID"
+FacilityS,              "Facility %FacilityNumber for Vendor %VendorID"
+FacilityForMaterialS,   "Facilities for Material %MaterialID"
+
+
+:dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id         Add Query ID          Change Query ID       Col Name           CtlID            Format
+//----------------------------------------------------------------------------------------------------
+FacilityD, FacilityD,     FacilityD,     VendorID,       DID_VENDORID,      "String"
+FacilityD, FacilityD,     FacilityD,     FacilityNumber, DID_FACILITYNUM,   "String"
+                                        
+FacilityD, FacilityCtyD, FacilityCtyD, Name,           DID_COUNTYNAME,    "String"
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+

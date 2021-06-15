@@ -1,0 +1,41 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\metadecl.h"    
+#include "..\include\itirptut.h" 
+
+
+:QUERY itirptuQ.bin
+//
+ID_EXP,        STR_EXP
+
+
+
+
+:FORMAT itirptuF.bin
+// These are used by the ItiRptUtMath function and the ItiRMath.exe module.
+ID_EXP_2D,     STR_EXP_2D
+ID_EXP_2DC,    STR_EXP_2DC
+ID_EXP_3DC,    STR_EXP_3DC
+ID_EXP_4DC,    STR_EXP_4DC
+ID_EXP_2,      STR_EXP_2
+ID_EXP_4,      STR_EXP_4
+ID_EXP_10,     STR_EXP_10
+ID_EXP_4C,     STR_EXP_4C
+
+
+// Used by the InitKeyList nad GetNextKey functions.
+ID_KEY,        STR_KEY
+

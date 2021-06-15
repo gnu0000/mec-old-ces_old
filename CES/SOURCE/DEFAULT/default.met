@@ -1,0 +1,398 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * default.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// Static Window ID    add,          change,       xpos ypos xsiz ysiz  CoordType     Window Options     Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------
+DefaultUnitPriceCatS,  DefltPricesD, DefltPricesD, 8,   10,  132,  22,  COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+DefaultUnitPriceS,     DefltPricesD, DefltPricesD, 8,   12,   60,  10,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobDefaultUnitPriceS,  DefltPricesD, DefltPricesD, 8,   12,   60,  10,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                    USHORT                     USHORT                                 RECTS               USHORT
+// Parents Window ID         Type Child Window ID       uKind       add,                  change,              Coord
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+DefaultUnitPriceCatS, DefaultUnitPriceCatL, ITIWC_LIST, DefltPricesD,  DefltPricesD, 0,   0,   0,   0,   COORD_REL
+
+
+
+
+
+
+
+
+:list list.bin
+//
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT               LONG                   LONG                 LONG                 USHORT USHORT USHORT
+// List Window ID       Window Options     Background Color     Label Bkg Color       Label ydata  Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+DefaultUnitPriceCatL, ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+
+
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT               USHORT                RECTS           USHORT        LONG            LONG                                             NAME                   PSZ
+// Window ID            Next Window ID                        CoordType     Foreground Clr  Txt Flags                                     Col Name               Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DefaultUnitPriceCatL,   DefaultUnitPriceS,    1,   0, 12,  1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,                              StandardItemNumber,     "String"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   14,   0, 25,  1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,  Description,            "String"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   18,   0,  5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,  CodeValueID,            "String"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   45,   0, 16,  1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,UnitPrice,              "Number,$,.."
+
+DefaultUnitPriceS,      0,                   15,   0, 52,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StandardItemNumber,     "String"
+DefaultUnitPriceS,      0,                   15,   1, 16,  1, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                            ShortDescription,       "String"
+DefaultUnitPriceS,      0,                   15,   5,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              CodeValueID,            "String"
+DefaultUnitPriceS,      0,                   22,   5,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   4,                      "String"
+DefaultUnitPriceS,      0,                   15,   6, 40,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              Description,            "String"
+DefaultUnitPriceS,      0,                   15,   7, 56,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              UnitPrice,              "Number,$,...."
+
+JobDefaultUnitPriceS,   0,                   15,   0, 52,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StandardItemNumber,     "String"
+JobDefaultUnitPriceS,   0,                   15,   1, 16,  1, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                            ShortDescription,       "String"
+JobDefaultUnitPriceS,   0,                   15,   5,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              CodeValueID,            "String"
+JobDefaultUnitPriceS,   0,                   22,   5,  1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   4,                      "String"
+JobDefaultUnitPriceS,   0,                   15,   6, 40,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              Description,            "String"
+JobDefaultUnitPriceS,   0,                   15,   7, 56,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                              UnitPrice,              "Number,$,...."
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                  USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID            Next Window ID    xpos ypos xsiz ysiz  CoordType  Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+DefaultUnitPriceCatL,   DefaultUnitPriceS,    1,  0, 12,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,                               "Item Number"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   14,  0, 6,   1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   18,  0, 5,   1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+DefaultUnitPriceCatL,   DefaultUnitPriceS,   51,  0, 16,  1,   TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Default Price"
+
+
+DefaultUnitPriceS,      0,                    0,  0, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Item Number:"
+DefaultUnitPriceS,      0,                    0,  1, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Item Description:"
+DefaultUnitPriceS,      0,                    0,  5, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit:"
+DefaultUnitPriceS,      0,                   20,  5,  1, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "-"
+DefaultUnitPriceS,      0,                    0,  6, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Price Description:"
+DefaultUnitPriceS,      0,                    0,  7, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit Price:"
+
+
+JobDefaultUnitPriceS,   0,                    0,  0, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Item Number:"
+JobDefaultUnitPriceS,   0,                    0,  1, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Item Description:"
+JobDefaultUnitPriceS,   0,                    0,  5, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit:"
+JobDefaultUnitPriceS,   0,                   20,  5,  1, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "-"
+JobDefaultUnitPriceS,   0,                    0,  6, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Price Description:"
+JobDefaultUnitPriceS,   0,                    0,  7, 14, 1,    COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit Price:"
+
+
+
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//---------------------------------------------------------------------------------------------------------
+
+DefaultUnitPriceCatL,   " /* DefaultUnitPriceCatL */ "
+DefaultUnitPriceCatL,   " SELECT SI.StandardItemNumber, SIDP.Description,"
+DefaultUnitPriceCatL,   " CV.CodeValueID, SIDP.UnitPrice,SI.StandardItemKey, "
+DefaultUnitPriceCatL,   " SIDP.BaseDate"
+DefaultUnitPriceCatL,   " FROM StandardItem SI, StdItemDefaultPrices SIDP, "
+DefaultUnitPriceCatL,   " CodeValue CV"
+DefaultUnitPriceCatL,   " WHERE SI.Unit = CV.CodeValueKey"
+// DefaultUnitPriceCatL,   " AND CV.CodeTableKey = (select CodeTableKey from CodeTable where CodeTableID = 'UNITS') "
+DefaultUnitPriceCatL,   " AND CV.CodeTableKey = 1000016 "
+DefaultUnitPriceCatL,   " AND SIDP.StandardItemKey = SI.StandardItemKey"
+DefaultUnitPriceCatL,   " AND SIDP.BaseDate = @UndeclaredBaseDate"
+DefaultUnitPriceCatL,   " AND SIDP.Deleted IS NULL"
+DefaultUnitPriceCatL,   " AND (SIDP.UnitType = %CurUnitType "
+DefaultUnitPriceCatL,        " OR SIDP.UnitType = NULL ) "
+DefaultUnitPriceCatL,   " ORDER BY SI.StandardItemNumber"
+
+DefaultUnitPriceS,      " SELECT SI.StandardItemNumber, SI.ShortDescription, "
+DefaultUnitPriceS,      " CV.CodeValueID, CV.Translation, SIDP.Description, "
+DefaultUnitPriceS,      " SIDP.UnitPrice, SIDP.StandardItemKey"
+DefaultUnitPriceS,      " FROM StandardItem SI, StdItemDefaultPrices SIDP,"
+DefaultUnitPriceS,      " CodeValue CV"
+DefaultUnitPriceS,      " WHERE SI.Unit = CV.CodeValueKey"
+// DefaultUnitPriceS,       " AND CV.CodeTableKey = (select CodeTableKey from CodeTable where CodeTableID = 'UNITS') "
+DefaultUnitPriceS,       " AND CV.CodeTableKey = 1000016 "
+DefaultUnitPriceS,      " AND SIDP.StandardItemKey = SI.StandardItemKey"
+DefaultUnitPriceS,      " AND SIDP.BaseDate = @UndeclaredBaseDate"
+DefaultUnitPriceS,   " AND (SIDP.UnitType = %CurUnitType "
+DefaultUnitPriceS,        " OR SIDP.UnitType = NULL ) "
+DefaultUnitPriceS,      " AND SI.StandardItemKey = %StandardItemKey"
+
+JobDefaultUnitPriceS,   " SELECT SI.StandardItemNumber, SI.ShortDescription, "
+JobDefaultUnitPriceS,   " CV.CodeValueID, CV.Translation, SIDP.Description, "
+JobDefaultUnitPriceS,   " SIDP.UnitPrice, SIDP.StandardItemKey"
+JobDefaultUnitPriceS,   " FROM StandardItem SI, StdItemDefaultPrices SIDP,"
+JobDefaultUnitPriceS,   " CodeValue CV"
+JobDefaultUnitPriceS,   " WHERE SI.Unit = CV.CodeValueKey"
+// JobDefaultUnitPriceS,   " AND CV.CodeTableKey = (select CodeTableKey from CodeTable where CodeTableID = 'UNITS') "
+JobDefaultUnitPriceS,   " AND CV.CodeTableKey = 1000016 "
+JobDefaultUnitPriceS,   " AND SIDP.StandardItemKey = SI.StandardItemKey"
+JobDefaultUnitPriceS,   " AND SIDP.BaseDate = '%BaseDate'"
+JobDefaultUnitPriceS,  " AND (SIDP.UnitType = %CurUnitType "
+JobDefaultUnitPriceS,       " OR SIDP.UnitType = NULL ) "
+JobDefaultUnitPriceS,   " AND SI.StandardItemKey = %StandardItemKey"
+
+DefltPricesD,           " SELECT SI.StandardItemNumber, SIDP.UnitPrice, "
+DefltPricesD,           " SIDP.Description"
+DefltPricesD,           " FROM StdItemDefaultPrices SIDP, StandardItem SI"
+DefltPricesD,           " WHERE SIDP.StandardItemKey = SI.StandardItemKey"
+DefltPricesD,           " AND SIDP.StandardItemKey = %StandardItemKey"
+DefltPricesD,           " AND SIDP.BaseDate = @UndeclaredBaseDate"
+DefltPricesD,   " AND (SIDP.UnitType = %CurUnitType "
+DefltPricesD,        " OR SIDP.UnitType = NULL ) "
+
+
+
+
+
+
+
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT               char []
+//
+// Window ID            Window Title
+//--------------------------------------------------------------------
+
+DefaultUnitPriceCatS,   "Default Unit Price Catalog"
+
+DefaultUnitPriceS,      "Default Unit Price for %StandardItemNumber "
+
+JobDefaultUnitPriceS,   "Default Unit Price for %StandardItemNumber "
+
+
+
+
+
+
+
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//                                    
+// Dlg Id     Add Query ID  Change Query ID     Col Name       CtlID                out Fmt         in fmt
+//-----------------------------------------------------------------------------------------------------------------------
+
+DefltPricesD, DefltPricesD, DefltPricesD, StandardItemNumber,   DID_STDITEMNUM,    "String",        "String"
+DefltPricesD, DefltPricesD, DefltPricesD, UnitPrice,            DID_UNITPRICE,     "Number,$,....", "Number,$...."
+DefltPricesD, ITIWND_LIST,   ITIWND_LIST, StandardItemKey,      StandardItemCatL,  "Number",        "Number"
+DefltPricesD, DefltPricesD, DefltPricesD, Description,          DID_DESCRIPTION,   "String",        "String"
+
+
+
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+DefltPricesD, "UPDATE StdItemDefaultPrices "
+DefltPricesD, "SET UnitType = (select UnitType from StandardItem "
+DefltPricesD,                " where StandardItemKey = %StandardItemKey ) "
+DefltPricesD, "WHERE "
+DefltPricesD, " StandardItemKey = %StandardItemKey "
+DefltPricesD, " AND BaseDate = @UndeclaredBaseDate "
+
+DefltPricesD, "UPDATE StdItemDefaultPrices "
+DefltPricesD, "SET "
+DefltPricesD, "StandardItemKey = @"StandardItemCatL"StandardItemKey, "
+DefltPricesD, "Description = @Description, "
+DefltPricesD, "UnitPrice = @UnitPrice "
+// DefltPricesD, " , UnitType = @CURRENTUNITSYS "
+DefltPricesD, "WHERE "
+DefltPricesD, "StandardItemKey = %StandardItemKey "
+DefltPricesD, "AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+DefltPricesD, "SELECT  Description, UnitPrice, StandardItemKey  "
+DefltPricesD, "FROM StdItemDefaultPrices HOLDLOCK "
+DefltPricesD, "WHERE StandardItemKey = %StandardItemKey "
+DefltPricesD, "AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+DefltPricesD, "DELETE FROM StdItemDefaultPrices "
+DefltPricesD, "WHERE StandardItemKey = @"StandardItemCatL"StandardItemKey " 
+DefltPricesD, "AND BaseDate = @UndeclaredBaseDate "
+DefltPricesD, "AND ( UnitType = @CURRENTUNITSYS  OR  UnitType = NULL) "
+DefltPricesD, "INSERT INTO StdItemDefaultPrices "
+DefltPricesD, "(StandardItemKey, BaseDate, Description, UnitPrice, UnitType) "
+DefltPricesD, "VALUES "
+DefltPricesD, "(@"StandardItemCatL"StandardItemKey, " 
+DefltPricesD, "@UndeclaredBaseDate, @Description, "
+DefltPricesD, "@UnitPrice, @CURRENTUNITSYS ) "
+
+DefltPricesD, "UPDATE StdItemDefaultPrices "
+DefltPricesD, "SET UnitType = (select UnitType from StandardItem "
+DefltPricesD,  "where StandardItemKey = @"StandardItemCatL"StandardItemKey ) "
+DefltPricesD, "WHERE "
+DefltPricesD, " StandardItemKey = @"StandardItemCatL"StandardItemKey "
+DefltPricesD, " AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//-------------------------------------------------------------------------
+
+DefaultUnitPriceCatL, "UPDATE StdItemDefaultPrices "
+DefaultUnitPriceCatL, "SET Deleted = 1 "
+DefaultUnitPriceCatL, "WHERE StandardItemKey IN (%StandardItemKey{,%StandardItemKey}) "
+DefaultUnitPriceCatL, "AND BaseDate = @UndeclaredBaseDate "
+

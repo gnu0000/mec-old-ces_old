@@ -1,0 +1,375 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * inflpred.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                                          RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID             add change                        xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+InflationPredictionCatS, InflationPredictionD, InflationPredictionD,  5,   3,   55,  12,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+InflationPredictionS,     0, 0,                            10,  28,  262, 150, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+InflationPredChangeS,    InflationPredChangeA, InflationPredChangeD,  10,   28,   262,  120,  COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                       USHORT                         USHORT                                       RECTS               USHORT
+//
+// Parents Window ID            Type Child Window ID           uKind                                        <-   ^    ->   v    Coord
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+InflationPredictionCatS,InflationPredictionCatL, ITIWC_LIST, InflationPredictionD, InflationPredictionD, 0,   0,   0,   0,   COORD_REL
+InflationPredictionS,    InflationPredictionL,   ITIWC_LIST, 0,                            0,            0,   42,  0,   0,   COORD_REL
+InflationPredChangeS,    InflationPredChangeL,   ITIWC_LIST, InflationPredChangeA, InflationPredChangeD, 0,   32,  0,   0,   COORD_REL
+
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata  Button Window ID
+//--------------------------------------------------------------------------------------------------------------------------------------
+InflationPredictionL,    ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+InflationPredictionCatL,ITI_LISTOPTIONSV,      ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+InflationPredChangeL,   ITI_LISTOPTIONSV,      ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME                                          PSZ
+//
+// Window ID                 Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags              Col Name         Format String
+//------------------------------------------------------------------------------------------------------------------------------------------------------- -----------------------------------
+InflationPredictionS, 0,                      14,   0,   1,  2, COORD_CHRRELX, ITI_SDATACOLOR,    ITI_SDATAMLFLAGS,  Description,         "String"
+InflationPredictionS, 0,                      18,   2,   1,  2, COORD_CHRRELX, ITI_SDATACOLOR,    ITI_SDATAMLFLAGS,  Comment,             "String"
+InflationPredictionS, 0,                      14,   4,   7,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATARTFLAGS,  InitialPrediction,   "Number,%.."
+
+InflationPredictionL,   0,                       1,   0,  10,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,    ChangeDate,          "DateTime,mmm d, yyyy"
+InflationPredictionL,   0,                      12,   0,   8,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,  InflationRate,       "Number,%.."
+InflationPredictionL,   0,                      21,   0, 255,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,    Comment,             "String"
+
+InflationPredictionCatL, InflationPredChangeS,   1,  0,  16,  1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,    InflationPredictionID, "String"
+InflationPredictionCatL, InflationPredChangeS,   1,  0,  13,  1, TR | CHR | X0ABS | Y0ABS | X1ABS | Y1ABS, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,  InitialPrediction,      "Number,%.."
+InflationPredictionCatL, InflationPredChangeS,   2,  1, 255,  1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,    Comment,               "String"
+                                                                                                                                                
+InflationPredChangeS,    0,                   15,   1, 255,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAMLFLAGS,  Comment,             "String"
+InflationPredChangeS,    0,                   12,   2,   8,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATARTFLAGS,  InitialPrediction,   "Number,%.."
+
+InflationPredChangeL,    0,                    1,   0,  10,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,    ChangeDate,          "DateTime,mmm d, yyyy"
+InflationPredChangeL,    0,                   12,   0,   8,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,  InflationRate,       "Number,%.."
+InflationPredChangeL,    0,                   21,   0, 255,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,    Comment,             "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                      USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID                   Next Window ID          xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+InflationPredictionS,   0,                       1,   0,  12,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Job Description:"
+InflationPredictionS,   0,                       0,   2,  17,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Prediction Description:"
+InflationPredictionS,   0,                       1,   4,  12,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Initial Prediction:"
+
+InflationPredictionL,     0,                       1,   0,  10,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Change Date"
+InflationPredictionL,     0,                      12,   0,   8,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Prediction"
+InflationPredictionL,     0,                      21,   0, 255,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Comment"
+
+InflationPredictionCatL, 0,                       1,  0,  16,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Inflation Prediction /"
+InflationPredictionCatL, 0,                       1,  0,  13,  1, TR | CHR | X0ABS | Y0ABS | X1ABS | Y1ABS, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Initial Prediction"
+InflationPredictionCatL, 0,                       2,  1, 255,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Comment"
+
+InflationPredChangeS,   0,                       0,   1,  14,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "       Description:"
+InflationPredChangeS,   0,                       0,   2,  14,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Initial Prediction:"
+
+InflationPredChangeL,     0,                       1,   0,  10,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Change Date"
+InflationPredChangeL,     0,                      12,   0,   8,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Prediction"
+InflationPredChangeL,     0,                      21,   0, 255,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Comment"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID                  Query String
+//----------------------------------------------------------------------------------------------------------------
+InflationPredictionS,  "SELECT Description, "
+InflationPredictionS,  "Comment, "
+InflationPredictionS,  "InitialPrediction, "
+InflationPredictionS,  "InflationPredictionID, "
+InflationPredictionS,  "InflationPrediction.InflationPredictionKey "
+InflationPredictionS,  "FROM Job, InflationPrediction, ProgramJob "
+InflationPredictionS,  "WHERE Job.JobKey = ProgramJob.JobKey "
+InflationPredictionS,  "AND ProgramJob.InflationPredictionKey = InflationPrediction.InflationPredictionKey "
+InflationPredictionS,  "AND Job.JobKey = %JobKey "
+
+InflationPredictionL,    "SELECT ChangeDate, InflationRate, "
+InflationPredictionL,    "Comment "
+InflationPredictionL,    "FROM InflationChange "
+InflationPredictionL,    "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredictionL,    "ORDER BY ChangeDate "
+
+InflationPredictionCatL, "SELECT InflationPredictionID, "
+InflationPredictionCatL, "InitialPrediction, Comment, "
+InflationPredictionCatL, "InflationPredictionKey "
+InflationPredictionCatL, "FROM InflationPrediction "
+InflationPredictionCatL, "WHERE Deleted IS NULL "
+InflationPredictionCatL, "ORDER BY InflationPredictionID "
+
+InflationPredictionD, "SELECT InflationPredictionID, "
+InflationPredictionD, "InitialPrediction, Comment "
+InflationPredictionD, "FROM InflationPrediction "
+InflationPredictionD, "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+InflationPredChangeS,  "SELECT InflationPredictionKey, Comment, "
+InflationPredChangeS,  "InitialPrediction, "
+InflationPredChangeS,  "InflationPredictionID "
+InflationPredChangeS,  "FROM  InflationPrediction "
+InflationPredChangeS,  "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+InflationPredChangeL,  "SELECT InflationPredictionKey, ChangeDate, InflationRate, "
+InflationPredChangeL,  "Comment "
+InflationPredChangeL,  "FROM InflationChange "
+InflationPredChangeL,  "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredChangeL,  "ORDER BY ChangeDate "
+
+InflationPredChangeD,  "SELECT ChangeDate, InflationRate, "
+InflationPredChangeD,  "Comment "
+InflationPredChangeD,  "FROM InflationChange "
+InflationPredChangeD,  "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredChangeD,  "AND   ChangeDate = '%ChangeDate' "
+
+InflationPredChangeA,  "SELECT InflationPredictionKey, ChangeDate, InflationRate, "
+InflationPredChangeA,  "Comment "
+InflationPredChangeA,  "FROM InflationChange "
+InflationPredChangeA,  "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+InflationPredictionS,   "Inflation Prediction %InflationPredictionID for Program Job %JobId"
+InflationPredictionCatS, "Inflation Prediction Catalog"
+InflationPredChangeS,   "Change Dates for Inflation Prediction %InflationPredictionID "
+
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id                     Add Query ID                  Change Query ID               Col Name               CtlID           Format
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+InflationPredictionD, InflationPredictionD, InflationPredictionD, InflationPredictionID, DID_INFLPREDID,    "String",     "String"
+InflationPredictionD, InflationPredictionD, InflationPredictionD, InitialPrediction,     DID_INITPRED,      "Number,%..", "Number,...."
+InflationPredictionD, InflationPredictionD, InflationPredictionD, Comment,               DID_COMMENT,       "String",     "*String"
+
+InflationPredChangeD, InflationPredChangeD, InflationPredChangeD, ChangeDate,            DID_CHANGEDATE,    "DateTime,mmm d,yyyy",   "DateTime"
+InflationPredChangeD, InflationPredChangeD, InflationPredChangeD, InflationRate,         DID_INFLATIONRATE, "Number,%..", "Number,...."
+InflationPredChangeD, InflationPredChangeD, InflationPredChangeD, Comment,               DID_COMMENT,       "String",     "*String"
+
+InflationPredChangeA, InflationPredChangeA, InflationPredChangeA, ChangeDate,            DID_CHANGEDATE,    "DateTime,mmm d,yyyy",   "DateTime"
+InflationPredChangeA, InflationPredChangeA, InflationPredChangeA, InflationRate,         DID_INFLATIONRATE, "Number,%..", "Number,...."
+InflationPredChangeA, InflationPredChangeA, InflationPredChangeA, Comment,               DID_COMMENT,       "String",     "*String"
+InflationPredChangeA, InflationPredChangeA, InflationPredChangeA, InflationPredictionKey, DID_INFLATIONPREDKEY,       "Number",     "Number"
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+// Window ID                  Query String
+//-------------------------------------------------------------------------
+
+InflationPredictionD, "UPDATE InflationPrediction "
+InflationPredictionD, "SET "
+InflationPredictionD, "InflationPredictionID = @InflationPredictionID, "
+InflationPredictionD, "InitialPrediction = @InitialPrediction, "
+InflationPredictionD, "Comment = @Comment "
+InflationPredictionD, "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+InflationPredChangeD, "UPDATE InflationChange "
+InflationPredChangeD, "SET "
+InflationPredChangeD, "InflationRate = @InflationRate, "
+InflationPredChangeD, "ChangeDate = @ChangeDate, "
+InflationPredChangeD, "Comment = @Comment "
+InflationPredChangeD, "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredChangeD, "AND   ChangeDate = '%ChangeDate' "
+
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+InflationPredictionD, "SELECT InflationPredictionID, InitialPrediction, "
+InflationPredictionD, "Comment "
+InflationPredictionD, "FROM InflationPrediction HOLDLOCK "
+InflationPredictionD, "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+InflationPredChangeD, "SELECT ChangeDate, InflationRate, Comment "   
+InflationPredChangeD, "FROM InflationChange "
+InflationPredChangeD, "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredChangeD, "AND   ChangeDate = '%ChangeDate' "
+
+InflationPredChangeA, "SELECT ChangeDate, InflationRate, Comment "   
+InflationPredChangeA, "FROM InflationChange "
+InflationPredChangeA, "WHERE InflationPredictionKey = %InflationPredictionKey "
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+InflationPredictionD, "INSERT INTO InflationPrediction "
+InflationPredictionD, "(InflationPredictionKey, InflationPredictionID, InitialPrediction, "
+InflationPredictionD, "Comment) "
+InflationPredictionD, "VALUES "
+InflationPredictionD, "(@NewKey, @InflationPredictionID, @InitialPrediction, "
+InflationPredictionD, "@Comment) "
+
+InflationPredChangeA,  "INSERT INTO InflationChange "
+InflationPredChangeA,  "(InflationPredictionKey, ChangeDate, InflationRate, "
+InflationPredChangeA,  "Comment) "
+InflationPredChangeA,  "VALUES "
+InflationPredChangeA,  "(@InflationPredictionKey, @ChangeDate, @InflationRate, "
+InflationPredChangeA,  "@Comment) "
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+InflationPredictionCatL, "UPDATE InflationPrediction "
+InflationPredictionCatL, "SET Deleted = 1 "
+InflationPredictionCatL, "WHERE InflationPredictionKey IN (%InflationPredictionKey{,%InflationPredictionKey}) "
+
+InflationPredChangeL, "DELETE FROM InflationChange "
+InflationPredChangeL, "WHERE InflationPredictionKey = %InflationPredictionKey "
+InflationPredChangeL, "AND   ChangeDate = '%ChangeDate' "
+
+

@@ -1,0 +1,73 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE AreaTypeCatD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "AreaType", AreaTypeCatD, 23, 28, 274, 77, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Area ~Type ID", 1200, 10, 66, 55, 8, WC_STATIC, SS_TEXT |                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 12, 55, 83, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN |                 WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 10, 40, 62, 8, WC_STATIC, SS_TEXT |                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 201, 10, 6, 256, 31, WC_MLE, MLS_BORDER | MLS_VSCROLL |                 WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 167, 60, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP |                 WS_VISIBLE
+        CONTROL "~Cancel", 2, 220, 60, 47, 13, WC_BUTTON, BS_PUSHBUTTON |                 WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 167, 44, 47, 13, WC_BUTTON, BS_PUSHBUTTON |                 WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 219, 44, 47, 13, WC_BUTTON, BS_PUSHBUTTON |                 WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE AreaTypeD1 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Area", AreaTypeD1, 82, 50, 263, 133, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+      CONTROL "~Area ID", 1202, 11, 121, 34, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+      CONTROL "", 202, 13, 108, 57, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+      CONTROL "~Description", 1203, 11, 91, 58, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+      CONTROL "", 203, 11, 45, 239, 44, WC_MLE, MLS_BORDER | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+      CONTROL "Modify ~Countys", 204, 11, 9, 80, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP
+      CONTROL "~OK", 1, 156, 24, 46, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+      CONTROL "~Cancel", 2, 208, 24, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+      CONTROL "~Help", 3, 156, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+      CONTROL "Add ~More", 4, 208, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE AreaTypeD2 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Modify Area Counties", AreaTypeD2, 15, 68, 373, 114, FS_NOBYTEALIGN | 
+           FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+           FCF_TITLEBAR
+    BEGIN
+        CONTROL "Counties in current Area", AreaTypeD2L1 + DID_STOFFSET, 12, 99, 140, 8, WC_STATIC, SS_TEXT |    DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", AreaTypeD2L1, 12, 15, 140, 81, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "Counties in no Area", AreaTypeD2L2 + DID_STOFFSET, 221, 99, 140, 8, WC_STATIC, SS_TEXT |  DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", AreaTypeD2L2, 221, 15, 140, 81, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "~<---", DID_DO  , 165, 81, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "---~>", DID_UNDO, 165, 63, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", 1, 165, 16, 42, 13, WC_BUTTON, BS_PUSHBUTTON |       WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 165, 34, 42, 13, WC_BUTTON, BS_PUSHBUTTON |   WS_TABSTOP | WS_VISIBLE
+    END
+END
+

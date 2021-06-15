@@ -1,0 +1,52 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!INCLUDE "..\makeopts"
+
+TARGET=pbxserve
+TARGETDIR=..\pbxserve^\
+
+all: $(EXEDIR)$(TARGET).exe 
+
+:FileList ModuleList = 
+   { 
+   pbxserve, init, receive
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itibase, itiglob,
+   iticrt,   itiipc,  itiutil
+   }
+
+
+:Expand ModuleList,{"$(CC) $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,includes
+
+
+$(EXEDIR)$(TARGET).exe: $(TARGET).def $(LIBDIR)*.lib {F: ModuleList,,obj} 
+   $(LINK) $(LFLAGS)$(LDEBUG) @<<tmp.lnk
+   {F: ModuleList,,}   +
+   crtexe
+   $(EXEDIR)$*.exe
+   $(@B).map
+   os2 {F: LibFiles,,}/NOD/NOE/BA/NOI
+   $(@B).def
+<<NOKEEP
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+
+
+
+

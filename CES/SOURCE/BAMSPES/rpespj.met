@@ -1,0 +1,230 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"  
+#include "..\include\winid.h"   
+#include "..\include\metadecl.h"
+#include "..\include\itirptdg.h"
+#include "dialog.h"
+
+#include "rPESpj.h"
+
+
+
+
+//  REPORT (11-18) PROJECT LISTING
+//  
+//  /* To retrieve the items for a particular project and category */
+//  
+//  SELECT SequenceNumber, StandardItemNumber, Quantity,
+//  UnitPrice, CodeValueID, ExtendedAmount, ShortDescription
+//  FROM StandardItem, CodeValue, ProjectItem
+//  WHERE ProjectItem.StandardItemKey = StandardItem.StandardItemKey
+//  AND StandardItem.Unit = CodeValueKey
+//  AND ProjectItem.ProjectControlNumber = "%ProjectControlNumber"
+//  AND ProjectItem.Category = "%Category"
+//  ORDER BY SequenceNumber
+//  
+//  
+//  /* To determine the items which are in chosen alternate */
+//  
+//  select JobItem.JobItemKey, StandardItemKey
+//  from JobItem, JobItemProjectItem
+//  where JobItemProjectItem.JobKey = JobItem.JobKey
+//  and JobItemProjectItem.JobItemKey = JobItem.JobItemKey
+//  and JobItemProjectItem.ProjectControlNumber = 'PCN1'
+//  and JobItemProjectItem.Category = 'CAT1'
+//  and 
+//  JobItem.JobKey = %JobKey and
+//  JobAlternateKey in
+//  (select ChosenAlternateKey 
+//  from JobAlternateGroup where JobKey = %JobKey)
+
+
+
+
+
+
+
+
+
+:query rPESpjQ.bin                                        
+
+ID_QUERY_PCN, "SELECT ProjectControlNumber "
+ID_QUERY_PCN, "FROM Project ORDER BY 1 "
+
+
+//  /* first part - Project Information */
+
+ID_QUERY_LISTING, "SELECT ProjectControlNumber, Description, "
+ID_QUERY_LISTING,  "WRKTYP.CodeValueID, WRKTYP.Translation, "
+ID_QUERY_LISTING,  "DIST.CodeValueID, SpecYear, Location "
+ID_QUERY_LISTING, "FROM Project, CodeValue WRKTYP, CodeValue DIST "
+ID_QUERY_LISTING, "WHERE WorkType = WRKTYP.CodeValueKey "
+ID_QUERY_LISTING,  "AND District = DIST.CodeValueKey "
+ID_QUERY_LISTING,  "AND ProjectControlNumber = '"
+//                                    Be sure to add a closing single quote
+
+
+//  /* To calculate the estimate */
+
+ID_QUERY_EST_AMT, "SELECT sum(ExtendedAmount) "
+ID_QUERY_EST_AMT, "FROM ProjectItem "
+ID_QUERY_EST_AMT, "WHERE ProjectControlNumber = '"
+//                                    Be sure to add a closing single quote
+
+
+
+//  /* To obtain all of the categories associated with each project. */
+
+ID_QUERY_CATGS, "SELECT Category "
+ID_QUERY_CATGS, "FROM ProjectCategory "
+ID_QUERY_CATGS, "WHERE ProjectControlNumber = '"
+//                                    Be sure to add a closing single quote
+
+
+
+
+// Category Item Stuff:
+
+// Category Item Total; use this in place of ID_QRY_CAT_ITM
+
+ID_QRY_CAT_ITM, "SELECT SequenceNumber, StandardItemNumber, Quantity, "
+ID_QRY_CAT_ITM, "UnitPrice, CodeValueID, Quantity * UnitPrice, "
+ID_QRY_CAT_ITM, "ShortDescription, Quantity * UnitPrice "
+
+ID_QRY_CAT_ITM_C1, " FROM StandardItem, CodeValue, ProjectItem PjI "
+//ID_QRY_CAT_ITM_C1,      " JobItem JI, JobItemProjectItem JIPI, "
+//ID_QRY_CAT_ITM_C1,      " JobAlternateGroup JAG "
+
+ID_QRY_CAT_ITM_C1, "WHERE ProjectItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QRY_CAT_ITM_C1, "AND StandardItem.Unit = CodeValueKey "
+ID_QRY_CAT_ITM_C1, "AND ProjectItem.ProjectControlNumber = '"
+
+ID_QRY_CAT_ITM_C2, " AND ProjectItem.Category = '"
+
+
+
+
+ID_QRY_CAT_ITM_TTL, "SELECT sum(DISTINCT PjI.ExtendedAmount) "
+ID_QRY_CAT_ITM_TTL, " FROM ProjectItem PjI, "
+ID_QRY_CAT_ITM_TTL,      " JobItem JI, JobItemProjectItem JIPI, "
+ID_QRY_CAT_ITM_TTL,      " JobAlternateGroup JAG "
+ID_QRY_CAT_ITM_TTL, "WHERE JAG.JobKey = JI.JobKey "
+ID_QRY_CAT_ITM_TTL, " AND JAG.JobAlternateGroupKey = JI.JobAlternateGroupKey "
+ID_QRY_CAT_ITM_TTL, " AND JAG.ChosenAlternateKey = JI.JobAlternateKey "
+ID_QRY_CAT_ITM_TTL, " AND JIPI.JobKey = JI.JobKey "
+ID_QRY_CAT_ITM_TTL, " AND JIPI.JobItemKey = JI.JobItemKey "
+ID_QRY_CAT_ITM_TTL, " AND JIPI.ProjectControlNumber = PjI.ProjectControlNumber "
+ID_QRY_CAT_ITM_TTL, " AND JIPI.Category = ProjectItem.Category "
+ID_QRY_CAT_ITM_TTL, " AND PjI.ProjectControlNumber = '"
+
+//ID_CNJ_CAT_ITM_TTL, " AND PjI.Category = '"
+
+
+
+
+
+// This yeilds the needed Job Item keys.
+ID_QRY_CAT_ITM_CHOS,    "SELECT ChosenAlternateKey "
+ID_QRY_CAT_ITM_CHOS,    "FROM JobItem JI, JobItemProjectItem JIPI, "
+ID_QRY_CAT_ITM_CHOS,        " JobAlternateGroup JAG "
+ID_QRY_CAT_ITM_CHOS,    "WHERE JAG.JobKey = JI.JobKey "
+ID_QRY_CAT_ITM_CHOS,     " AND JAG.JobAlternateGroupKey = JI.JobAlternateGroupKey "
+ID_QRY_CAT_ITM_CHOS,     " AND JAG.ChosenAlternateKey = JI.JobAlternateKey "
+ID_QRY_CAT_ITM_CHOS,     " AND JIPI.JobKey = JI.JobKey "
+ID_QRY_CAT_ITM_CHOS,     " AND JIPI.JobItemKey = JI.JobItemKey "
+ID_QRY_CAT_ITM_CHOS,     " AND JIPI.ProjectControlNumber = '"
+
+ID_QRY_CAT_ITM_CHOS_CAT, " AND JIPI.Category = '"
+
+ID_QRY_CAT_ITM_CHOS_SEQ, " AND JIPI.SequenceNumber = '"
+
+
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "22"
+                            
+// Column titles                                      
+//ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//--------------------------------------------------
+RPT_TTL_1,  "0,  9,  9, 13,Project: "
+RPT_TTL_2, "22,  3, 25, 52, - "
+
+RPT_TTL_3,  "7, 11, 18,  8,Work Type: "
+RPT_TTL_4, "26,  3, 29, 40, - "
+RPT_TTL_5,  "8, 10, 18,  8,District: "
+RPT_TTL_6,  "7, 11, 18,  4,Spec Year: "
+RPT_TTL_7,  "8, 10, 18, 60,Location: "
+
+RPT_TTL_8,  "8, 10, 18, 18,Estimate: "
+
+
+RPT_TTL_9,  "0,  8,  0,  0,Project "
+RPT_TTL_10, "0,  9,  0,  0,Category "
+RPT_TTL_11, "0,  7,  0,  0, Items "
+
+RPT_TTL_12, "0,  4,  0,  4,Seq# "
+RPT_TTL_13, "5,  6,  5, 13,Item/ "
+RPT_TTL_14,"27, 10, 18, 17,Quantity "
+RPT_TTL_15,"49,  6, 38, 17,Price "
+RPT_TTL_16,"55,  1, 57,  4,/ "
+RPT_TTL_17,"57,  4, 57,  4,Unit "
+RPT_TTL_18,"70,  9, 64, 16,Extension "
+RPT_TTL_19,"12, 12, 12, 40,Description "
+RPT_TTL_20,"36,  1, 38, 17,@ "
+RPT_TTL_21,"62,  1, 64, 16,= "
+
+RPT_TTL_22,"57,  7, 64, 16, Total:"
+
+
+
+:FORMAT rPESpjF.bin                                                  
+
+ID_QUERY_PCN,     "String"
+
+ID_QUERY_LISTING, "String", "String"
+ID_QUERY_LISTING, "String", "String"
+ID_QUERY_LISTING, "String", "Year,yyyy" 
+ID_QUERY_LISTING, "Position,<long><deg> deg <min>' <sec>"" Longitude, <lat><deg> deg <min>' <sec>"" Latitude"
+
+ID_QUERY_EST_AMT, "Number,$,.."
+
+ID_QUERY_CATGS,   "String"
+
+
+ID_QRY_CAT_ITM,      "String",        "String", "Number,,...."
+ID_QRY_CAT_ITM,      "Number,$,....", "String", "Number,$,..",  "String", "Number,.."
+
+ID_QRY_CAT_ITM_TTL,  "Number,$,.."
+
+ID_QRY_CAT_ITM_CHOS, "Number"
+
+:query rPESpjDQ.bin                                                  
+
+rPESpj_RptDlgBox, "SELECT ProjectControlNumber "
+rPESpj_RptDlgBox, "FROM Project "
+//rPESpj_RptDlgBox, "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+
+
+:Dialog rPESpjDD.bin rPESpjDF.bin                                        
+//                                                               
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rPESpj_RptDlgBox, rPESpj_RptDlgBox, rPESpj_RptDlgBox, ProjectControlNumber, DID_KEY, "String", "String"            
+

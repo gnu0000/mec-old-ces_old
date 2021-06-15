@@ -1,0 +1,67 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!INCLUDE "..\makeopts"
+
+TARGET=sqlbrow
+TARGETDIR=..\sqlbrow^\
+
+all: $(EXEDIR)$(TARGET).exe 
+
+:FileList ModuleList = 
+   { 
+   sqlbrow, about, init, process
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itibase, itiglob,
+   iticrt,   
+   itidbase, itimbase,itifmt,
+   itiutil  
+   }
+
+:FileList Resources = 
+   {
+   SQLBrow.rc,  SQLBrow.dlg,
+   SQLBrow.ico, results.bin
+   }
+
+:Expand ModuleList,{"$(CC) $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,includes
+
+
+results.bin: $(TARGET).met
+   $(EXEDIR)BuildRes $(TARGET).met
+   
+
+$(TARGET).res: {I: SQLBrow.rc} {F: Resources,,} $(TARGET).rc $(TARGET).pre
+   rc -r $(DEBUG) $*.rc
+
+
+$(EXEDIR)$(TARGET).exe: $(TARGET).def $(TARGET).res $(LIBDIR)*.lib {F: ModuleList,,obj} 
+   $(LINK) $(LFLAGS)$(LDEBUG) @<<tmp.lnk
+   {F: ModuleList,,}   +
+   crtexe
+   $(EXEDIR)$*.exe
+   $(@B).map
+   os2 {F: LibFiles,,}/NOD/NOE/BA/NOI
+   $(@B).def
+<<NOKEEP
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+   rc $(@B).res $*.exe
+
+
+

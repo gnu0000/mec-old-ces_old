@@ -1,0 +1,129 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * itiperm.met
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "..\include\colid.h"
+#include "query.h"
+
+
+:static  static.bin
+//
+// USHORT         RECTS        USHORT      LONG             LONG
+//
+// Static WinID   add          change                       CoordType     Window Options     Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+ShowMessageS,      0,          0,          7,  5,  60,  12, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+:CHILD child.bin
+//
+//
+//
+// Parents ID Child ID     uKind       add         change      Coord
+//------------------------------------------------------------------------------------------------------------------------------------
+ShowMessageS, ShowMessageL,  ITIWC_LIST, 0, 0, 0, 0, 0, 0, COORD_CHRREL
+
+
+
+
+:list list.bin
+//
+//
+// USHORT       LONG               LONG                 LONG                     USHORT USHORT  USHORT
+// List ID      Window Options     Background Color     Label Bkg Color           Label ydata   Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+ShowMessageL,   ITI_LISTOPTIONSHV, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,      0,   0,      0
+
+
+
+:DATA data.bin format.bin
+//
+//
+// Window ID   Next ID xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name           Format String
+//------------------------------------------------------------------------------------------------------------------------------------------
+ShowMessageL,  0,        1,  0, 16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     UserID,     "String"
+ShowMessageL,  0,       18,  0, 32,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     Time,       "DateTime,mmm dd, yyyy hh:nn:ssa"
+//ShowMessageL,  0,       18,  0, 16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     Time,       "DateTime,mmm dd, yyyy hh:nn:ssa"
+//ShowMessageL,  0,       36,  0, 16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     Time,       "DateTime,hh:nn:ssa"
+ShowMessageL,  0,        4,  1, 256, 1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Message, "String"
+
+
+:label label.bin labeltxt.bin
+//
+//
+// USHORT     USHORT     RECTS           USHORT     LONG                LONG               char []
+// Window ID  Next ID                        Foreground Color   Txt Flags          Label String
+//---------------------------------------------------------------------------------------------------------------------------
+ShowMessageL,   0,       1,  0, 16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "From User"
+ShowMessageL,   0,      18,  0, 32,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Date"
+//ShowMessageL,   0,      18,  0, 16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Date"
+//ShowMessageL,   0,      36,  0, 16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Time"
+ShowMessageL,   0,       4,  1, 256, 1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Message"
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT           char []
+// Window ID        Window Title
+//----------------------------------------------------------
+ShowMessageS,  "Messages for user %UserID"
+
+
+:query query.bin
+ShowMessageL,        "SELECT U.UserID, UM.FromUserKey, "
+ShowMessageL,        "UM.ToUserKey, UM.MessageKey, UM.Time, UM.Message "
+ShowMessageL,        "FROM User U, UserMessage UM "
+ShowMessageL,        "WHERE U.UserKey = UM.FromUserKey "
+ShowMessageL,        "ORDER BY UM.Time "
+
+ShowMessageS,        "SELECT U.UserID "
+ShowMessageS,        "FROM User U "
+ShowMessageS,        "WHERE U.UserKey = @CurrentUserKey "
+
+:query delete.bin
+ShowMessageL,        "DELETE FROM UserMessage "
+ShowMessageL,        "WHERE MessageKey IN (%MessageKey{,%MessageKey}) "
+
+
+:query calcqry.bin
+GET_USER_INFO,       "SELECT U.UserKey, U.UserID, U.Name, U.Type, "
+GET_USER_INFO,       "U.PhoneNumber, U.Type "
+GET_USER_INFO,       "FROM User U, UserApplication UA, Application A "
+GET_USER_INFO,       "WHERE Deleted IS NULL "
+GET_USER_INFO,       "AND U.UserID = '%UserID' "
+GET_USER_INFO,       "AND U.Password = %Password "
+GET_USER_INFO,       "AND UA.UserKey = U.UserKey "
+GET_USER_INFO,       "AND UA.ApplicationKey = A.ApplicationKey "
+GET_USER_INFO,       "AND A.ApplicationID = '%ApplicationID' "
+
+
+UPDATE_PASSWORD,     "UPDATE User "
+UPDATE_PASSWORD,     "SET Password = %Password "
+UPDATE_PASSWORD,     "WHERE UserKey = %UserKey "
+

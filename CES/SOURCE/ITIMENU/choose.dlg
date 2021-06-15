@@ -1,0 +1,35 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+DLGTEMPLATE IDD_CHOOSE_ACTIVE_WINDOW LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Activate Window", IDD_CHOOSE_ACTIVE_WINDOW, 12, 22, 294, 89, 
+                FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Choose a ~window to activate:", 257, 7, 72, 134, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_VISIBLE
+        CONTROL "", DID_WINDOW_LIST, 3, 3, 288, 66, WC_LISTBOX, LS_HORZSCROLL | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Ok", 1, 155, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 205, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 258, 251, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+

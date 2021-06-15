@@ -1,0 +1,86 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE MaterialD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Material", MaterialD, 21, 54, 328, 112, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Material ID", 1200, 10, 96, 59, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 12, 85, 53, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit", 1202, 108, 95, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATERIALUNIT, 83, 42, 78, 51, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Zone Type ID", 1203, 224, 94, 59, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATERIALZONETYPE, 188, 42, 128, 51, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 10, 48, 55, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATERIALDESCR, 10, 21, 305, 24, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 75, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 123, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 171, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Add More", 4, 219, 6, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE MatPricesD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Material Price", MatPricesD, 18, 57, 151, 109, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Unit Price", DID_UNITPRICE+DID_STOFFSET, 10, 98, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNITPRICE, 12, 86, 110, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Material Zones", DID_MATZONEID+DID_STOFFSET, 19, 67, 65, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATZONEID, 13, 5, 78, 60, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 104, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 104, 46, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 104, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 104, 14, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+

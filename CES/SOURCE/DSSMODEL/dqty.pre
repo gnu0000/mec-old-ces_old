@@ -1,0 +1,74 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+TARGET=dQty
+
+TARGETDIR=..\dssmodel^\                       
+
+:FileList SourceFiles = 
+   { 
+   dQty, gauss
+   }  
+
+:FileList MetFiles =    
+   {
+   dQtyQ 
+   }
+
+
+:FileList LibFiles = 
+   {
+   itibase, itierror, itiutil, itidbase, itimbase,
+   itiwin,  itifmt,   itiprt,  itirptut, iticrt,
+   itiglob, itiimp,   paramet
+   }
+
+:FileList OtherObj = { ..\lib\itidllc }
+
+
+
+!include "..\makeopts"
+
+all: $(EXEDIR)$(TARGET).dll $(TARGET).res
+
+
+~ build metadata resource files
+{F:MetFiles,,BIN} : $(TARGET).met
+  $(EXEDIR)BuildRes $(TARGET).met
+
+
+
+
+$(TARGET).res: {F:MetFiles,,BIN} $(TARGET).rc  {I: dQty.rc} 
+   rc -r $(DEBUG) $*.rc
+
+
+:Expand SourceFiles,{"cl $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+
+$(EXEDIR)$(TARGET).dll: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def  $(TARGET).res 
+   $(LINK) @<<$(TARGET).lnk
+           {F: SourceFiles,,}/noi/nod/map +
+           crtdll_i {F: OtherObj,,}$(LFLAGS) $(LDEBUG)
+           $*.dll
+           $(@B).map
+           {F: LibFiles,,} os2
+           $(@B).def
+<<NOKEEP
+   rc $(@B).res $*.dll
+   mapsym /l $(@B).map
+   copy $(TARGET).sym   $(EXEDIR)$(TARGET).sym
+

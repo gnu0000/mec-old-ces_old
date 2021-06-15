@@ -1,0 +1,143 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE CrewD                    LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew", CrewD                   , 40, 47, 242, 70, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Crew ~ID", 1200, 8, 52, 42, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 12, 41, 50, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 10, 30, 54, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CREWDESCR, 10, 5, 221, 24, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 144, 46, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 194, 46, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 144, 29, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 193, 29, 42, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE CrewLbEqD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew", CrewLbEqD, 11, 28, 416, 141, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Description", DID_CREWDESCR+DID_STOFFSET, 10, 129, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CREWDESCR, 10, 110, 387, 19, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewLaborL, 5, 22, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD1, 168, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE1, 168, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE1, 168, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewEquipL, 212, 21, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD2, 372, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE2, 372, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE2, 372, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 33, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+      //  CONTROL "~Cancel", 2, 79, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+      //          WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 125, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewLaborD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew Labor", CrewLaborD, 18, 48, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Labor Catalog", 259, 81, 69, 63, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", LaborCat2L, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewEquipD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew Equipment", CrewEquipD, 27, 26, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Equipment Catalog", 259, 65, 68, 88, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", EquipCatL, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+

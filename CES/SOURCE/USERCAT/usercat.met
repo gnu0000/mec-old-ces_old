@@ -1,0 +1,375 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * usercat.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                     RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID  add            change         xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+UserCatS,        UserD,             UserD,            2,  10,   140, 19, COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+CatalogUserS,    CatalogUserD,      CatalogUserD,     6,  14,   110, 22, COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+ApplicationUserS,ApplicationUserD,  ApplicationUserD, 10, 18,   100, 22, COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT              USHORT                 USHORT                                   RECTS               USHORT
+//
+// Parents Window ID   Type Child Window ID   uKind      add              change       <-   ^    ->   v    Coord
+//---------------------------------------------------------------------------------------------------------
+UserCatS,         UserCatL,         ITIWC_LIST, UserD,            UserD,            0, 0, 0, 0, COORD_REL
+CatalogUserS,     CatalogUserL,     ITIWC_LIST, CatalogUserD,     CatalogUserD,     0, 0, 0, 0, COORD_REL
+ApplicationUserS, ApplicationUserL, ITIWC_LIST, ApplicationUserD, ApplicationUserD, 0, 0, 0, 0, COORD_REL
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT  USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata   Button Window ID
+//---------------------------------------------------------------------------------------------------------------------------------------
+UserCatL,                ITI_LISTOPTIONSV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+CatalogUserL,            ITI_LISTOPTIONSV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+ApplicationUserL,        ITI_LISTOPTIONSV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+ApplicationUserDL,       ITI_LISTOPTIONSV | LWS_BORDER,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+DefJobUserL,             ITI_LISTOPTIONSHV,    ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT      USHORT         RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME           PSZ
+//
+// Window ID   Next Window ID xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name       Format String
+//----------------------------------------------------------------------------------------------------------------------------
+UserCatL, CatalogUserS,  1,   0,   16,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserID,        "String"
+UserCatL, CatalogUserS,  18,  0,   23,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Name,          "String"
+UserCatL, CatalogUserS,  43,  0,   16,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, PhoneNumber,   "String"
+UserCatL, CatalogUserS,  60,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Type,          "UserType"
+
+CatalogUserL, 0,         1,   0,   16,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, CatalogID,     "String"
+CatalogUserL, 0,         18,  0,    9,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Description,   "String"
+CatalogUserL, 0,          0,  0,    8,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Permission,    "Privilege"
+
+ApplicationUserL, 0,     1,   0,   16,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserID,        "String"
+ApplicationUserL, 0,     18,  0,    1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Name,          "String"
+
+ApplicationUserDL,  0,   1,  0,   16,  1,    COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, UserID,        "String"
+ApplicationUserDL,  0,  18,  0,    1,  1,    TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Name,          "String"
+
+DefJobUserL, 0,            1,  0,   16,  1,  COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, UserID,        "String"
+DefJobUserL, 0,           18,  0,   23,  1,  COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, Name,          "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT        USHORT         RECTS (DLG|UL|RNG)  USHORT        LONG                LONG               char []
+//
+// Window ID     Next Window ID xposypos  xsiz ysiz CoordType     Foreground Color   Txt Flags          Label String
+//-------------------------------------------------------------------------------------------------------------------------------
+UserCatL,   CatalogUserS,   1,  0,   16,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "User"
+UserCatL,   CatalogUserS,  18,  0,   23,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Name"
+UserCatL,   CatalogUserS,  43,  0,   16,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Phone Number"
+UserCatL,   CatalogUserS,  60,  0,   12,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Type"
+
+CatalogUserL,   0,          1,  0,   16,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Catalog"
+CatalogUserL,   0,         18,  0,    9,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Name"
+CatalogUserL,   0,          0,  0,    8,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Permission"
+
+ApplicationUserL,   0,      1,  0,   16,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "User"
+ApplicationUserL,   0,     18,  0,    1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Name"
+
+ApplicationUserDL,  0,      1,  0,   16,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "User"
+ApplicationUserDL,  0,     18,  0,    1,  1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Name"
+
+DefJobUserL, 0,              1,  0,   16,  1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "User"
+DefJobUserL, 0,             18,  0,   23,  1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Name"
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                 char []
+//
+// Window ID              Query String
+//------------------------------------------------------------------------------------------------------------
+UserCatL,            "/* UserCatL */ "
+UserCatL,            "SELECT UserID, Name, PhoneNumber, Type, "
+UserCatL,            "UserKey "
+UserCatL,            "FROM User "
+UserCatL,            "WHERE Deleted IS NULL "
+UserCatL,            "AND UserKey != 700 "
+UserCatL,            "ORDER BY UserID "
+
+UserD,               "SELECT UserID, Type, Password, Name, UserKey, "
+UserD,               "PhoneNumber "
+UserD,               "FROM User "
+UserD,               "WHERE UserKey = %UserKey "
+
+UserEditTypeD,         "SELECT UserKey, Type "
+UserEditTypeD,         "FROM User "
+
+DefJobUserD,         "SELECT UserID "
+DefJobUserD,         "FROM User "
+DefJobUserD,         "WHERE UserKey = %UserKey "
+
+DefJobUserL,         "SELECT UserID, UserName "
+DefJobUserL,         "FROM User "
+DefJobUserL,         "ORDER BY UserID "
+
+CatalogUserS,        "SELECT U.UserID, U.UserKey "
+CatalogUserS,        "FROM User U "
+CatalogUserS,        "WHERE U.UserKey = %UserKey "
+                     
+CatalogUserL,        "SELECT U.UserKey, UC.CatalogKey, C.CatalogID, "
+CatalogUserL,        "UC.Permission, C.Description "
+CatalogUserL,        "FROM User U, UserCatalog UC, Catalog C "
+CatalogUserL,        "WHERE U.UserKey = UC.UserKey "
+CatalogUserL,        "AND U.UserKey = %UserKey "
+CatalogUserL,        "AND UC.CatalogKey = C.CatalogKey "
+CatalogUserL,        "ORDER BY C.CatalogID "
+
+ApplicationUserS,    "SELECT A.ApplicationKey, A.ApplicationID "
+ApplicationUserS,    "FROM Application A "
+ApplicationUserS,    "WHERE A.ApplicationKey = %ApplicationKey "
+
+ApplicationUserL,    "SELECT U.UserID, U.Name, UA.ApplicationKey, "
+ApplicationUserL,    "UA.UserKey "
+ApplicationUserL,    "FROM User U, UserApplication UA "
+ApplicationUserL,    "WHERE U.UserKey = UA.UserKey "
+ApplicationUserL,    "AND UA.ApplicationKey = %ApplicationKey "
+ApplicationUserL,    "ORDER BY U.UserID "
+
+CatalogUserD,        "SELECT U.UserKey, UC.CatalogKey, C.CatalogID, "
+CatalogUserD,        "UC.Permission, U.Name, U.UserID "
+CatalogUserD,        "FROM User U, UserCatalog UC, Catalog C "
+CatalogUserD,        "WHERE U.UserKey = UC.UserKey "
+CatalogUserD,        "AND U.UserKey = %UserKey "
+CatalogUserD,        "AND UC.CatalogKey = C.CatalogKey "
+CatalogUserD,        "AND UC.CatalogKey = %CatalogKey "
+
+ApplicationUserD,    "SELECT U.UserID, U.Name, UA.ApplicationKey, "
+ApplicationUserD,    "UA.UserKey, A.ApplicationID "
+ApplicationUserD,    "FROM User U, UserApplication UA, Application A "
+ApplicationUserD,    "WHERE U.UserKey = UA.UserKey "
+ApplicationUserD,    "AND UA.ApplicationKey = %ApplicationKey "
+ApplicationUserD,    "AND UA.UserKey = %UserKey "
+ApplicationUserD,    "AND A.ApplicationKey = %ApplicationKey "
+
+ApplicationUserDL,   "SELECT U.UserID, U.Name, U.UserKey "
+ApplicationUserDL,   "FROM User U "
+ApplicationUserDL,   "WHERE U.Deleted IS NULL "
+ApplicationUserDL,   "ORDER BY U.UserID "
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+UserCatS,               "User Catalog"
+CatalogUserS,           "Catalog Permissions for User %UserID"
+ApplicationUserS,       "Users for Application %ApplicationID"
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id     Add Query ID  Change Query ID    Col Name      CtlID            out Fmt     in fmt
+//---------------------------------------------------------------------------------------------------------------
+UserD,               UserD,       UserD,       UserID,       DID_USERID,      "String",   "String"
+UserD,               ITIWND_ENUM, ITIWND_ENUM, Type,         DID_USERTYPE,    "UserType", "UserType"
+UserD,               UserD,       UserD,       Password,     DID_PASSWORD,    "Password", "Password"
+UserD,               UserD,       UserD,       Name,         DID_NAME,        "String",   "String"
+UserD,               UserD,       UserD,       PhoneNumber,  DID_PHONENUMBER, "String",   "*String"
+                     
+DefJobUserD,         DefJobUserD, DefJobUserD, UserID,       DID_USERID,      "String",   "String"
+DefJobUserD,         DefJobUserL,    DefJobUserL,    UserID,       DID_USERID,      "String",   "String"
+DefJobUserD,         DefJobUserL,    DefJobUserL,    Name,         DID_NAME,        "String",   "String"
+
+CatalogUserD,        CatalogUserD,   CatalogUserD,   Name,         DID_NAME,        "String",   "String"
+CatalogUserD,        CatalogUserD,   CatalogUserD,   UserID,       DID_USERID,      "String",   "String"
+CatalogUserD,        CatalogUserD,   CatalogUserD,   CatalogID,    DID_CATALOGID,   "String",   "String"
+CatalogUserD,        ITIWND_ENUM,    ITIWND_ENUM,    Permission,   DID_PERMISSION,  "Privilege","Privilege"
+
+ApplicationUserD,    ApplicationUserD,ApplicationUserD,ApplicationID,DID_APPLICATIONID,"String", "String"
+ApplicationUserD,    ITIWND_LIST, ITIWND_LIST,       UserKey,      ApplicationUserDL,"Number", "Number"
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+UserD,         "UPDATE User "
+UserD,         "SET "
+UserD,         "UserID=@UserID, "
+UserD,         "Type=@Type, "
+UserD,         "Password=@Password, "
+UserD,         "Name=@Name, "
+UserD,         "PhoneNumber=@PhoneNumber "
+UserD,         "WHERE UserKey = %UserKey "
+
+CatalogUserD,  "UPDATE UserCatalog "
+CatalogUserD,  "SET Permission=@Permission "
+CatalogUserD,  "WHERE UserKey = %UserKey "
+CatalogUserD,  "AND CatalogKey = %CatalogKey "
+
+ApplicationUserD, "UPDATE UserApplication "
+ApplicationUserD, "SET UserKey=@"ApplicationUserDL"UserKey " 
+ApplicationUserD, "WHERE UserKey = %UserKey " 
+ApplicationUserD, "AND ApplicationKey = %ApplicationKey " 
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+UserD,         "SELECT UserID, Type, Password, Name, "
+UserD,         "PhoneNumber "
+UserD,         "FROM User HOLDLOCK "
+UserD,         "WHERE UserKey = %UserKey "
+
+CatalogUserD,  "SELECT Permission "
+CatalogUserD,  "FROM UserCatalog HOLDLOCK "
+CatalogUserD,  "WHERE UserKey = %UserKey "
+CatalogUserD,  "AND CatalogKey = %CatalogKey "
+
+ApplicationUserD,  "SELECT Permission "
+ApplicationUserD,  "FROM UserApplication HOLDLOCK "
+ApplicationUserD,  "WHERE UserKey = %UserKey "
+ApplicationUserD,  "AND ApplicationKey = %ApplicationKey "
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+UserD,         "INSERT INTO User "
+UserD,         "(UserKey,UserID,Type,Password,Name,PhoneNumber) "
+UserD,         "VALUES "
+UserD,         "(@NewKey,@UserID,@Type,@Password,@Name,@PhoneNumber) "
+
+ApplicationUserD, "INSERT INTO UserApplication "
+ApplicationUserD, "(UserKey,ApplicationKey) "
+ApplicationUserD, "VALUES "
+ApplicationUserD, "(@"ApplicationUserDL"UserKey,%ApplicationKey) "
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+UserCatL,      "UPDATE User "
+UserCatL,      "SET Deleted = 1"
+UserCatL,      "WHERE UserKey IN (%UserKey{,%UserKey}) "
+
+ApplicationUserL,  "DELETE FROM UserApplication "
+ApplicationUserL,  "WHERE (UserKey = %UserKey "
+ApplicationUserL,  "AND ApplicationKey = %ApplicationKey) "
+ApplicationUserL,  "{OR (UserKey = %UserKey "
+ApplicationUserL,  "AND ApplicationKey = %ApplicationKey)} "
+

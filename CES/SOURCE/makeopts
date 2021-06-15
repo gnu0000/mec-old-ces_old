@@ -1,0 +1,84 @@
+# define the directories that our children will use
+
+LIBDIR=..\lib^\
+EXEDIR=..\exe^\
+DLLDIR=..\exe^\
+INCLUDEDIR=..\include^\
+
+
+# define default CEXEFLAGS and DEBUG for out children
+# CEXEFLAGS: C compiler options for executables
+# -c   : compile only -- no link
+# -W3  : strict warnings
+# -Od  : disable optimizations
+# -AL  : use large memory model
+# -Aw  : DS != SS, and don't reload it
+# -G2  : use 80286 instructions
+# -Gs  : don't put in stack probes -- required for OS/2
+# -Gc  : use PASCAL calling sequence
+# -D_DLL: Define _DLL macro -- used by standard c header files for CRT in a DLL
+# -D_MT: Define _MT macro -- used by standard c header files for multi thread
+# -Zp  : pack structures on byte boundary -- required for OS/2
+# -FPi : use inline 80x87 emulated instructions
+# -nologo: suppress banner
+
+CEXEFLAGS=-c -W3 -Od -ALw -G2sc -D_DLL -D_MT -Zp -FPi -nologo 
+# CEXEFLAGS=-c -W3 -Od -ALw -G2sc -D_DLL -D_MT -Zp -FPi -nologo -Fs -Sl132 -Fl
+
+# define default CDLLFLAGS and DEBUG for out children
+# CDLLFLAGS: C compiler options for DLLs that use CRT in a DLL
+# -c   : compile only -- no link
+# -W3  : strict warnings
+# -Od  : disable optimizations
+# -AL  : use large memory model
+# -Aw  : DS != SS, and don't reload it
+# -G2  : use 80286 instructions
+# -Gs  : don't put in stack probes -- required for OS/2
+# -Gc  : use PASCAL calling sequence
+# -D_DLL: Define _DLL macro -- used by standard c header files for CRT in a _DLL
+# -D_MT : Define _MT macro -- used by standard c header files for multi thread
+# -Zp  : pack structures on byte boundary -- required for OS/2
+# -FPi : use inline 80x87 emulated instructions
+# -nologo: suppress banner
+
+CDLLFLAGS=-c -W3 -Od -ALw -G2sc -D_DLL -D_MT -Zp -FPi -nologo
+# CDLLFLAGS=-c -W3 -Od -ALw -G2sc -D_DLL -D_MT -Zp -FPi -nologo -Fs -Sl132 -Fl
+
+
+
+# define default CSDLLFLAGS and DEBUG for out children
+# CSDLLFLAGS: C compiler options for DLLs that use CRT statically linked
+# -c   : compile only -- no link
+# -W3  : strict warnings
+# -Od  : disable optimizations
+# -AL  : use large memory model
+# -Aw  : DS != SS, and don't reload it
+# -G2  : use 80286 instructions
+# -Gs  : don't put in stack probes -- required for OS/2
+# -Gc  : use PASCAL calling sequence
+# -D_MT : Define _MT macro -- used by standard c header files for multi thread
+# -Zp  : pack structures on byte boundary -- required for OS/2
+# -FPi : use inline 80x87 emulated instructions
+# -nologo: suppress banner
+
+CSDLLFLAGS=-c -W3 -Od -ALw -G2sc -D_MT -Zp -FPi -nologo
+
+
+# CDEBUG are the C compiler options to use for debugging.  Comment this
+# out for non-debugging version
+CDEBUG=-Zi -DDEBUG
+
+# LDEBUG are the linker options to use for debugging.  Comment this
+# out for non-debugging version
+LDEBUG=/LI/CO/map
+
+
+LINK=link
+# LINK=link386
+
+LFLAGS=/NOLOGO 
+# LFLAGS=/NOLOGO  /I 
+
+DEBUG=-DDEBUG
+
+

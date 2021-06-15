@@ -1,0 +1,38 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE 256 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Browser: Facility", 256, 9, 41, 415, 153, FS_NOBYTEALIGN | 
+                FS_BORDER | NOT FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | 
+                WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "", 256, 109, 80, 121, 70, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "", 257, 3, 115, 103, 38, WC_STATIC, SS_GROUPBOX | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Portable Only", 258, 7, 135, 73, 10, WC_BUTTON, BS_CHECKBOX | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "State Approved Only", 259, 7, 121, 98, 10, WC_BUTTON, 
+                BS_CHECKBOX | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", 260, 233, 79, 177, 71, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "", 261, 109, 5, 301, 72, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "Search", 263, 29, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Help", 264, 29, 34, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+

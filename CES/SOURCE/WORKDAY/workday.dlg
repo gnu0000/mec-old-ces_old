@@ -1,0 +1,80 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGINCLUDE 1 "dialog.h"
+
+DLGTEMPLATE WorkDayD                 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Working Day Calendar Catalog", WorkDayD                , 48, 68, 254, 89, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Working Day Calendar ID", 1200, 9, 77, 110, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_WORKDAYCALID, 11, 66, 108, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 9, 51, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_WORKDAYDESCR, 11, 27, 232, 21, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 35, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 83, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 131, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 179, 5, 48, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+
+
+DLGTEMPLATE WorkDayInfoD             LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Working Day Calendar", WorkDayInfoD            , 25, 48, 221, 65, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Month", DID_MONTH+DID_STOFFSET, 12, 55, 30, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MONTH, 7, 4, 68, 49, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Year", 1203, 91, 55, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_YEAR, 91, 44, 38, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Working Days", 1204, 146, 55, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_WORKINGDAYS, 148, 44, 54, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 114, 22, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 161, 21, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 114, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 159, 6, 47, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+

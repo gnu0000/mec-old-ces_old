@@ -1,0 +1,110 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE InflationPredictionD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Inflation Prediction", InflationPredictionD, 24, 93, 258, 83, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Inflation Prediction ID", 1200, 10, 71, 94, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 11, 61, 94, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "I~nitial Prediction", 1201, 142, 72, 77, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 201, 143, 61, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "C~omment", 1202, 10, 48, 47, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COMMENT, 9, 20, 240, 27, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 42, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 90, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 138, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 186, 4, 42, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE InflationPredChangeD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Inflation Prediction", InflationPredChangeD, 24, 93, 258, 83, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "C~hange Date", 1200, 10, 71, 94, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CHANGEDATE, 11, 61, 94, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Inflation Prediction", 1201, 142, 72, 82, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_INFLATIONRATE, 143, 61, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "C~omment", 1202, 10, 48, 47, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COMMENT, 9, 20, 240, 27, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 42, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 90, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 138, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE InflationPredChangeA LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Inflation Prediction", InflationPredChangeA, 24, 93, 258, 83, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "C~hange Date", 1200, 10, 71, 94, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CHANGEDATE, 11, 61, 94, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Inflation Prediction", 1201, 142, 72, 82, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_INFLATIONRATE, 143, 61, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "C~omment", 1202, 10, 48, 47, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COMMENT, 9, 20, 240, 27, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", DID_INFLATIONPREDKEY, 0, 0, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN 
+
+        CONTROL "~OK", 1, 42, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 90, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 138, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+

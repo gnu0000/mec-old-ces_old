@@ -1,0 +1,44 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGINCLUDE 1 "dialog.H"                                       
+DLGINCLUDE 2 "..\include\itirptdg.H"
+
+
+DLGTEMPLATE IDD_RMJRIT LOADONCALL MOVEABLE DISCARDABLE          
+
+BEGIN                                                         
+    DIALOG RPT_MJR_SESSION, IDD_RMJRIT, 70, 50, 150, 40,            
+                FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE |  
+                WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR       
+    BEGIN                                                     
+        CONTROL " Selected items only. ", DID_SELECTED, 20, 25, 120, 10, 
+                WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE       
+
+//                WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP                        
+//                | DT_HALFTONE | WS_GROUP | WS_VISIBLE                        
+
+
+        CTRL_PCH
+
+        CONTROL "", DID_KEY, 0, 0, 0, 0, WC_ENTRYFIELD,                      
+                ES_LEFT | ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP             
+    END                                                                     
+END                                                                         
+
+
+
+

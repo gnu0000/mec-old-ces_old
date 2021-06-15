@@ -1,0 +1,6 @@
+
+NAME           UNECSV  WINDOWAPI
+DESCRIPTION    'ITI utility unecsv 1995'
+HEAPSIZE          4096
+STACKSIZE        34096
+EXETYPE           OS2                

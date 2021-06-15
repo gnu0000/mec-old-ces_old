@@ -1,0 +1,323 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * workday.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                                                RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID             add                   change            xpos ypos xsiz ysiz CoordType       Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarCatS,  WorkDayD,     WorkDayD,    39,  4,   336, 119, COORD_RNG,    ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+WorkingDayCalendarS,      WorkDayInfoD, WorkDayInfoD, 3,  5,    43,   8, COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                       USHORT                         USHORT                                                  RECTS               USHORT
+//
+// Parents Window ID            Type Child Window ID           uKind          add                  change              <-   ^    ->   v    Coord
+//---------------------------------------------------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarS,     WorkingDayCalendarL,     ITIWC_LIST,   WorkDayInfoD, WorkDayInfoD, 0,   0,   0,   0,   COORD_REL
+WorkingDayCalendarCatS, WorkingDayCalendarCat,      ITIWC_LIST,   WorkDayD,     WorkDayD,     0,   0,   0,   0,   COORD_REL
+
+
+
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata  Button Window ID
+//--------------------------------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarL,    ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+WorkingDayCalendarCat,     ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME                 PSZ
+//
+// Window ID                 Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name             Format String
+//-------------------------------------------------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarL,   0,                      1,   0,  10,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,    2,                   "Month,mmmm"
+WorkingDayCalendarL,   0,                      12,  0,   4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATACTRFLAGS, Year,                "Year,yyyy"
+WorkingDayCalendarL,   0,                      17,  0,  10,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATACTRFLAGS, WorkingDays,         "Number,,"
+WorkingDayCalendarL,   0,                      28,  0,  11,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATACTRFLAGS, 1,                   "Month,d"
+
+WorkingDayCalendarCat,    WorkingDayCalendarS, 1,   0,   96,  8,   COORD_RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  WorkingDayCalendarID,"*"
+WorkingDayCalendarCat,    WorkingDayCalendarS, 106, 0,   212, 8,   COORD_RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  Description,         "*"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                      USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID                   Next Window ID          xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarL,     0,                      1,   0,  10,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Month"
+WorkingDayCalendarL,     0,                      12,  0,   4,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Year"
+WorkingDayCalendarL,     0,                      17,  0,  10,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Working Days"
+WorkingDayCalendarL,     0,                      28,  0,  11,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Calendar Days"
+
+WorkingDayCalendarCat,      WorkingDayCalendarS,   1,  1,  96,   8,   COORD_RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Working Day Calendar"
+WorkingDayCalendarCat,      WorkingDayCalendarS,  106, 1,   212, 8,   COORD_RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID                  Query String
+//----------------------------------------------------------------------------------------------------------------
+WorkingDayCalendarL,    "SELECT convert (varchar (2), Month)+'/1/'+convert (varchar (4), Year), "
+WorkingDayCalendarL,    "Month, Year, WorkingDays, "
+WorkingDayCalendarL,    "WorkingDayCalendarKey, BaseDate "
+WorkingDayCalendarL,    "FROM WorkingDayPrediction "
+WorkingDayCalendarL,    "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+WorkingDayCalendarL,    "AND BaseDate = "UNDECLARED_BASE_DATE" "
+WorkingDayCalendarL,    "ORDER BY Year, Month "
+
+WorkingDayCalendarCat,     "SELECT WorkingDayCalendarID, Description, "
+WorkingDayCalendarCat,     "WorkingDayCalendarKey "
+WorkingDayCalendarCat,     "FROM WorkingDayCalendar "
+WorkingDayCalendarCat,     "WHERE Deleted IS NULL "
+WorkingDayCalendarCat,     "ORDER BY WorkingDayCalendarID "
+
+WorkDayD,              "SELECT WorkingDayCalendarID, Description "
+WorkDayD,              "FROM WorkingDayCalendar "
+WorkDayD,              "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+
+WorkDayInfoD,          "SELECT Month, Year, WorkingDays "
+WorkDayInfoD,          "FROM WorkingDayPrediction "
+WorkDayInfoD,          "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+WorkDayInfoD,          "AND Year = %Year "
+WorkDayInfoD,          "AND Month = %1 "
+WorkDayInfoD,          "AND BaseDate = '%BaseDate' "
+
+WorkDayInfoAddD,          "SELECT Month, Year, WorkingDays "
+WorkDayInfoAddD,          "FROM WorkingDayPrediction "
+WorkDayInfoAddD,          "WHERE WorkingDayCalendarKey = -1"
+
+WorkingDayCalendarS,  "SELECT WorkingDayCalendarID, "
+WorkingDayCalendarS,  "WorkingDayCalendarKey "
+WorkingDayCalendarS,  "FROM WorkingDayCalendar "
+WorkingDayCalendarS,  "WHERE WorkingDayCalendarKey=%WorkingDayCalendarKey "
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+WorkingDayCalendarS,     "Working Day Calendar %WorkingDayCalendarID"
+WorkingDayCalendarCatS, "Working Day Calendar Catalog"
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id            Add Query ID        Change Query ID      Col Name           CtlID            Format
+//----------------------------------------------------------------------------------------------------------------
+WorkDayD,     WorkDayD,    WorkDayD,     WorkingDayCalendarID, DID_WORKDAYCALID,  "String", "String"
+WorkDayD,     WorkDayD,    WorkDayD,     Description,          DID_WORKDAYDESCR,  "String", "String"
+
+WorkDayInfoD, ITIWND_ENUM,        ITIWND_ENUM,         Month,                DID_MONTH,         "Month", "Month,m"
+WorkDayInfoD, WorkDayInfoAddD,WorkDayInfoD, Year,         DID_YEAR,          "Year",   "Year"
+WorkDayInfoD, WorkDayInfoAddD,WorkDayInfoD, WorkingDays,  DID_WORKINGDAYS,   "Number", "Number"
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+WorkDayD,      "UPDATE WorkingDayCalendar "
+WorkDayD,      "SET "
+WorkDayD,      "WorkingDayCalendarID = @WorkingDayCalendarID, "
+WorkDayD,      "Description = @Description "
+WorkDayD,      "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+
+WorkDayInfoD,  "UPDATE WorkingDayPrediction "
+WorkDayInfoD,  "SET "
+WorkDayInfoD,  "WorkingDays = @WorkingDays, "
+WorkDayInfoD,  "Year = @Year, "
+WorkDayInfoD,  "Month = @Month "
+WorkDayInfoD,  "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+WorkDayInfoD,  "AND Year = %Year "
+WorkDayInfoD,  "AND Month = %1 "
+WorkDayInfoD,  "AND BaseDate = '%BaseDate' "
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+WorkDayD,      "SELECT WorkingDayCalendarID, Description "
+WorkDayD,      "FROM WorkingDayCalendar HOLDLOCK "
+WorkDayD,      "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+
+WorkDayInfoD,  "SELECT Month, Year, BaseDate, WorkingDays "
+WorkDayInfoD,  "FROM WorkingDayPrediction HOLDLOCK "
+WorkDayInfoD,  "WHERE WorkingDayCalendarKey = %WorkingDayCalendarKey "
+WorkDayInfoD,  "AND Year = %Year "
+WorkDayInfoD,  "AND Month = %1 "
+WorkDayInfoD,  "AND BaseDate = '%BaseDate' "
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+WorkDayD,      "INSERT INTO WorkingDayCalendar "
+WorkDayD,      "(WorkingDayCalendarKey, WorkingDayCalendarID,"
+WorkDayD,      "Description) "
+WorkDayD,      "VALUES "
+WorkDayD,      "(@NewKey, @WorkingDayCalendarID, @Description) "
+
+WorkDayInfoD,  "INSERT INTO WorkingDayPrediction "
+WorkDayInfoD,  "(WorkingDayCalendarKey, Year, Month, BaseDate, WorkingDays) "
+WorkDayInfoD,  "VALUES "
+WorkDayInfoD,  "(%WorkingDayCalendarKey, @Year, @Month, @UndeclaredBaseDate, @WorkingDays) "
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                  char []
+// Window ID               Query String
+//-------------------------------------------------------------------------
+
+
+WorkingDayCalendarCat,  "UPDATE WorkingDayCalendar "
+WorkingDayCalendarCat,  "SET Deleted = 1 "
+WorkingDayCalendarCat,  "WHERE WorkingDayCalendarKey IN (%WorkingDayCalendarKey{,%WorkingDayCalendarKey}) "
+WorkingDayCalendarCat,  " AND WorkingDayCalendarKey != 1 "
+
+
+WorkingDayCalendarL, "DELETE FROM WorkingDayPrediction "
+WorkingDayCalendarL, "WHERE (Year = %Year "
+WorkingDayCalendarL, "AND Month = %Month "
+WorkingDayCalendarL, "AND BaseDate = "UNDECLARED_BASE_DATE") "
+WorkingDayCalendarL, "{ OR (Year = %Year "
+WorkingDayCalendarL, "AND Month = %Month "
+WorkingDayCalendarL, "AND BaseDate = "UNDECLARED_BASE_DATE")} "
+WorkingDayCalendarL, "AND WorkingDayCalendarKey = %WorkingDayCalendarKey "
+WorkingDayCalendarL, "AND WorkingDayCalendarKey != 1 "
+
+

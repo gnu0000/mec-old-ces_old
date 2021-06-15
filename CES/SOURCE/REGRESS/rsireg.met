@@ -1,0 +1,178 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"    
+#include "..\include\winid.h"     
+#include "..\include\metadecl.h"  
+#include "..\include\itirptdg.h"  
+#include "dialog.h"               
+#include "rSIReg.h"                   
+
+
+
+:query rSIRegQ.bin                    
+
+
+// /* STANDARD ITEM LISTING - PEMETH REGRESSION */
+
+ID_QUERY_LISTING, "SELECT StandardItemNumber, ShortDescription, "
+ID_QUERY_LISTING, "StandardItemPEMETHRegression.ImportDate, "
+ID_QUERY_LISTING, "AreaTypeID, MinimumQuantity, MaximumQuantity, "
+ID_QUERY_LISTING, "MedianQuantity, CodeValueID, "
+ID_QUERY_LISTING, "BaseDate, BaseUnitPrice, AnnualInflation, (AnnualInflation/12), "
+ID_QUERY_LISTING, "QuantityAdjustment, "
+ID_QUERY_LISTING, "StandardItemPEMETHRegression.ImportDate "
+ID_QUERY_LISTING, "FROM StandardItem, PEMETHRegression, AreaType, CodeValue, "
+ID_QUERY_LISTING, "StandardItemPEMETHRegression "
+ID_QUERY_LISTING, "WHERE StandardItemPEMETHRegression.StandardItemKey  "
+ID_QUERY_LISTING,       "= StandardItem.StandardItemKey "
+ID_QUERY_LISTING, "AND PEMETHRegression.StandardItemKey  "
+ID_QUERY_LISTING,       "= StandardItemPEMETHRegression.StandardItemKey "
+ID_QUERY_LISTING, "AND PEMETHRegression.ImportDate "
+ID_QUERY_LISTING,       "= StandardItemPEMETHRegression.ImportDate "
+ID_QUERY_LISTING, "AND StandardItem.Unit = CodeValueKey "
+ID_QUERY_LISTING, "AND PEMETHRegression.AreaTypeKey = AreaType.AreaTypeKey "
+ID_QUERY_LISTING, "AND StandardItemPEMETHRegression.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_LISTING, "AND StandardItemPEMETHRegression.StandardItemKey = "
+
+
+
+
+  
+// /* for Area Qualitative Adjustments */
+
+ID_QUERY_AREA, "SELECT AreaID, Adjustment "
+ID_QUERY_AREA, "FROM Area, StandardItemPEMETHRegression SIPR, AreaAdjustment, PEMETHRegression "
+ID_QUERY_AREA, "WHERE PEMETHRegression.StandardItemKey = SIPR.StandardItemKey "
+ID_QUERY_AREA, "AND  PEMETHRegression.ImportDate = SIPR.ImportDate "
+ID_QUERY_AREA, "AND AreaAdjustment.StandardItemKey = PEMETHRegression.StandardItemKey "
+ID_QUERY_AREA, "AND AreaAdjustment.ImportDate = PEMETHRegression.ImportDate "
+ID_QUERY_AREA, "AND AreaAdjustment.AreaKey = Area.AreaKey "
+ID_QUERY_AREA, "AND SIPR.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_AREA, "AND SIPR.StandardItemKey =  "
+//ID_CONJ_SAW,   " AND SIPR.ImportDate = "
+
+
+
+// /* for Season Qualitative Adjustments */
+
+ID_QUERY_SEASON, "SELECT Season, Adjustment "
+ID_QUERY_SEASON, "FROM StandardItemPEMETHRegression SIPR, SeasonAdjustment, PEMETHRegression "
+ID_QUERY_SEASON, "WHERE PEMETHRegression.StandardItemKey = SIPR.StandardItemKey "
+ID_QUERY_SEASON, "AND  PEMETHRegression.ImportDate = SIPR.ImportDate "
+ID_QUERY_SEASON, "AND SeasonAdjustment.StandardItemKey = PEMETHRegression.StandardItemKey "
+ID_QUERY_SEASON, "AND SeasonAdjustment.ImportDate = PEMETHRegression.ImportDate "
+ID_QUERY_SEASON, "AND SIPR.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_SEASON, "AND SIPR.StandardItemKey =  "
+//ID_CONJ_SAW,   " AND SIPR.ImportDate = "
+
+
+
+
+
+
+// /* for WorkType Qualitative Adjustments */
+
+
+ID_QUERY_WRKTYP, "SELECT CodeValueID, Adjustment "
+ID_QUERY_WRKTYP, "FROM StandardItemPEMETHRegression SIPR, WorkTypeAdjustment, CodeValue, PEMETHRegression "
+ID_QUERY_WRKTYP, "WHERE PEMETHRegression.StandardItemKey = SIPR.StandardItemKey "
+ID_QUERY_WRKTYP, "AND  PEMETHRegression.ImportDate = SIPR.ImportDate "
+ID_QUERY_WRKTYP, "AND WorkTypeAdjustment.StandardItemKey = PEMETHRegression.StandardItemKey "
+ID_QUERY_WRKTYP, "AND WorkTypeAdjustment.ImportDate = PEMETHRegression.ImportDate "
+ID_QUERY_WRKTYP, "AND WorkTypeAdjustment.WorkType = CodeValue.CodeValueKey "
+ID_QUERY_WRKTYP, "AND SIPR.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_WRKTYP, "AND SIPR.StandardItemKey =  "
+
+ID_CONJ_SAW,     " AND SIPR.ImportDate = "
+                                   // must be quoted
+
+
+
+
+
+
+
+
+// Column titles                                      
+// ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//----------------------------------------------------------
+RPT_TTL_1,  "0,  5,  5, 14,Item "
+RPT_TTL_2, "18,  3, 21, 40, - "  
+
+RPT_TTL_3,  "4, 55, 54, 13,PEMETH Regression data for this item was imported "
+RPT_TTL_4, "22, 16, 38, 18,and is based on "
+RPT_TTL_5, "56,  7,  0,  0,areas. "
+
+RPT_TTL_6,  "4, 35, 39, 16,Only items with quantities between "
+RPT_TTL_7, "55,  5, 59, 16, and "
+RPT_TTL_8,  "4, 19,  0,  0,will be estimated. "
+
+RPT_TTL_9,  "4, 17, 21, 15,Median Quantity: "
+RPT_TTL_10, "4, 17, 21, 12,      Base Date: "
+RPT_TTL_11, "4, 17, 21, 16,     Base Price: "
+
+RPT_TTL_12, "3, 18, 21, 11,Annual Inflation: "
+RPT_TTL_13,"32,  2, 33,  9, ("
+RPT_TTL_14,"42,  9, 33,  9,/month). "
+RPT_TTL_15, "3, 18, 21, 11,Decrease price by "
+RPT_TTL_16,"32, 29,  0,  0, each time quantity doubles. "
+
+
+RPT_TTL_17, "4, 24,  0,  0,Qualitative adjustments: "
+RPT_TTL_18, "8,  5,  8, 21,Area "
+RPT_TTL_19,"31,  7, 31, 21,Season "
+RPT_TTL_20,"54,  9, 54, 21,Work Type "
+
+
+
+// Number of column titles    
+ID_RPT_TTL,    "20" 
+
+
+
+:FORMAT rSIRegF.bin                                
+
+ID_QUERY_LISTING, "String", "String"
+ID_QUERY_LISTING, "DateTime,mmm dd, yyyy"
+ID_QUERY_LISTING, "String", "Number,,...", "Number,,..."
+ID_QUERY_LISTING, "Number,,...", "String"
+ID_QUERY_LISTING, "DateTime,mmm dd, yyyy", "Number,$,....", "Number,%,..", "Number,%,.."
+ID_QUERY_LISTING, "Number,%.."
+ID_QUERY_LISTING, "DateTime,mm/dd/yyyy hh:nn:ss"
+
+
+ID_QUERY_AREA,   "String", "Number,%,.." 
+
+ID_QUERY_SEASON, "Season", "Number,%,.." 
+
+ID_QUERY_WRKTYP, "String", "Number,%,.." 
+
+ 
+
+:query rSIRegDQ.bin                                
+
+rSIReg_RptDlgBox,       "SELECT StandardItemKey "           
+rSIReg_RptDlgBox,       "FROM StandardItem "                
+rSIReg_RptDlgBox,       "WHERE StandardItemKey = %StandardItemKey " 
+
+
+:Dialog rSIRegDD.bin rSIRegDF.bin                      
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rSIReg_RptDlgBox, rSIReg_RptDlgBox, rSIReg_RptDlgBox, StandardItemKey, DID_KEY, "Number", "Number"            
+

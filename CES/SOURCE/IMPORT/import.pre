@@ -1,0 +1,92 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+~ template premake file
+
+
+~ Set the TARGET macro to be the name of what you are building.  
+
+TARGET=import
+
+~ Set the TARGETDIR macro to be the relative path of the subdirectory you
+~ are working in.  For exaple, use "TARGET=..\mydir^\" if you are working
+~ in the directory mydir.  Note that the ^\ at the end of the path
+~ is required.
+TARGETDIR=..\import^\
+
+
+~ Set the SourceFiles file list to be all of the source code files
+~ for your module.
+
+:FileList SourceFiles =
+   {
+   import, columns, load, purge, 
+   foreign, primary, copy, highest, calc,
+   project
+   }
+
+
+~ Use the OtherObj to list any .obj files you may need to link to.
+~ For example, if you need to have DLL initialization code, you would
+~ have either itiblli or itidllc for the OtherObj.
+
+:FileList OtherObj = 
+   {
+   }
+
+
+~ use LibFiles for the libraries in the ..\lib subdirectory.  For
+~ example, if you use the ItiMem functions, you would specify ItiBase.
+
+:FileList LibFiles =
+   {
+   itiimp, ItiUtil, ItiDBase, ItiBase, ItiCRT,
+   itifmt, colid, itiglob, itierror, itirptut 
+   }
+
+!include "..\makeopts"
+
+all: $(LIBDIR)$(TARGET).lib $(EXEDIR)$(TARGET).exe
+
+
+~ build metadata resource files
+impquery.bin : $(TARGET).met {I: import.met}
+   $(EXEDIR)BuildRes $(TARGET).met
+
+
+$(TARGET).res: {I: import.rc} impquery.bin $(TARGET).rc 
+   rc -r $(DEBUG) $*.rc
+
+
+$(LIBDIR)$(TARGET).lib: $(TARGET).def
+   implib -nologo $*.lib $?
+
+:Expand SourceFiles,{"cl $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+
+$(EXEDIR)$(TARGET).exe: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def $(TARGET).res
+   link @<<$(TARGET).lnk
+      {F: SourceFiles,,}/nologo/noi/nod$(LDEBUG) +
+      {F: OtherObj,,} crtexe
+      $(EXEDIR)$(TARGET).exe
+      $(@B).map
+      {F: LibFiles,,} os2
+      $(TARGET).def
+
+   mapsym /l $(@B).map
+<<NOKEEP
+   rc $(@B).res $*.exe
+
+

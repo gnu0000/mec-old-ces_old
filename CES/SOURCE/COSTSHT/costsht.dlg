@@ -1,0 +1,180 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+DLGINCLUDE 1 "dialog.H"                                       
+
+
+// DLGTEMPLATE CostSheetD LOADONCALL MOVEABLE DISCARDABLE 
+// BEGIN
+//     DIALOG "Cost Sheet", CostSheetD, 7, 65, 390, 110, FS_NOBYTEALIGN | FS_DLGBORDER | 
+//                 WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+//                 FCF_TITLEBAR
+//     BEGIN
+//         CONTROL "Cost ~Sheet ID", 1200, 13, 100, 68, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 200, 13, 88, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~Description", 1201, 148, 100, 51, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", DID_DESCRIPTION, 148, 75, 231, 23, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+//                 MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "Production ~Rate", 1202, 13, 73, 76, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 202, 13, 62, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~Labor Overhead Pct", 1206, 145, 60, 87, 9, WC_STATIC, 
+//                 SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 206, 145, 50, 102, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~Equipment Overhead Pct", 1207, 267, 61, 108, 8, WC_STATIC, 
+//                 SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 207, 268, 50, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "Production ~Granularity", 1204, 13, 46, 101, 9, WC_STATIC, 
+//                 SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", DID_PRODUCTIONGRAN, 13, 16, 111, 30,
+//                 WC_COMBOBOX, CBS_DROPDOWN | WS_TABSTOP | WS_VISIBLE
+// 
+// 
+//         CONTROL "Materials ~Overhead Pct", 1208, 144, 38, 102, 8, WC_STATIC, 
+//                 SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 208, 143, 26, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "Mark~up Pct", 1205, 267, 38, 50, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 205, 267, 26, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "Default ~Hrs Per Day", 1203, 9, 23, 89, 8, WC_STATIC, 
+//                 SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", 203, 13, 12, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~OK", 1, 171, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+//                 WS_TABSTOP | WS_VISIBLE
+//         CONTROL "~Cancel", 2, 217, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 WS_TABSTOP | WS_VISIBLE
+//         CONTROL "~Help", 3, 264, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 BS_HELP | WS_TABSTOP | WS_VISIBLE
+//         CONTROL "Add ~More", 4, 311, 6, 48, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 WS_TABSTOP | WS_VISIBLE
+// 
+// 
+//     END
+// END
+// 
+// 
+////
+
+DLGTEMPLATE CostSheetD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Cost Sheet", CostSheetD, 7, 65, 390, 130, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Cost ~Sheet ID", 1200, 13, 120, 68, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",    DID_COSTSHEETID, 13, 109, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                         WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 145, 120, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",  DID_DESCRIPTION, 145, 95, 231, 23, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                                                       MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Production ~Rate", 1202, 13, 93, 76, 8, WC_STATIC, SS_TEXT | 
+                                                         DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",   DID_PRODUCTIONRATE, 13, 82, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                          WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Labor Overhead Pct", 1206, 145, 80, 87, 9, WC_STATIC, 
+                                                             SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABOVERHEADPCT, 145, 70, 102, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                         WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Equipment Overhead Pct", 1207, 267, 81, 108, 8, WC_STATIC, 
+                                                                  SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_EQUIPOVERHEADPCT, 268, 70, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                           WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Production ~Granularity", 1204, 13, 66, 101, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODUCTIONGRAN, 13, 36, 111, 30,
+                WC_COMBOBOX, CBS_DROPDOWN | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Materials ~Overhead Pct", 1208, 144, 58, 102, 8, WC_STATIC, 
+                                                                  SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATOVERHEADPCT, 144, 46, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                         WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Mark~up Pct", 1205, 267, 58, 70, 8, WC_STATIC, SS_TEXT | 
+                                                     DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MARKUPPCT, 267, 46, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                    WS_TABSTOP | WS_VISIBLE
+
+   //     CONTROL "Measurement System", 1209, 13, 43, 89, 8, WC_STATIC, 
+   //                                                        SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+   //     CONTROL "",           DID_UNIT_SYS, 13, 32, 108, 8, 
+   //                                WC_COMBOBOX, CBS_DROPDOWN | WS_TABSTOP | WS_VISIBLE 
+
+        CONTROL "Default ~Hrs Per Day", 1203, 13, 43, 89, 8, WC_STATIC, 
+                                                             SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",       DID_DEFHOURSPERDAY, 13, 32, 108, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                                                             WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Metric Sheet",   DID_METRIC_UNIT, 13, 18, 65, 10, WC_BUTTON, BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "English Sheet", DID_ENGLISH_UNIT, 13,  8, 70, 10, WC_BUTTON, BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+//        CONTROL "Neither/Both",  DID_NEITHER_UNIT, 90, 18, 65, 10, WC_BUTTON, BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK",       DID_OK      , 171, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE | BS_DEFAULT
+        CONTROL "~Cancel",   DID_CANCEL  , 217, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help",     DID_HELP    , 264, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE | BS_HELP 
+        CONTROL "Add ~More", DID_ADDMORE , 311, 6, 48, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+//         CONTROL "Copy",      DID_COPY,     125, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE CopyCostSheetD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Cost Sheet, make a copy ", CopyCostSheetD, 10, 46, 213, 62, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Copy Cost Sheet:", DID_OLD_COSTSHEETID + DID_STOFFSET, 4, 52, 70, 8, WC_STATIC, SS_TEXT | DT_RIGHT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "  ", DID_OLD_COSTSHEETID, 77, 52, 80, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "To Cost Sheet:", DID_COSTSHEETID + DID_STOFFSET, 3, 41, 69, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COSTSHEETID, 5, 30, 70, 8, WC_ENTRYFIELD,
+                ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE | ES_AUTOSCROLL
+        CONTROL "~OK", DID_OK, 5, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 55, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END

@@ -1,0 +1,2253 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+/* This file contains metadata for the Cost Based Estimation windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "copycbe.h"
+#include "dialog.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics     (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// USHORT                                                                                  RECTS                    USHORT     LONG                  LONG
+// Static Window ID   Add,                       Change,                                   xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CBEstForStdItemS, CostBasedEstimateD, CostBasedEstimateD,       4,   1,   60,  13, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+CBEstForJobItemS, JobCostBasedEstD,   JobCostBasedEstD,         4,   1,   60,  13, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+                                                                        
+CostShtCrewS,     CrewForCostShtD,    CrewForCostShtD,         71,  13,  332, 123, COORD_RNG,    ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+MaterialS,        MatForCostShtD,     MatForCostShtD,           2,   1,  120,  32, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+TaskS,            TasksForStdItemD,   TasksForStdItemD,         2,   1,  131,  36, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+TaskCostShtS,     CostShtForTaskD,    CostShtForTaskD,          2,   8,  124,  24, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobTaskS,         AddJobTaskListD,    ChJobTaskListD,           0,   1,  142,  42, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+JobCostShtS,      0,                  JobCostSheetD,            0,   1,  142,  40, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobCrewS,         CrewForJobD,        CrewForJobD,             71,  13,  332, 123, COORD_RNG,    ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobMaterialsS,    JobMaterialsD,      JobMaterialsD,            1,   1,  142,  42, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+JobZoneS,         0,                  0,                        2,   2,   65,  13, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+CrewForCostShtS,  CrewCShtLbEqD,      CrewCShtLbEqD,            5,   5,   60,  13, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+CrewForJobS,      CrewJobLbEqD,       CrewJobLbEqD,             5,   5,   60,  13, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT                       USHORT                         USHORT                                                    RECTS               USHORT
+//                                                                                                                     
+// Parents Window ID       Type Child Window ID     uKind       Add,                      Change                      <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CBEstForStdItemS,  CBEstForStdItemL,      ITIWC_LIST,    CostBasedEstimateD, CostBasedEstimateD,   0,   0,   0,   0,  COORD_REL
+CBEstForJobItemS,  CBEstForJobItemL,      ITIWC_LIST,    JobCostBasedEstD,   JobCostBasedEstD,     0,   0,   0,   0,  COORD_REL
+
+CostShtCrewS,      CostShtCrewL,          ITIWC_LIST,    CrewForCostShtD,    CrewForCostShtD,      0,   0,   0,   0,  COORD_REL
+MaterialS,         MaterialL,             ITIWC_LIST,    MatForCostShtD,     MatForCostShtD,       0,   0,   0,   2,  COORD_CHRREL
+TaskS,             TaskL,                 ITIWC_LIST,    TasksForStdItemD,   TasksForStdItemD,     0,   3,   0,   0,  COORD_CHRREL
+JobTaskS,          JobTaskL,              ITIWC_LIST,    AddJobTaskListD,    ChJobTaskListD,       0,   3,   0,   2,  COORD_CHRREL
+JobCostShtS,       JobCostShtCombo,       ITIWC_COMBO,   0,                        0,              7,  12,  16,   5,  COORD_CHRRNG
+JobCrewS,          JobCrewL,              ITIWC_LIST,    CrewForJobD,        CrewForJobD,          0,   0,   0,   0,  COORD_REL
+JobMaterialsS,     JobMaterialsL,         ITIWC_LIST,    JobMaterialsD,      JobMaterialsD,        0,   3,   0,   0,  COORD_CHRREL
+
+JobZoneS,          JobZoneL,              ITIWC_LIST,    0,                        0,                          0,   0,   0,   0,  COORD_REL
+
+CrewForCostShtS,   CrewForCostShtL1,      ITIWC_LIST,    CrewCShtLbEqD,      CrewCShtLbEqD,        0,   2,  50,   0,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+CrewForCostShtS,   CrewForCostShtL2,      ITIWC_LIST,    CrewCShtLbEqD,      CrewCShtLbEqD,       50,   2,   0,   0,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+
+CrewForJobS,       CrewForJobL1,          ITIWC_LIST,    CrewJobLbEqD,       CrewJobLbEqD,         0,   2,  50,   0,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+CrewForJobS,       CrewForJobL2,          ITIWC_LIST,    CrewJobLbEqD,       CrewJobLbEqD,        50,   2,   0,   0,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                  LONG                             LONG                  LONG                  USHORT USHORT   USHORT
+// List Window ID          Window Options                   Background Color      Label Bkg Color       Label ydata    Button Window ID
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+CBEstForStdItemL,       ITI_LISTOPTIONSV,                ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+CBEstForJobItemL,       ITI_LISTOPTIONSV,                ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+CostShtCrewL,           ITI_LISTOPTIONSHV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+MaterialL,              ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+TaskL,                  ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+JobTaskL,               ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+JobCrewL,               ITI_LISTOPTIONSHV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+JobMaterialsL,          ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+JobZoneL,               ITI_LISTOPTIONSV,                ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+
+TaskCostShtEditDL,    ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+MatForCostShtDL,  ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+CrewForCostShtL1,       ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+CrewForCostShtL2,       ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+CrewCatForCostShtD,  ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+CrewCShtLaborL,         ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+CrewCShtEquipL,         ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+
+CrewForJobL1,           ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+CrewForJobL2,           ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+CrewJobLaborL,          ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+CrewJobEquipL,          ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,    0
+
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                  USHORT              RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                                USHORT  PSZ
+//
+// Window ID               Next Window ID      xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags                                  uIndex     Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CBEstForStdItemL,       TaskS,          1,   0,  8,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                      CostBasedEstimateID,            "String"
+CBEstForStdItemL,       TaskS,         17,   0,  8,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,          Description,                    "String"
+CBEstForStdItemL,       TaskS,          0,   0,  4,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,          Active,                         "Flag,No,Yes"
+
+CBEstForJobItemL,       JobTaskS,       1,   0,  8,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                      CostBasedEstimateID,            "String"
+CBEstForJobItemL,       JobTaskS,      18,   0,  8,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,          Description,                    "String"
+CBEstForJobItemL,       JobTaskS,       0,   0,  4,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,          Active,                         "Flag,No,Yes"
+
+
+CostShtCrewL,         CrewForCostShtS,  1,   0, 8,   1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         CostSheetCrewID,                "String"
+CostShtCrewL,         CrewForCostShtS, 10,   0, 255, 1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         Description,                    "String"
+
+JobCrewL,               CrewForJobS,    1,   0, 8,   1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         CrewID,                         "String"
+JobCrewL,               CrewForJobS,   10,   0, 255, 1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         Description,                    "String"
+
+MaterialL,              0,                   1,  0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         MaterialID,                     "String"
+MaterialL,              0,                   4,  1,   36,  1, COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         Description,                    "String"
+MaterialL,              0,                   5,  0,   15,  1, COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATARTFLAGS,       Quantity,                       "Number,,..."
+MaterialL,              0,                   38, 0,    4,  1, COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         CodeValueID,                    "String"
+MaterialL,              0,                   22, 0,   14,  1, COORD_CHRRNG, ITI_LLINKCOLOR,   ITI_LDATARTFLAGS,       UnitPrice,                      "Number,$,...."
+MaterialL,              0,                   40, 0,   15,  1, COORD_CHRRNG, ITI_LLINKCOLOR,   ITI_LDATARTFLAGS,       5,                              "Number,$,.."
+
+MaterialS,              0,                   25, 0,   14,  1, COORD_CHRRNG, ITI_LLINKCOLOR,   ITI_LDATARTFLAGS,       CostSheetKey,                   "Number"
+
+TaskS,                0,                   15, 0,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR,  ITI_SDATAMLFLAGS,       ShortDescription,               "String"
+
+TaskL,                  TaskCostShtS,    1,  0,   16,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         TaskID,                         "String"
+TaskL,                  TaskCostShtS,    4,  1,  255,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         Description,                    "String"
+TaskL,                  TaskCostShtS,   18,  0,   10,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         CostSheetID,                    "String"
+TaskL,                  TaskCostShtS,   28,  0,    4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         CodeValueID,                    "String"
+TaskL,                  TaskCostShtS,   34,  0,   10,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,       ProductionAdjustment,           "Number,%.."
+TaskL,                  TaskCostShtS,   50,  0,   10,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,       MaterialQuantityAdjustment,     "Number,%.."
+
+TaskCostShtS,         0,                   11,  0,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,       Description,                    "String"
+TaskCostShtS,         0,                   20,  2,   12,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         ProductionRate,                 "Number,,...."
+TaskCostShtS,         0,                   34,  2,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         CodeValueID,                    "String"
+TaskCostShtS,         0,                   20,  3,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         ProductionGranularity,          "UnitOfTime"
+TaskCostShtS,         0,                   51,  3,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         ProductionAdjustment,           "Number,%.."
+TaskCostShtS,         0,                   20,  4,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         DefaultHoursPerDay,             "Number,.."
+TaskCostShtS,         0,                   20,  5,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         MaterialsOverheadPct,           "Number,%."
+TaskCostShtS,         0,                   51,  5,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         MaterialQuantityAdjustment,     "Number,%.."
+TaskCostShtS,         0,                   20,  6,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         EquipmentOverheadPct,           "Number,%."
+TaskCostShtS,         0,                   20,  7,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         LaborOverheadPct,               "Number,%."
+TaskCostShtS,         0,                   20,  8,    8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         MarkUpPct,                      "Number,%."
+
+JobTaskS,             0,                   12,  0,    13, 1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,         StandardItemNumber,             "String"
+JobTaskS,             0,                   12,  1,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,       ShortDescription,               "String"
+//JobTaskS,             0,                   40,  0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS,  10,       "Number,,..."
+//JobTaskS,             0,                   26,  0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS,   9,       "Number,$,...."
+//JobTaskS,             0,                    2,  0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS,  11,       "Number,$,.."
+//JobTaskS,             0,                   19,  0,    4,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  CodeValueID, "String"
+//JobTaskS,             0,                   11,  1,    3,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,    SupplementalDescription,        "String"
+
+
+JobTaskL,               JobCostShtS,     1,  0,   16,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         TaskID,                         "String"
+JobTaskL,               JobCostShtS,     4,  1,  255,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         TaskDescription,                "String"
+JobTaskL,               JobCostShtS,    15,  0,   15,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,       QuantityPerItemUnit,            "Number,,......"
+JobTaskL,               JobCostShtS,    31,  0,   14,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_LDATARTFLAGS,       UnitPrice,                      "Number,$,...."
+JobTaskL,               JobCostShtS,    45,  0,    5,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,         CodeValueID,                    "String"
+JobTaskL,               JobCostShtS,    49,  0,   19,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,       6,                              "Number,$,.."
+
+
+JobCostShtS,          0,   35,  8,  4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,          "String"
+JobCostShtS,          0,   64,  8,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,   35,  9,  4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,          "String"
+JobCostShtS,          0,   64,  9,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,   35, 10,  4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,          "String"
+JobCostShtS,          0,   64, 10,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,   64, 11,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,   64, 12,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,  128, 29,  8,  2, COORD_BLKRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,  128, 27,  8,  2, COORD_BLKRNG,  ITI_SDATACOLOR, ITI_SDATACTRFLAGS, CodeValueID,          "String"
+JobCostShtS,          0,   11,  0, 16,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    TaskID,               "String"
+JobCostShtS,          0,   48,  0,  4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    CostBasedEstimateID,  "String"
+JobCostShtS,          0,   11,  1,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,  TaskDescription,      "String"
+JobCostShtS,          0,   11,  3,  8,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    CostSheetID,          "String"
+JobCostShtS,          0,   11,  4,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,  Description,          "String"
+JobCostShtS,          0,   11,  6, 12,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    DisplayedProductionRate,    "Number,,...."
+JobCostShtS,          0,   23,  6,  4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,          "String"
+JobCostShtS,          0,   34,  6,  5,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    Duration,             "Number,,"
+JobCostShtS,          0,   43,  6, 16,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    1,                    "Number,,..."
+JobCostShtS,          0,   57,  6,  4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,          "String"
+JobCostShtS,          0,   11,  7,  5,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    HoursPerDay,          "Number,.."
+JobCostShtS,          0,   33,  7,  5,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,    OvertimeHoursPerDay,  "Number,.."
+JobCostShtS,          0,   41,  8,  6,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATARTFLAGS,  MaterialsOverheadPct, "Number,%."
+JobCostShtS,   JobCrewS,    4,  9, 12,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_LDATARTFLAGS,  EquipmentDailyCost,   "Number,$,.."
+JobCostShtS,          0,   41,  9,  6,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATARTFLAGS,  EquipmentOverheadPct, "Number,%."
+JobCostShtS,   JobCrewS,    4, 10, 12,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_LDATARTFLAGS,  LaborDailyCost,       "Number,$,.."
+JobCostShtS,          0,   41, 10,  6,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATARTFLAGS,  LaborOverheadPct,     "Number,%."
+JobCostShtS,          0,   35, 12,  6,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATARTFLAGS,  MarkUpPct,            "Number,%."
+JobCostShtS,          0,   95, 29, 28,  2, COORD_BLKRNG,  ITI_SDATACOLOR, ITI_SDATARTFLAGS,  QuantityPerItemUnit,  "Number,,......"
+
+
+
+
+JobMaterialsS,        0,                   18,  0,    13, 1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,        CostBasedEstimateID,             "String"
+JobMaterialsS,        0,                   12,  1,     8, 1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,        CostSheetID,                     "String"
+JobMaterialsS,        0,                   24,  4,     1, 2, TL | BLK | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, Description, "String"
+
+JobMaterialsL,          0,                    1,  0,   16,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,        MaterialID,                      "String"
+JobMaterialsL,          0,                    4,  1,  255,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,        Material.Description,            "String"
+JobMaterialsL,          0,                   15,  0,   15,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,      Quantity,                        "Number,,..."
+JobMaterialsL,          0,                   31,  0,   14,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_LDATARTFLAGS,      UnitPrice,                       "Number,$,...."
+JobMaterialsL,          0,                   45,  0,    4,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS,        CodeValueID,                     "String"
+JobMaterialsL,          0,                   49,  0,   19,  1, COORD_CHRRNG,  ITI_LDATACOLOR, ITI_LDATARTFLAGS,      5,                               "Number,$,.."
+
+TaskCostShtEditDL,    0,                   1,   0, 8,   1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         CostSheetID,                    "String"
+TaskCostShtEditDL,    0,                  10,   0, 255, 1,  COORD_CHRRNG, ITI_LDATACOLOR,   ITI_LDATAFLAGS,         Description,                    "String"
+
+MatForCostShtDL,  0,                   2,   0,    8,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                               MaterialID,      "String"
+MatForCostShtDL,  0,                  10,   0,    6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Description,     "String"
+MatForCostShtDL,  0,                   1,   0,    4,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   CodeValueID,     "String"
+
+
+CrewForCostShtS,      0,                  11,  0, 255,  2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS,                            Description,    "String"
+
+CrewForCostShtL1,       0,                   1,  0,   8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     LaborerID,      "String"
+CrewForCostShtL1,       0,                   1,   0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,       Quantity,       "Number,,.."
+CrewForCostShtL1,       0,                   3,   1, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     Labor.Description,  "String"
+
+CrewForCostShtL2,       0,                   1,   0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     EquipmentID,    "String"
+CrewForCostShtL2,       0,                   1,   0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,       Quantity,       "Number,,.."
+CrewForCostShtL2,       0,                   3,   1, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     Equipment.Description,  "String"
+
+
+CrewCatForCostShtD,  0,                   1,   0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     CrewID,         "String"
+CrewCatForCostShtD,  0,                  10,   0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     Description,    "String"
+
+
+CrewCShtLaborL,         0,                   1,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, LaborerID,             "String"
+CrewCShtLaborL,         0,                   1,  0,    7,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewCShtLaborL,         0,                   3,  1,  255,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Labor.Description,     "String"
+
+CrewCShtEquipL,         0,                   1,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, EquipmentID,           "String"
+CrewCShtEquipL,         0,                   1,  0,    7,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewCShtEquipL,         0,                   3,  1,   255, 1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Equipment.Description,    "String"
+
+
+
+
+CrewForJobS,      0,                  11,  0, 255,  2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS,                            Description,    "String"
+
+CrewForJobL1,       0,                   1,  0,   8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     LaborerID,      "String"
+CrewForJobL1,       0,                   1,   0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,       Quantity,       "Number,,.."
+CrewForJobL1,       0,                   3,   1, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     Labor.Description,  "String"
+
+CrewForJobL2,       0,                   1,   0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     EquipmentID,    "String"
+CrewForJobL2,       0,                   1,   0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,       Quantity,       "Number,,.."
+CrewForJobL2,       0,                   3,   1, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,                                     Equipment.Description,  "String"
+
+
+CrewJobLaborL,         0,                   1,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, LaborerID,             "String"
+CrewJobLaborL,         0,                   1,  0,    7,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewJobLaborL,         0,                   3,  1,  255,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Labor.Description,     "String"
+
+CrewJobEquipL,         0,                   1,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, EquipmentID,           "String"
+CrewJobEquipL,         0,                   1,  0,    7,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewJobEquipL,         0,                   3,  1,   255, 1,   COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Equipment.Description,    "String"
+
+JobZoneL,              0,                   1,   0,   16,  1,  COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  ZoneTypeID,               "String"
+JobZoneL,              0,                  18,   0,    8,  1,  COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  ZoneID,                   "String"
+JobZoneL,              0,                  27,   0,   40,  1,  COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  Description, "String"
+
+
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID                 Next Window  xpos ypos  xsiz ysiz CoordType  Foreground Color  Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+CBEstForStdItemL,            0,           1,  0, 15,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,                               "Cost Based Estimate"
+CBEstForStdItemL,            0,          17,  0, 13,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+CBEstForStdItemL,            0,           0,  0,  6,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Active"
+
+CBEstForJobItemL,            0,           1,  0, 15,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,                               "Cost Based Estimate"
+CBEstForJobItemL,            0,          18,  0, 13,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+CBEstForJobItemL,            0,           0,  0,  6,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Active"
+
+
+CostShtCrewL,                0,            1,   0,   8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Crew"
+CostShtCrewL,                0,           10,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+JobCrewL,                    0,            1,   0,   8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Crew"
+JobCrewL,                    0,           10,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+
+MaterialS,                   0,            4,   0,  13,   1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,    "<calculating>"
+MaterialS,                   0,           18,   0,   7,   1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Total:"
+
+MaterialL,                   0,            1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Material /"
+MaterialL,                   0,            4,   1,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Description"
+MaterialL,                   0,           13,   0,   7,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELRTFLAGS,   "Quantity"
+MaterialL,                   0,           32,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Price"
+MaterialL,                   0,           37,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Unit"
+MaterialL,                   0,           36,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "/"
+MaterialL,                   0,           40,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Extension"
+
+TaskS,                     0,            1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,     "Item Description:"
+
+TaskL,                       0,            1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELFLAGS,     "Task /"
+TaskL,                       0,            4,   1,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELFLAGS,     "Description"
+TaskL,                       0,           13,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELRTFLAGS,   "Cost Sheet"
+TaskL,                       0,           28,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELFLAGS,     "Unit"
+TaskL,                       0,           34,   0,  15,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELFLAGS,     "Production Adj"
+TaskL,                       0,           49,   0,  15,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_SLABELFLAGS,     "Material Qty Adj"
+
+TaskCostShtS,              0,            1,   0,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Description:"
+TaskCostShtS,              0,            8,   2,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Production:"
+TaskCostShtS,              0,           39,   2,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+TaskCostShtS,              0,           40,   2,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "Day"
+TaskCostShtS,              0,            1,   3,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Production Granularity:"
+TaskCostShtS,              0,           32,   3,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Production Adjustment:"
+TaskCostShtS,              0,            1,   4,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Default Hours/Day:"
+
+TaskCostShtS,              0,            1,   5,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Materials Overhead:"
+TaskCostShtS,              0,           32,   5,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Material Qty Adjustment:"
+
+TaskCostShtS,              0,            1,   6,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Equipment Overhead:"
+TaskCostShtS,              0,            1,   7,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Labor Overhead:"
+TaskCostShtS,              0,            1,   8,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Contractor Markup:"
+
+//JobTaskS,                  0,           26,   0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,  ITI_SDATARTFLAGS,   "$0.0000"
+//JobTaskS,                  0,           40,   0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,  ITI_SDATARTFLAGS,   "0.000"
+JobTaskS,                  0,            2,   0,   15,  1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,  ITI_SDATARTFLAGS,   "$0.00"
+JobTaskS,                  0,            1,   0,  13,   1, COORD_CHRRNG,                             ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Item Number:"
+JobTaskS,                  0,            2,   1,  13,   1, COORD_CHRRNG,                             ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Description:"
+JobTaskS,                    0,           15,   0,   7,   1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "ItemTotal:"
+//JobTaskS,                  0,           25,   0,   1,   1, BR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "/"
+
+JobTaskL,                    0,            1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Task /"
+JobTaskL,                    0,            4,   1,  45,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Description               (Per Item Unit)"
+//JobTaskL,                    0,            4,   1,  45,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Description                              "
+JobTaskL,                    0,           17,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+JobTaskL,                    0,           45,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Unit"
+JobTaskL,                    0,           40,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Price"
+JobTaskL,                    0,           44,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS,  "/"
+JobTaskL,                    0,           51,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Extension"
+                                                                                                                    
+
+JobCostShtS,   JobMaterialsS,           21,   8,   13,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_LDATARTFLAGS,      ""     // MaterialsUnitCost
+JobCostShtS,        JobCrewS,           21,   9,   13,  1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // EquipmentUnitCost      
+JobCostShtS,        JobCrewS,           21,  10,  13,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // LaborUnitCost       
+JobCostShtS,   JobMaterialsS,           48,   8,  15,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // MaterialsCost       
+JobCostShtS,        JobCrewS,           48,   9,  15,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // EquipCost           
+JobCostShtS,        JobCrewS,           48,  10,  15,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // LaborCost           
+JobCostShtS,               0,           48,  11,  15,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // Total               
+JobCostShtS,               0,           48,  12,  15,   1, COORD_CHRRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // MarkUp              
+JobCostShtS,               0,           96,  27,  30,   2, COORD_BLKRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // UnitPrice           
+JobCostShtS,               0,           94,  33,  32,   2, COORD_BLKRNG,  ITI_LLINKCOLOR, ITI_SDATARTFLAGS,      ""     // Extension
+
+JobCostShtS,               0,           78,  27,  18,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Unit Price:"
+JobCostShtS,               0,           75,  33,  20,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Extension:"
+JobCostShtS,               0,           76,  29,  20,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "* Quantity:"
+
+JobCostShtS,               0,           34,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           63,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           34,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           63,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           34,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           63,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           63,  12,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,          126,  27,   2,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+JobCostShtS,               0,           63,  11,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "/"
+
+JobCostShtS,               0,            1,   0,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Task:"
+JobCostShtS,               0,           31,   0,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "Cost Based Estimate:"
+JobCostShtS,               0,            1,   1,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Description:"
+JobCostShtS,               0,            1,   3,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Cost Sheet:"
+JobCostShtS,               0,            1,   4,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Description:"
+JobCostShtS,               0,            1,   6,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Production:"
+JobCostShtS,               0,           28,   6,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "/day"
+JobCostShtS,               0,           36,   6,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "days ="
+JobCostShtS,               0,            1,   7,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "[Hours/Day:"
+JobCostShtS,               0,           17,   7,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "Overtime Hours/Day:"
+JobCostShtS,               0,           32,   7,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "]"
+JobCostShtS,               0,            1,   8,   8,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Materials:"
+JobCostShtS,               0,           40,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "+"
+JobCostShtS,               0,           48,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "="
+JobCostShtS,               0,            1,   9,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Equip:"
+JobCostShtS,               0,           16,   9,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "/day ="
+JobCostShtS,               0,           40,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "+"
+JobCostShtS,               0,           48,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "="
+JobCostShtS,               0,            1,  10,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Labor:"
+JobCostShtS,               0,           16,  10,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,       "/day =" 
+JobCostShtS,               0,           40,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "+"
+JobCostShtS,               0,           48,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,    "="
+JobCostShtS,               0,           38,  11,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Total:"
+JobCostShtS,               0,           38,  12,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "Markup:"
+JobCostShtS,               0,           99,  26,  26,   1, COORD_BLKRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS,    "---------------------------------------"
+JobCostShtS,               0,           99,  30,  26,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,     "---------------------------------------"
+
+
+JobMaterialsS,                  0,            1,   0,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR,     ITI_SLABELFLAGS, "Cost Based Estimate:"
+JobMaterialsS,                  0,            1,   1,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Cost Sheet:"
+JobMaterialsS,                  0,            1,   2,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Description:"
+
+JobMaterialsL,                    0,            1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Materials /"
+JobMaterialsL,                    0,            4,   1,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Description"
+JobMaterialsL,                    0,           17,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+JobMaterialsL,                    0,           45,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Unit"
+JobMaterialsL,                    0,           40,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Price"
+JobMaterialsL,                    0,           44,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS,  "\"
+JobMaterialsL,                    0,           51,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Extension"
+
+TaskCostShtEditDL,              0,            1,   0,   8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Cost Sheet"
+TaskCostShtEditDL,              0,           10,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+MatForCostShtDL,            0,            1,   0,    8,  1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Material"
+MatForCostShtDL,            0,           10,   0,    6,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+MatForCostShtDL,            0,            1,   0,    4,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+
+CrewForCostShtS,                0,            1,   0,    9,  1,  COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,   "Description:"
+
+CrewForCostShtL1,                 0,            1,  0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Laborer /"
+CrewForCostShtL1,                 0,            1,  0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewForCostShtL1,                 0,            3,  1, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewForCostShtL2,                 0,            1,  0, 9,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Equipment /"
+CrewForCostShtL2,                 0,            1,  0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewForCostShtL2,                 0,            3,  1, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewCatForCostShtD,            0,            1,  0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Crew"
+CrewCatForCostShtD,            0,           10,  0, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewCShtLaborL,                   0,            1,  0,   8, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Laborer"             
+CrewCShtLaborL,                   0,            1,  0,   7, 1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS, "Quantity"
+CrewCShtLaborL,                   0,            3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+CrewCShtEquipL,                   0,            1,  0,   8, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Equipment"           
+CrewCShtEquipL,                   0,            1,  0,   7, 1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewCShtEquipL,                   0,            3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+
+
+CrewForJobS,                0,            1,   0,    9,  1,  COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,   "Description:"
+
+CrewForJobL1,                 0,            1,  0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Laborer /"
+CrewForJobL1,                 0,            1,  0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewForJobL1,                 0,            3,  1, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewForJobL2,                 0,            1,  0, 9,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Equipment /"
+CrewForJobL2,                 0,            1,  0, 7,   1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewForJobL2,                 0,            3,  1, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewJobLaborL,                0,            1,  0,   8, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Laborer"             
+CrewJobLaborL,                0,            1,  0,   7, 1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS, "Quantity"
+CrewJobLaborL,                0,            3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+CrewJobEquipL,                0,            1,  0,   8, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Equipment"           
+CrewJobEquipL,                0,            1,  0,   7, 1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewJobEquipL,                0,            3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+JobZoneL,                     0,            1,  0,  16, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "ZoneType"
+JobZoneL,                     0,           18,  0,   8, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Zone"
+JobZoneL,                     0,           27,  0,  40, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID           Query String
+//---------------------------------------------------------------------------------------------------------------
+
+
+CBEstForStdItemS, "SELECT StandardItemKey, StandardItemNumber "
+CBEstForStdItemS, "FROM StandardItem "
+CBEstForStdItemS, "WHERE StandardItemKey = %StandardItemKey "
+
+// CBEstForJobItemS, "SELECT StandardItem.StandardItemKey, StandardItemNumber, "
+// CBEstForJobItemS, "JobCostBasedEstimate.JobKey, JobCostBasedEstimate.JobItemKey "
+// CBEstForJobItemS, "FROM StandardItem, JobItem, JobCostBasedEstimate "
+// CBEstForJobItemS, "WHERE JobCostBasedEstimate.JobKey = JobItem.JobKey "
+// CBEstForJobItemS, "AND JobCostBasedEstimate.JobItemKey = JobItem.JobItemKey "
+// CBEstForJobItemS, "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+// CBEstForJobItemS, "AND JobCostBasedEstimate.JobKey = %JobKey "
+// CBEstForJobItemS, "AND JobCostBasedEstimate.JobItemKey = %JobItemKey "
+// CBEstForJobItemS, "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+
+
+CBEstForJobItemS, "SELECT StandardItem.StandardItemKey, StandardItemNumber,  "
+CBEstForJobItemS, "JobItem.JobKey,  JobItem.JobItemKey "  
+CBEstForJobItemS, "FROM StandardItem, JobItem "
+CBEstForJobItemS, "WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey "
+CBEstForJobItemS, "AND JobItem.JobKey = %JobKey "
+CBEstForJobItemS, "AND JobItem.JobItemKey = %JobItemKey "
+
+
+CBEstForStdItemL, " SELECT CostBasedEstimateID, Description, Active,"
+CBEstForStdItemL, " CostBasedEstimateKey, StandardItemKey"
+CBEstForStdItemL, " FROM CostBasedEstimate"
+CBEstForStdItemL, " WHERE StandardItemKey = %StandardItemKey"
+CBEstForStdItemL, " ORDER BY CostBasedEstimateID"
+
+CBEstForJobItemL, " SELECT CostBasedEstimateID, Description, Active,"
+CBEstForJobItemL, " JobItemCostBasedEstimateKey, JobKey, JobItemKey"
+CBEstForJobItemL, " FROM JobCostBasedEstimate "
+CBEstForJobItemL, " WHERE JobKey = %JobKey"
+CBEstForJobItemL, " AND JobItemKey = %JobItemKey"
+CBEstForJobItemL, " ORDER BY CostBasedEstimateID"
+                     
+CostShtCrewL,     " SELECT CostSheetCrewID, Description, CostSheetCrewKey,"
+CostShtCrewL,     " CostSheetKey"
+CostShtCrewL,     " FROM CrewUsed"
+CostShtCrewL,     " WHERE CostSheetKey = %CostSheetKey"
+CostShtCrewL,     " ORDER BY CostSheetCrewID"
+
+CostShtCrewS,     " SELECT CostSheetID, CostSheetKey"
+CostShtCrewS,     " FROM CostSheet"
+CostShtCrewS,     " WHERE CostSheetKey = %CostSheetKey"
+
+JobCrewS,         "SELECT CostSheetID, JobID, "
+JobCrewS,         "JobCostSheet.JobKey, JobCostSheet.JobCostSheetKey "
+JobCrewS,         "FROM JobCostSheet, Job "
+JobCrewS,         "WHERE JobCostSheet.JobKey = Job.JobKey "
+JobCrewS,         "AND JobCostSheet.JobKey = %JobKey "
+JobCrewS,         "AND JobCostSheet.JobCostSheetKey = %JobCostSheetKey "
+
+JobCrewL,         " SELECT CrewID, Description,"
+JobCrewL,         " JobKey, JobCostSheetKey, JobCrewKey"
+JobCrewL,         " FROM JobCrewUsed"
+JobCrewL,         " WHERE JobKey = %JobKey"
+JobCrewL,         " AND JobCostSheetKey = %JobCostSheetKey"
+JobCrewL,         " ORDER BY CrewID"
+
+MaterialS,        "SELECT CostSheetID, CostSheetKey "
+MaterialS,        "FROM CostSheet "
+MaterialS,        "WHERE CostSheetKey = %CostSheetKey "
+
+MaterialL,        "/* MaterialL */"
+MaterialL,        " SELECT MaterialID, Quantity, UnitPrice, CodeValueID," 
+MaterialL,        " Extension = Quantity * UnitPrice, Material.Description,"  
+MaterialL,        " MaterialUsed.MaterialKey, MaterialUsed.CostSheetKey"
+MaterialL,        " FROM CodeValue CV, Material M, MaterialUsed MU, MaterialPrice MP"   
+MaterialL,        ", CostSheet CS"
+MaterialL,        " WHERE MU.MaterialKey = M.MaterialKey"
+MaterialL,        " AND M.Unit = CodeValueKey"
+MaterialL,        " AND MP.MaterialKey = M.MaterialKey"
+MaterialL,        " AND MP.ZoneKey = 1"
+MaterialL,        " AND MP.BaseDate = @UndeclaredBaseDate"  
+MaterialL,        " AND MU.CostSheetKey = %CostSheetKey"  
+MaterialL,        " AND MU.CostSheetKey = CS.CostSheetKey"  
+MaterialL,        " AND (( (MP.UnitType = CS.UnitType) OR (MP.UnitType = NULL) )"
+MaterialL,         " OR ( CS.UnitType = NULL "
+MaterialL,              " AND MP.UnitType = %CurUnitType "
+MaterialL,              " AND (CV.UnitType = MP.UnitType OR CV.UnitType = NULL) ))"
+MaterialL,        " ORDER BY MaterialID"
+
+TaskS,            " SELECT StandardItemNumber, ShortDescription, CodeValueID,"
+TaskS,            " StandardItem.StandardItemKey, CostBasedEstimateKey"
+TaskS,            " FROM StandardItem, CostBasedEstimate, CodeValue CV"
+TaskS,            " WHERE StandardItem.Unit = CodeValueKey"
+// TaskS,            " AND CV.CodeTableKey = (select CodeTableKey from CodeTable where CodeTableID='UNITS' )"
+TaskS,            " AND CV.CodeTableKey = 1000016 "
+TaskS,            " AND StandardItem.StandardItemKey = %StandardItemKey"
+TaskS,            " AND CostBasedEstimateKey = %CostBasedEstimateKey"
+
+TaskL,            " SELECT TaskID, CostSheetID, CodeValueID, ProductionAdjustment,"
+TaskL,            " MaterialQuantityAdjustment, Task.Description,"
+TaskL,            " Task.CostSheetKey, TaskKey, CostBasedEstimateKey, CodeValueKey"
+TaskL,            " FROM Task, CostSheet CS, CodeValue CV"
+TaskL,            " WHERE Unit = CodeValueKey"
+// TaskL,            " AND CV.CodeTableKey = (select CodeTableKey from CodeTable where CodeTableID='UNITS' )"
+TaskL,            " AND CV.CodeTableKey = 1000016 "
+TaskL,            " AND Task.CostSheetKey = CS.CostSheetKey"
+TaskL,            " AND Task.CostBasedEstimateKey = %CostBasedEstimateKey"
+TaskL,            " AND CS.Deleted = NULL "
+TaskL,            " ORDER BY TaskID"
+
+
+TaskCostShtS,     "SELECT Task.Description, ProductionRate, ProductionGranularity, "
+TaskCostShtS,     "ProductionAdjustment, DefaultHoursPerDay, MaterialsOverheadPct, "
+TaskCostShtS,     "EquipmentOverheadPct, LaborOverheadPct, MarkUpPct, " 
+TaskCostShtS,     "MaterialQuantityAdjustment, CostSheet.CostSheetKey, CostSheetID, TaskID, "
+TaskCostShtS,     "CodeValueID "
+TaskCostShtS,     "FROM CostSheet CS, Task, CodeValue "
+TaskCostShtS,     "WHERE Task.Unit = CodeValueKey "
+TaskCostShtS,     "AND Task.CostSheetKey = CostSheet.CostSheetKey "
+TaskCostShtS,     "AND Task.CostBasedEstimateKey = %CostBasedEstimateKey "
+TaskCostShtS,     "AND Task.CostSheetKey = %CostSheetKey "
+TaskCostShtS,     "AND Task.TaskKey = %TaskKey "
+TaskCostShtS,     "AND CS.Deleted = NULL "
+
+//JobTaskS,  "SELECT DISTINCT JobCostSheet.JobKey, JobCostSheet.JobItemKey, "
+//JobTaskS,  "JobID, JobItem.StandardItemKey, StandardItemNumber, "
+//JobTaskS,  "ShortDescription, LongDescription, CodeValueID, "
+//JobTaskS,  "(SELECT sum(UnitPrice) "
+//JobTaskS,  " FROM JobCostSheet "
+//JobTaskS,  " WHERE JobKey= %JobKey "
+//JobTaskS,  " AND JobItemCostBasedEstimateKey= %JobItemCostBasedEstimateKey "
+//JobTaskS,  " AND JobItemKey=%JobItemKey), "
+//JobTaskS,  "(SELECT sum(QuantityPerItemUnit) "
+//JobTaskS,  " FROM JobCostSheet "
+//JobTaskS,  " WHERE JobKey=%JobKey "
+//JobTaskS,  " AND JobItemCostBasedEstimateKey=%JobItemCostBasedEstimateKey "
+//JobTaskS,  " AND JobItemKey = %JobItemKey), "
+//JobTaskS,  "(SELECT sum(QuantityPerItemUnit * UnitPrice) "
+//JobTaskS,  " FROM JobCostSheet "
+//JobTaskS,  " WHERE JobKey = %JobKey "
+//JobTaskS,  " AND JobItemCostBasedEstimateKey= %JobItemCostBasedEstimateKey "
+//JobTaskS,  " AND JobItemKey = %JobItemKey), "
+//JobTaskS,  "JobCostSheet.JobItemCostBasedEstimateKey "
+//JobTaskS,  "FROM JobCostSheet, Job, JobItem, StandardItem, CodeValue "
+//JobTaskS,  "WHERE JobCostSheet.JobKey = Job.JobKey "
+//JobTaskS,  "AND JobCostSheet.JobKey=JobItem.JobKey "
+//JobTaskS,  "AND JobCostSheet.JobItemKey=JobItem.JobItemKey "
+//JobTaskS,  "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+//JobTaskS,  "AND StandardItem.Unit = CodeValueKey "
+//JobTaskS,  "AND JobCostSheet.JobKey = %JobKey "
+//JobTaskS,  "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+//JobTaskS,  "AND JobCostSheet.JobItemKey = %JobItemKey "
+
+// JobTaskS,  "SELECT JI.JobKey, JI.JobItemKey,  "
+// JobTaskS,  "J.JobID, JI.StandardItemKey, SI.StandardItemNumber, "
+// JobTaskS,  "SI.ShortDescription, CV.CodeValueID, "
+// JobTaskS,  "JCBE.JobItemCostBasedEstimateKey "
+// JobTaskS,  "FROM Job J, JobItem JI, StandardItem SI, CodeValue CV, "
+// JobTaskS,  "JobCostBasedEstimate JCBE "
+// JobTaskS,  "WHERE JI.JobKey = %JobKey "
+// JobTaskS,  "AND JI.JobItemKey = %JobItemKey "
+// JobTaskS,  "AND JI.StandardItemKey = SI.StandardItemKey "
+// JobTaskS,  "AND SI.Unit = CV.CodeValueKey "
+// JobTaskS,  "AND JCBE.JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+// JobTaskS,  "AND JCBE.JobKey = %JobKey "
+// JobTaskS,  "AND JCBE.JobItemKey = %JobItemKey "
+
+// JobTaskS,  "SELECT DISTINCT JobCostSheet.JobKey, JobCostSheet.JobItemKey, "
+// JobTaskS,  "JobCostSheet.JobCostSheetKey, JobID, JobItem.StandardItemKey, StandardItemNumber, "
+// JobTaskS,  "ShortDescription, LongDescription, CodeValueID, "
+// JobTaskS,  "JobCostSheet.JobItemCostBasedEstimateKey "
+// JobTaskS,  "FROM JobCostSheet, Job, JobItem, StandardItem, CodeValue "
+// JobTaskS,  "WHERE JobCostSheet.JobKey = Job.JobKey "
+// JobTaskS,  "AND JobCostSheet.JobKey=JobItem.JobKey "
+// JobTaskS,  "AND JobCostSheet.JobItemKey=JobItem.JobItemKey "
+// JobTaskS,  "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+// JobTaskS,  "AND StandardItem.Unit = CodeValueKey "
+// JobTaskS,  "AND JobCostSheet.JobKey = %JobKey "
+// JobTaskS,  "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+// JobTaskS,  "AND JobCostSheet.JobItemKey = %JobItemKey "
+
+
+JobTaskS,   "/* cbest.met JobTaskS */ " 
+JobTaskS,   " SELECT JI.JobKey, JI.JobItemKey, J.JobID,"
+JobTaskS,   " JI.StandardItemKey, SI.StandardItemNumber,"
+JobTaskS,   " SI.ShortDescription, SI.LongDescription, CV.CodeValueID,"
+JobTaskS,   " JCBE.JobItemCostBasedEstimateKey, JI.JobBreakdownKey"
+JobTaskS,   " , JI.Quantity "
+JobTaskS,   " FROM  Job J, JobItem JI, StandardItem SI, CodeValue CV,"
+JobTaskS,   " JobCostBasedEstimate JCBE"
+JobTaskS,   " WHERE JI.StandardItemKey = SI.StandardItemKey"
+JobTaskS,   " AND SI.Unit = CV.CodeValueKey"
+JobTaskS,   " AND JI.JobKey = %JobKey"
+JobTaskS,   " AND JI.JobItemKey = %JobItemKey"
+JobTaskS,   " AND J.JobKey = %JobKey"
+JobTaskS,   " AND JCBE.JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey"
+JobTaskS,   " AND JCBE.JobKey = %JobKey"
+JobTaskS,   " AND JCBE.JobItemKey =  %JobItemKey"
+
+
+JobTaskL,   " SELECT TaskID, QuantityPerItemUnit, UnitPrice, CodeValueID,"
+JobTaskL,   " TaskDescription, Extension = QuantityPerItemUnit * UnitPrice, "
+JobTaskL,   " JobKey, JobCostSheetKey, JobItemKey,"
+JobTaskL,   " JobItemCostBasedEstimateKey "
+JobTaskL,   " FROM JobCostSheet JCS, CodeValue "
+JobTaskL,   " WHERE Unit = CodeValueKey "
+JobTaskL,   " AND JobKey = %JobKey "
+JobTaskL,   " AND JobItemKey = %JobItemKey "
+JobTaskL,   " AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+// JobTaskL,   " AND JCS.Deleted = NULL "
+JobTaskL,   " ORDER BY TaskID"
+
+
+
+JobCostShtS,      " SELECT UnitsProduced = JCS.DisplayedProductionRate * JCS.Duration,"
+JobCostShtS,      " JCS.TaskID,"
+JobCostShtS,      " JCBE.CostBasedEstimateID,"
+JobCostShtS,      " JCS.TaskDescription,"
+JobCostShtS,      " JCS.CostSheetID,"
+JobCostShtS,      " JCS.Description,"
+JobCostShtS,      " JCS.DisplayedProductionRate,"
+JobCostShtS,      " CV.CodeValueID,"
+JobCostShtS,      " JCS.Duration,"
+JobCostShtS,      " JCS.HoursPerDay,"
+JobCostShtS,      " JCS.OvertimeHoursPerDay,"
+JobCostShtS,      " JCS.MaterialsUnitCost,"
+JobCostShtS,      " JCS.MaterialsOverheadPct,"
+JobCostShtS,      " JCS.EquipmentDailyCost,"
+JobCostShtS,      " JCS.EquipmentOverheadPct,"
+JobCostShtS,      " JCS.LaborDailyCost,"
+JobCostShtS,      " JCS.LaborOverheadPct,"
+JobCostShtS,      " JCS.MarkUpPct,"
+JobCostShtS,      " J.JobID,"
+JobCostShtS,      " JCS.JobCostSheetKey,"
+JobCostShtS,      " JCS.JobKey,"
+JobCostShtS,      " JCS.JobItemKey,"
+JobCostShtS,      " JCS.JobItemCostBasedEstimateKey,"
+JobCostShtS,      " SI.StandardItemNumber,"
+JobCostShtS,      " SI.StandardItemKey,"
+JobCostShtS,      " JCS.QuantityPerItemUnit,"
+JobCostShtS,      " JI.JobBreakdownKey"
+
+JobCostShtS,      ", JCS.ProductionRate"
+
+JobCostShtS,      " FROM Job J, JobCostSheet JCS, JobCostBasedEstimate JCBE,"
+JobCostShtS,      " CodeValue CV, JobItem JI, StandardItem SI"
+JobCostShtS,      " WHERE JobCostSheet.Unit = CV.CodeValueKey"
+JobCostShtS,      " AND JCS.JobKey = JI.JobKey"
+JobCostShtS,      " AND JCS.JobItemKey = JI.JobItemKey"
+JobCostShtS,      " AND JI.StandardItemKey = SI.StandardItemKey"
+JobCostShtS,      " AND JCS.JobKey = J.JobKey"
+JobCostShtS,      " AND JCS.JobKey = JCBE.JobKey"
+JobCostShtS,      " AND JCS.JobItemKey = JCBE.JobItemKey"
+JobCostShtS,      " AND JCS.JobItemCostBasedEstimateKey = JCBE.JobItemCostBasedEstimateKey"
+JobCostShtS,      " AND JCS.JobKey = %JobKey " 
+JobCostShtS,      " AND JCS.JobCostSheetKey = %JobCostSheetKey"
+JobCostShtS,      " AND JCS.JobItemKey = %JobItemKey "  
+                    
+
+
+// JobMaterialsS,    "SELECT CostBasedEstimateID, CostSheetID, JobCostSheet.Description, "
+// JobMaterialsS,    "JobCostSheet.JobKey, JobID, JobCostSheet.JobItemCostBasedEstimateKey, "
+// JobMaterialsS,    "JobCostSheet.JobCostSheetKey, StandardItemNumber "
+// JobMaterialsS,    "FROM JobCostBasedEstimate, JobCostSheet, Job, StandardItem "
+// JobMaterialsS,    "WHERE JobCostBasedEstimate.JobKey = Job.JobKey "
+// JobMaterialsS,    "AND JobCostSheet.JobKey = JobCostBasedEstimate.JobKey "
+// JobMaterialsS,    "AND JobCostSheet.JobItemKey = JobCostBasedEstimate.JobItemKey "
+// JobMaterialsS,    "AND JobCostSheet.JobItemCostBasedEstimateKey = JobCostBasedEstimate.JobItemCostBasedEstimateKey "
+// JobMaterialsS,    "AND StandardItemKey = %StandardItemKey "
+// JobMaterialsS,    "AND JobCostBasedEstimate.JobKey = %JobKey "
+// JobMaterialsS,    "AND JobCostBasedEstimate.JobItemKey = %JobItemKey "
+// JobMaterialsS,    "AND JobCostBasedEstimate.JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+
+
+
+
+JobMaterialsS,    "SELECT CostBasedEstimateID, CostSheetID, JobCostSheet.Description, "
+JobMaterialsS,    "JobID, StandardItemNumber, Job.JobKey, "
+JobMaterialsS,    "JobCostSheet.JobCostSheetKey, JobItem.JobBreakdownKey "
+JobMaterialsS,    "FROM JobCostSheet, JobCostBasedEstimate JCBE, Job, StandardItem, JobItem "
+JobMaterialsS,    "WHERE JobCostSheet.JobKey = JCBE.JobKey "
+JobMaterialsS,    "AND JobCostSheet.JobItemCostBasedEstimateKey = JCBE.JobItemCostBasedEstimateKey "
+JobMaterialsS,    "AND JobCostSheet.JobItemKey =  JCBE.JobItemKey "
+JobMaterialsS,    "AND JobCostSheet.JobKey = Job.JobKey "
+JobMaterialsS,    "AND JCBE.JobItemKey = JobItem.JobItemKey "
+JobMaterialsS,    "AND JCBE.JobKey  = JobItem.JobKey "
+JobMaterialsS,    "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+JobMaterialsS,    "AND JobItem.JobKey = %JobKey "
+JobMaterialsS,    "AND JobCostSheet.JobKey = %JobKey "
+JobMaterialsS,    "AND JobCostSheet.JobCostSheetKey = %JobCostSheetKey "
+
+
+
+JobMaterialsL,      " /* cbest.met.JobMaterialsL */ "
+JobMaterialsL,      "SELECT MaterialID, JMU.Quantity, JMU.UnitPrice, CodeValueID, "    
+JobMaterialsL,      "Extension = JMU.Quantity * JMU.UnitPrice, Material.Description, "   
+JobMaterialsL,      "JMU.JobKey, JMU.JobCostSheetKey, JMU.MaterialKey, JI.JobBreakdownKey "
+JobMaterialsL,      "FROM CodeValue, Material, JobMaterialUsed JMU, MaterialPrice MP, "
+JobMaterialsL,          "JobItem JI, JobCostSheet JCS, Job J "    
+JobMaterialsL,      "WHERE JobMaterialUsed.MaterialKey = Material.MaterialKey " 
+JobMaterialsL,      "AND Material.Unit = CodeValueKey "
+JobMaterialsL,      "AND MP.MaterialKey = Material.MaterialKey " 
+JobMaterialsL,      "AND MP.ZoneKey = 1 "
+JobMaterialsL,      "AND MP.BaseDate = @UndeclaredBaseDate "   
+JobMaterialsL,      "AND JMU.JobCostSheetKey = %JobCostSheetKey "  
+JobMaterialsL,      "AND JMU.JobKey = %JobKey "
+JobMaterialsL,      "AND JCS.JobKey = JMU.JobKey "
+JobMaterialsL,      "AND J.JobKey = JMU.JobKey "
+JobMaterialsL,      "AND JCS.JobCostSheetKey = JMU.JobCostSheetKey "
+JobMaterialsL,      "AND JI.JobKey = JCS.JobKey "
+JobMaterialsL,      "AND JI.JobItemKey = JCS.JobItemKey "
+JobMaterialsL,      "AND (MP.UnitType = J.UnitType OR MP.UnitType = NULL ) "
+JobMaterialsL,      "ORDER BY MaterialID "
+
+CostBasedEstimateD, "SELECT CostBasedEstimateID, Description, "
+CostBasedEstimateD, "Active, CostBasedEstimateKey "
+CostBasedEstimateD, "FROM CostBasedEstimate "
+CostBasedEstimateD, "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+
+JobCostBasedEstD,   "SELECT CostBasedEstimateID, Description, "
+JobCostBasedEstD,   "Active, JobKey, JobItemKey, JobItemCostBasedEstimateKey "
+JobCostBasedEstD,   "FROM JobCostBasedEstimate "
+JobCostBasedEstD,   "WHERE JobKey = %JobKey "
+JobCostBasedEstD,   "AND JobItemKey = %JobItemKey "
+JobCostBasedEstD,   "AND JobItemCostBasedEstimateKey=%JobItemCostBasedEstimateKey "
+
+TaskCostShtEditDL,   " /* TaskCostShtEditDL */"
+TaskCostShtEditDL,   " SELECT CostSheetID, Description, CostSheetKey "
+TaskCostShtEditDL,          ", UnitType "
+TaskCostShtEditDL,   " FROM CostSheet CS"
+TaskCostShtEditDL,   " WHERE Deleted IS NULL"
+TaskCostShtEditDL,   " AND (CS.UnitType = %CurUnitType "
+TaskCostShtEditDL,         "OR CS.UnitType = NULL) "
+TaskCostShtEditDL,   " ORDER BY CostSheetID "
+
+
+
+TasksForStdItemD,   "SELECT TaskID, Description, ProductionAdjustment, "
+TasksForStdItemD,   "TaskID, MaterialQuantityAdjustment, QuantityPerItemUnit "
+TasksForStdItemD,   "FROM Task "
+TasksForStdItemD,   "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+TasksForStdItemD,   "AND TaskKey = %TaskKey "
+
+TaskUnitC,    " SELECT CV.CodeValueID, CV.CodeValueKey"
+TaskUnitC,    " FROM CodeValue CV, CodeTable CT"
+TaskUnitC,    " WHERE CV.CodeTableKey = CT.CodeTableKey"
+TaskUnitC,    " AND CT.CodeTableID = 'UNITS'"
+TaskUnitC,    " AND CV.CodeValueID <> '----'"
+TaskUnitC,    " AND (CV.Deleted IS NULL"
+TaskUnitC,         " OR CV.CodeValueKey = %Unit)"
+TaskUnitC,    " AND ((CV.UnitType = "
+TaskUnitC,               "(SELECT UnitType FROM Job WHERE JobKey = %JobKey))"
+TaskUnitC,         " OR (CV.UnitType = NULL "
+TaskUnitC,         " AND CV.CodeValueID NOT IN"
+TaskUnitC,         " (select CodeValueID from CodeValue CXV" 
+TaskUnitC,         " where CXV.UnitType = %CurUnitType ) "
+TaskUnitC,    ")) ORDER BY CV.CodeValueID "
+
+
+TaskUnitCNJ,    " SELECT CV.CodeValueID, CV.CodeValueKey"
+TaskUnitCNJ,    " FROM CodeValue CV, CodeTable CT"
+TaskUnitCNJ,    " WHERE CV.CodeTableKey = CT.CodeTableKey"
+TaskUnitCNJ,    " AND CT.CodeTableID = 'UNITS'"
+TaskUnitCNJ,    " AND CV.CodeValueID <> '----'"
+TaskUnitCNJ,    " AND (CV.Deleted IS NULL"
+TaskUnitCNJ,         " OR CV.CodeValueKey = %Unit)"
+TaskUnitCNJ,    " AND ((CV.UnitType = %CurUnitType)"
+TaskUnitCNJ,      " OR (CV.UnitType = NULL"
+TaskUnitCNJ,         " AND CV.CodeValueID NOT IN"
+TaskUnitCNJ,         " (select CodeValueID from CodeValue CXV" 
+TaskUnitCNJ,         " where CXV.UnitType = %CurUnitType ) "
+TaskUnitCNJ,    ")) ORDER BY CV.CodeValueID "
+
+
+CostShtForTaskD,    "SELECT ProductionRate, ProductionGranularity, "
+CostShtForTaskD,    "DefaultHoursPerDay, MaterialsOverheadPct, "
+CostShtForTaskD,    "EquipmentOverheadPct, LaborOverheadPct, "
+CostShtForTaskD,    "MarkUpPct"
+CostShtForTaskD,    ", CostSheetID, Description "
+CostShtForTaskD,    " FROM CostSheet "
+CostShtForTaskD,    " WHERE CostSheetKey = %CostSheetKey "
+
+ChJobTaskListD,     "SELECT TaskID, QuantityPerItemUnit, TaskDescription, "
+ChJobTaskListD,     "JobKey, JobCostSheetKey "
+ChJobTaskListD,     "FROM JobCostSheet "
+ChJobTaskListD,     "WHERE JobKey = %JobKey "
+ChJobTaskListD,     "AND JobCostSheetKey = %JobCostSheetKey "
+ChJobTaskListD,     "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+ChJobTaskListD,     "AND JobItemKey=%JobItemKey "
+
+AddJobTaskListD,    "SELECT TaskID, QuantityPerItemUnit, TaskDescription, "
+AddJobTaskListD,    "CostSheetID, Description, JobCostSheetKey, JobKey "
+AddJobTaskListD,    "FROM JobCostSheet "
+AddJobTaskListD,    "WHERE JobKey = %JobKey "
+AddJobTaskListD,    "AND JobCostSheetKey = %JobCostSheetKey "
+AddJobTaskListD,    "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+AddJobTaskListD,    "AND JobItemKey=%JobItemKey "
+
+
+JobCostSheetD,      "SELECT TaskID, TaskDescription, CostSheetID, "
+JobCostSheetD,      "Description, ProductionRate, Duration, "
+JobCostSheetD,      "ProductionGranularity, HoursPerDay, OvertimeHoursPerDay, "
+JobCostSheetD,      "LaborDailyCost, EquipmentDailyCost, MaterialsUnitCost, "
+JobCostSheetD,      "MarkUpPct, LaborOverheadPct, EquipmentOverheadPct, "
+JobCostSheetD,      "MaterialsOverheadPct, QuantityPerItemUnit "
+JobCostSheetD,      "FROM JobCostSheet "
+JobCostSheetD,      "WHERE JobKey = %JobKey "
+JobCostSheetD,      "AND JobItemKey = JobItemKey "
+JobCostSheetD,      "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+JobCostSheetD,      "AND JobCostSheetKey = %JobCostSheetKey "
+
+
+MatForCostShtDL, "/* MatForCostShtDL */"
+MatForCostShtDL, " SELECT MaterialID, Material.Description, "
+MatForCostShtDL, " CodeValueID, "
+MatForCostShtDL, " MaterialKey, Unit "
+MatForCostShtDL, " FROM Material M, CodeValue CV "
+MatForCostShtDL, " WHERE Unit = CodeValueKey "
+MatForCostShtDL, " AND Material.Deleted IS NULL "
+MatForCostShtDL, " AND ( (CV.UnitType = %CurUnitType)"
+MatForCostShtDL,       " OR (CV.UnitType = NULL) )"
+MatForCostShtDL, " ORDER BY MaterialID "
+
+MatForCostShtD,     " SELECT Quantity "
+MatForCostShtD,     " FROM MaterialUsed "
+MatForCostShtD,     " WHERE CostSheetKey = %CostSheetKey "
+MatForCostShtD,     " AND MaterialKey=%MaterialKey "
+
+
+CrewForCostShtS,     "SELECT CostSheetCrewID, CostSheetCrewKey, CrewUsed.Description, "
+CrewForCostShtS,     "CostSheetID, CrewUsed.CostSheetKey "
+CrewForCostShtS,     "FROM CrewUsed, CostSheet "
+CrewForCostShtS,     "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+CrewForCostShtS,     "AND CrewUsed.CostSheetKey = %CostSheetKey "
+CrewForCostShtS,     "AND CostSheetCrewKey = %CostSheetCrewKey "
+
+
+CrewForCostShtL1,      "SELECT LaborerID, Labor.Description, Quantity, CrewUsed.CostSheetCrewKey, "
+CrewForCostShtL1,      "CrewUsed.CostSheetKey, CrewLaborUsed.LaborerKey "
+CrewForCostShtL1,      "FROM CrewUsed, CrewLaborUsed, Labor "
+CrewForCostShtL1,      "WHERE CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+CrewForCostShtL1,      "AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+CrewForCostShtL1,      "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+CrewForCostShtL1,      "AND CrewUsed.CostSheetCrewKey = %CostSheetCrewKey "
+CrewForCostShtL1,      "AND CrewUsed.CostSheetKey = %CostSheetKey "
+CrewForCostShtL1,      "ORDER BY LaborerID "
+
+
+CrewForCostShtL2,      "SELECT EquipmentID, Equipment.Description, Quantity, " 
+CrewForCostShtL2,      "CrewUsed.CostSheetKey, CrewUsed.CostSheetCrewKey, "  
+CrewForCostShtL2,      "Equipment.EquipmentKey "  
+CrewForCostShtL2,      "FROM Equipment, CrewEquipmentUsed, CrewUsed "  
+CrewForCostShtL2,      "WHERE CrewEquipmentUsed.CostSheetCrewKey = CrewUsed.CostSheetCrewKey "  
+CrewForCostShtL2,      "AND CrewEquipmentUsed.CostSheetKey = CrewUsed.CostSheetKey "  
+CrewForCostShtL2,      "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "  
+CrewForCostShtL2,      "AND CrewEquipmentUsed.CostSheetKey = %CostSheetKey "  
+CrewForCostShtL2,      "AND CrewEquipmentUsed.CostSheetCrewKey = %CostSheetCrewKey "  
+CrewForCostShtL2,      "ORDER BY EquipmentID "  
+
+CrewForCostShtD,    "SELECT CostSheetCrewKey, CostSheetKey, CostSheetCrewID, "
+CrewForCostShtD,    "Description "
+CrewForCostShtD,    "FROM CrewUsed "
+CrewForCostShtD,    "WHERE CostSheetKey = %CostSheetKey "
+CrewForCostShtD,    "AND CostSheetCrewKey = %CostSheetCrewKey "
+
+CrewCatForCostShtD, "SELECT CrewID, Description, CrewKey "
+CrewCatForCostShtD, "FROM Crew "
+CrewCatForCostShtD, "WHERE Deleted IS NULL "
+CrewCatForCostShtD, "ORDER BY CrewID "
+
+
+CrewCShtLaborL, "SELECT LaborerID, Labor.Description, Quantity, "
+CrewCShtLaborL, "CrewLaborUsed.CostSheetKey, CrewLaborUsed.CostSheetCrewKey, "
+CrewCShtLaborL, "CrewLaborUsed.LaborerKey "
+CrewCShtLaborL, "FROM CrewUsed, CrewLaborUsed, Labor "
+CrewCShtLaborL, "WHERE CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+CrewCShtLaborL, "AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+CrewCShtLaborL, "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+CrewCShtLaborL, "AND CrewUsed.CostSheetKey = %CostSheetKey "
+CrewCShtLaborL, "AND CrewUsed.CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLaborL, "ORDER BY LaborerID "
+
+CrewCShtEquipL, "SELECT EquipmentID, Equipment.Description, Quantity, "
+CrewCShtEquipL, "CrewEquipmentUsed.CostSheetKey, CrewEquipmentUsed.CostSheetCrewKey, "
+CrewCShtEquipL, "CrewEquipmentUsed.EquipmentKey "
+
+CrewCShtEquipL, "FROM Equipment, CrewEquipmentUsed, CrewUsed "
+CrewCShtEquipL, "WHERE CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey "
+CrewCShtEquipL, "AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey "
+CrewCShtEquipL, "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+CrewCShtEquipL, "AND CrewUsed.CostSheetKey = %CostSheetKey "
+CrewCShtEquipL, "AND CrewUsed.CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtEquipL, "ORDER BY EquipmentID "
+
+
+CrewCShtLbEqD,   "SELECT Description, CostSheetCrewKey, CostSheetKey "
+CrewCShtLbEqD,   "FROM CrewUsed "
+CrewCShtLbEqD,   "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLbEqD,   "AND CostSheetKey = %CostSheetKey "
+
+CrewCShtLaborD, "SELECT Quantity, CostSheetCrewKey, CostSheetKey, LaborerKey "
+CrewCShtLaborD, "FROM CrewLaborUsed "
+CrewCShtLaborD, "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLaborD, "AND CostSheetKey = %CostSheetKey "
+CrewCShtLaborD, "AND LaborerKey = %LaborerKey "
+
+CrewCShtEquipD, "SELECT Quantity, CostSheetCrewKey, CostSheetKey, EquipmentKey "
+CrewCShtEquipD, "FROM CrewEquipmentUsed "
+CrewCShtEquipD, "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtEquipD, "AND CostSheetKey = %CostSheetKey "
+CrewCShtEquipD, "AND EquipmentKey = %EquipmentKey "
+
+JobMaterialsD,  "SELECT "
+//JobMaterialsD,  "UnitPrice, "
+JobMaterialsD,  "Quantity, JobKey, JobCostSheetKey, MaterialKey "
+JobMaterialsD,  "FROM JobMaterialUsed "
+JobMaterialsD,  "WHERE JobKey = %JobKey "
+JobMaterialsD,  "AND JobCostSheetKey = %JobCostSheetKey "
+JobMaterialsD,  "AND MaterialKey=%MaterialKey "
+
+
+CrewForJobD,    "SELECT CrewID, Description,"
+CrewForJobD,    "JobKey, JobCostSheetKey, JobCrewKey "
+CrewForJobD,    "FROM JobCrewUsed "
+CrewForJobD,    "WHERE JobKey = %JobKey "
+CrewForJobD,    "AND JobCostSheetKey = %JobCostSheetKey "
+CrewForJobD,    "AND JobCrewKey = %JobCrewKey "
+
+
+
+CrewForJobS,     "SELECT CrewID, U.JobKey, U.JobCostSheetKey, "
+CrewForJobS,     "U.JobCrewKey, U.Description, "
+CrewForJobS,     "S.CostSheetID, JobID, S.JobItemKey "
+CrewForJobS,     "FROM JobCrewUsed U, JobCostSheet S, Job "
+CrewForJobS,     "WHERE U.JobKey = S.JobKey "
+CrewForJobS,     "AND U.JobCostSheetKey = S.JobCostSheetKey "
+CrewForJobS,     "AND U.JobKey = Job.JobKey "
+CrewForJobS,     "AND U.JobKey = %JobKey "
+CrewForJobS,     "AND U.JobCostSheetKey = %JobCostSheetKey "
+CrewForJobS,     "AND JobCrewKey = %JobCrewKey "
+
+
+CrewForJobL1,      "SELECT LaborerID, Labor.Description, Quantity, JobCrewUsed.JobCrewKey, "
+CrewForJobL1,      "JobCrewUsed.JobCostSheetKey, JobCrewUsed.JobKey, JobCrewLaborUsed.LaborerKey "
+CrewForJobL1,      "FROM JobCrewUsed, JobCrewLaborUsed, Labor "
+CrewForJobL1,      "WHERE JobCrewLaborUsed.JobKey = JobCrewUsed.JobKey "
+CrewForJobL1,      "AND  JobCrewLaborUsed.JobCostSheetKey = JobCrewUsed.JobCostSheetKey "
+CrewForJobL1,      "AND JobCrewLaborUsed.JobCrewKey = JobCrewUsed.JobCrewKey "
+CrewForJobL1,      "AND JobCrewLaborUsed.LaborerKey = Labor.LaborerKey "
+CrewForJobL1,      "AND JobCrewUsed.JobKey = %JobKey "
+CrewForJobL1,      "AND JobCrewUsed.JobCostSheetKey = %JobCostSheetKey "
+CrewForJobL1,      "AND JobCrewUsed.JobCrewKey = %JobCrewKey "
+CrewForJobL1,      "ORDER BY LaborerID "
+
+
+
+
+CrewForJobL2,      "SELECT EquipmentID, Equipment.Description, Quantity, " 
+CrewForJobL2,      "JobCrewUsed.JobKey, JobCrewUsed.JobCostSheetKey, "
+CrewForJobL2,      "JobCrewUsed.JobCrewKey, "  
+CrewForJobL2,      "Equipment.EquipmentKey "  
+CrewForJobL2,      "FROM Equipment, JobCrewEquipmentUsed, JobCrewUsed "  
+CrewForJobL2,      "WHERE JobCrewEquipmentUsed.JobKey = JobCrewUsed.JobKey "
+CrewForJobL2,      "AND JobCrewEquipmentUsed.JobCostSheetKey = JobCrewUsed.JobCostSheetKey "  
+CrewForJobL2,      "AND JobCrewEquipmentUsed.JobCrewKey = JobCrewUsed.JobCrewKey "  
+CrewForJobL2,      "AND JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "  
+CrewForJobL2,      "AND JobCrewEquipmentUsed.JobKey = %JobKey "
+CrewForJobL2,      "AND JobCrewEquipmentUsed.JobCostSheetKey = %JobCostSheetKey "  
+CrewForJobL2,      "AND JobCrewEquipmentUsed.JobCrewKey = %JobCrewKey "  
+CrewForJobL2,      "ORDER BY EquipmentID "  
+
+
+
+CrewJobLaborL, "SELECT LaborerID, Labor.Description, Quantity, "
+CrewJobLaborL, "JobCrewLaborUsed.JobKey, "
+CrewJobLaborL, "JobCrewLaborUsed.JobCostSheetKey, JobCrewLaborUsed.JobCrewKey, "
+CrewJobLaborL, "JobCrewLaborUsed.LaborerKey "
+CrewJobLaborL, "FROM JobCrewUsed, JobCrewLaborUsed, Labor "
+CrewJobLaborL, "WHERE JobCrewLaborUsed.JobKey = JobCrewUsed.JobKey "
+CrewJobLaborL, "AND JobCrewLaborUsed.JobCostSheetKey = JobCrewUsed.JobCostSheetKey "
+CrewJobLaborL, "AND JobCrewLaborUsed.JobCrewKey = JobCrewUsed.JobCrewKey "
+CrewJobLaborL, "AND JobCrewLaborUsed.LaborerKey = Labor.LaborerKey "
+CrewJobLaborL, "AND JobCrewUsed.JobKey = %JobKey "
+CrewJobLaborL, "AND JobCrewUsed.JobCostSheetKey = %JobCostSheetKey "
+CrewJobLaborL, "AND JobCrewUsed.JobCrewKey = %JobCrewKey "
+CrewJobLaborL, "ORDER BY LaborerID "
+
+
+CrewJobEquipL, "SELECT EquipmentID, Equipment.Description, Quantity, "
+CrewJobEquipL, "JobCrewEquipmentUsed.JobKey, "
+CrewJobEquipL, "JobCrewEquipmentUsed.JobCostSheetKey, JobCrewEquipmentUsed.JobCrewKey, "
+CrewJobEquipL, "JobCrewEquipmentUsed.EquipmentKey "
+CrewJobEquipL, "FROM Equipment, JobCrewEquipmentUsed, JobCrewUsed "
+CrewJobEquipL, "WHERE JobCrewEquipmentUsed.JobKey = JobCrewUsed.JobKey "
+CrewJobEquipL, "AND JobCrewUsed.JobCostSheetKey = JobCrewEquipmentUsed.JobCostSheetKey "
+CrewJobEquipL, "AND JobCrewUsed.JobCrewKey = JobCrewEquipmentUsed.JobCrewKey "
+CrewJobEquipL, "AND JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+CrewJobEquipL, "AND JobCrewUsed.JobKey = %JobKey "
+CrewJobEquipL, "AND JobCrewUsed.JobCostSheetKey = %JobCostSheetKey "
+CrewJobEquipL, "AND JobCrewUsed.JobCrewKey = %JobCrewKey "
+CrewJobEquipL, "ORDER BY EquipmentID "
+
+
+
+
+CrewJobLbEqD,   "SELECT Description, JobKey, JobCrewKey, JobCostSheetKey "
+CrewJobLbEqD,   "FROM JobCrewUsed "
+CrewJobLbEqD,   "WHERE JobKey = %JobKey "
+CrewJobLbEqD,   "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobLbEqD,   "AND JobCrewKey = %JobCrewKey "
+
+
+
+CrewJobLaborD, "SELECT Quantity, JobKey, JobCostSheetKey, JobCrewKey, LaborerKey "
+CrewJobLaborD, "FROM JobCrewLaborUsed "
+CrewJobLaborD, "WHERE JobKey = %JobKey "
+CrewJobLaborD, "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobLaborD, "AND JobCrewKey = %JobCrewKey "
+CrewJobLaborD, "AND LaborerKey = %LaborerKey "
+
+CrewJobEquipD, "SELECT Quantity, JobKey, JobCostSheetKey, JobCrewKey, EquipmentKey "
+CrewJobEquipD, "FROM JobCrewEquipmentUsed "
+CrewJobEquipD, "WHERE JobKey = %JobKey "
+CrewJobEquipD, "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobEquipD, "AND JobCrewKey = %JobCrewKey "
+CrewJobEquipD, "AND EquipmentKey = %EquipmentKey "
+
+JobZoneS,       "SELECT JobID, JobKey "
+JobZoneS,       "FROM Job "
+JobZoneS,       "WHERE JobKey = %JobKey "
+
+JobZoneL,         "SELECT ZoneTypeID, ZoneID, Zone.Description "
+JobZoneL,         "FROM JobZone, Zone, ZoneType "
+JobZoneL,         "WHERE JobZone.ZoneTypeKey = ZoneType.ZoneTypeKey "
+JobZoneL,         "AND JobZone.ZoneTypeKey = Zone.ZoneTypeKey "
+JobZoneL,         "AND JobZone.ZoneKey = Zone.ZoneKey "
+JobZoneL,         "AND JobZone.JobKey = %JobKey "
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+//
+// USHORT                    char []
+//
+// Window ID                Window Title
+//-------------------------------------------------------------------------------
+
+
+CBEstForStdItemS,     "Cost-Based Estimates for %StandardItemNumber "
+
+CBEstForJobItemS,     "Job Cost-Based Estimates for %StandardItemNumber "
+
+CostShtCrewS,         "Crew for Cost Sheet %CostSheetID "
+
+MaterialS,            "Materials for Cost Sheet %CostSheetID "
+
+TaskS,                "Tasks for %StandardItemNumber [ %CodeValueID ] "
+
+TaskCostShtS,         "Cost Sheet %CostSheetID for Task %TaskID "
+
+JobTaskS,             "Tasks for Job %JobID, Item %StandardItemNumber "
+
+JobCostShtS,          "Cost Sheet for Job %JobID, Item %StandardItemNumber"
+
+JobCrewS,             "Crews for Job %JobID, Cost Sheet %CostSheetID "
+
+JobMaterialsS,        "Materials for Job %JobID, Item %StandardItemNumber "
+
+
+CrewForCostShtS,      "Crew %CostSheetCrewID For Cost Sheet %CostSheetID "
+
+CrewForJobS,          "Crew %CrewID For Job %JobID "
+
+JobZoneS,             "Zones for Job %JobID "
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID         Add Query ID         Change Query ID      Column name       Control ID               Format          Input Fmt
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CostBasedEstimateD,  CostBasedEstimateD,  CostBasedEstimateD,  CostBasedEstimateID,        DID_CBESTID,            "String",       "String"
+CostBasedEstimateD,  CostBasedEstimateD,  CostBasedEstimateD,  Description,                DID_DESCRIP,            "String",       "String"
+CostBasedEstimateD,  CostBasedEstimateD,  CostBasedEstimateD,  Active,                     DID_ACTIVE,             "Flag,0,1",     "Flag,0,1"
+                     
+JobCostBasedEstD,    JobCostBasedEstD,    JobCostBasedEstD,    CostBasedEstimateID,        DID_CBESTID,            "String",       "String"
+JobCostBasedEstD,    JobCostBasedEstD,    JobCostBasedEstD,    Description,                DID_DESCRIP,            "String",       "String"
+JobCostBasedEstD,    JobCostBasedEstD,    JobCostBasedEstD,    Active,                     DID_ACTIVE,             "Flag,0,1",     "Flag,0,1"
+                     
+                     
+TasksForStdItemD,    TasksForStdItemD,    TasksForStdItemD,    TaskID,                     DID_TASKID,             "String",       "String"
+TasksForStdItemD,    TasksForStdItemD,    TasksForStdItemD,    ProductionAdjustment,       DID_PRODUCADJ,          "Number,%..",   "Number,...."
+TasksForStdItemD,    TasksForStdItemD,    TasksForStdItemD,    MaterialQuantityAdjustment, DID_MATQTYADJ,          "Number,%..",   "Number,...."
+TasksForStdItemD,    TasksForStdItemD,    TasksForStdItemD,    Description,                DID_TASKDESCRIP,        "String",       "String"
+TasksForStdItemD,    TaskUnitCNJ,         TaskUnitCNJ,         CodeValueID,                DID_UNIT_NJ,            "String",       "Number"
+TasksForStdItemD,    ITIWND_LIST,         ITIWND_LIST,         CostSheetKey,               TaskCostShtEditDL,      "Number",       "Number"
+TasksForStdItemD,    TasksForStdItemD,    TasksForStdItemD,    QuantityPerItemUnit,        DID_QTYPERITEMUNIT,     "Number,,....", "Number,,...." 
+                     
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     ProductionRate,             DID_PRODRATE,           "Number,,....", "Number,,...."
+CostShtForTaskD,     ITIWND_ENUM,         ITIWND_ENUM,         ProductionGranularity,      DID_PRODGRAN,           "UnitOfTime",   "UnitOfTime"
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     DefaultHoursPerDay,         DID_HRSPERDAY,          "Number,..",    "Number,.."                                                                                        
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     MaterialsOverheadPct,       DID_MATOVRHDPCT,        "Number,%.",    "Number,...."                                                                                          
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     EquipmentOverheadPct,       DID_EQUIPOVRHDPCT,      "Number,%.",    "Number,...."                                                                                           
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     LaborOverheadPct,           DID_LABOROVRHDPCT,      "Number,%.",    "Number,...."                                                                                      
+CostShtForTaskD,     CostShtForTaskD,     CostShtForTaskD,     MarkUpPct,                  DID_CONTRACPCT,         "Number,%.",    "Number,...."
+                     
+ChJobTaskListD,      ChJobTaskListD,      ChJobTaskListD,      TaskID,                     DID_TASKID,             "String",       "String"
+ChJobTaskListD,      ChJobTaskListD,      ChJobTaskListD,      QuantityPerItemUnit,        DID_QTYPERITEMUNIT,     "Number,,....", "Number,,...." 
+ChJobTaskListD,      ChJobTaskListD,      ChJobTaskListD,      TaskDescription,            DID_TASKDESCRIP,        "String",       "String"
+ChJobTaskListD,      TaskUnitC,           TaskUnitC,           CodeValueID,                DID_UNIT,               "String",       "Number"
+                     
+AddJobTaskListD,     AddJobTaskListD,     AddJobTaskListD,     TaskID,                     DID_TASKID,             "String",       "String"
+AddJobTaskListD,     AddJobTaskListD,     AddJobTaskListD,     QuantityPerItemUnit,        DID_QTYPERITEMUNIT,     "Number,,....", "Number,,...." 
+AddJobTaskListD,     TaskUnitC,           TaskUnitC,           CodeValueID,                DID_UNIT,               "String",       "Number"
+AddJobTaskListD,     AddJobTaskListD,     AddJobTaskListD,     TaskDescription,            DID_TASKDESCRIP,        "String",       "String"
+AddJobTaskListD,     AddJobTaskListD,     AddJobTaskListD,     CostSheetID,                DID_COSTSHTID,          "String",       "String"
+AddJobTaskListD,     AddJobTaskListD,     AddJobTaskListD,     Description,                DID_DESCRIP,            "String",       "String"
+AddJobTaskListD,     ITIWND_LIST,         ITIWND_LIST,         CostSheetKey,               TaskCostShtEditDL,      "Number",       "Number"
+                                                                                    
+                     
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       TaskID,                     DID_TASKID,             "String",       "String"
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       TaskDescription,            DID_TASKDESCRIP,        "String",       "String"
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       CostSheetID,                DID_COSTSHTID,          "String",       "String"
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       Description,                DID_DESCRIP,            "String",       "String"
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       ProductionRate,             DID_PRODRATE,           "Number,,....", "Number,,...."
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       Duration,                   DID_DURATION,           "Number,,",     "Number,,..."
+JobCostSheetD,       ITIWND_ENUM,         ITIWND_ENUM,         ProductionGranularity,      DID_PRODGRAN,           "UnitOfTime",   "UnitOfTime"
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       HoursPerDay,                DID_HRSPERDAY,          "Number,..",    "Number,.."                                                                                        
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       OvertimeHoursPerDay,        DID_OVRTIMEHRS,         "Number,..",    "Number,.."                                                                                        
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       MarkUpPct,                  DID_MARKUPPCT,          "Number,%.",    "Number,...."
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       LaborOverheadPct,           DID_LABOROVRHDPCT,      "Number,%.",    "Number,...."                                                                                      
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       EquipmentOverheadPct,       DID_EQUIPOVRHDPCT,      "Number,%.",    "Number,...."                                                                                           
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       MaterialsOverheadPct,       DID_MATOVRHDPCT,        "Number,%.",    "Number,...."                                                                                          
+JobCostSheetD,       JobCostSheetD,       JobCostSheetD,       QuantityPerItemUnit,        DID_QTYPERITEMUNIT,     "Number,,....", "Number,,...." 
+JobCostSheetD,       TaskUnitC,           TaskUnitC,           CodeValueID,                DID_UNIT,               "String",       "Number"
+                     
+MatForCostShtD,      MatForCostShtD,      MatForCostShtD,      Quantity,                   DID_QUANTITY,           "Number,,....", "Number,,...."
+MatForCostShtD,      ITIWND_LIST,         ITIWND_LIST,         MaterialKey,                MatForCostShtDL,        "Number",       "Number"
+                     
+                     
+CrewForCostShtD,     CrewForCostShtD,     CrewForCostShtD,     CostSheetCrewID,           DID_COSTSHTCREWID,       "String",       "String"
+CrewForCostShtD,     CrewForCostShtD,     CrewForCostShtD,     Description,               DID_DESCRIP,             "String",       "String"
+CrewForCostShtD,     ITIWND_LIST,         ITIWND_LIST,         CrewKey,                   CrewCatForCostShtD,"Number",       "Number"
+                     
+CrewCShtLbEqD,       CrewCShtLbEqD,       CrewCShtLbEqD,       Description,               DID_CREWDESCR,           "String",       "String"
+CrewCShtLbEqD,       0,                   0,                   0,                         CrewCShtLaborL,       "",             ""
+CrewCShtLbEqD,       0,                   0,                   0,                         CrewCShtEquipL,       "",             ""
+                     
+CrewCShtLaborD,      CrewCShtLaborD,      CrewCShtLaborD,      Quantity,                  DID_QUANTITY,            "Number,,..",   "Number,,.."
+CrewCShtLaborD,      ITIWND_LIST,         ITIWND_LIST,         LaborerKey,                LaborCatL,               "Number",       "Number"
+                     
+CrewCShtEquipD,      CrewCShtEquipD,      CrewCShtEquipD,      Quantity,                  DID_QUANTITY,            "Number,,..",   "Number,,.."
+CrewCShtEquipD,      ITIWND_LIST,         ITIWND_LIST,         EquipmentKey,              EquipCatL,               "Number",       "Number"
+                     
+// JobMaterialsD,       JobMaterialsD,       JobMaterialsD,       UnitPrice,                 DID_UNITPRICE,           "Number,,....", "Number,,...."
+JobMaterialsD,       JobMaterialsD,       JobMaterialsD,       Quantity,                  DID_QUANTITY,            "Number,,....", "Number,,...."
+JobMaterialsD,       ITIWND_LIST,         ITIWND_LIST,         MaterialKey,               MatForCostShtDL,         "Number",       "Number"
+                     
+                     
+CrewForJobD,         CrewForJobD,         CrewForJobD,         CrewID,                    DID_JOBCREWID,           "String",       "String"
+CrewForJobD,         CrewForJobD,         CrewForJobD,         Description,               DID_DESCRIP,             "String",       "String"
+CrewForJobD,         ITIWND_LIST,         ITIWND_LIST,         CrewKey,                   CrewCatForCostShtD,"Number",       "Number"
+                     
+CrewJobLbEqD,        CrewJobLbEqD,        CrewJobLbEqD,        Description,               DID_CREWDESCR,           "String",       "String"
+CrewJobLbEqD,        0,                   0,                   0,                         CrewJobLaborL,        "",             ""
+CrewJobLbEqD,        0,                   0,                   0,                         CrewJobEquipL,        "",             ""
+                     
+CrewJobLaborD,       CrewJobLaborD,       CrewJobLaborD,       Quantity,                  DID_QUANTITY,            "Number,,..",   "Number,,.."
+CrewJobLaborD,       ITIWND_LIST,         ITIWND_LIST,         LaborerKey,                LaborCatL,            "Number",       "Number"
+                     
+CrewJobEquipD,       CrewJobEquipD,       CrewJobEquipD,       Quantity,                  DID_QUANTITY,            "Number,,..",   "Number,,.."
+CrewJobEquipD,       ITIWND_LIST,         ITIWND_LIST,         EquipmentKey,              EquipCatL,            "Number",       "Number"
+
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.                                                                    
+//                                                                                                          
+// Multiple strings for the same window ID                                                                  
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+CostBasedEstimateD,  "UPDATE CostBasedEstimate "
+CostBasedEstimateD,  "SET "
+CostBasedEstimateD,  "CostBasedEstimateID = @CostBasedEstimateID, "
+CostBasedEstimateD,  "Description=@Description, "
+CostBasedEstimateD,  "Active=@Active "
+CostBasedEstimateD,  "WHERE CostBasedEstimateKey=%CostBasedEstimateKey "
+
+JobCostBasedEstD,    "UPDATE JobCostBasedEstimate "
+JobCostBasedEstD,    "SET "
+JobCostBasedEstD,    "CostBasedEstimateID = @CostBasedEstimateID, "
+JobCostBasedEstD,    "Description=@Description, "
+JobCostBasedEstD,    "Active=@Active "
+JobCostBasedEstD,    "WHERE JobKey=%JobKey "
+JobCostBasedEstD,    "AND JobItemKey=%JobItemKey "
+JobCostBasedEstD,    "AND JobItemCostBasedEstimateKey=%JobItemCostBasedEstimateKey "
+
+TasksForStdItemD,    "UPDATE Task "
+TasksForStdItemD,    "SET "
+TasksForStdItemD,    "TaskID=@TaskID, "
+TasksForStdItemD,    "Description=@Description, "
+TasksForStdItemD,    "ProductionAdjustment=@ProductionAdjustment, "
+TasksForStdItemD,    "MaterialQuantityAdjustment= @MaterialQuantityAdjustment, "
+TasksForStdItemD,    "Unit=@"DID_UNIT_NJ"CodeValueKey, " 
+TasksForStdItemD,    "CostSheetKey = @"TaskCostShtEditDL"CostSheetKey, "
+TasksForStdItemD,    "QuantityPerItemUnit = @QuantityPerItemUnit "
+TasksForStdItemD,    "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+TasksForStdItemD,    "AND TaskKey = %TaskKey "
+
+CostShtForTaskD,     "UPDATE CostSheet "
+CostShtForTaskD,     "SET "
+CostShtForTaskD,     "ProductionRate=@ProductionRate, "
+CostShtForTaskD,     "DefaultHoursPerDay=@DefaultHoursPerDay, "
+CostShtForTaskD,     "ProductionGranularity=@ProductionGranularity, "
+// CostShtForTaskD,     "ProductionGranularity=@"DID_PRODGRAN"ProductionGranularity, "
+CostShtForTaskD,     "MarkUpPct=@MarkUpPct, "
+CostShtForTaskD,     "LaborOverheadPct=@LaborOverheadPct, "
+CostShtForTaskD,     "EquipmentOverheadPct=@EquipmentOverheadPct, "
+CostShtForTaskD,     "MaterialsOverheadPct=@MaterialsOverheadPct "
+CostShtForTaskD,     "WHERE CostSheetKey = %CostSheetKey "
+
+ChJobTaskListD,      "UPDATE JobCostSheet "
+ChJobTaskListD,      "SET "
+ChJobTaskListD,      "TaskID=@TaskID, "
+ChJobTaskListD,      "TaskDescription=@TaskDescription, "
+ChJobTaskListD,      "QuantityPerItemUnit=@QuantityPerItemUnit, "
+ChJobTaskListD,      "Unit=@"DID_UNIT"CodeValueKey "
+ChJobTaskListD,      "WHERE JobKey=%JobKey "
+ChJobTaskListD,      "AND JobCostSheetKey=%JobCostSheetKey "
+ChJobTaskListD,      "AND JobItemCostBasedEstimateKey=%JobItemCostBasedEstimateKey "
+ChJobTaskListD,      "AND JobItemKey=%JobItemKey "
+
+JobCostSheetD,       "/* CBEST.MET: */ "
+JobCostSheetD,       "UPDATE JobCostSheet "
+JobCostSheetD,       "SET "
+JobCostSheetD,       "TaskID=@TaskID, "
+JobCostSheetD,       "TaskDescription=@TaskDescription, "
+JobCostSheetD,       "CostSheetID=@CostSheetID, "
+JobCostSheetD,       "Description=@Description, "
+JobCostSheetD,       "ProductionRate=@ProductionRate, "
+// JobCostSheetD,       "Duration=@Duration, "
+JobCostSheetD,       "ProductionGranularity=@ProductionGranularity, "
+JobCostSheetD,       "HoursPerDay=@HoursPerDay, "
+JobCostSheetD,       "OvertimeHoursPerDay=@OvertimeHoursPerDay, "
+JobCostSheetD,       "MarkUpPct=@MarkUpPct, "
+JobCostSheetD,       "LaborOverheadPct=@LaborOverheadPct, "
+JobCostSheetD,       "EquipmentOverheadPct=@EquipmentOverheadPct, "
+JobCostSheetD,       "MaterialsOverheadPct=@MaterialsOverheadPct, "
+JobCostSheetD,       "QuantityPerItemUnit=@QuantityPerItemUnit, "
+JobCostSheetD,       "Unit=@"DID_UNIT"CodeValueKey "
+JobCostSheetD,       "WHERE JobKey=%JobKey "
+JobCostSheetD,       "AND JobCostSheetKey=%JobCostSheetKey "
+
+JobCostSheetD,       "UPDATE JobCostSheet "
+JobCostSheetD,       "SET "
+JobCostSheetD,       "UnitPrice = (MarkUpPct + 1.0) * "
+JobCostSheetD,        "(SELECT "
+JobCostSheetD,         "((EquipmentDailyCost * (1.0+EquipmentOverheadPct))/DisplayedProductionRate) + "
+JobCostSheetD,             "((LaborDailyCost * (1.0+LaborOverheadPct))    /DisplayedProductionRate) + "
+JobCostSheetD,           "(MaterialsUnitCost * (1.0+MaterialsOverheadPct)) "
+JobCostSheetD,         "FROM JobCostSheet "
+JobCostSheetD,         "WHERE JobKey = %JobKey "
+JobCostSheetD,         "AND JobCostSheetKey = %JobCostSheetKey) "
+JobCostSheetD,       "WHERE JobKey=%JobKey "
+JobCostSheetD,       "AND JobCostSheetKey=%JobCostSheetKey "
+
+
+
+
+
+MatForCostShtD,      "UPDATE MaterialUsed "
+MatForCostShtD,      "SET "
+MatForCostShtD,      "CostSheetKey=%CostSheetKey, "
+MatForCostShtD,      "MaterialKey=@"MatForCostShtDL"MaterialKey, "
+MatForCostShtD,      "Quantity=@Quantity "
+MatForCostShtD,      "WHERE CostSheetKey = %CostSheetKey "
+MatForCostShtD,      "AND MaterialKey = %MaterialKey "
+
+CrewForCostShtD,     "UPDATE CrewUsed "
+CrewForCostShtD,     "SET "
+CrewForCostShtD,     "CostSheetKey = %CostSheetKey, "
+CrewForCostShtD,     "CostSheetCrewKey = @NewKey, "
+CrewForCostShtD,     "CostSheetCrewID = @CostSheetCrewID, "
+CrewForCostShtD,     "Description = @Description "
+CrewForCostShtD,     "WHERE CostSheetKey = %CostSheetKey "
+CrewForCostShtD,     "AND CostSheetCrewKey = %CostSheetCrewKey "
+
+
+CrewCShtLbEqD,       "UPDATE CrewUsed "
+CrewCShtLbEqD,       "SET "
+CrewCShtLbEqD,       "Description = @Description "
+CrewCShtLbEqD,       "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLbEqD,       "AND CostSheetKey = %CostSheetKey "
+
+CrewCShtLaborD,      "UPDATE CrewLaborUsed "
+CrewCShtLaborD,      "SET "
+CrewCShtLaborD,      "Quantity = @Quantity, "
+CrewCShtLaborD,      "LaborerKey = @"LaborCatL"LaborerKey "
+CrewCShtLaborD,      "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLaborD,      "AND CostSheetKey = %CostSheetKey "
+CrewCShtLaborD,      "AND LaborerKey = %LaborerKey "
+
+CrewCShtEquipD,      "UPDATE CrewEquipmentUsed "
+CrewCShtEquipD,      "SET "
+CrewCShtEquipD,      "Quantity = @Quantity, "
+CrewCShtEquipD,      "EquipmentKey = @"EquipCatL"EquipmentKey "
+CrewCShtEquipD,      "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtEquipD,      "AND CostSheetKey = %CostSheetKey "
+CrewCShtEquipD,      "AND EquipmentKey = %EquipmentKey "
+
+//need to set material price too? YES!!!!
+JobMaterialsD,       "UPDATE JobMaterialUsed "
+JobMaterialsD,       "SET "
+JobMaterialsD,       "JobCostSheetKey=%JobCostSheetKey, "
+JobMaterialsD,       "MaterialKey=@"MatForCostShtDL"MaterialKey, "
+// JobMaterialsD,       "UnitPrice=@UnitPrice, "
+JobMaterialsD,       "Quantity=@Quantity "
+//JobMaterialsD,       ", UnitPrice= "
+//JobMaterialsD,       "(SELECT UnitPrice FROM MaterialPrice "
+//JobMaterialsD,        "WHERE MaterialKey= @"MatForCostShtDL"MaterialKey "
+//JobMaterialsD,        "AND )"  //MAY95 TLB
+JobMaterialsD,       " WHERE JobKey = %JobKey "
+JobMaterialsD,       " AND JobCostSheetKey = %JobCostSheetKey "
+JobMaterialsD,       " AND MaterialKey = %MaterialKey "
+
+CrewForJobD,         "UPDATE JobCrewUsed "
+CrewForJobD,         "SET "
+CrewForJobD,         "JobKey = %JobKey, "
+CrewForJobD,         "JobCostSheetKey = %JobCostSheetKey, "
+CrewForJobD,         "JobCrewKey = @NewKey, "
+CrewForJobD,         "CrewID = @CrewID, "
+CrewForJobD,         "Description = @Description "
+CrewForJobD,         "WHERE JobKey = %JobKey "
+CrewForJobD,         "AND JobCostSheetKey = %JobCostSheetKey "
+CrewForJobD,         "AND JobCrewKey = %JobCrewKey "
+
+CrewJobLbEqD,        "UPDATE JobCrewUsed "
+CrewJobLbEqD,        "SET "
+CrewJobLbEqD,        "Description = @Description "
+CrewJobLbEqD,        "WHERE JobKey = %JobKey "
+CrewJobLbEqD,        "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobLbEqD,        "AND JobCrewKey = %JobCrewKey "
+                     
+CrewJobLaborD,       "UPDATE JobCrewLaborUsed "
+CrewJobLaborD,       "SET "
+CrewJobLaborD,       "Quantity = @Quantity, "
+CrewJobLaborD,       "LaborerKey = @"LaborCatL"LaborerKey "
+CrewJobLaborD,       "WHERE JobKey = %JobKey "
+CrewJobLaborD,       "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobLaborD,       "AND JobCrewKey = %JobCrewKey "
+CrewJobLaborD,       "AND LaborerKey = %LaborerKey "
+
+CrewJobEquipD,       "UPDATE JobCrewEquipmentUsed "
+CrewJobEquipD,       "SET "
+CrewJobEquipD,       "Quantity = @Quantity, "
+CrewJobEquipD,       "EquipmentKey = @"EquipCatL"EquipmentKey "
+CrewJobEquipD,       "WHERE JobKey = %JobKey "
+CrewJobEquipD,       "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobEquipD,       "AND JobCrewKey = %JobCrewKey "
+CrewJobEquipD,       "AND EquipmentKey = %EquipmentKey "
+
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+CostBasedEstimateD,  "SELECT CostBasedEstimateID, "
+CostBasedEstimateD,  "Description, Active "
+CostBasedEstimateD,  "FROM CostBasedEstimate HOLDLOCK "
+CostBasedEstimateD,  "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+
+JobCostBasedEstD,    "SELECT CostBasedEstimateID, "
+JobCostBasedEstD,    "Description, Active "
+JobCostBasedEstD,    "FROM JobCostBasedEstimate HOLDLOCK "
+JobCostBasedEstD,    "WHERE JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+JobCostBasedEstD,    "AND JobKey=%JobKey "
+JobCostBasedEstD,    "AND JobItemKey=%JobItemKey "
+
+TasksForStdItemD,    "SELECT TaskID, Description, ProductionAdjustment, "
+TasksForStdItemD,    "MaterialQuantityAdjustment, Unit, QuantityPerItemUnit, "
+TasksForStdItemD,    "CostSheetKey "
+TasksForStdItemD,    "FROM Task HOLDLOCK "
+TasksForStdItemD,    "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+TasksForStdItemD,    "AND TaskKey = %TaskKey "
+
+CostShtForTaskD,     "SELECT ProductionRate, DefaultHoursPerDay, "
+CostShtForTaskD,     "ProductionGranularity, MarkUpPct, LaborOverheadPct, "
+CostShtForTaskD,     "EquipmentOverheadPct, MaterialsOverheadPct "
+CostShtForTaskD,     "FROM CostSheet HOLDLOCK "
+CostShtForTaskD,     "WHERE CostSheetKey = %CostSheetKey "
+                                          
+ChJobTaskListD,      "SELECT TaskID, TaskDescription, Unit, QuantityPerItemUnit "
+ChJobTaskListD,      "FROM JobCostSheet HOLDLOCK "
+ChJobTaskListD,      "WHERE JobKey=%JobKey "
+ChJobTaskListD,      "AND JobCostSheetKey=%JobCostSheetKey "
+ChJobTaskListD,      "AND JobItemCostBasedEstimateKey=%JobItemCostBasedEstimateKey "
+ChJobTaskListD,      "AND JobItemKey=%JobItemKey "
+
+MatForCostShtD,      "SELECT Quantity "
+MatForCostShtD,      "FROM MaterialUsed HOLDLOCK "
+MatForCostShtD,      "WHERE CostSheetKey=%CostSheetKey "
+MatForCostShtD,      "AND MaterialKey=%MaterialKey "
+
+CrewForCostShtD,     "SELECT CostSheetCrewID, Description "
+CrewForCostShtD,     "FROM CrewUsed HOLDLOCK "
+CrewForCostShtD,     "WHERE CostSheetKey = %CostSheetKey "
+CrewForCostShtD,     "AND CostSheetCrewKey = %CostSheetCrewKey "
+
+
+CrewCShtLbEqD,       "SELECT Description "
+CrewCShtLbEqD,       "FROM CrewUsed HOLDLOCK "
+CrewCShtLbEqD,       "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLbEqD,       "AND CostSheetKey = %CostSheetKey "
+
+CrewCShtLaborD,      "SELECT Quantity "
+CrewCShtLaborD,      "FROM CrewLaborUsed HOLDLOCK "
+CrewCShtLaborD,      "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLaborD,      "AND CostSheetKey = %CostSheetKey "
+CrewCShtLaborD,      "AND LaborerKey = %LaborerKey "
+
+CrewCShtEquipD,      "SELECT Quantity, EquipmentKey "
+CrewCShtEquipD,      "FROM CrewEquipmentUsed HOLDLOCK "
+CrewCShtEquipD,      "WHERE CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtEquipD,      "AND CostSheetKey = %CostSheetKey "
+CrewCShtEquipD,      "AND EquipmentKey = %EquipmentKey "
+
+JobMaterialsD,       "SELECT "
+// JobMaterialsD,            "UnitPrice, "
+JobMaterialsD,            "Quantity "
+JobMaterialsD,       "FROM JobMaterialUsed HOLDLOCK "
+JobMaterialsD,       "WHERE JobKey = %JobKey "
+JobMaterialsD,       "AND JobCostSheetKey=%JobCostSheetKey "
+JobMaterialsD,       "AND MaterialKey=%MaterialKey "
+
+CrewForJobD,         "SELECT CrewID, Description "
+CrewForJobD,         "FROM JobCrewUsed HOLDLOCK "
+CrewForJobD,         "WHERE JobKey = %JobKey "
+CrewForJobD,         "AND JobCostSheetKey = %JobCostSheetKey "
+CrewForJobD,         "AND JobCrewKey = %JobCrewKey "
+
+
+CrewJobLbEqD,        "SELECT Description "
+CrewJobLbEqD,        "FROM JobCrewUsed HOLDLOCK "
+CrewJobLbEqD,        "WHERE JobKey = %JobKey "
+CrewJobLbEqD,        "AND JobCrewKey = %JobCrewKey "
+CrewJobLbEqD,        "AND JobCostSheetKey = %JobCostSheetKey "
+
+CrewJobLaborD,       "SELECT Quantity "
+CrewJobLaborD,       "FROM JobCrewLaborUsed HOLDLOCK "
+CrewJobLaborD,       "WHERE JobKey = %JobKey "
+CrewJobLaborD,       "AND JobCrewKey = %JobCrewKey "
+CrewJobLaborD,       "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobLaborD,       "AND LaborerKey = %LaborerKey "
+
+CrewJobEquipD,       "SELECT Quantity, EquipmentKey "
+CrewJobEquipD,       "FROM JobCrewEquipmentUsed HOLDLOCK "
+CrewJobEquipD,       "WHERE JobKey = %JobKey "
+CrewJobEquipD,       "AND JobCrewKey = %JobCrewKey "
+CrewJobEquipD,       "AND JobCostSheetKey = %JobCostSheetKey "
+CrewJobEquipD,       "AND EquipmentKey = %EquipmentKey "
+
+JobCostSheetD,       "SELECT TaskID, TaskDescription, CostSheetID, "
+JobCostSheetD,       "Description, ProductionRate, Duration, " 
+JobCostSheetD,       "ProductionGranularity, HoursPerDay, OvertimeHoursPerDay, "
+JobCostSheetD,       "MarkUpPct, LaborOverheadPct, EquipmentOverheadPct, "
+JobCostSheetD,       "MaterialsOverheadPct, QuantityPerItemUnit, "
+JobCostSheetD,       "Unit, DisplayedProductionRate "
+JobCostSheetD,       "FROM JobCostSheet HOLDLOCK "
+JobCostSheetD,       "WHERE JobKey = %JobKey "
+JobCostSheetD,       "AND JobCostSheetKey = %JobCostSheetKey "
+JobCostSheetD,       "AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey "
+JobCostSheetD,       "AND JobItemKey = %JobItemKey "
+
+
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+
+CostBasedEstimateD,  "INSERT INTO CostBasedEstimate "
+CostBasedEstimateD,  "(CostBasedEstimateKey, CostBasedEstimateID, "
+CostBasedEstimateD,  "StandardItemKey, Description, Active) "
+CostBasedEstimateD,  "VALUES "
+CostBasedEstimateD,  "(@NewKey, @CostBasedEstimateID, %StandardItemKey, "
+CostBasedEstimateD,  "@Description, @Active) "
+
+JobCostBasedEstD,    "INSERT INTO JobCostBasedEstimate "
+JobCostBasedEstD,    "(JobKey, JobItemKey, JobItemCostBasedEstimateKey, "
+JobCostBasedEstD,    "CostBasedEstimateID, "
+JobCostBasedEstD,    "Description, Active) "
+JobCostBasedEstD,    "VALUES "
+JobCostBasedEstD,    "(%JobKey, %JobItemKey, @NewKey, @CostBasedEstimateID, "
+JobCostBasedEstD,    "@Description, @Active) "
+
+
+TasksForStdItemD,    "INSERT INTO Task "
+TasksForStdItemD,    "(CostBasedEstimateKey, CostSheetKey, TaskKey, "
+TasksForStdItemD,    "TaskID, Description, ProductionAdjustment, "
+TasksForStdItemD,    "MaterialQuantityAdjustment, Unit, QuantityPerItemUnit) "
+TasksForStdItemD,    "VALUES "
+TasksForStdItemD,    "(%CostBasedEstimateKey, @"TaskCostShtEditDL"CostSheetKey, "
+TasksForStdItemD,    "@NewKey, "
+TasksForStdItemD,    "@TaskID, @"DID_TASKDESCRIP"Description, "
+TasksForStdItemD,    "@ProductionAdjustment, @MaterialQuantityAdjustment, "
+TasksForStdItemD,    "@"DID_UNIT_NJ"CodeValueKey, @QuantityPerItemUnit) "
+
+AddJobTaskListD,     "/* cbest.met AddJobTaskListD */ "
+AddJobTaskListD,     "INSERT INTO JobCostSheet "
+AddJobTaskListD,     "(JobKey, JobCostSheetKey, JobItemCostBasedEstimateKey, "
+AddJobTaskListD,     "JobItemKey, TaskID, TaskDescription, CostSheetID, "
+AddJobTaskListD,     "Description, ProductionRate, Duration, ProductionGranularity, "
+AddJobTaskListD,     "HoursPerDay, OvertimeHoursPerDay, LaborDailyCost, EquipmentDailyCost, "
+AddJobTaskListD,     "MaterialsUnitCost, MarkUpPct, LaborOverheadPct, "
+AddJobTaskListD,     "EquipmentOverheadPct, MaterialsOverheadPct, "
+AddJobTaskListD,     "QuantityPerItemUnit,"
+AddJobTaskListD,     "Unit, UnitPrice, DisplayedProductionRate) "
+AddJobTaskListD,     "VALUES "
+AddJobTaskListD,     "(%JobKey, @NewKey, %JobItemCostBasedEstimateKey, "
+AddJobTaskListD,     "%JobItemKey, @TaskID, @TaskDescription, @CostSheetID, "
+AddJobTaskListD,     "@Description, 0, 1, 40, "
+// AddJobTaskListD,     "@"DID_PRODGRAN"ProductionGranularity, 0, "
+AddJobTaskListD,     "8, 0, 0, 0, "
+AddJobTaskListD,     "0, 0, 0, "
+AddJobTaskListD,     "0, 0, "
+AddJobTaskListD,     "@QuantityPerItemUnit, "
+AddJobTaskListD,     "@"DID_UNIT"CodeValueKey, 0, 0)"
+
+MatForCostShtD,      "/* MatForCostShtD */ "
+MatForCostShtD,      "INSERT INTO MaterialUsed "
+MatForCostShtD,      "(CostSheetKey, MaterialKey, Quantity) "
+MatForCostShtD,      "VALUES "
+MatForCostShtD,      "(%CostSheetKey, @"MatForCostShtDL"MaterialKey, "
+MatForCostShtD,      "@Quantity) "
+
+
+JobMaterialsD,       "/* CBEst.met */ "
+JobMaterialsD,       "INSERT INTO JobMaterialUsed "
+JobMaterialsD,       "(JobKey, JobCostSheetKey, MaterialKey, "
+JobMaterialsD,       "Quantity, Unit, UnitPrice) "
+JobMaterialsD,       "VALUES "
+JobMaterialsD,       "(%JobKey, %JobCostSheetKey, @"MatForCostShtDL"MaterialKey, "
+JobMaterialsD,       "@Quantity, @"MatForCostShtDL"Unit, 0) "
+//JobMaterialsD,       "@Quantity, @"MatForCostShtDL"Unit, @UnitPrice) "
+JobMaterialsD,       "IF (0 = (SELECT UnitPrice FROM JobMaterialUsed "
+JobMaterialsD,       "WHERE JobKey= %JobKey AND JobCostSheetKey=%JobCostSheetKey "
+JobMaterialsD,       " AND MaterialKey = @"MatForCostShtDL"MaterialKey ) ) "
+JobMaterialsD,       "AND (NULL != (SELECT UnitPrice FROM MaterialPrice "
+JobMaterialsD,         "WHERE ZoneKey = 1 "
+JobMaterialsD,           "AND BaseDate = @UndeclaredBaseDate "
+JobMaterialsD,           "AND MaterialKey = @"MatForCostShtDL"MaterialKey "
+JobMaterialsD,           "AND UnitType = (SELECT UnitType FROM Job WHERE JobKey= %JobKey) )) "
+JobMaterialsD,       "UPDATE JobMaterialUsed SET UnitPrice = "
+JobMaterialsD,       "(SELECT UnitPrice FROM MaterialPrice "
+JobMaterialsD,       "WHERE ZoneKey = 1 "
+JobMaterialsD,       "AND BaseDate = @UndeclaredBaseDate "
+JobMaterialsD,       "AND MaterialKey = @"MatForCostShtDL"MaterialKey  "
+JobMaterialsD,       "AND UnitType = (SELECT UnitType FROM Job WHERE JobKey= %JobKey) "
+JobMaterialsD,       ") WHERE JobKey= %JobKey AND JobCostSheetKey=%JobCostSheetKey "
+JobMaterialsD,       " AND MaterialKey = @"MatForCostShtDL"MaterialKey "
+
+
+
+CrewForCostShtD,     "INSERT INTO CrewUsed "
+CrewForCostShtD,     "(CostSheetKey, CostSheetCrewKey, CostSheetCrewID, Description) "
+CrewForCostShtD,     "VALUES "
+CrewForCostShtD,     "(%CostSheetKey, @NewKey, "
+CrewForCostShtD,     "@CostSheetCrewID, @Description) "
+
+CrewCShtLaborD,      "INSERT INTO CrewLaborUsed "
+CrewCShtLaborD,      "(CostSheetKey, CostSheetCrewKey, LaborerKey, Quantity) "
+CrewCShtLaborD,      "VALUES "
+CrewCShtLaborD,      "(%CostSheetKey, %CostSheetCrewKey, @"LaborCatL"LaborerKey, @Quantity) "
+                     
+CrewCShtEquipD,      "INSERT INTO CrewEquipmentUsed "
+CrewCShtEquipD,      "(CostSheetKey, CostSheetCrewKey, EquipmentKey, Quantity) "
+CrewCShtEquipD,      "VALUES "
+CrewCShtEquipD,      "(%CostSheetKey, %CostSheetCrewKey, @"EquipCatL"EquipmentKey, @Quantity) "
+
+
+CrewForJobD,         "INSERT INTO JobCrewUsed "
+CrewForJobD,         "(JobKey, JobCostSheetKey, JobCrewKey, CrewID, Description) "
+CrewForJobD,         "VALUES "
+CrewForJobD,         "(%JobKey, %JobCostSheetKey, @NewKey, "
+CrewForJobD,         "@CrewID, @Description) "
+
+CrewJobLaborD,       "INSERT INTO JobCrewLaborUsed "
+CrewJobLaborD,       "(JobKey, JobCostSheetKey, JobCrewKey, LaborerKey, Quantity, "
+CrewJobLaborD,       "Rate, OvertimeRate) "
+CrewJobLaborD,       "VALUES "
+CrewJobLaborD,       "(%JobKey, %JobCostSheetKey, %JobCrewKey, @"LaborCatL"LaborerKey, @Quantity, "
+CrewJobLaborD,       "0,0) "
+                     
+CrewJobEquipD,       "INSERT INTO JobCrewEquipmentUsed "
+CrewJobEquipD,       "(JobKey, JobCostSheetKey, JobCrewKey, EquipmentKey, Quantity, "
+CrewJobEquipD,       "Rate, OvertimeRate) "
+CrewJobEquipD,       "VALUES "
+CrewJobEquipD,       "(%JobKey, %JobCostSheetKey, %JobCrewKey, @"EquipCatL"EquipmentKey, @Quantity, "
+CrewJobEquipD,       "0,0) "
+
+
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+CBEstForStdItemL,    "DELETE FROM CostBasedEstimate "
+CBEstForStdItemL,    "WHERE CostBasedEstimateKey IN (%CostBasedEstimateKey{,%CostBasedEstimateKey}) "
+
+CBEstForJobItemL,    "DELETE FROM JobCostBasedEstimate "
+CBEstForJobItemL,    "WHERE JobKey = %JobKey "
+CBEstForJobItemL,    "AND JobItemKey = %JobItemKey "
+CBEstForJobItemL,    "AND JobItemCostBasedEstimateKey IN (%JobItemCostBasedEstimateKey{,%JobItemCostBasedEstimateKey}) "
+
+TaskL,               "DELETE FROM Task "
+TaskL,               "WHERE CostBasedEstimateKey = %CostBasedEstimateKey "
+TaskL,               "AND TaskKey IN (%TaskKey{,%TaskKey}) "
+
+JobTaskL,            "DELETE FROM JobCostSheet "
+JobTaskL,            "WHERE JobKey = %JobKey "
+JobTaskL,            "AND JobCostSheetKey IN (%JobCostSheetKey{,%JobCostSheetKey}) "
+JobTaskL,            " "
+JobTaskL,            "DELETE FROM JobCrewUsed "
+JobTaskL,            "WHERE JobKey = %JobKey "
+JobTaskL,            "AND JobCostSheetKey IN (%JobCostSheetKey{,%JobCostSheetKey}) "
+JobTaskL,            " "
+JobTaskL,            "DELETE FROM JobCrewLaborUsed "
+JobTaskL,            "WHERE JobKey = %JobKey "
+JobTaskL,            "AND JobCostSheetKey IN (%JobCostSheetKey{,%JobCostSheetKey}) "
+JobTaskL,            " "
+JobTaskL,            "DELETE FROM JobCrewEquipmentUsed "
+JobTaskL,            "WHERE JobKey = %JobKey "
+JobTaskL,            "AND JobCostSheetKey IN (%JobCostSheetKey{,%JobCostSheetKey}) "
+JobTaskL,            " "
+JobTaskL,            "DELETE FROM JobMaterialUsed "
+JobTaskL,            "WHERE JobKey = %JobKey "
+JobTaskL,            "AND JobCostSheetKey IN (%JobCostSheetKey{,%JobCostSheetKey}) "
+
+
+MaterialL,           "DELETE FROM MaterialUsed "
+MaterialL,           "WHERE CostSheetKey=%CostSheetKey "
+MaterialL,           "AND MaterialKey IN (%MaterialKey{,%MaterialKey}) "
+
+
+CrewCShtLaborL,      "DELETE FROM CrewLaborUsed "
+CrewCShtLaborL,      "WHERE LaborerKey IN (%LaborerKey{,%LaborerKey}) "
+CrewCShtLaborL,      "AND CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtLaborL,      "AND CostSheetKey = %CostSheetKey "
+
+CrewCShtEquipL,      "DELETE FROM CrewEquipmentUsed "
+CrewCShtEquipL,      "WHERE EquipmentKey IN (%EquipmentKey{,%EquipmentKey}) "
+CrewCShtEquipL,      "AND CostSheetCrewKey = %CostSheetCrewKey "
+CrewCShtEquipL,      "AND CostSheetKey = %CostSheetKey "
+
+
+JobMaterialsL,       "DELETE FROM JobMaterialUsed "
+JobMaterialsL,       "WHERE JobKey = %JobKey "
+JobMaterialsL,       "AND JobCostSheetKey = %JobCostSheetKey "
+JobMaterialsL,       "AND MaterialKey IN (%MaterialKey{,%MaterialKey}) "
+
+
+
+CostShtCrewL,        "DELETE FROM CrewUsed "
+CostShtCrewL,        "WHERE CostSheetKey = %CostSheetKey "
+CostShtCrewL,        "AND CostSheetCrewKey IN (%CostSheetCrewKey{,%CostSheetCrewKey})"
+
+CostShtCrewL,        "DELETE FROM CrewEquipmentUsed "
+CostShtCrewL,        "WHERE CostSheetKey = %CostSheetKey "
+CostShtCrewL,        "AND CostSheetCrewKey IN (%CostSheetCrewKey{,%CostSheetCrewKey}) "
+
+CostShtCrewL,        "DELETE FROM CrewLaborUsed "
+CostShtCrewL,        "WHERE CostSheetKey = %CostSheetKey "
+CostShtCrewL,        "AND CostSheetCrewKey IN (%CostSheetCrewKey{,%CostSheetCrewKey}) "
+
+
+
+
+JobCrewL,            "DELETE FROM JobCrewUsed "
+JobCrewL,            "WHERE JobKey = %JobKey "
+JobCrewL,            "AND JobCostSheetKey = %JobCostSheetKey "
+JobCrewL,            "AND JobCrewKey IN (%JobCrewKey{,%JobCrewKey}) "
+
+JobCrewL,            "DELETE FROM JobCrewEquipmentUsed "
+JobCrewL,            "WHERE JobKey = %JobKey "
+JobCrewL,            "AND JobCostSheetKey = %JobCostSheetKey "
+JobCrewL,            "AND JobCrewKey IN (%JobCrewKey{,%JobCrewKey}) "
+
+JobCrewL,            "DELETE FROM JobCrewLaborUsed "
+JobCrewL,            "WHERE JobKey = %JobKey "
+JobCrewL,            "AND JobCostSheetKey = %JobCostSheetKey "
+JobCrewL,            "AND JobCrewKey IN (%JobCrewKey{,%JobCrewKey}) "
+
+
+CrewJobLaborL,       "DELETE FROM JobCrewLaborUsed "
+CrewJobLaborL,       "WHERE LaborerKey IN (%LaborerKey{,%LaborerKey}) "
+CrewJobLaborL,       "AND JobKey = %JobKey "
+CrewJobLaborL,       "AND JobCrewKey = %JobCrewKey "
+CrewJobLaborL,       "AND JobCostSheetKey = %JobCostSheetKey "
+
+CrewJobEquipL,       "DELETE FROM JobCrewEquipmentUsed "
+CrewJobEquipL,       "WHERE EquipmentKey IN (%EquipmentKey{,%EquipmentKey}) "
+CrewJobEquipL,       "AND JobKey = %JobKey "
+CrewJobEquipL,       "AND JobCrewKey = %JobCrewKey "
+CrewJobEquipL,       "AND JobCostSheetKey = %JobCostSheetKey "
+
+
+:format kludge.bin
+//JobTaskS,            "Number,$....", "Number,...", "Number,$.."
+JobTaskS,            "Number,$.."
+// JobTaskS,            "Number,$,....", "Number,,...", "Number,$,.."
+MATERIALS_CNT,       "Number"
+MATERIALS_CPY_CNT,       "Number"
+
+// MATERIALS,           "Number", "Number", "Number", "Number,....", "Number", "Number,...."
+MATERIALS,           "String", "String", "String", "Number,....", "Number", "Number,...."
+
+MATERIALS_DEFZONE,   "Number", "Number", "Number", "Number,....", "Number", "Number,...."
+
+COPY_CREW,           "Number", "Number", "Number", "String", "String"
+COPY_CREW_EQ,        "Number", "Number", "Number", "Number", "Number,...", "Number,...", "Number,..."
+COPY_CREW_EQ_DEF,    "Number", "Number", "Number", "Number", "Number,...", "Number,...", "Number,..."
+CBE_KEYS,            "Number", "String", "Number", "String"
+
+:query calcq.bin
+COPY_CREW,           " /* cbest.copycbe.c COPY_CREW */"                          
+COPY_CREW,           " INSERT INTO JobCrewUsed"                          
+COPY_CREW,           " (JobKey, JobCostSheetKey, JobCrewKey,"                          
+COPY_CREW,           " CrewID, Description)"                          
+COPY_CREW,           " SELECT %s, %s, %s,"
+COPY_CREW,           " CostSheetCrewID, Description"                          
+COPY_CREW,           " FROM CrewUsed"                          
+COPY_CREW,           " WHERE CostSheetKey = %s"                          
+COPY_CREW,           " AND CostSheetCrewKey = %s "                          
+
+COPY_CREW_EQ,           " /* copy the crew's equipment */"                          
+COPY_CREW_EQ,           " INSERT INTO JobCrewEquipmentUsed"                          
+COPY_CREW_EQ,             " (JobKey, JobCostSheetKey, JobCrewKey,"                          
+COPY_CREW_EQ,             " EquipmentKey, Quantity,"                          
+COPY_CREW_EQ,             " Rate, OvertimeRate)"
+COPY_CREW_EQ,           " SELECT %s, %s, %s, "
+COPY_CREW_EQ,             " CEU.EquipmentKey,"                          
+COPY_CREW_EQ,             " CEU.Quantity, ER.Rate, ER.OvertimeRate"                          
+COPY_CREW_EQ,           " FROM CrewEquipmentUsed CEU,"                          
+COPY_CREW_EQ,             " EquipmentRate ER, JobZone JZ,"                          
+COPY_CREW_EQ,             " Equipment E"                          
+COPY_CREW_EQ,           " WHERE CEU.CostSheetKey = %s "
+COPY_CREW_EQ,           " AND CEU.CostSheetCrewKey = %s "
+COPY_CREW_EQ,           " AND CEU.EquipmentKey = E.EquipmentKey"                          
+COPY_CREW_EQ,           " AND CEU.EquipmentKey = ER.EquipmentKey"                          
+COPY_CREW_EQ,           " AND JZ.JobKey = %s "
+COPY_CREW_EQ,           " AND JZ.ZoneTypeKey = E.ZoneTypeKey"                          
+COPY_CREW_EQ,           " AND JZ.ZoneKey = ER.ZoneKey"                          
+COPY_CREW_EQ,           " AND ER.BaseDate = '%s' "
+
+COPY_CREW_EQ_DEF,       " /* copy rates for the default zone */"
+COPY_CREW_EQ_DEF,       " INSERT INTO JobCrewEquipmentUsed"                          
+COPY_CREW_EQ_DEF,         " (JobKey, JobCostSheetKey, JobCrewKey,"                          
+COPY_CREW_EQ_DEF,         " EquipmentKey, Quantity,"                          
+COPY_CREW_EQ_DEF,         " Rate, OvertimeRate)"                          
+COPY_CREW_EQ_DEF,       " SELECT %s, %s, %s"
+COPY_CREW_EQ_DEF,        ", CEU.EquipmentKey, CEU.Quantity, ER.Rate, ER.OvertimeRate"                          
+COPY_CREW_EQ_DEF,       " FROM CrewEquipmentUsed CEU,"                          
+COPY_CREW_EQ_DEF,         " EquipmentRate ER, JobZone JZ,"                          
+COPY_CREW_EQ_DEF,         " Equipment E"                          
+COPY_CREW_EQ_DEF,       " WHERE CEU.CostSheetKey = %s"
+COPY_CREW_EQ_DEF,       " AND CEU.CostSheetCrewKey = %s"
+COPY_CREW_EQ_DEF,       " AND CEU.EquipmentKey = E.EquipmentKey"                          
+COPY_CREW_EQ_DEF,       " AND CEU.EquipmentKey = ER.EquipmentKey"                          
+COPY_CREW_EQ_DEF,       " AND JZ.JobKey = %s"
+COPY_CREW_EQ_DEF,       " AND JZ.ZoneTypeKey = E.ZoneTypeKey"                          
+COPY_CREW_EQ_DEF,       " AND 1 = ER.ZoneKey"                          
+COPY_CREW_EQ_DEF,       " AND ER.BaseDate = '%s'"
+COPY_CREW_EQ_DEF,       " AND CEU.EquipmentKey NOT IN"
+COPY_CREW_EQ_DEF,       " (SELECT JCEU.EquipmentKey"
+COPY_CREW_EQ_DEF,       " FROM JobCrewEquipmentUsed JCEU"
+COPY_CREW_EQ_DEF,       " WHERE JCEU.JobKey = %s"
+COPY_CREW_EQ_DEF,       " AND JCEU.JobCostSheetKey = %s"
+COPY_CREW_EQ_DEF,       " AND JCEU.JobCrewKey = %s)"
+
+COPY_CREW_LAB,           " /* copy the equipment crew's labor */"
+COPY_CREW_LAB,           " INSERT INTO JobCrewLaborUsed"
+COPY_CREW_LAB,             " (JobKey, JobCostSheetKey, JobCrewKey,"
+COPY_CREW_LAB,             " LaborerKey, Quantity, Rate, OvertimeRate)"
+COPY_CREW_LAB,           " SELECT %s, %s, %s,"
+COPY_CREW_LAB,             " CLU.LaborerKey,"
+COPY_CREW_LAB,             " CLU.Quantity, LWAB.%s,"
+COPY_CREW_LAB,             " LWAB.%s "
+COPY_CREW_LAB,           " FROM CrewLaborUsed CLU, LaborerWageAndBenefits LWAB,"
+COPY_CREW_LAB,              " JobZone JZ, Labor L"
+COPY_CREW_LAB,           " WHERE CLU.CostSheetKey = %s "
+COPY_CREW_LAB,           " AND CLU.CostSheetCrewKey = %s "
+COPY_CREW_LAB,           " AND CLU.LaborerKey = L.LaborerKey"
+COPY_CREW_LAB,           " AND CLU.LaborerKey = LWAB.LaborerKey"
+COPY_CREW_LAB,           " AND JZ.JobKey = %s "
+COPY_CREW_LAB,           " AND JZ.ZoneTypeKey = L.ZoneTypeKey"
+COPY_CREW_LAB,           " AND JZ.ZoneKey = LWAB.ZoneKey"
+COPY_CREW_LAB,           " AND LWAB.BaseDate = '%s' "
+
+COPY_CREW_LAB_DEF,   " /* copy labor rates for the default zone */"
+COPY_CREW_LAB_DEF,   " INSERT INTO JobCrewLaborUsed"
+COPY_CREW_LAB_DEF,     " (JobKey, JobCostSheetKey, JobCrewKey,"
+COPY_CREW_LAB_DEF,     " LaborerKey, Quantity, Rate, OvertimeRate)"
+COPY_CREW_LAB_DEF,   " SELECT %s, %s, %s"
+COPY_CREW_LAB_DEF,     ", CLU.LaborerKey,"
+COPY_CREW_LAB_DEF,     " CLU.Quantity, LWAB.%s"
+COPY_CREW_LAB_DEF,     ", LWAB.%s "
+COPY_CREW_LAB_DEF,   " FROM CrewLaborUsed CLU, LaborerWageAndBenefits LWAB,"
+COPY_CREW_LAB_DEF,     " JobZone JZ, Labor L"
+COPY_CREW_LAB_DEF,   " WHERE CLU.CostSheetKey = %s"
+COPY_CREW_LAB_DEF,   " AND CLU.CostSheetCrewKey = %s"
+COPY_CREW_LAB_DEF,   " AND CLU.LaborerKey = L.LaborerKey"
+COPY_CREW_LAB_DEF,   " AND CLU.LaborerKey = LWAB.LaborerKey"
+COPY_CREW_LAB_DEF,   " AND JZ.JobKey = %s"
+COPY_CREW_LAB_DEF,   " AND JZ.ZoneTypeKey = L.ZoneTypeKey"
+COPY_CREW_LAB_DEF,   " AND 1 = LWAB.ZoneKey"
+COPY_CREW_LAB_DEF,   " AND LWAB.BaseDate = '%s' "
+COPY_CREW_LAB_DEF,   " AND CLU.LaborerKey NOT IN"
+COPY_CREW_LAB_DEF,   " (SELECT JCEU.LaborerKey"
+COPY_CREW_LAB_DEF,   "  FROM JobCrewLaborUsed JCEU"
+COPY_CREW_LAB_DEF,   "  WHERE JCEU.JobKey = %s"
+COPY_CREW_LAB_DEF,   "  AND JCEU.JobCostSheetKey = %s "
+COPY_CREW_LAB_DEF,   "  AND JCEU.JobCrewKey = %s ) "
+            
+
+COPY_COST_SHEET, "/* cbest.met.COPY_COST_SHEET */ "
+COPY_COST_SHEET, " INSERT INTO JobCostSheet"
+COPY_COST_SHEET, " (JobKey, JobCostSheetKey,"
+COPY_COST_SHEET, " JobItemCostBasedEstimateKey, JobItemKey,"
+COPY_COST_SHEET, " TaskID, TaskDescription,"
+COPY_COST_SHEET, " CostSheetID, Description,"
+COPY_COST_SHEET, " ProductionRate, Duration,"
+COPY_COST_SHEET, " ProductionGranularity, HoursPerDay,"
+COPY_COST_SHEET, " OvertimeHoursPerDay, LaborDailyCost,"
+COPY_COST_SHEET, " EquipmentDailyCost, MaterialsUnitCost,"
+COPY_COST_SHEET, " MarkUpPct, LaborOverheadPct,"
+COPY_COST_SHEET, " EquipmentOverheadPct, MaterialsOverheadPct,"
+COPY_COST_SHEET, " QuantityPerItemUnit, Unit,"
+COPY_COST_SHEET, " UnitPrice, DisplayedProductionRate)"
+COPY_COST_SHEET, " SELECT"
+COPY_COST_SHEET, " %JobKey, %NJCSHTKey,"
+COPY_COST_SHEET, " %JobItemCostBasedEstimateKey,  %JobItemKey,"
+COPY_COST_SHEET, " T.TaskID, T.Description,"
+COPY_COST_SHEET, " CS.CostSheetID, CS.Description,"
+COPY_COST_SHEET, " T.ProductionAdjustment * CS.ProductionRate, 0,"
+COPY_COST_SHEET, " CS.ProductionGranularity,  CS.DefaultHoursPerDay,"
+COPY_COST_SHEET, " 0, 0,"
+COPY_COST_SHEET, " 0, 0,"
+COPY_COST_SHEET, " CS.MarkUpPct, CS.LaborOverheadPct,"
+COPY_COST_SHEET, " CS.EquipmentOverheadPct, CS.MaterialsOverheadPct,"
+COPY_COST_SHEET, " T.QuantityPerItemUnit, T.Unit,"
+COPY_COST_SHEET, " 0, CS.ProductionRate"
+COPY_COST_SHEET, " FROM Task T, CostSheet CS"
+COPY_COST_SHEET, " WHERE T.TaskKey = %TaskKey"
+COPY_COST_SHEET, " AND T.CostSheetKey = %CostSheetKey"
+COPY_COST_SHEET, " AND T.CostBasedEstimateKey = %CostBasedEstimateKey"
+COPY_COST_SHEET, " AND CS.CostSheetKey = %CostSheetKey "
+
+COPY_COST_SHEET_TPA1,     "/* cbest.met.COPY_COST_SHEET_TPA1 */ "
+COPY_COST_SHEET_TPA1,     " INSERT INTO JobCostSheet"
+COPY_COST_SHEET_TPA1,     " (JobKey, JobCostSheetKey,"
+COPY_COST_SHEET_TPA1,     " JobItemCostBasedEstimateKey, JobItemKey,"
+COPY_COST_SHEET_TPA1,     " TaskID, TaskDescription,"
+COPY_COST_SHEET_TPA1,     " CostSheetID, Description,"
+COPY_COST_SHEET_TPA1,     " ProductionRate, Duration,"
+COPY_COST_SHEET_TPA1,     " ProductionGranularity, HoursPerDay,"
+COPY_COST_SHEET_TPA1,     " OvertimeHoursPerDay, LaborDailyCost,"
+COPY_COST_SHEET_TPA1,     " EquipmentDailyCost, MaterialsUnitCost,"
+COPY_COST_SHEET_TPA1,     " MarkUpPct, LaborOverheadPct,"
+COPY_COST_SHEET_TPA1,     " EquipmentOverheadPct, MaterialsOverheadPct,"
+COPY_COST_SHEET_TPA1,     " QuantityPerItemUnit, Unit,"
+COPY_COST_SHEET_TPA1,     " UnitPrice, DisplayedProductionRate)"
+COPY_COST_SHEET_TPA1,     " SELECT"
+COPY_COST_SHEET_TPA1,     " %JobKey, %NJCSHTKey,"
+COPY_COST_SHEET_TPA1,     " %JobItemCostBasedEstimateKey,  %JobItemKey,"
+COPY_COST_SHEET_TPA1,     " T.TaskID, T.Description,"
+COPY_COST_SHEET_TPA1,     " CS.CostSheetID, CS.Description,"
+COPY_COST_SHEET_TPA1,     " CS.ProductionRate, 0,"
+COPY_COST_SHEET_TPA1,     " CS.ProductionGranularity, CS.DefaultHoursPerDay,"
+COPY_COST_SHEET_TPA1,     " 0, 0,"
+COPY_COST_SHEET_TPA1,     " 0, 0,"
+COPY_COST_SHEET_TPA1,     " CS.MarkUpPct, CS.LaborOverheadPct,"
+COPY_COST_SHEET_TPA1,     " CS.EquipmentOverheadPct, CS.MaterialsOverheadPct,"
+COPY_COST_SHEET_TPA1,     " T.QuantityPerItemUnit, T.Unit,"
+COPY_COST_SHEET_TPA1,     " 0, CS.ProductionRate"
+COPY_COST_SHEET_TPA1,     " FROM Task T, CostSheet CS"
+COPY_COST_SHEET_TPA1,     " WHERE T.TaskKey = %TaskKey"
+COPY_COST_SHEET_TPA1,     " AND T.CostSheetKey = %CostSheetKey"
+COPY_COST_SHEET_TPA1,     " AND T.CostBasedEstimateKey = %CostBasedEstimateKey"
+COPY_COST_SHEET_TPA1,     " AND CS.CostSheetKey = %CostSheetKey"
+
+
+// COPY_MATERIAL,    " INSERT INTO JobMaterialUsed"
+// COPY_MATERIAL,    " (JobKey, JobCostSheetKey, MaterialKey, Quantity, Unit,"
+// COPY_MATERIAL,    " UnitPrice)"
+// COPY_MATERIAL,    " SELECT %JobKey, %JobCostSheetKey, MU.MaterialKey,"
+// COPY_MATERIAL,    " MU.Quantity, M.Unit, MP.UnitPrice"
+// COPY_MATERIAL,    " FROM MaterialUsed MU, MaterialPrice MP, Material M,"
+// COPY_MATERIAL,    " JobZone JZ, Job J"
+// COPY_MATERIAL,    " WHERE MU.CostSheetKey = %CostSheetKey"
+// COPY_MATERIAL,    " AND   MU.MaterialKey  = MP.MaterialKey"
+// COPY_MATERIAL,    " AND   MU.MaterialKey  = M.MaterialKey"
+// COPY_MATERIAL,    " AND   J.JobKey        = %JobKey"
+// COPY_MATERIAL,    " AND   J.BaseDate      = MP.BaseDate"
+// COPY_MATERIAL,    " AND   J.JobKey        = JZ.JobKey"
+// COPY_MATERIAL,    " AND   M.ZoneTypeKey   = JZ.ZoneTypeKey"
+// COPY_MATERIAL,    " AND   MP.ZoneKey      = JZ.ZoneKey",
+// COPY_MATERIAL,    " "
+// COPY_MATERIAL,    " /* copy material prices for the default zone */"
+// COPY_MATERIAL,    " "
+// COPY_MATERIAL,    " INSERT INTO JobMaterialUsed"
+// COPY_MATERIAL,    " (JobKey, JobCostSheetKey, MaterialKey, Quantity, Unit,"
+// COPY_MATERIAL,    " UnitPrice)"
+// COPY_MATERIAL,    " SELECT %JobKey, %JobCostSheetKey, MU.MaterialKey,"
+// COPY_MATERIAL,    " MU.Quantity, M.Unit, MP.UnitPrice"
+// COPY_MATERIAL,    " FROM MaterialUsed MU, MaterialPrice MP, Material M,"
+// COPY_MATERIAL,    " JobZone JZ, Job J"
+// COPY_MATERIAL,    " WHERE MU.CostSheetKey = %CostSheetKey"
+// COPY_MATERIAL,    " AND MU.MaterialKey = MP.MaterialKey"
+// COPY_MATERIAL,    " AND MU.MaterialKey = M.MaterialKey"
+// COPY_MATERIAL,    " AND J.JobKey       = %JobKey"
+// COPY_MATERIAL,    " AND J.BaseDate     = MP.BaseDate"
+// COPY_MATERIAL,    " AND J.JobKey       = JZ.JobKey"
+// COPY_MATERIAL,    " AND M.ZoneTypeKey  = JZ.ZoneTypeKey"
+// COPY_MATERIAL,    " AND MP.ZoneKey     = 1"
+// COPY_MATERIAL,    " AND MU.MaterialKey NOT IN"
+// COPY_MATERIAL,    " (SELECT JMU.MaterialKey"
+// COPY_MATERIAL,    " FROM JobMaterialUsed JMU"
+// COPY_MATERIAL,    " WHERE JMU.JobKey = %JobKey"
+// COPY_MATERIAL,    " AND JMU.JobCostSheetKey = %JobCostSheetKey)"
+ 
+
+MATERIALS_CNT,    "/* cbest.met.MATERIALS_CNT */ " 
+MATERIALS_CNT,    " SELECT COUNT(*)"
+MATERIALS_CNT,    " FROM MaterialUsed MU, MaterialPrice MP, Material M,"
+MATERIALS_CNT,    " JobZone JZ, Job J"
+MATERIALS_CNT,    " WHERE MU.CostSheetKey = %CostSheetKey"
+MATERIALS_CNT,    " AND MU.MaterialKey = MP.MaterialKey"
+MATERIALS_CNT,    " AND MU.MaterialKey = M.MaterialKey"
+MATERIALS_CNT,    " AND J.JobKey = %JobKey"
+MATERIALS_CNT,    " AND J.JobKey = JZ.JobKey"
+MATERIALS_CNT,    " AND J.BaseDate = MP.BaseDate"       //  95MAY tlb -
+MATERIALS_CNT,    " AND M.ZoneTypeKey = JZ.ZoneTypeKey" //  95MAY tlb -
+MATERIALS_CNT,       " AND (MP.UnitType = (SELECT UnitType FROM Job WHERE JobKey= %JobKey) "
+MATERIALS_CNT,            " OR MP.UnitType = NULL ) "
+MATERIALS_CNT,    " AND (MP.ZoneKey = JZ.ZoneKey "
+MATERIALS_CNT,         " OR MP.ZoneKey = 1 ) "
+
+
+MATERIALS_CPY_CNT, "/* cbest.MATERIALS_CPY_CNT */ " 
+MATERIALS_CPY_CNT, " SELECT COUNT(*)"
+MATERIALS_CPY_CNT, " FROM MaterialUsed MU, MaterialPrice MP, Material M "
+MATERIALS_CPY_CNT, " WHERE MU.CostSheetKey = %CostSheetKey"
+MATERIALS_CPY_CNT, " AND MU.MaterialKey = MP.MaterialKey"
+MATERIALS_CPY_CNT, " AND MU.MaterialKey = M.MaterialKey"
+MATERIALS_CPY_CNT, " AND BaseDate = "
+MATERIALS_CPY_CNT,      "(SELECT BaseDate FROM Job WHERE JobKey = %JobKey )"
+MATERIALS_CPY_CNT, " AND MP.ZoneKey = 1 "
+MATERIALS_CPY_CNT, " AND (MP.UnitType = NULL"
+MATERIALS_CPY_CNT,     " OR MP.UnitType = "
+MATERIALS_CPY_CNT,     " (SELECT UnitType FROM Job WHERE JobKey = %JobKey )) "
+
+ 
+
+
+MATERIALS,    "/* cbest.met.MATERIALS */ "
+MATERIALS,    " SELECT %JobKey, %JobCostSheetKey, MU.MaterialKey,"
+MATERIALS,    " MU.Quantity, M.Unit, MP.UnitPrice"
+MATERIALS,    " FROM MaterialUsed MU, MaterialPrice MP, Material M,"
+MATERIALS,    " JobZone JZ, Job J"
+MATERIALS,    " WHERE MU.CostSheetKey = %CostSheetKey"
+MATERIALS,    " AND MU.MaterialKey = MP.MaterialKey"
+MATERIALS,    " AND MU.MaterialKey = M.MaterialKey"
+MATERIALS,    " AND J.JobKey = %JobKey"
+MATERIALS,    " AND J.JobKey = JZ.JobKey"
+MATERIALS,    " AND J.BaseDate = MP.BaseDate"        // 95MAY tlb -
+MATERIALS,    " AND M.ZoneTypeKey = JZ.ZoneTypeKey"  // 95MAY tlb -
+MATERIALS,    " AND MP.ZoneKey = JZ.ZoneKey"
+MATERIALS,    " AND (MP.UnitType = (SELECT UnitType FROM Job WHERE JobKey= %JobKey) "
+MATERIALS,         " OR MP.UnitType = NULL ) "
+
+
+MATERIALS_DEFZONE,    "/* cbest.met.MATERIALS_DEFZONE */ "
+MATERIALS_DEFZONE,    " SELECT %JobKey, %JobCostSheetKey, MU.MaterialKey,"
+MATERIALS_DEFZONE,    " MU.Quantity, M.Unit, MP.UnitPrice"
+MATERIALS_DEFZONE,    " FROM MaterialUsed MU, MaterialPrice MP, Material M,"
+MATERIALS_DEFZONE,    " JobZone JZ, Job J"
+MATERIALS_DEFZONE,    " WHERE MU.CostSheetKey = %CostSheetKey"
+MATERIALS_DEFZONE,    " AND MU.MaterialKey = MP.MaterialKey"
+MATERIALS_DEFZONE,    " AND MU.MaterialKey = M.MaterialKey"
+MATERIALS_DEFZONE,    " AND J.JobKey = %JobKey"
+MATERIALS_DEFZONE,    " AND J.JobKey = JZ.JobKey"
+MATERIALS_DEFZONE,    " AND J.BaseDate = MP.BaseDate"        // 95MAY tlb -
+MATERIALS_DEFZONE,    " AND M.ZoneTypeKey = JZ.ZoneTypeKey"  // 95MAY tlb -
+MATERIALS_DEFZONE,    " AND MP.ZoneKey = 1"
+MATERIALS_DEFZONE,    " AND MP.UnitType = (SELECT UnitType FROM Job WHERE JobKey= %JobKey) "
+MATERIALS_DEFZONE,    " AND MU.MaterialKey NOT IN"
+MATERIALS_DEFZONE,    " (SELECT JMU.MaterialKey"
+MATERIALS_DEFZONE,    " FROM JobMaterialUsed JMU"
+MATERIALS_DEFZONE,    " WHERE JMU.JobKey = %JobKey"
+MATERIALS_DEFZONE,    " AND JMU.JobCostSheetKey = %JobCostSheetKey ) "
+
+
+CBE_KEYS,   "/* cbest.met.CBE_KEYS */ "
+CBE_KEYS,    " SELECT CBE.CostBasedEstimateKey, CostBasedEstimateID,"
+CBE_KEYS,    " Active, CBE.Description"
+CBE_KEYS,    " FROM CostBasedEstimate CBE, StandardItem SI "
+CBE_KEYS,    " WHERE "
+CBE_KEYS,      " CBE.CostBasedEstimateKey IN"
+CBE_KEYS,      " (SELECT CostBasedEstimateKey"
+CBE_KEYS,        " FROM Task T WHERE T.CostSheetKey IN"
+CBE_KEYS,           " (select CostSheetKey from CostSheet"
+CBE_KEYS,            " where Deleted = NULL "
+CBE_KEYS,            " and (UnitType = NULL OR UnitType = "
+
+CBE_KEYS_SUFFIX,          " OR UnitType = (select UnitType from StandardItem"
+CBE_KEYS_SUFFIX,                      " where StandardItemKey = "
+
+CBE_KEYS_2,    "))) AND CBE.StandardItemKey = SI.StandardItemKey"
+CBE_KEYS_2,    " AND (CBE.UnitType = SI.UnitType OR CBE.UnitType = "
+
+CBE_KEYS_2_SUFFIX,  " OR CBE.UnitType = NULL OR SI.UnitType = NULL) )"
+CBE_KEYS_2_SUFFIX,  " AND CBE.StandardItemKey = "
+
+// CBE_KEYS,            "/* cbest.met.CBE_KEYS */"
+// CBE_KEYS,            " SELECT CostBasedEstimateKey, CostBasedEstimateID,"
+// CBE_KEYS,            " Active, Description "
+// CBE_KEYS,            " FROM CostBasedEstimate"
+// CBE_KEYS,            " WHERE StandardItemKey = %s"
+

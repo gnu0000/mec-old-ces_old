@@ -1,0 +1,78 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rAreas.h"                                       
+
+:query rAreasQ.bin                                        
+
+ID_QUERY_DESC, "select AreaTypeID, Description "
+ID_QUERY_DESC, "from AreaType "
+ID_QUERY_DESC, "where Deleted is NULL "
+ID_QUERY_DESC, " and AreaTypeKey = "
+
+
+ID_QUERY_LISTING, "select distinct AreaID, Area.Description, CountyID, Name "
+ID_QUERY_LISTING, "from Area, AreaCounty, County "
+ID_QUERY_LISTING, "where Area.Deleted is NULL "
+ID_QUERY_LISTING, " and County.Deleted is NULL " 
+ID_QUERY_LISTING, " and Area.AreaKey = AreaCounty.AreaKey "
+ID_QUERY_LISTING, " and AreaCounty.CountyKey = County.CountyKey "
+ID_QUERY_LISTING, " and Area.AreaTypeKey = "
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "7"
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth,TtlText
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,     11,      11,      16,Area-Type: "
+RPT_TTL_2,    "27,     3,      30,      49, - "  
+
+RPT_TTL_3,    "7,      5,      13,       8,Area:"  
+RPT_TTL_4,    "21,     3,      24,      55, - "  
+
+RPT_TTL_5,    "14,     9,      24,       4,Counties:"  
+RPT_TTL_6,    "28,     3,      31,      30, - "  
+
+RPT_TTL_7,    "0,     17,      18,      16,(cont.) Area-Type " 
+
+
+:FORMAT rAreasF.bin                                                  
+
+ID_QUERY_DESC,    "String", "String"
+ID_QUERY_LISTING, "String", "String", "String", "String"
+
+
+:query rAreasDQ.bin                                                  
+
+rAreas_RptDlgBox,       "SELECT AreaTypeKey "                             
+rAreas_RptDlgBox,       "FROM AreaType "                                  
+rAreas_RptDlgBox,       "WHERE Deleted is NULL "                   
+rAreas_RptDlgBox,       "AND AreaTypeKey = %AreaTypeKey "                   
+
+
+:Dialog rAreasDD.bin rAreasDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rAreas_RptDlgBox, rAreas_RptDlgBox, rAreas_RptDlgBox, AreaTypeKey, DID_KEY, "Number", "Number"            
+

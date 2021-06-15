@@ -1,0 +1,44 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+DLGTEMPLATE CountyD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "County", CountyD                 , 24, 60, 259, 49, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "C~ounty ID", 1200, 7, 40, 52, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 9, 29, 63, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "County ~Name", 1201, 93, 40, 60, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 201, 95, 29, 152, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 33, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 81, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 129, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 177, 6, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+

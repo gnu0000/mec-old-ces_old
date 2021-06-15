@@ -1,0 +1,225 @@
+/*
+ * default.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// Static Window ID    add,          change,       xpos ypos xsiz ysiz  CoordType     Window Options     Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                    USHORT                     USHORT                                 RECTS               USHORT
+// Parents Window ID         Type Child Window ID       uKind       add,                  change,              Coord
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+DefaultUnitPriceCatS, DefaultUnitPriceCatL, ITIWC_LIST, DefltPricesD,  DefltPricesD, 0,   0,   0,   0,   COORD_REL
+
+
+
+
+
+
+
+
+:list list.bin
+//
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT               LONG                   LONG                 LONG                 USHORT USHORT USHORT
+// List Window ID       Window Options     Background Color     Label Bkg Color       Label ydata  Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT               USHORT                RECTS           USHORT        LONG            LONG                                             NAME                   PSZ
+// Window ID            Next Window ID                        CoordType     Foreground Clr  Txt Flags                                     Col Name               Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                  USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID            Next Window ID    xpos ypos xsiz ysiz  CoordType  Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT               char []
+//
+// Window ID            Window Title
+//--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//                                    
+// Dlg Id        Add Query ID          Change Query ID        Col Name               CtlID                  out Fmt   in fmt
+//-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//-------------------------------------------------------------------------

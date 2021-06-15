@@ -1,0 +1,381 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * costsht.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "..\include\dialog.h"
+#include "dialog.h"
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                 RECTS                USHORT        LONG                 LONG
+// Static ID    add         change        xpos ypos xsiz ysiz  CoordType     Window Options       Background Color
+//-------------------------------------------------------------------------------------------------------------
+CostSheetCatS,  CostSheetD, CostSheetD,   4,   1,   55,  17,   COORD_CHRRNG, ITI_STATICOPTIONS,   ITI_STATICBACKGROUND
+CostSheetS,     CostSheetD, CostSheetD,   8,   2,   50,  13,   COORD_CHRRNG, ITI_STATICOPTIONS,   ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+// USHORT       USHORT            USHORT       RECT        USHORT
+// Parents ID   Child Window ID   uKind        add         change        <-   ^    ->   v    Coord
+//--------------------------------------------------------------------------------------------------------------
+CostSheetCatS,  CostSheetCatL,    ITIWC_LIST,  CostSheetD, CostSheetD,   0,   0,   0,   0,  COORD_REL
+
+
+
+
+:list list.bin
+//
+// USHORT            LONG               LONG                  LONG                   USHORT USHORT USHORT
+// List Window ID    Window Options     Background Color      Label Bkg Color        Label ydata  Button Window ID
+//----------------------------------------------------------------------------------------------------------------
+CostSheetCatL,       ITI_LISTOPTIONSV,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,  0,   0,    0 
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//
+// USHORT           USHORT             RECTS           USHORT     LONG               LONG             NAME                   PSZ
+// Window ID        Next Window ID                     CoordType  Foreground Color   Txt Flags               Col Name               Format String
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+CostSheetCatL, CostSheetS,     1,   0,  8,  1,  COORD_CHRRNG,  ITI_LDATACOLOR,  ITI_LDATAFLAGS,   CostSheetID,           "String"
+CostSheetCatL, CostSheetS,     11,  0,  0,  1,  COORD_CHRRELX, ITI_LDATACOLOR,  ITI_LDATAFLAGS,   Description,           "String"
+
+CostSheetS,    CostSheetCatS,  12,  1,  1,   2, COORD_CHRRELX, ITI_SDATACOLOR,  ITI_SDATAMLFLAGS, Description,           "String"
+CostSheetS,    CostSheetCatS,  20,  3,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   ProductionRate,        "Number,,...."       
+CostSheetS,    CostSheetCatS,  20,  4,  20,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   ProductionGranularity, "UnitOfTime"
+CostSheetS,    CostSheetCatS,  20,  5,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   DefaultHoursPerDay,    "Number,.."
+CostSheetS,    CostSheetCatS,  20,  6,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   MaterialsOverheadPct,  "Number,%."
+CostSheetS,    CostSheetCatS,  20,  7,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   EquipmentOverheadPct,  "Number,%."
+CostSheetS,    CostSheetCatS,  20,  8,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   LaborOverheadPct,      "Number,%."
+CostSheetS,    CostSheetCatS,  20,  9,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   MarkUpPct,             "Number,%."
+
+CostSheetS,    CostSheetCatS,  20, 10,  15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,  ITI_SDATAFLAGS,   UnitType,               "Flag,E,M"
+
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//
+// USHORT           USHORT    RECTS           USHORT        LONG                LONG               char []
+// Window ID   Next Window             CoordType     Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+CostSheetCatL, CostSheetD,   1, 0,  8,  1, COORD_CHRRNG,  ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Cost Sheet"
+CostSheetCatL, CostSheetS,   11,0,  1,  1, COORD_CHRRELX, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CostSheetS,   0,             1, 1,  10,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Description:"
+CostSheetS,   0,             1, 3,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Production:"
+CostSheetS,   0,             1, 4,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Production Granularity:"
+CostSheetS,   0,             1, 5,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Default Hours/Day:"
+CostSheetS,   0,             1, 6,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Materials Overhead:"
+CostSheetS,   0,             1, 7,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Equipment Overhead:"
+CostSheetS,   0,             1, 8,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Labor Overhead:"
+CostSheetS,   0,             1, 9,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Markup:"
+CostSheetS,   0,             1,10,  18,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Unit System:"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT              char []
+//
+// Window ID           Query String
+//---------------------------------------------------------------------------------------------------------
+
+CostSheetCatL,   " /* CostSheetCatL */"
+CostSheetCatL, " SELECT CostSheetID, Description, CostSheetKey"
+CostSheetCatL,   ", UnitType"
+CostSheetCatL, " FROM CostSheet CS"
+CostSheetCatL, " WHERE Deleted IS NULL"
+CostSheetCatL, " AND (CS.UnitType = %CurUnitType "
+CostSheetCatL,      "OR CS.UnitType = NULL) "
+CostSheetCatL, " ORDER BY CostSheetID"
+
+CostSheetS,     " /* CostSheetS */"
+CostSheetS,    " SELECT Description, ProductionRate,"
+CostSheetS,    " ProductionGranularity, DefaultHoursPerDay,"
+CostSheetS,    " MaterialsOverheadPct, EquipmentOverheadPct,"
+CostSheetS,    " LaborOverheadPct, MarkUpPct, CostSheetID,"
+CostSheetS,    " CostSheetKey"
+CostSheetS,     ", UnitType"
+CostSheetS,    " FROM CostSheet"
+CostSheetS,    " WHERE CostSheetKey = %CostSheetKey"
+
+CostSheetD,     " /* CostSheetD */"
+CostSheetD,    " SELECT CostSheetID, Description, ProductionRate,"
+CostSheetD,    " ProductionGranularity, DefaultHoursPerDay,"
+CostSheetD,    " MaterialsOverheadPct, EquipmentOverheadPct,"
+CostSheetD,    " LaborOverheadPct, MarkUpPct, CostSheetKey"
+CostSheetD,     ", UnitType "
+CostSheetD,    " FROM CostSheet"
+CostSheetD,    " WHERE CostSheetKey = %CostSheetKey"
+
+CostSheetDPG,  " select CV.Translation from CodeValue CV, CodeTable CT"
+CostSheetDPG,  " where CV.CodeTableKey = CT.CodeTableKey" 
+CostSheetDPG,  " AND CT.CodeTableID IN ('UNITS', 'Units', 'units')"
+CostSheetDPG,  " AND CV.Translation IN "
+CostSheetDPG,  "('DAY', 'WEEK', 'MONTH', 'YEAR',"
+CostSheetDPG,  " 'day', 'week', 'month', 'year',"
+CostSheetDPG,  " 'Day', 'Week', 'Month', 'Year') "
+
+
+CopyCostSheetD, " SELECT CostSheetID, CostSheetKey "
+CopyCostSheetD, " FROM CostSheet "
+CopyCostSheetD, " WHERE CostSheetKey = %CostSheetKey "
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+CostSheetCatS,         "Cost Sheet Catalog"
+CostSheetS,             "Cost Sheet %CostSheetID"
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id      Add Query ID   Change ID      Col Name                CtlID                   Format
+//------------------------------------------------------------------------------------------------------------------------
+CostSheetD,    CostSheetD,    CostSheetD,    CostSheetID,            DID_COSTSHEETID,        "String",      "String"
+CostSheetD,    CostSheetD,    CostSheetD,    Description,            DID_DESCRIPTION,        "String",      "String"
+CostSheetD,    CostSheetD,    CostSheetD,    ProductionRate,         DID_PRODUCTIONRATE,     "Number,...",  "Number,..."
+CostSheetD,    CostSheetD,    CostSheetD,    DefaultHoursPerDay,     DID_DEFHOURSPERDAY,     "Number,..",   "Number,.."
+CostSheetD,    CostSheetD,    CostSheetD,    LaborOverheadPct,       DID_LABOVERHEADPCT,     "Number,%.",   "Number,...."
+CostSheetD,    CostSheetD,    CostSheetD,    EquipmentOverheadPct,   DID_EQUIPOVERHEADPCT,   "Number,%.",   "Number,...."
+CostSheetD,    CostSheetD,    CostSheetD,    MaterialsOverheadPct,   DID_MATOVERHEADPCT,     "Number,%.",   "Number,...."
+CostSheetD,    CostSheetD,    CostSheetD,    MarkUpPct,              DID_MARKUPPCT,          "Number,%.",   "Number,...."
+CostSheetD,    ITIWND_ENUM,    ITIWND_ENUM,  ProductionGranularity,  DID_PRODUCTIONGRAN,     "UnitOfTime",   "UnitOfTime"
+
+CopyCostSheetD, CopyCostSheetD, CopyCostSheetD,  CostSheetID,        DID_OLD_COSTSHEETID,    "String",      "String"
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CostSheetD,   " UPDATE CostSheet"
+CostSheetD,   " SET"
+CostSheetD,   " CostSheetID=@CostSheetID,"
+CostSheetD,   " Description=@Description,"
+CostSheetD,   " ProductionRate=@ProductionRate,"
+CostSheetD,   " ProductionGranularity=@ProductionGranularity,"
+CostSheetD,   " DefaultHoursPerDay=@DefaultHoursPerDay,"
+CostSheetD,   " LaborOverheadPct=@LaborOverheadPct,"
+CostSheetD,   " EquipmentOverheadPct=@EquipmentOverheadPct,"
+CostSheetD,   " MaterialsOverheadPct=@MaterialsOverheadPct,"
+CostSheetD,   " MarkUpPct=@MarkUpPct"
+CostSheetD,     ", UnitType=@UnitType"
+CostSheetD,   " WHERE CostSheetKey=%CostSheetKey"
+
+CostSheetD2,   "/* CostSheetD2 */"
+CostSheetD2,   " UPDATE CostSheet"
+CostSheetD2,   " SET"
+CostSheetD2,   " CostSheetID= '%s',"
+CostSheetD2,   " Description= '%s',"
+CostSheetD2,   " ProductionRate= %s,"
+CostSheetD2,   " ProductionGranularity= %s,"
+CostSheetD2,   " DefaultHoursPerDay= %s,"
+CostSheetD2,   " LaborOverheadPct= %s,"
+CostSheetD2,   " EquipmentOverheadPct= %s,"
+CostSheetD2,   " MaterialsOverheadPct= %s,"
+CostSheetD2,   " MarkUpPct= %s,"
+CostSheetD2,   " UnitType= %s "
+CostSheetD2,   " WHERE CostSheetKey= %s "
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CostSheetD,   " SELECT CostSheetID,"
+CostSheetD,   " Description,"
+CostSheetD,   " ProductionRate,"
+CostSheetD,   " ProductionGranularity,"
+CostSheetD,   " DefaultHoursPerDay,"
+CostSheetD,   " LaborOverheadPct,"
+CostSheetD,   " EquipmentOverheadPct,"
+CostSheetD,   " MaterialsOverheadPct,"
+CostSheetD,   " MarkUpPct"
+CostSheetD,   " FROM CostSheet HOLDLOCK"
+CostSheetD,   " WHERE CostSheetKey=%CostSheetKey"
+
+CopyCostSheetD, " /* CopyCostSheetD lock.bin */ "
+CopyCostSheetD, " SELECT A.CostSheetID "
+CopyCostSheetD, " FROM CostSheet A "
+CopyCostSheetD, " WHERE A.CostSheetKey = %CostSheetKey "
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CostSheetD,   "/* CostSheetD */"
+CostSheetD,   " INSERT INTO CostSheet"
+CostSheetD,   " (CostSheetKey,CostSheetID,"
+CostSheetD,   " Description,"
+CostSheetD,   " ProductionRate,"
+CostSheetD,   " ProductionGranularity,"
+CostSheetD,   " DefaultHoursPerDay,"
+CostSheetD,   " LaborOverheadPct,"
+CostSheetD,   " EquipmentOverheadPct,"
+CostSheetD,   " MaterialsOverheadPct,"
+CostSheetD,   " MarkUpPct"
+CostSheetD,   ", UnitType"
+CostSheetD,   ") VALUES"
+CostSheetD,   " (@NewKey,@CostSheetID,"
+CostSheetD,   " @Description,"
+CostSheetD,   " @ProductionRate,"
+CostSheetD,   " @"DID_PRODUCTIONGRAN"ProductionGranularity,"
+CostSheetD,   " @DefaultHoursPerDay,"
+CostSheetD,   " @LaborOverheadPct,"
+CostSheetD,   " @EquipmentOverheadPct,"
+CostSheetD,   " @MaterialsOverheadPct,"
+CostSheetD,   " @MarkUpPct"
+CostSheetD,   ", %%s)"
+//  /////CostSheetD,   ", @"DID_UNIT_SYS"UnitType)"
+
+
+CostSheetD2,   "/* CostSheetD2 ADD */"
+CostSheetD2,   " INSERT INTO CostSheet"
+CostSheetD2,   " (CostSheetID,"
+CostSheetD2,   " Description,"
+CostSheetD2,   " ProductionRate,"
+CostSheetD2,   " ProductionGranularity,"
+CostSheetD2,   " DefaultHoursPerDay,"
+CostSheetD2,   " LaborOverheadPct,"
+CostSheetD2,   " EquipmentOverheadPct,"
+CostSheetD2,   " MaterialsOverheadPct,"
+CostSheetD2,   " MarkUpPct,"
+CostSheetD2,   " UnitType,"
+CostSheetD2,   " CostSheetKey)"
+CostSheetD2,   " VALUES "
+CostSheetD2,   "('%s',"
+CostSheetD2,   " '%s',"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s,"
+CostSheetD2,   " %s) "
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+//CostSheetCatL,  " DELETE FROM CostSheet"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetCatL,  " DELETE MaterialUsed"
+//CostSheetCatL,  " FROM MaterialUsed"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetCatL,  " DELETE CrewEquipmentUsed"
+//CostSheetCatL,  " FROM CrewEquipmentUsed"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetCatL,  " DELETE CrewLaborUsed"
+//CostSheetCatL,  " FROM CrewLaborUsed"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetCatL,  " DELETE CrewUsed"
+//CostSheetCatL,  " FROM CrewUsed"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetCatL,  " DELETE Task"
+//CostSheetCatL,  " FROM Task"
+//CostSheetCatL,  " WHERE CostSheetKey = %CostSheetKey"
+
+CostSheetCatL,    " UPDATE CostSheet"
+CostSheetCatL,    " SET Deleted = 1"
+CostSheetCatL,    " WHERE CostSheetKey IN (%CostSheetKey{,%CostSheetKey}) "
+
+
+//CostSheetS,     " DELETE FROM CostSheet"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetS,     " DELETE MaterialUsed"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetS,     " DELETE CrewEquipmentUsed"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetS,     " DELETE CrewLaborUsed"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetS,     " DELETE CrewUsed"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+//CostSheetS,     " DELETE Task"
+//CostSheetS,     " WHERE CostSheetKey = %CostSheetKey"
+

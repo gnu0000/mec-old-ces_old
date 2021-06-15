@@ -1,0 +1,65 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+TARGET=rcodetab
+TARGETDIR=..\codetab^\
+
+:FileList SourceFiles = {rcodetab, rinidll}
+
+:FileList LibFiles = { ItiBase, ItiError, ItiUtil, ItiDBase, ItiCrt, 
+                       ItiMBase,ItiWin,   ItiFmt,  ItiRptUt, ItiPrt }
+
+:FileList OtherObj = 
+   { 
+   ..\lib\itidllc
+   }
+
+:FileList MetFiles = { rcodetaQ, rcodetaF }
+
+
+
+!include "..\makeopts"
+
+all: $(EXEDIR)$(TARGET).dll $(TARGET).met
+
+
+
+{F:MetFiles,,BIN} : $(TARGET).met {I: rcodetab.met}
+  $(EXEDIR)BuildRes $(TARGET).met
+
+$(TARGET).res: {F:MetFiles,,BIN} $(TARGET).rc {I: rcodetab.rc} $(TARGET).dlg  
+   rc -r $(DEBUG) $*.rc
+
+
+:Expand SourceFiles,{"cl $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+
+$(EXEDIR)$(TARGET).dll: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def  $(TARGET).res 
+   $(LINK) @<<$(TARGET).lnk
+           $(LFLAGS) $(LDEBUG)/NOI/NOD crtdll_i $(LIBDIR)itidllc +
+           {F: SourceFiles,,} 
+           $*.dll
+           $(@B).map
+           {F: LibFiles,$(LIBDIR),LIB} os2.lib
+           $(@B).def
+<<NOKEEP
+   rc $(@B).res $*.dll
+   mapsym /l $(@B).map
+   copy $(TARGET).sym   $(EXEDIR)$(TARGET).sym 
+
+
+
+
+

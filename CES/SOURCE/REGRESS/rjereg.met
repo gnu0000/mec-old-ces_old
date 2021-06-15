@@ -1,0 +1,359 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rJEReg.h"                                       
+
+
+
+// /* JOB ESTIMATE:  PREMETH REGRESSION */
+// 
+// 
+// /* To obtain JobID and County ID */
+// 
+// SELECT JobID, CountyID, CountyKey
+// FROM Job, County
+// WHERE Job.PrimaryCountyKey = County.CountyKey
+// AND JobKey = %JobKey  
+// 
+// 
+// /* To obtain all the JobBreakdowns for this particular Job */
+// 
+// SELECT JobBreakdownKey, JobBreakdownID, WorkType
+// FROM JobBreakdown
+// WHERE JobKey = %JobKey
+// 
+// 
+// /* To obtain all the job items associated with a particular Job Breakdown */
+// 
+// SELECT JobItemKey
+// FROM JobItem
+// WHERE JobKey = %JobKey
+// AND JobBreakdownKey = %JobBreakdownKey
+//  
+// 
+// /* To obtain information on a particular JobItem in a particular JobBreakdown */
+// 
+// SELECT ShortDescription, BaseUnitPrice, CodeValueID, Quantity,
+// MedianQuantity, QuantityAdjustment, AreaTypeKey
+// FROM CodeValue, StandardItem, PEMETHRegression, JobItem
+// WHERE StandardItem.Unit = CodeValueKey
+// AND JobItem.StandardItemKey = StandardItem.StandardItemKey
+// AND StandardItem.StandardItemKey = PEMETHRegression.StandardItemKey
+// AND PEMETHRegression.ImportDate = '1-25-91'
+// AND JobItem.JobKey = %JobKey
+// AND JobItem.JobItemKey = %JobItemKey
+// AND JobItem.JobBreakdownKey = %JobBreakdownKey
+// 
+// 
+// 
+// /* To obtain the Area for this particular Job */
+// 
+// 
+// SELECT AreaCounty.AreaKey, AreaID
+// FROM  AreaCounty, Area
+// WHERE Area.AreaTypeKey = AreaCounty.AreaTypeKey
+// AND Area.AreaKey = AreaCounty.AreaKey
+// AND AreaCounty.AreaTypeKey = %AreaTypeKey
+// AND AreaCounty.CountyKey = %CountyKey
+// 
+// 
+// /* To obtain AreaAdjustment info */
+// 
+// SELECT Adjustment, AreaID
+// FROM Area, AreaAdjustment
+// WHERE AreaAdjustment.AreaKey = Area.AreaKey
+// AND StandardItemKey = %StandardItemKey
+// AND ImportDate = '%ImportDate'
+// AND AreaAdjustment.AreaKey = %AreaKey
+// 
+//
+//
+// /* To obtain SeasonAdjustment info for a particular Season */
+// /* Question ??? how do we know what Season the adjustment is for ??? */
+// 
+// 
+// SELECT Adjustment, Season
+// FROM SeasonAdjustment
+// WHERE StandardItemKey = %StandardItemKey
+// AND ImportDate = '%ImportDate'
+// AND Season = %Season
+// 
+// 
+//              
+// /* To obtain WorkTypeAdjustment info for a particular WorkType */
+// 
+// 
+// SELECT CodeValueID, Adjustment
+// FROM WorkTypeAdjustment, CodeValue
+// WHERE WorkType = CodeValueKey
+// AND StandardItemKey = %StandardItemKey
+// AND ImportDate = '%ImportDate'
+// AND WorkType = %WorkType
+
+
+
+
+
+                                                    
+:query rJERegQ.bin                                        
+
+ID_QRY_TITLE_NAMES, "select JobID, Name, CountyID, CountyKey "
+ID_QRY_TITLE_NAMES, "from County, Job "
+ID_QRY_TITLE_NAMES, "where Job.PrimaryCountyKey = County.CountyKey "
+ID_QRY_TITLE_NAMES, "and JobKey = "
+
+
+// /* To obtain all the JobBreakdowns for this particular Job */
+
+ID_QRY_JOB_BRKDWN, "SELECT JobBreakdownKey, JobBreakdownID, "
+ID_QRY_JOB_BRKDWN,        "WorkType, CodeValueID "
+ID_QRY_JOB_BRKDWN, "FROM JobBreakdown, CodeValue "
+ID_QRY_JOB_BRKDWN, "WHERE WorkType = CodeValueKey "
+ID_QRY_JOB_BRKDWN, "AND JobKey = "
+
+
+// /* To obtain all the job items associated with a particular Job Breakdown */
+
+//ID_QRY_JOB_ITEM, "SELECT DISTINCT JobItemKey, StandardItemNumber, ShortDescription, "
+//ID_QRY_JOB_ITEM,  " SI.StandardItemKey, CodeValueID "
+//
+//ID_QRY_JOB_ITEM, "FROM JobItem JI, StandardItem SI, PEMETHRegression PR, CodeValue "
+//ID_QRY_JOB_ITEM, "WHERE SI.StandardItemKey = JobItem.StandardItemKey "
+//ID_QRY_JOB_ITEM, "AND SI.StandardItemKey = PR.StandardItemKey "
+//ID_QRY_JOB_ITEM, "AND SI.Unit = CodeValueKey "
+//ID_QRY_JOB_ITEM, "AND JobKey = "
+
+ID_CONJ_JOB_ITEM, " AND JI.JobBreakdownKey = "
+
+
+ID_QRY_JOB_ITEM, "SELECT JobItemKey,  StandardItemNumber, ShortDescription, "
+ID_QRY_JOB_ITEM,    "SI.StandardItemKey, CodeValueID "
+ID_QRY_JOB_ITEM, "FROM StandardItem SI, JobItem JI, " 
+ID_QRY_JOB_ITEM,    "ItemEstimationMethod IEM, JobBreakdown JB, " 
+ID_QRY_JOB_ITEM,    "CodeValue CV, Job J "
+ID_QRY_JOB_ITEM, "WHERE JI.StandardItemKey = SI.StandardItemKey " 
+ID_QRY_JOB_ITEM, "AND JI.ItemEstimationMethodKey = IEM.ItemEstimationMethodKey " 
+ID_QRY_JOB_ITEM, "AND EstimationMethodAbbreviation = 'Reg' "
+ID_QRY_JOB_ITEM, "AND JB.JobBreakdownKey = JI.JobBreakdownKey " 
+ID_QRY_JOB_ITEM, "AND JB.JobKey = JI.JobKey " 
+ID_QRY_JOB_ITEM, "AND JB.JobKey = Job.JobKey "
+ID_QRY_JOB_ITEM, "AND Unit = CodeValueKey " 
+ID_QRY_JOB_ITEM, "AND Job.JobKey = "
+
+
+// /* To obtain information on a particular JobItem in a particular JobBreakdown */
+
+ID_QRY_BPQ, "SELECT BaseUnitPrice, CodeValueID, Quantity, "
+ID_QRY_BPQ, "MedianQuantity, QuantityAdjustment, AreaTypeKey, "
+ID_QRY_BPQ, " (LOG(Quantity/MedianQuantity))/LOG(2.0), "
+
+ID_QRY_BPQ, "BaseUnitPrice * POWER((1.0 + QuantityAdjustment), (LOG(Quantity/MedianQuantity))/LOG(2.0) ) * POWER(1.0 + AnnualInflation, datediff(dd,ImportDate,BaseDate)/365.25), "
+ID_QRY_BPQ, "BaseUnitPrice * POWER((1.0 + QuantityAdjustment), (LOG(Quantity/MedianQuantity))/LOG(2.0) ) * POWER(1.0 + AnnualInflation, datediff(dd,ImportDate,BaseDate)/365.25), "
+ID_QRY_BPQ, "BaseUnitPrice * POWER((1.0 + QuantityAdjustment), (LOG(Quantity/MedianQuantity))/LOG(2.0) ) * POWER(1.0 + AnnualInflation, datediff(dd,ImportDate,BaseDate)/365.25), "
+ID_QRY_BPQ, "BaseUnitPrice * POWER((1.0 + QuantityAdjustment), (LOG(Quantity/MedianQuantity))/LOG(2.0) ) * POWER(1.0 + AnnualInflation, datediff(dd,ImportDate,BaseDate)/365.25) "
+
+
+ID_QRY_BPQ, "FROM CodeValue, StandardItem, PEMETHRegression, JobItem, Job "
+ID_QRY_BPQ, "WHERE StandardItem.Unit = CodeValueKey "
+ID_QRY_BPQ, "AND JobItem.JobKey = Job.JobKey "
+ID_QRY_BPQ, "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QRY_BPQ, "AND StandardItem.StandardItemKey = PEMETHRegression.StandardItemKey "
+ID_QRY_BPQ, "AND PEMETHRegression.ImportDate >= "
+
+ID_CONJ_BPQ_CAP,        " AND PEMETHRegression.ImportDate < DATEADD(minute,1,"
+                                                              //add closing )
+ID_CONJ_BPQ_KEY,        " AND JobItem.JobKey = "       
+ID_CONJ_BPQ_ITEM_KEY,   " AND JobItem.JobItemKey = "
+ID_CONJ_BPQ_BRKDWN_KEY, " AND JobItem.JobBreakdownKey = " 
+
+
+
+
+// /* To obtain the Area for this particular Job */
+// 
+// 
+// 
+// /* To obtain AreaAdjustment info */
+// 
+ID_SLC_ADJ, "SELECT Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+ID_SLC_ADJ_RAW, "'), Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+ID_QRY_AREA, "'), Adjustment, AreaID "
+ID_QRY_AREA, " FROM Area, AreaAdjustment "
+ID_QRY_AREA, " WHERE AreaAdjustment.AreaKey = Area.AreaKey "
+ID_QRY_AREA, " AND AreaAdjustment.AreaKey = "
+ID_QRY_AREA,         "(SELECT DISTINCT AreaCounty.AreaKey "
+ID_QRY_AREA,         " FROM  AreaCounty, Area "
+ID_QRY_AREA,         " WHERE Area.AreaTypeKey = AreaCounty.AreaTypeKey " 
+ID_QRY_AREA,         " AND Area.AreaKey = AreaCounty.AreaKey "
+ID_QRY_AREA,         " AND AreaCounty.AreaTypeKey = "
+
+ID_CONJ_AREA_CKEY,   " AND AreaCounty.CountyKey = "
+ 
+ID_CONJ_AREA_SIKEY,  ") AND StandardItemKey = "
+
+
+ID_CONJ_ADJ_IMPDATE,     " AND ImportDate >= "
+ID_CONJ_ADJ_IMPDATE_CAP, " AND ImportDate < "
+
+
+
+
+
+
+// /* To obtain SeasonAdjustment info for a particular Season */
+// /* Question ??? how do we know what Season the adjustment is for ??? */
+// 
+ 
+//ID_SLC_ADJ, "SELECT Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+//ID_SLC_ADJ_RAW, "'), Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+ID_QRY_SEASON, "'), Adjustment, Season "
+ID_QRY_SEASON, "FROM SeasonAdjustment "
+ID_QRY_SEASON, "WHERE StandardItemKey = "
+
+ID_CONJ_SEASON," AND Season = (select (LettingMonth/4)+1 from Job where JobKey = "
+
+
+
+
+
+//ID_CONJ_ADJ_IMPDATE,     " AND ImportDate >= "
+//ID_CONJ_ADJ_IMPDATE_CAP, " AND ImportDate < "
+
+
+
+//              
+// /* To obtain WorkTypeAdjustment info for a particular WorkType */
+// 
+//ID_SLC_ADJ, "SELECT Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+//ID_SLC_ADJ_RAW, "'), Adjustment * CONVERT(float, '"
+                                //BPQ_QTY_x_BUP_RAW
+
+ID_QRY_WORKTYPE, "'), Adjustment, CodeValueID "
+ID_QRY_WORKTYPE, "FROM WorkTypeAdjustment, CodeValue "
+ID_QRY_WORKTYPE, "WHERE WorkType = CodeValueKey "
+ID_QRY_WORKTYPE, "AND StandardItemKey = "
+
+ID_CONJ_WORKTYPE, " AND WorkType = "
+
+//ID_CONJ_ADJ_IMPDATE,     " AND ImportDate >= "
+//ID_CONJ_ADJ_IMPDATE_CAP, " AND ImportDate < "
+
+
+
+ID_QRY_IMP, "SELECT max(ImportDate), DATEADD(minute,1,max(ImportDate)) "
+ID_QRY_IMP, "FROM PEMETHRegression "
+ID_QRY_IMP, "WHERE StandardItemKey = "
+
+
+
+                                                    
+ID_QRY_LISTING,     "select JobID, Description "    
+ID_QRY_LISTING,     "  from Job "                   
+ID_WHERE_CONJUNCTION, " where JobKey = "              
+
+
+// Column titles                                      
+//ppsz_Idx TtlC TtlCWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,  10,   10,       8,Breakdown "           
+RPT_TTL_2,   "16,   5,   21,      14,Item "  
+RPT_TTL_3,   "34,   3,   37,      40, - "  
+
+RPT_TTL_4,    "5,  13,   18,      17,Base Price = "  
+RPT_TTL_5,   "34,   3,   37,      16, / "  
+RPT_TTL_6,    "7,  11,   18,      16,Quantity = "  
+RPT_TTL_7,   "33,   5,   38,      11, = 2^"  
+RPT_TTL_8,   "49,   3,   52,      16, * "  
+RPT_TTL_9,   "67,  13,   52,      16, (median qty)"  
+
+RPT_TTL_10,   "5,  35,   37,      40,Unit Price = Base Price increased "
+RPT_TTL_11,  "61,   6,   51,      11, times"  
+                  
+RPT_TTL_12,  "15,  18,   18,      17, + Area-Adjustment"  
+RPT_TTL_13,  "15,  20,   18,      17, + Season-Adjustment"  
+RPT_TTL_14,  "15,  23,   18,      17, + Work-Type-Adjustment"  
+        
+RPT_TTL_15,  "49,   9,   58,      16,for Area "  
+RPT_TTL_16,  "49,   4,   53,      16,for "  
+RPT_TTL_17,  "49,  14,   63,      16,for Work-Type "  
+                  
+RPT_TTL_18,  "15,   3,   18,      17, = "  
+        
+RPT_TTL_19,   "5,  35,   37,      40,Unit Price = Base Price decreased "
+
+// Number of column titles
+ID_RPT_TTL,    "19"
+      
+                                                               
+                                                               
+:FORMAT rJERegF.bin                                                  
+
+ID_QRY_TITLE_NAMES, "String", "String", "String", "Number"
+
+ID_QRY_JOB_BRKDWN, "Number", "String","Number", "String"
+
+
+ID_QRY_JOB_ITEM, "Number", "String", "String", "Number", "String"
+
+ID_QRY_IMP, "DateTime, 'mm-dd-yyyy hh:nn:ss' "
+ID_QRY_IMP, "DateTime, 'mm-dd-yyyy hh:nn:ss' "
+
+
+ID_QRY_BPQ, "Number,$,....", "String",     "Number,,..."
+ID_QRY_BPQ, "Number,,...",   "Number,%..", "Number",      "Number,...."
+ID_QRY_BPQ, "Number,$,....", "Number,...."
+ID_QRY_BPQ, "Number,$,....", "Number,...."
+
+ID_QRY_AREA,     "Number,$,....", "Number,......", "Number,%..", "String,~,)~" 
+
+ID_QRY_SEASON,   "Number,$,....", "Number,......", "Number,%..", "Season" 
+                                                               
+ID_QRY_WORKTYPE, "Number,$,....", "Number,......", "Number,%..", "String,~,)~" 
+                                                               
+                                                               
+ID_QRY_LISTING,        "String", "String"                      
+
+                                                               
+:query rJERegDQ.bin                                                  
+                                                               
+rJEReg_RptDlgBox,       "SELECT JobKey "                             
+rJEReg_RptDlgBox,       "FROM Job "                                  
+rJEReg_RptDlgBox,       "WHERE JobKey = %JobKey "                   
+                                                               
+                                                               
+:Dialog rJERegDD.bin rJERegDF.bin                                        
+                                                               
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rJEReg_RptDlgBox, rJEReg_RptDlgBox, rJEReg_RptDlgBox, JobKey, DID_KEY, "Number", "Number"
+ 
+
+

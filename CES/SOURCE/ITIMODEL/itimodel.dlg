@@ -1,0 +1,241 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+
+DLGTEMPLATE ModelProfileD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Parametric Profile Analysis", ModelProfileD, 6, 9, 417, 212, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Profile ID:", DID_PROFILEID + DID_STOFFSET, 3, 202, 46, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PROFILEID, 51, 201, 70, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description:", DID_DESCRIPTION + DID_STOFFSET, 136, 202, 56, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIPTION, 193, 176, 216, 34, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Create a profile for each work type.", DID_MAKEWORKTYPE, 4, 176, 175, 10, 
+                WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Also generate Quantity & Price data.", DID_ALSO_Q_P, 4, 186, 175, 10, 
+                WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~Letting date:", DID_LETTINGDATE1 + DID_STOFFSET, 4, 165, 57, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE1, 65, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_LETTINGDATE2 + DID_STOFFSET, 141, 164, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE2, 163, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Number of bids:", DID_NUMBEROFBIDS1 + DID_STOFFSET, 5, 151, 70, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS1, 79, 150, 58, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_NUMBEROFBIDS2 + DID_STOFFSET, 143, 150, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS2, 165, 149, 67, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Awarded bid total:", DID_AWARDEDTOTAL1 + DID_STOFFSET, 5, 136, 81, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL1, 87, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_AWARDEDTOTAL2 + DID_STOFFSET, 162, 135, 17, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL2, 181, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Included major items:", ModelMajorItemL + DID_STOFFSET, 7, 122, 112, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelMajorItemL, 7, 56, 266, 64, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included work types:", ModelWorkTypeL + DID_STOFFSET, 289, 44, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelWorkTypeL, 289, 3, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included road types:", ModelRoadTypeL + DID_STOFFSET, 287, 150, 90, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelRoadTypeL, 287, 108, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included statuses:", ModelStatusL + DID_STOFFSET, 157, 45, 91, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelStatusL, 156, 3, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included districts:", ModelDistrictL + DID_STOFFSET, 288, 98, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelDistrictL, 288, 56, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 23, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 23, 11, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 83, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE ModelQuantityD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Major Item Quantity Analysis", ModelQuantityD, 6, 9, 417, 178, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Letting date:", DID_LETTINGDATE1 + DID_STOFFSET, 4, 165, 57, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE1, 65, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_LETTINGDATE2 + DID_STOFFSET, 141, 164, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE2, 163, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Number of bids:", DID_NUMBEROFBIDS1 + DID_STOFFSET, 5, 151, 70, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS1, 79, 150, 58, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_NUMBEROFBIDS2 + DID_STOFFSET, 143, 150, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS2, 165, 149, 67, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Awarded bid total:", DID_AWARDEDTOTAL1 + DID_STOFFSET, 5, 136, 81, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL1, 87, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_AWARDEDTOTAL2 + DID_STOFFSET, 162, 135, 17, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL2, 181, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Included major items:", ModelMajorItemL + DID_STOFFSET, 7, 122, 112, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelMajorItemL, 7, 56, 266, 64, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included work types:", ModelWorkTypeL + DID_STOFFSET, 289, 44, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelWorkTypeL, 289, 3, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included road types:", ModelRoadTypeL + DID_STOFFSET, 287, 150, 90, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelRoadTypeL, 287, 108, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included statuses:", ModelStatusL + DID_STOFFSET, 157, 45, 91, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelStatusL, 156, 3, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included districts:", ModelDistrictL + DID_STOFFSET, 288, 98, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelDistrictL, 288, 56, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 23, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 23, 11, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 83, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE ModelPriceD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Major Item Price Analysis", ModelPriceD, 6, 9, 417, 178, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Letting date:", DID_LETTINGDATE1 + DID_STOFFSET, 4, 165, 57, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE1, 65, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_LETTINGDATE2 + DID_STOFFSET, 141, 164, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTINGDATE2, 163, 164, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Number of bids:", DID_NUMBEROFBIDS1 + DID_STOFFSET, 5, 151, 70, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS1, 79, 150, 58, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_NUMBEROFBIDS2 + DID_STOFFSET, 143, 150, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NUMBEROFBIDS2, 165, 149, 67, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Awarded bid total:", DID_AWARDEDTOTAL1 + DID_STOFFSET, 5, 136, 81, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL1, 87, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_AWARDEDTOTAL2 + DID_STOFFSET, 162, 135, 17, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_AWARDEDTOTAL2, 181, 135, 69, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Included major items:", ModelMajorItemL + DID_STOFFSET, 7, 122, 112, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelMajorItemL, 7, 56, 266, 64, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included work types:", ModelWorkTypeL + DID_STOFFSET, 289, 44, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelWorkTypeL, 289, 3, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included road types:", ModelRoadTypeL + DID_STOFFSET, 287, 150, 90, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelRoadTypeL, 287, 108, 124, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included statuses:", ModelStatusL + DID_STOFFSET, 157, 45, 91, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelStatusL, 156, 3, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "Included districts:", ModelDistrictL + DID_STOFFSET, 288, 98, 91, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ModelDistrictL, 288, 56, 125, 40, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 23, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 23, 11, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 83, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

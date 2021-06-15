@@ -1,0 +1,141 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 151, 91, 140, 108, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 88, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "BAMS/DSS Browser: Item", 257, 53, 98, 46, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 47, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "¸ 1991 AASHTO", 263, 5, 71, 131, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Version 0.00", DID_VERSION, 53, 87, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "444 North Capitol Street, NW #225", 258, 5, 57, 129, 6, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Washington, DC  20001", 262, 5, 47, 129, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Fax: (352) 373-9586", 265, 5, 37, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE IDD_ITEM_BROWSER LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "BAMS/DSS Browser: Item", IDD_ITEM_BROWSER, 11, 45, 381, 157, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "ITEM SPECIFICATIONS", 10, 5, 146, 100, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 10, 5, 144, 99, 2, WC_STATIC, SS_FGNDRECT | WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Item Number:", DID_ITEMNUMBER + DID_STOFFSET, 5, 132, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ITEMNUMBER, 73, 132, 89, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description:", DID_DESCRIPTION + DID_STOFFSET, 5, 120, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIPTION, 73, 118, 89, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Quantity:", DID_QUANTITY1 + DID_STOFFSET, 169, 132, 42, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY1, 219, 132, 61, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_QUANTITY2 + DID_STOFFSET, 285, 132, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY2, 307, 132, 61, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "PROPOSAL SPECIFICATIONS", 10, 5, 106, 126, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 10, 5, 104, 125, 2, WC_STATIC, SS_FGNDRECT | WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Proposal ID:", DID_PROPID + DID_STOFFSET, 5, 92, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PROPID, 73, 92, 95, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Estimate:", DID_ESTIMATE1 + DID_STOFFSET, 5, 78, 62, 8, WC_STATIC, SS_TEXT | DT_RIGHT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ESTIMATE1, 73, 78, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_ESTIMATE2 + DID_STOFFSET, 139, 78, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ESTIMATE2, 159, 78, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Letting Date:", DID_LETTING1 + DID_STOFFSET, 5, 64, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTING1, 73, 64, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~To", DID_LETTING2 + DID_STOFFSET, 139, 64, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTING2, 159, 64, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Location Description:", DID_LOCATION + DID_STOFFSET, 5, 50, 92, 8, WC_STATIC, 
+                SS_TEXT | DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "", DID_LOCATION, 101, 50, 119, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Included Work Types", IBWorkTypeL + DID_STOFFSET, 243, 118, 92, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", IBWorkTypeL, 243, 86, 122, 32, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE | WS_TABSTOP
+
+        CONTROL "Included Road Types", IBRoadTypeL + DID_STOFFSET, 243, 76, 92, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", IBRoadTypeL, 243, 44, 122, 32, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE | WS_TABSTOP
+
+        CONTROL "Included Districts", IBDistrictsL + DID_STOFFSET, 243, 34, 92, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", IBDistrictsL, 243, 2, 122, 32, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE | WS_TABSTOP
+
+        CONTROL "", DID_PROP_GROUP, 69, 4, 147, 42, WC_STATIC, SS_GROUPBOX | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Awarded Proposals Only", DID_AWARDED_PROP, 75, 28, 136, 10, WC_BUTTON, 
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Rejected Proposals Only", DID_REJECTED_PROP, 75, 18, 136, 10, WC_BUTTON, 
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Include All Proposals", DID_ALL_PROP, 75, 8, 136, 10, WC_BUTTON, 
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Search", DID_SEARCH, 5, 18, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 5, 2, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+

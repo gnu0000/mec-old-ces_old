@@ -1,0 +1,151 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * DSShell.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+
+
+
+
+:static  static.bin 
+//
+//   generates data for 
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// USHORT                   RECTS               USHORT     LONG                  LONG                 
+// Static Window ID         xpos ypos xsiz ysiz CoordType  Window Options        Background Color     
+//-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+:CHILD child.bin 
+//
+//   generates data for 
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled. 
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT                       USHORT                         USHORT           RECTS               USHORT   
+//                                         
+// Parents Window ID            Type Child Window ID           uKind            <-   ^    ->   v    Coord    
+//-----------------------------------------------------------------------------------------------------------
+
+
+
+                                        
+:list list.bin 
+//
+//   generates data for 
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT   USHORT 
+//                                                                                                      
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata    Button Window ID
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+:DATA data.bin format.bin 
+//
+//   generates data for 
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG          USHORT  PSZ
+//                                                                                  
+// Window ID                 Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags     uIndex  Format String
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+:label label.bin labeltxt.bin 
+//
+//   generates data for 
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                      USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//                                                                                    
+// Window ID                   Next Window ID          xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+:query query.bin 
+//
+//   generates data for 
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID                  Query String
+//----------------------------------------------------------------------------------------------------------------
+
+
+:title title.bin 
+//
+//   generates data for 
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+

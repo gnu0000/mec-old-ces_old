@@ -1,0 +1,64 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 151, 91, 140, 108, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 88, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "BAMS/DSS Browser: Item", 257, 53, 98, 46, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 47, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "¸ 1991 AASHTO", 263, 5, 71, 131, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Version 0.00", DID_VERSION, 53, 87, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "444 North Capitol Street, NW #225", 258, 5, 57, 129, 6, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Washington, DC  20001", 262, 5, 47, 129, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Fax: (352) 373-9586", 265, 5, 37, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE FacilityBrowserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Browser: Facility", FacilityBrowserD , 9, 41, 415, 156, FS_NOBYTEALIGN | 
+                FS_BORDER | NOT FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | 
+                WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "", 257, 3, 115, 103, 38, WC_STATIC, SS_GROUPBOX | WS_GROUP | WS_VISIBLE
+        CONTROL "Portable Only", DID_PORTABLEONLY, 7, 135, 73, 10, WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+        CONTROL "State Approved Only", DID_APPROVEDONLY, 7, 121, 98, 10, WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", FacilityBrowserCountyL,   109, 81, 121, 73, "LISTWINDOW", WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", FacilityBrowserMaterialL, 233, 81, 177, 73, "LISTWINDOW", WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", FacilityBrowserVendorL,   109, 5,  301, 73, "LISTWINDOW", WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Search", DID_SEARCH, 29, 66, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Help", DID_HELP, 29, 34, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

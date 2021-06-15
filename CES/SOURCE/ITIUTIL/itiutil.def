@@ -1,0 +1,101 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+;|                                                                          |
+;|       This program module is part of DS/Shell (PC), Info Tech's          |
+;|       database interfaces for OS/2, a proprietary product of             |
+;|       Info Tech, Inc., no part of which may be reproduced or             |
+;|       transmitted in any form or by any means, electronic,               |
+;|       mechanical, or otherwise, including photocopying and recording     |
+;|       or in connection with any information storage or retrieval         |
+;|       system, without permission in writing from Info Tech, Inc.         |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+LIBRARY         ITIUTIL         INITINSTANCE
+DESCRIPTION     'Info Tech utility functions module.  Copyright (C) 1991-1994 Info Tech, Inc.'
+DATA            MULTIPLE        
+EXPORTS         ITISTRCPY
+                ITISTRCAT
+                ITISTRNCAT
+                ITISTRCHR
+                ITISTRRCHR
+                ITISTRICHR
+                ITISTRCMP
+                ITISTRICMP
+                ITISTRNCMP
+                ITISTRNICMP
+                ITISTRLEN
+                ITISTRISCHARINSTRING
+                ITISTRSKIPSPACE
+                ITISTRSKIPNONSPACE
+                ITISTRTOSHORT
+                ITISTRTOUSHORT
+                ITISTRTOLONG
+                ITISTRTOULONG
+                ITISTRSHORTTOSTRING
+                ITISTRUSHORTTOSTRING
+                ITISTRLONGTOSTRING
+                ITISTRULONGTOSTRING
+                ITISTRUPPER
+                ITISTRLOWER
+                ITISTRTOK
+                ITIMEMBINSEARCH
+                ITIMEMQSORT
+                ITIMEMCPY
+                ITIMEMRCPY
+                ITIMEMSET
+                ITIMEMSWAP
+                ITICSVGETFIELD
+                ITICSVMAKEFIELD
+                ITIGETWORD
+                ITIEAT
+                ITICLIP
+                ITISTRIP
+                ITITWOQUOTES
+                ITISINGLEQUOTES
+                ITISTRDUP
+                ITIMEMDUP
+                ITIFREESTRARRAY
+                ITIFREESTRARRAY2
+                ITIOPENPROFILE
+                ITICLOSEPROFILE
+                ITIGETPROFILESTRING
+                ITIWRITEPROFILESTRING
+                ITIEXTRACT 
+                ITICHARASCIITOHEX
+                ITISTRHEXTOULONG 
+                ITISTRHEXTOUCHAR 
+                ITISTRULONGTOHEXSTRING
+                ITISTRUCHARTOHEXSTRING
+                ITISTRREPLACEPARAMS
+                ITISTRISWILDCARD
+                ITISTRMATCHWILDCARD
+                _ItiStrMakePPSZ
+                _ItiStrMakePPSZ2
+                ITISTRTODOUBLE
+                ITISTRDOUBLETOSTRING
+                ITISTRISBLANK
+                _ItiFillPPSZ 
+                _ItiStrPrintfDlgItem
+                ITISTRGET1PARAM
+                ITIFILEQUERYEXIST 
+                ITIFILEOPENREAD 
+                ITIFILECLOSE 
+                ITIFILEQUERYPOS 
+                ITIFILESETPOS 
+                ITIFILESKIPLINE 
+                ITIFILESKIPBLANKLINES 
+                ITIFILEOPENCSV 
+                ITIFILECLOSECSV 
+                ITIFILESKIPCSVLINE 
+                ITIFILEGETCSVWORD 
+                ITIFILESKIPCSVWORD 
+                ITIFILESAVECSVPOS 
+                ITIFILERESTORECSVPOS 
+                ITIFILESKIPCSVSECTION 
+                ITIVERCMP
+
+                
+

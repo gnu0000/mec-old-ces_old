@@ -1,0 +1,90 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE ZoneTypeD                LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Zone Type", ZoneTypeD               , 21, 22, 231, 88, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Zone Type ID", 1200, 10, 77, 58, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 12, 66, 118, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 10, 53, 59, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ZONETYPEDESCR, 11, 27, 213, 24, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 28, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 76, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 124, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 172, 6, 42, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+DLGTEMPLATE ZoneD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Zone", ZoneD, 12, 42, 263, 133, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Zone ID", DID_ZONEID+DID_STOFFSET, 11, 121, 34, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ZONEID, 13, 108, 57, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Description", DID_ZONEDESCR+DID_STOFFSET, 11, 91, 58, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ZONEDESCR, 11, 45, 239, 44, WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Modify Ma~ps", 207, 11, 9, 80, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP
+        CONTROL "~OK", 1, 156, 24, 46, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 208, 24, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 156, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 208, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", DID_ZONETYPEKEY, 0, 0, 0, 0, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP  
+    END
+END
+
+
+
+
+
+DLGTEMPLATE ZoneMapD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Modify Zone Maps", ZoneMapD, 17, 54, 372, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU |               FCF_TITLEBAR
+    BEGIN
+      CONTROL "Maps in current Zone", MapCountyL+DID_STOFFSET, 12, 99, 140, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+      CONTROL "", MapCountyL, 12, 15, 140, 81, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+      CONTROL "Maps in no Zone", MapCat2L + DID_STOFFSET, 221, 99, 140, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+      CONTROL "", MapCat2L, 221, 15, 140, 81, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+      CONTROL "~<---", DID_DO , 165, 81, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+      CONTROL "---~>", DID_UNDO, 165, 63, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+      CONTROL "~OK", 1, 165, 16, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+      CONTROL "~Cancel", 2, 165, 34, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE  
+    END
+END
+
+
+

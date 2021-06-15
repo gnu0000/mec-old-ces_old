@@ -1,0 +1,303 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * majitem.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+:static  static.bin
+//
+// Static WinID   add             change          x1  y1  x2   y2   CoordType     Window Options      Background Color
+//------------------------------------------------------------------------------------------------------------------------
+MajorItemCatS,    MajorItemCatD,  MajorItemCatD,  1,  4,  55,  11,  COORD_CHRRNG, ITI_STATICOPTIONS,  ITI_STATICBACKGROUND
+MajorItemS,       MajorItemD,     MajorItemD,     2,  5,  40,  15,  COORD_CHRRNG, ITI_STATICOPTIONS,  ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+// Parents WinID  Child ID       uKind       add             change          x1  y1  x2  y2  Coord
+//-------------------------------------------------------------------------------------------------------
+MajorItemCatS,    MajorItemCatL, ITIWC_LIST, MajorItemCatD,  MajorItemCatD,  0,  0,  0,  0,  COORD_REL
+MajorItemS,       MajorItemL,    ITIWC_LIST, MajorItemD,     MajorItemD,     0,  6,  0,  0,  COORD_CHRREL
+
+
+
+
+
+:list list.bin
+//
+// List Window ID  Window Options     Background Color      Label Bkg Color        Label ydata  Button ID
+//-------------------------------------------------------------------------------------------------------
+MajorItemL,        ITI_LISTOPTIONSV,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,  0,    0,     0
+MajorItemCatL,     ITI_LISTOPTIONSV,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,  0,    0,     0
+
+
+
+#define COORD_CHRRNGTR  TR | CHR | X0REL | Y0ABS | X1RNG | Y1RNG
+
+:DATA data.bin format.bin
+//
+// Window ID    Next ID      x1   y1  x2  y2  CoordType       Fore Color      Txt Flags                Col Name                  Fmt String
+//-------------------------------------------------------------------------------------------------------------------------------------------
+MajorItemCatL,  MajorItemS,  3,   0,  8,  1,  COORD_CHRRNG,   ITI_LDATACOLOR, ITI_LDATAFLAGS,          MajorItemID,              "String"
+MajorItemCatL,  MajorItemS,  10,  0,  6,  1,  COORD_CHRRELX,  ITI_LDATACOLOR, ITI_LDATAFLAGS,          Description,              "String"
+MajorItemCatL,  MajorItemS,  1,   0,  4,  1,  COORD_CHRRNGTR, ITI_LDATACOLOR, ITI_LDATAFLAGS,          CodeValueID,              "String"
+
+MajorItemS,     0,           12,  0,  1,  1,  COORD_CHRRELX,  ITI_SDATACOLOR, ITI_SDATAFLAGS,          MajorItemID,              "String"
+MajorItemS,     0,           12,  1,  1,  2,  COORD_CHRRELX,  ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, Description,              "String"
+MajorItemS,     0,           12,  3,  1,  1,  COORD_CHRRELX,  ITI_SDATACOLOR, ITI_SDATAFLAGS,          CodeValueID,              "String"
+MajorItemS,     0,           12,  4,  1,  1,  COORD_CHRRELX,  ITI_SDATACOLOR, ITI_SDATAFLAGS,          SpecYear,                 "String"
+
+// MajorItemL,  0,           1,   0,  11, 1,  COORD_CHRRNG,   ITI_LDATACOLOR, ITI_LDATAFLAGS,          StandardItemNumber,       "String"
+MajorItemL,     0,           1,   0,  12, 1,  COORD_CHRRNG,   ITI_LDATACOLOR, ITI_LDATAFLAGS,          StandardItemNumber,       "String"
+MajorItemL,     0,           15,  0,  7,  1,  COORD_CHRRNG,   ITI_LDATACOLOR, ITI_LDATARTFLAGS,        QuantityConversionFactor, "Number,...."
+MajorItemL,     0,           25,  0,  7,  1,  COORD_CHRRNG,   ITI_LDATACOLOR, ITI_LDATARTFLAGS,        PercentofCost,            "Number,%.."
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+// Window ID    Next ID      x1   y1  x2  y2  CoordType       Foreground Color  Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------
+MajorItemCatL,  MajorItemS,  1,   0,  8,  1,  COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Major Item"
+MajorItemCatL,  MajorItemS,  10,  0,  6,  1,  COORD_CHRRELX,  ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Description"
+MajorItemCatL,  MajorItemS,  1,   0,  4,  1,  COORD_CHRRNGTR, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Unit"
+
+MajorItemS,     0,           1,   0,  10, 1,  COORD_CHRRNG,   ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Major Item:"
+MajorItemS,     0,           1,   1,  10, 1,  COORD_CHRRNG,   ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Description:"
+MajorItemS,     0,           1,   3,  10, 1,  COORD_CHRRNG,   ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Common Unit:"
+MajorItemS,     0,          1,   4,  10, 1,  COORD_CHRRNG,   ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Spec Year:"
+MajorItemS,     0,           1,   5,  20, 1,  COORD_CHRRNG,   ITI_SLABELCOLOR,  ITI_SLABELFLAGS,   "Contributing Standard Items"
+
+MajorItemL,     0,           1,   0,  10, 1,  COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Standard Item"
+MajorItemL,     0,           13,  0,  10,  1,  COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS,    "Conv Factor"
+// MajorItemL,     0,           13,  0,  8,  1,  COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Quantity %"
+MajorItemL,     0,           24,  0,  8,  1,  COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Cost %"
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id       Add Query ID     Change Query ID  Col Name                  CtlID                    Format
+//------------------------------------------------------------------------------------------------------------------------------------
+MajorItemCatD,  MajorItemCatD,   MajorItemCatD,   MajorItemID,              DID_ID,                 "String",       "String"
+MajorItemCatD,  MajorItemCatD,   MajorItemCatD,   Description,              DID_DESCR,              "String",       "String"
+MajorItemCatD,  MajorItemUnitQ,  MajorItemUnitQ,  CodeValueID,              DID_UNIT,               "String",       "Number"
+MajorItemCatD,  MajorItemSPYQ,   MajorItemSPYQ,   SpecYear,                 DID_SPECYEAR,           "String",       "Number"
+MajorItemCatD,  MajorItemCatD,   MajorItemCatD,   QuantityConversionFactor, DID_CONV,               "Number,..........",  "Number,.........."
+
+MajorItemD,     MajorItemD,      MajorItemD,      QuantityConversionFactor, DID_CONV,               "Number,..........",  "Number,.........."
+MajorItemD,     MajorItemD,      MajorItemD,      PercentofCost,            DID_PCT,                "Number,%...",   "Number,....."
+MajorItemD,     ITIWND_LIST,     ITIWND_LIST,     StandardItemKey,          StandardItemCatL,       "Number",       "Number"
+
+
+
+
+
+:query query.bin
+//
+// Window ID         Query String
+//----------------------------------------------------------------------------------------------------------
+MajorItemCatL,  " /* MajorItemCatL */"
+MajorItemCatL,  " SELECT MajorItemID, Description, CodeValueID,"
+MajorItemCatL,  " MajorItemKey, CodeTableKey, CodeValueKey, CommonUnit"
+MajorItemCatL,  ", MI.UnitType, SpecYear "
+MajorItemCatL,  " FROM MajorItem MI, CodeValue CV"
+MajorItemCatL,  " WHERE CommonUnit=CodeValueKey"
+MajorItemCatL,  " AND MajorItem.Deleted IS NULL"
+MajorItemCatL,  " AND MajorItemKey > 5 "
+MajorItemCatL,   " AND (MI.UnitType = NULL "
+MajorItemCatL,        " OR MI.UnitType = %CurUnitType )"
+MajorItemCatL,   " AND (MI.SpecYear = NULL "
+MajorItemCatL,        " OR MI.SpecYear = %CurSpecYear) "
+// The CurSpecYear above added.  23 AUG 95
+MajorItemCatL,   " AND (CV.UnitType = NULL "
+MajorItemCatL,        " OR CV.UnitType = %CurUnitType )"
+MajorItemCatL,  " ORDER BY MajorItemID"
+
+
+MajorItemS,     " SELECT MajorItemID, Description, CodeValueID,"
+MajorItemS,  " SpecYear, "
+MajorItemS,     " MajorItemKey"
+MajorItemS,     " FROM MajorItem, CodeValue"
+MajorItemS,     " WHERE MajorItemKey = %MajorItemKey"
+MajorItemS,     " AND CommonUnit = CodeValueKey"
+
+MajorItemL,     " /* MajorItemL */"
+MajorItemL,     " SELECT StandardItemNumber, SIMI.QuantityConversionFactor,"
+MajorItemL,     " PercentofCost, StandardItem.StandardItemKey "
+MajorItemL,     " FROM MajorItem MI, StandardItemMajorItem SIMI, StandardItem"
+MajorItemL,     " WHERE MI.MajorItemKey = SIMI.MajorItemKey"
+MajorItemL,     " AND SIMI.StandardItemKey = StandardItem.StandardItemKey"
+MajorItemL,     " AND MI.MajorItemKey = %MajorItemKey"
+MajorItemL,     " AND MI.MajorItemKey > 5 "
+// MajorItemL,   " AND MI.UnitSys = (SELECT UnitSys FROM UnitSystem) "
+// MajorItemL,   " AND MI.SpecYear = (SELECT SpecYear FROM CurrentSpecYear) "
+MajorItemL,     " ORDER BY StandardItemNumber"
+
+MajorItemCatD,  " SELECT MajorItemID, Description, CommonUnit, MajorItemKey"
+MajorItemCatD,  " ,UnitType, SpecYear, QuantityConversionFactor "
+MajorItemCatD,  " FROM MajorItem"
+MajorItemCatD,  " WHERE MajorItemKey = %MajorItemKey"
+
+MajorItemD,     " /* MajorItemD query.bin */"
+MajorItemD,     " SELECT QuantityConversionFactor, PercentofCost,"
+// MajorItemD,     " UnitType, SpecYear, "
+MajorItemD,     " StandardItemKey, MajorItemKey"
+MajorItemD,     " FROM StandardItemMajorItem"
+MajorItemD,     " WHERE MajorItemKey = %MajorItemKey"
+MajorItemD,     " AND StandardItemKey = %StandardItemKey"
+
+MajorItemUnitQ, " SELECT CodeValueID, CodeValueKey"
+MajorItemUnitQ, " FROM CodeValue CV, CodeTable CT"
+MajorItemUnitQ, " WHERE CV.CodeTableKey = CT.CodeTableKey"
+MajorItemUnitQ, " AND CodeTableID = 'UNITS'"
+MajorItemUnitQ, " AND (CV.Deleted is null"
+MajorItemUnitQ,      " OR CodeValueKey = %CommonUnit)"
+MajorItemUnitQ, " AND (CV.UnitType = %CurUnitType "
+MajorItemUnitQ,      " OR CV.UnitType = NULL) "
+MajorItemUnitQ, " AND CV.CodeValueID != '----' "
+MajorItemUnitQ, " ORDER BY CodeValueID"
+
+
+MajorItemSPYQ, " SELECT DISTINCT SpecYear FROM StandardItem WHERE SpecYear > 1900 ORDER BY SpecYear DESC "
+
+
+
+:title title.bin
+//
+// Window ID     Window Title
+//----------------------------------------
+MajorItemS,      "Major Item %MajorItemID"
+MajorItemCatS,   "Major Item Catalog"
+
+
+
+
+:query update.bin
+//
+// Window ID    Query String
+//-------------------------------------------------------------------------
+MajorItemCatD,  " UPDATE MajorItem"
+MajorItemCatD,  " SET "
+MajorItemCatD,  " MajorItemID=@MajorItemID,"
+MajorItemCatD,  " Description=@Description,"
+MajorItemCatD,  " CommonUnit=@CodeValueKey"
+MajorItemCatD,  ", SpecYear = @SpecYear "
+MajorItemCatD,  ", UnitType = @CURRENTUNITSYS "
+MajorItemCatD,  ", QuantityConversionFactor = @QuantityConversionFactor "
+MajorItemCatD,  " WHERE MajorItemKey=%MajorItemKey"
+
+MajorItemD,     " UPDATE StandardItemMajorItem"
+MajorItemD,     " SET "
+MajorItemD,     " QuantityConversionFactor = @QuantityConversionFactor,"
+MajorItemD,     " PercentofCost = @PercentofCost,"
+MajorItemD,     " StandardItemKey = @"StandardItemCatL"StandardItemKey"
+MajorItemD,   " , SpecYear = @"StandardItemCatL"SpecYear "
+//MajorItemD,   " (select SpecYear "
+//MajorItemD,   " from StandardItem where StandardItemKey = %StandardItemKey )"
+MajorItemD,     " WHERE MajorItemKey = %MajorItemKey"
+MajorItemD,     " AND StandardItemKey = %StandardItemKey "
+
+
+
+
+
+
+
+
+:query lock.bin
+//
+// Window ID    Query String
+//-------------------------------------------------------------------------
+MajorItemCatD,  " SELECT MajorItemID, Description, CommonUnit"
+MajorItemCatD,  " FROM MajorItem HOLDLOCK"
+MajorItemCatD,  " WHERE MajorItemKey = %MajorItemKey"
+
+MajorItemD,     " SELECT StandardItemKey, QuantityConversionFactor,"
+MajorItemD,     " PercentofCost"
+MajorItemD,     " FROM StandardItemMajorItem HOLDLOCK"
+MajorItemD,     " WHERE MajorItemKey = %MajorItemKey"
+MajorItemD,     " AND StandardItemKey = %StandardItemKey"
+
+
+
+
+
+
+:query insert.bin
+//
+// Window ID    Query String
+//-------------------------------------------------------------------------
+MajorItemCatD,  " /* MajorItemCatD */"
+MajorItemCatD,  " INSERT INTO MajorItem"
+MajorItemCatD,  " (MajorItemKey,MajorItemID,Description,CommonUnit"
+MajorItemCatD,  ", UnitType, SpecYear, QuantityConversionFactor "
+MajorItemCatD,  ") VALUES "
+MajorItemCatD,  "(@NewKey, @MajorItemID, @Description, @CodeValueKey"
+MajorItemCatD,  ", @CURRENTUNITSYS , @SpecYear, @QuantityConversionFactor ) "
+
+MajorItemD,     " /* MajorItemD */"
+MajorItemD,     " INSERT INTO StandardItemMajorItem"
+MajorItemD,     " (MajorItemKey, StandardItemKey, QuantityConversionFactor,"
+MajorItemD,     " PercentofCost "
+MajorItemD,     " ,SpecYear "
+MajorItemD,     ") VALUES " 
+MajorItemD,     " (%MajorItemKey, @"StandardItemCatL"StandardItemKey,"
+MajorItemD,     " @QuantityConversionFactor, @PercentofCost  "
+MajorItemD,     " , @"StandardItemCatL"SpecYear )"
+
+
+
+
+
+
+:query delete.bin
+//
+// Window ID    Query String
+//-------------------------------------------------------------------------
+MajorItemCatL,  " UPDATE MajorItem"
+MajorItemCatL,  " SET Deleted = 1"
+MajorItemCatL,  " WHERE MajorItemKey IN (%MajorItemKey{,%MajorItemKey})"
+MajorItemCatL,  " AND MajorItemKey != 1 "
+
+MajorItemL,     " DELETE StandardItemMajorItem"
+MajorItemL,     " WHERE MajorItemKey = %MajorItemKey"
+MajorItemL,     " AND StandardItemKey IN (%StandardItemKey{,%StandardItemKey})
+MajorItemL,     " AND MajorItemKey != 1 "
+
+
+
+

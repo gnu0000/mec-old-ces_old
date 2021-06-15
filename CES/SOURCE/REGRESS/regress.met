@@ -1,0 +1,324 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * Regress.met
+ * This file contains the metadata for the 
+ * PEMETH Regression dll windows
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "regimp.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+:static static.bin
+//
+// Static WinID  add   change   xpos ypos xsiz ysiz CoordType     Window Options     Background Color
+//-------------------------------------------------------------------------------------------------------
+JobPemethRegS,   0,    0,       2,   0,   70,  23,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+PemethRegS,      0,    0,       2,   0,   70,  21,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+:CHILD child.bin
+//
+//ParentID  ChildID   uKind        add  chg              Coord
+//----------------------------------------------------------------
+PemethRegS, PemethRegC1, ITIWC_COMBO,     0,    0,     2,  4,  15,  6, COORD_CHRRNG
+PemethRegS, PemethRegC2, ITIWC_COMBO,     0,    0,    19,  4,  15,  6, COORD_CHRRNG
+PemethRegS, PemethRegC3, ITIWC_COMBO,     0,    0,    36,  4,  15,  6, COORD_CHRRNG
+PemethRegS, PemethRegC4, ITIWC_COMBO,     0,    0,    53,  4,  15,  6, COORD_CHRRNG
+
+
+:DATA data.bin format.bin
+//
+// Window ID      Coords                       Foreground Clr  Txt Flags       Col Name         Format String
+//---------------------------------------------------------------------------------------------------------------
+JobPemethRegS, 0,    6,  1,  55, 2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, LongDescription, "String"
+JobPemethRegS, 0,    17, 16, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   AreaID,          "String"
+JobPemethRegS, 0,    17, 17, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   CodeValueID,     "String"
+JobPemethRegS, 0,    24, 17, 60, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   Translation,     "String"
+JobPemethRegS, 0,    17, 18, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   1,               "Season"
+JobPemethRegS, 0,    17, 19, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   BaseDate,        "DateTime,mm/dd/yyyy hh:nn:ssa"
+JobPemethRegS, 0,    17, 20, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ImportDate,      "DateTime,mm/dd/yyyy hh:nn:ssa"
+JobPemethRegS, 0,    17, 14, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   MinimumQuantity, "Number,,..."
+JobPemethRegS, 0,    32, 14, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATACTRFLAGS,2,               "Number,,..."
+JobPemethRegS, 0,    49, 14, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, MaximumQuantity, "Number,,..."
+
+PemethRegS,    0,    6,  1,  55, 2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, LongDescription, "String"
+PemethRegS,    0,    17, 18, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ImportDate,      "DateTime,mm/dd/yyyy hh:nn:ssa"
+PemethRegS,    0,    17, 16, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   MinimumQuantity, "Number,,..."
+PemethRegS,    0,    32, 16, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATACTRFLAGS,2,               "Number,,..."
+PemethRegS,    0,    49, 16, 18, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATARTFLAGS, MaximumQuantity, "Number,,..."
+
+
+
+:label label.bin labeltxt.bin
+//
+// Window ID   NextD  Coords         CoordType     Foreground Color  Txt Flags         Label String
+//---------------------------------------------------------------------------------------------------
+JobPemethRegS, 0,     6,  5,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+JobPemethRegS, 0,     6,  9,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+JobPemethRegS, 0,     6,  13, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+JobPemethRegS, 0,     57, 5,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,    ""
+JobPemethRegS, 0,     57, 6,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,     ""
+JobPemethRegS, 0,     45, 5,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit Price:"
+JobPemethRegS, 0,     45, 6,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Quantity:"
+JobPemethRegS, 0,     1,  0,  40, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Job Item Description:"
+JobPemethRegS, 0,     1,  16, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Area:"
+JobPemethRegS, 0,     1,  17, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "WorkType:"
+JobPemethRegS, 0,     1,  18, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Season:"
+JobPemethRegS, 0,     1,  19, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Base Date:"
+JobPemethRegS, 0,     1,  20, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Import Date:"
+JobPemethRegS, 0,     26, 16, 30, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "Item Quantity"
+JobPemethRegS, 0,     1,  5,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "U"
+JobPemethRegS, 0,     1,  6,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "n"
+JobPemethRegS, 0,     1,  7,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "i"
+JobPemethRegS, 0,     1,  8,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "t"
+JobPemethRegS, 0,     1,  10, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "P"
+JobPemethRegS, 0,     1,  11, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "r"
+JobPemethRegS, 0,     1,  12, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "i"
+JobPemethRegS, 0,     1,  13, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "c"
+JobPemethRegS, 0,     1,  14, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "e"
+JobPemethRegS, 0,    16,  3, 16,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "Enter New Quantity:"
+
+PemethRegS,    0,     6,  6,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+PemethRegS,    0,     6, 10,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+PemethRegS,    0,     6, 15,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+PemethRegS,    0,     57, 6,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,    ""
+PemethRegS,    0,     57, 7,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,     ""
+PemethRegS,    0,     45, 6,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit Price:"
+PemethRegS,    0,     45, 7,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Quantity:"
+PemethRegS,    0,     1,  0,  40, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Standard Item Description:"
+PemethRegS,    0,     1,  18, 15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Import Date:"
+PemethRegS,    0,     26, 17, 30, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "Item Quantity"
+PemethRegS,    0,     1,  6,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "U"
+PemethRegS,    0,     1,  7,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "n"
+PemethRegS,    0,     1,  8,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "i"
+PemethRegS,    0,     1,  9,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "t"
+PemethRegS,    0,     1,  11, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "P"
+PemethRegS,    0,     1,  12, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "r"
+PemethRegS,    0,     1,  13, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "i"
+PemethRegS,    0,     1,  14, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "c"
+PemethRegS,    0,     1,  15, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "e"
+PemethRegS,    0,     2,  3,  15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Season"
+PemethRegS,    0,    19,  3,  15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "WorkType"
+PemethRegS,    0,    36,  3,  15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Area"
+PemethRegS,    0,    53,  3,  15, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Base Date"
+
+
+
+:title title.bin
+//
+// Window ID   Window Title
+//--------------------------------------------------------------------
+JobPemethRegS, "PEMETH Regression for Job %JobID, Job Item %StandardItemNumber"
+PemethRegS,    "PEMETH Regression for Item %StandardItemNumber"
+
+
+:query query.bin
+//
+// Window ID   Query String
+//----------------------------------------------------------------------------------------------------------------
+JobPemethRegS, " SELECT 1 + J.LettingMonth / 4, "
+JobPemethRegS, " (PR.MaximumQuantity + PR.MedianQuantity) / 2,"
+JobPemethRegS, " 1 + J.LettingMonth / 4,"
+JobPemethRegS, " PR.ImportDate,J.BaseDate, SI.StandardItemNumber,"
+JobPemethRegS, " SI.LongDescription,JI.Quantity,"
+JobPemethRegS, " A.AreaID, CVW.CodeValueID,"
+JobPemethRegS, " CVW.Translation, PR.MinimumQuantity,"
+JobPemethRegS, " PR.MaximumQuantity, PR.MedianQuantity,"
+JobPemethRegS, " J.JobKey, JB.JobBreakdownKey, SI.StandardItemKey,"
+JobPemethRegS, " PR.BaseUnitPrice, PR.AnnualInflation,"
+JobPemethRegS, " PR.QuantityAdjustment,JB.WorkType,A.AreaKey, J.JobID"
+JobPemethRegS, " FROM JobItem JI, Job J, "
+JobPemethRegS, " JobBreakdown JB, StandardItem SI, "
+JobPemethRegS, " StandardItemPEMETHRegression SIPR,"
+JobPemethRegS, " PEMETHRegression PR, Area A, "
+JobPemethRegS, " AreaCounty AC, CodeValue CVW"
+JobPemethRegS, " WHERE JI.JobKey = %JobKey"
+JobPemethRegS, " AND JI.JobItemKey = %JobItemKey"
+JobPemethRegS, " AND J.JobKey = JI.JobKey"
+JobPemethRegS, " AND JI.JobKey = JB.JobKey"
+JobPemethRegS, " AND JI.JobBreakdownKey = JB.JobBreakdownKey"
+JobPemethRegS, " AND JI.StandardItemKey = SI.StandardItemKey"
+JobPemethRegS, " AND SI.StandardItemKey = SIPR.StandardItemKey"
+JobPemethRegS, " AND J.BaseDate = SIPR.BaseDate"
+JobPemethRegS, " AND SIPR.StandardItemKey = PR.StandardItemKey"
+JobPemethRegS, " AND SIPR.ImportDate = PR.ImportDate"
+JobPemethRegS, " AND A.AreaTypeKey = PR.AreaTypeKey"
+JobPemethRegS, " AND A.AreaKey = AC.AreaKey"
+JobPemethRegS, " AND A.AreaTypeKey = AC.AreaTypeKey"
+JobPemethRegS, " AND AC.CountyKey = J.PrimaryCountyKey"
+JobPemethRegS, " AND AC.BaseDate = J.BaseDate"
+JobPemethRegS, " AND JB.WorkType = CVW.CodeValueKey"
+
+PemethRegS,    " SELECT SI.LongDescription,"
+PemethRegS,    " (PR.MaximumQuantity + PR.MedianQuantity) / 2,"
+PemethRegS,    " PR.ImportDate,SIPR.BaseDate, SI.StandardItemNumber,"
+PemethRegS,    " PR.AreaTypeKey,"
+PemethRegS,    " PR.MinimumQuantity,"
+PemethRegS,    " PR.MaximumQuantity, PR.MedianQuantity,"
+PemethRegS,    " SI.StandardItemKey,"
+PemethRegS,    " PR.BaseUnitPrice, PR.AnnualInflation,"
+PemethRegS,    " PR.QuantityAdjustment"
+PemethRegS,    " FROM StandardItem SI, "
+PemethRegS,    " StandardItemPEMETHRegression SIPR,"
+PemethRegS,    " PEMETHRegression PR"
+PemethRegS,    " WHERE SI.StandardItemKey = SIPR.StandardItemKey"
+PemethRegS,    " AND SI.StandardItemKey = %StandardItemKey"
+PemethRegS,    " AND SIPR.BaseDate = @UndeclaredBaseDate"
+PemethRegS,    " AND SIPR.StandardItemKey = PR.StandardItemKey"
+PemethRegS,    " AND SIPR.ImportDate = PR.ImportDate"
+
+PemethRegC2,   " SELECT CV.CodeValueID, CV.CodeValueKey"
+PemethRegC2,   " FROM CodeValue CV, CodeTable CT"
+PemethRegC2,   " WHERE CT.CodeTableKey = CV.CodeTableKey"
+PemethRegC2,   " AND CT.CodeTableID = 'WRKTYP'"
+// PemethRegC2,     " AND CT.UnitType = %CurUnitType  "
+PemethRegC2,   " ORDER BY CV.CodeValueID"
+
+PemethRegC3,   " SELECT A.AreaID, A.AreaKey"
+PemethRegC3,   " FROM Area A"
+PemethRegC3,   " WHERE A.AreaTypeKey =%s "
+PemethRegC3,   " ORDER BY A.AreaID"
+
+PemethRegC4,   " SELECT DISTINCT SIPR.BaseDate, SIPR.BaseDate"
+PemethRegC4,   " FROM StandardItemPEMETHRegression SIPR"
+PemethRegC4,   " WHERE SIPR.StandardItemKey = %s "
+PemethRegC4,   " ORDER BY SIPR.BaseDate DESC"
+
+
+:query impquery.bin
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------------
+//UPDATEAREAKEY,       "UPDATE %TableName "
+//UPDATEAREAKEY,       "SET %TargetColumn = "
+//UPDATEAREAKEY,       "(SELECT DISTINCT A.AreaKey "
+//UPDATEAREAKEY,       " FROM %ProductionDatabase..Area A, "
+//UPDATEAREAKEY,       " %ProductionDatabase..AreaType AT, PEMETHRegression, "
+//UPDATEAREAKEY,       " AreaAdjustment "
+//UPDATEAREAKEY,       " WHERE AreaID='%KeyValue' "
+//UPDATEAREAKEY,       " AND AT.AreaTypeKey=A.AreaTypeKey "
+//UPDATEAREAKEY,       " AND PEMETHRegression.AreaTypeKey=AT.AreaTypeKey "
+//UPDATEAREAKEY,       " AND AreaAdjustment.StandardItemKey = PEMETHRegression.StandardItemKey "
+//UPDATEAREAKEY,       " AND AreaAdjustment.ImportDate = PEMETHRegression.ImportDate) "
+//UPDATEAREAKEY,       "WHERE %ColumnName='%KeyValue' "
+
+DELETEMAPPING,         "DELETE FROM %ProductionDatabase..StandardItemPEMETHRegression "
+DELETEMAPPING,         "WHERE BaseDate ='%KeyValue' "
+DELETEMAPPING,         "AND StandardItemKey IN "
+DELETEMAPPING,         "(SELECT StandardItemKey "
+DELETEMAPPING,         " FROM PEMETHRegression)"
+
+MAKEMAPPING,           "INSERT INTO %ProductionDatabase..StandardItemPEMETHRegression "
+MAKEMAPPING,           "(StandardItemKey, BaseDate, ImportDate) "
+MAKEMAPPING,           "SELECT StandardItemKey, '%KeyValue', ImportDate "
+MAKEMAPPING,           "FROM PEMETHRegression "
+MAKEMAPPING,           "WHERE StandardItemKey IS NOT NULL "
+MAKEMAPPING,           "AND AreaTypeKey IS NOT NULL "
+
+COPYREGRESSION,        "INSERT INTO %ProductionDatabase..PEMETHRegression "
+COPYREGRESSION,        "(StandardItemKey, ImportDate, "
+COPYREGRESSION,        "AreaTypeKey, MinimumQuantity, MaximumQuantity, "
+COPYREGRESSION,        "MedianQuantity, BaseUnitPrice, AnnualInflation, "
+COPYREGRESSION,        "QuantityAdjustment) "
+COPYREGRESSION,        "SELECT StandardItemKey, ImportDate, "
+COPYREGRESSION,        "AreaTypeKey, MinimumQuantity, MaximumQuantity, "
+COPYREGRESSION,        "MedianQuantity, BaseUnitPrice, AnnualInflation, "
+COPYREGRESSION,        "QuantityAdjustment "
+COPYREGRESSION,        "FROM PEMETHRegression "
+COPYREGRESSION,        "WHERE StandardItemKey IS NOT NULL "
+COPYREGRESSION,        "AND AreaTypeKey IS NOT NULL "
+
+COPYAREAADJ,           "INSERT INTO %ProductionDatabase..AreaAdjustment "
+COPYAREAADJ,           "(StandardItemKey, ImportDate, "
+COPYAREAADJ,           "AreaKey, Adjustment) "
+COPYAREAADJ,           "SELECT "
+COPYAREAADJ,           "StandardItemKey, ImportDate, "
+COPYAREAADJ,           "AreaKey, Adjustment "
+COPYAREAADJ,           "FROM AreaAdjustment "
+COPYAREAADJ,           "WHERE StandardItemKey IS NOT NULL "
+COPYAREAADJ,           "AND AreaKey IS NOT NULL "
+
+COPYSEASONADJ,         "INSERT INTO %ProductionDatabase..SeasonAdjustment "
+COPYSEASONADJ,         "(StandardItemKey, ImportDate, "
+COPYSEASONADJ,         "Season, Adjustment) "
+COPYSEASONADJ,         "SELECT "
+COPYSEASONADJ,         "StandardItemKey, ImportDate, "
+COPYSEASONADJ,         "Season, Adjustment "
+COPYSEASONADJ,         "FROM SeasonAdjustment "
+COPYSEASONADJ,         "WHERE StandardItemKey IS NOT NULL "
+
+COPYWORKTYPEADJ,       "INSERT INTO %ProductionDatabase..WorkTypeAdjustment "
+COPYWORKTYPEADJ,       "(StandardItemKey, ImportDate, "
+COPYWORKTYPEADJ,       "WorkType, Adjustment) "
+COPYWORKTYPEADJ,       "SELECT "
+COPYWORKTYPEADJ,       "StandardItemKey, ImportDate, "
+COPYWORKTYPEADJ,       "WorkType, Adjustment "
+COPYWORKTYPEADJ,       "FROM WorkTypeAdjustment "
+COPYWORKTYPEADJ,       "WHERE StandardItemKey IS NOT NULL "
+COPYWORKTYPEADJ,       "AND WorkType IS NOT NULL "
+
+
+UPDATESTANDARDITEMKEY,  "/* regress.met UPDATESTANDARDITEMKEY */ " 
+UPDATESTANDARDITEMKEY,  " UPDATE %TableName"
+UPDATESTANDARDITEMKEY,  " SET %TargetColumn = %StdItemKey"
+UPDATESTANDARDITEMKEY,   " WHERE "
+// UPDATESTANDARDITEMKEY,   "  %TargetColumn IS NULL AND "
+UPDATESTANDARDITEMKEY,   " StandardItemNumber = '%StdItemNumber' "
+UPDATESTANDARDITEMKEY,   " AND SpecYear = %TargetSpecYear "
+
+UPDATESTDITEMKEY_SUBQRY,  "/* regress.met UPDATESTDITEMKEY_SUBQRY */"
+UPDATESTDITEMKEY_SUBQRY,  " SELECT DISTINCT SI.StandardItemKey"
+UPDATESTDITEMKEY_SUBQRY,  ", SI.StandardItemNumber"
+UPDATESTDITEMKEY_SUBQRY,  ", SI.SpecYear"
+UPDATESTDITEMKEY_SUBQRY,   " FROM %ProductionDatabase..StandardItem SI"
+UPDATESTDITEMKEY_SUBQRY,   " , %TableName TN"
+UPDATESTDITEMKEY_SUBQRY,   " WHERE "
+UPDATESTDITEMKEY_SUBQRY,   " SI.StandardItemNumber = TN.%ColumnName"
+UPDATESTDITEMKEY_SUBQRY,   " AND SI.SpecYear = TN.SpecYear "
+// UPDATESTDITEMKEY_SUBQRY,   " AND SI.UnitType = %TargetUnitType "
+
+
+
+GETAREATYPEKEY,        "SELECT PA.AreaTypeKey "
+GETAREATYPEKEY,        "FROM PEMETHRegression PA, %TableName TN "
+GETAREATYPEKEY,        "WHERE PA.StandardItemNumber=TN.StandardItemNumber "
+GETAREATYPEKEY,        "AND PA.ImportDate = TN.ImportDate "
+
+UPDATEAREATYPEKEY,     "UPDATE %TableName "
+UPDATEAREATYPEKEY,     "SET %TargetColumn = "
+UPDATEAREATYPEKEY,     "(SELECT AreaTypeKey "
+UPDATEAREATYPEKEY,     "FROM %ProductionDatabase..AreaType "
+UPDATEAREATYPEKEY,     "WHERE %ProductionDatabase..AreaType.AreaTypeID = "
+UPDATEAREATYPEKEY,     "%TableName.%ColumnName) "
+
+UPDATEAREAKEY,         "UPDATE %TableName "
+UPDATEAREAKEY,         "SET %TargetColumn = "
+UPDATEAREAKEY,         "(SELECT AreaKey "
+UPDATEAREAKEY,         "FROM %ProductionDatabase..Area, PEMETHRegression PR "
+UPDATEAREAKEY,         "WHERE %ProductionDatabase..Area.AreaID = "
+UPDATEAREAKEY,         "%TableName.%ColumnName "
+UPDATEAREAKEY,         "AND %ProductionDatabase..Area.AreaTypeKey = "
+UPDATEAREAKEY,         "PR.AreaTypeKey "
+UPDATEAREAKEY,         "AND PR.StandardItemNumber = %TableName.StandardItemNumber "
+UPDATEAREAKEY,         "AND PR.ImportDate= %TableName.ImportDate) "
+

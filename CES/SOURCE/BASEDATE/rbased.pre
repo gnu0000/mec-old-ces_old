@@ -1,0 +1,62 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+TARGET=rBased
+TARGETDIR=..\basedate^\                       
+:FileList SourceFiles = { rBased, rinidll }  
+:FileList MetFiles =    { rBasedQ, rBasedF, rBasedDQ, rBasedDF, rBasedDD }
+
+:FileList SourceFiles = { $(TARGET), rinidll }
+
+:FileList LibFiles = {ItiBase, ItiError, ItiUtil, ItiDBase, ItiMBase,
+                      ItiWin,  ItiFmt,   ItiPrt,  ItiRptUt, ItiCrt}
+
+:FileList OtherObj = { itidllc }
+
+
+
+!include "..\makeopts"
+
+all: $(EXEDIR)$(TARGET).dll $(TARGET).res
+
+
+~ build metadata resource files
+{F:MetFiles,,BIN} : $(TARGET).met
+  $(EXEDIR)BuildRes $(TARGET).met
+
+
+
+
+$(TARGET).res: {F:MetFiles,,BIN} $(TARGET).rc $(TARGET).dlg {I: rBased.rc} 
+   rc -r $(DEBUG) $*.rc
+
+
+:Expand SourceFiles,{"cl $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+
+$(EXEDIR)$(TARGET).dll: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def  $(TARGET).res 
+   $(LINK) @<<$(TARGET).lnk
+           $(LFLAGS) $(LDEBUG)/NOI/NOD crtdll_i $(LIBDIR)itidllc +
+           {F: SourceFiles,,} 
+           $*.dll
+           $(@B).map
+           {F: LibFiles,$(LIBDIR),LIB} os2.lib
+           $(@B).def
+<<NOKEEP
+   rc $(@B).res $*.dll
+   mapsym /l $(@B).map
+   copy $(TARGET).sym   $(EXEDIR)$(TARGET).sym
+

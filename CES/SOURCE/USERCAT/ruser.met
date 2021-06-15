@@ -1,0 +1,94 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rUser.h"                                       
+
+
+:query rUserQ.bin                                        
+
+ID_QUERY_LISTING, "SELECT U.UserID, U.PhoneNumber, U.Type, U.Name "
+ID_QUERY_LISTING, "FROM User U "
+ID_QUERY_LISTING, "WHERE U.Deleted IS NULL "
+ID_QUERY_LISTING, " AND U.UserKey = "
+
+
+ID_QUERY_APP, "SELECT A.ApplicationID, A.Description "
+ID_QUERY_APP, "FROM Application A, User U, UserApplication UA "
+ID_QUERY_APP, "WHERE U.UserKey = UA.UserKey "
+ID_QUERY_APP, " AND UA.ApplicationKey = A.ApplicationKey "
+ID_QUERY_APP, " AND U.Deleted IS NULL "
+ID_QUERY_APP, " AND U.UserKey = "
+
+
+ID_QUERY_CAT, "SELECT C.CatalogID, UC.Permission "
+ID_QUERY_CAT, "FROM User U, UserCatalog UC, Catalog C "
+ID_QUERY_CAT, "WHERE U.UserKey = UC.UserKey "
+ID_QUERY_CAT, " AND UC.CatalogKey = C.CatalogKey "
+ID_QUERY_CAT, " AND U.Deleted is NULL "
+ID_QUERY_CAT, " AND U.UserKey = "
+
+
+ID_QUERY_KEYS, "SELECT U.UserKey "
+ID_QUERY_KEYS, "FROM User U "
+ID_QUERY_KEYS, "WHERE U.Deleted is NULL "
+
+ID_QUERY_CONJ,    " AND UserKey = "
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "8"
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,      8,       0,             17,User/"           
+RPT_TTL_2,    "19,    16,       19,            21,Phone Number"  
+RPT_TTL_3,    "45,     5,       45,            30,Type"  
+RPT_TTL_4,    "4,     50,       4,             50,Name"  
+
+RPT_TTL_5,    "8,     14,       22,            50,Applications: "  
+RPT_TTL_6,    "0,      0,       23,            50,Desc"  
+RPT_TTL_7,    "8,     10,       18,            26,Catalogs: "  
+RPT_TTL_8,    "0,      0,       46,            25,Perm"  
+
+
+
+:FORMAT rUserF.bin                                                  
+
+ID_QUERY_LISTING,   "String", "String", "UserType,f", "String"
+ID_QUERY_APP,       "String", "String"
+ID_QUERY_CAT,       "String", "Privilege"
+ID_QUERY_KEYS,      "Number"
+
+
+:query rUserDQ.bin                                                  
+
+rUser_RptDlgBox,       "SELECT UserKey "                             
+rUser_RptDlgBox,       "FROM User "                                  
+rUser_RptDlgBox,       "WHERE UserKey = %UserKey "                   
+
+
+
+:Dialog rUserDD.bin rUserDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt 
+//--------------------------------------------------------------------------------------
+rUser_RptDlgBox, rUser_RptDlgBox, rUser_RptDlgBox, UserKey, DID_KEY, "Number", "Number" 
+

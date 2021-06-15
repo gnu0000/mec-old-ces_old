@@ -1,0 +1,103 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE LaborD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Laborer", LaborD, 13, 9, 276, 101, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Laborer ID", 1200, 10, 90, 59, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 200, 12, 79, 56, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Zone Type ID", 1202, 108, 90, 59, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABORZONETYPE, 81, 38, 128, 51, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", 1201, 10, 35, 55, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABORDESCR, 10, 8, 256, 25, WC_MLE, MLS_BORDER | WS_GROUP | 
+                MLS_WORDWRAP | MLS_VSCROLL | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 226, 84, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 226, 68, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 226, 52, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Add More", 4, 223, 35, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+
+
+
+
+
+DLGTEMPLATE LabRateD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Labor Rate", LabRateD, 23, 96, 344, 86, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Davis Bacon", 256, 61, 76, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+
+        CONTROL "Hourly ~Rate", DID_DBHOURLYRATE+DID_STOFFSET, 19, 65, 56, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DBHOURLYRATE, 10, 54, 72, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "O~vertime Rate", DID_DBOVERTIMERATE+DID_STOFFSET, 105, 65, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DBOVERTIMERATE, 101, 54, 70, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Non Davis Bacon", 257, 49, 34, 82, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+
+        CONTROL "Hourly R~ate", DID_NDBHOURLYRATE+DID_STOFFSET, 19, 25, 52, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NDBHOURLYRATE, 10, 13, 72, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Ov~ertime Rate", DID_NDBOVERTIMERATE+DID_STOFFSET, 105, 25, 66, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NDBOVERTIMERATE, 101, 13, 72, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Labor Zones", DID_LABZONEID+DID_STOFFSET, 201, 76, 64, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABZONEID, 192, 2, 87, 72, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 292, 55, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 292, 37, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 292, 21, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 291, 5, 44, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

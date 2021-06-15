@@ -1,0 +1,179 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE ParametricProfileD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Parametric Profile", ParametricProfileD, 2, 1, 239, 64, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Profile ID", DID_PROFILEID+DID_STOFFSET, 9, 53, 45, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PROFILEID, 9, 37, 76, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIPTION+DID_STOFFSET, 9, 24, 52, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIPTION, 9, 3, 221, 19, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 119, 46, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 170, 46, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 119, 27, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 167, 27, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+DLGTEMPLATE SignifMajItemD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Significant Major Item", SignifMajItemD, 22, 43, 350, 126, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+
+        CONTROL "Major ~Item", DID_MAJORITEM+DID_STOFFSET, 19, 114, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC |  WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MAJORITEM, 19, 101, 52, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~Percent of Cost", DID_PCTOFVALUE+DID_STOFFSET, 111, 114, 68, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC |  WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PCTOFVALUE, 109, 101, 72, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Major Item Catalog", 264, 7, 88, 98, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", MajItemEditDL, 7, 6, 334, 78, "LISTWINDOW", WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 224, 106, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 281, 106, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 224, 88, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 278, 88, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+
+
+
+
+
+
+
+DLGTEMPLATE JobBreakdownMajorItemE LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Breakdown Major Item", JobBreakdownMajorItemE, 11, 12, 350, 170, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Qty Adjustment Factors", DID_LEN+DID_STOFFSET, 67, 159, 130, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+
+        CONTROL "Length", DID_LEN,   69, 149, 42, 10, WC_BUTTON,
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", DID_LEN_CONV, 120, 149, 42, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        LTEXT  "", DID_LEN_R, 182, 149, 72, 8
+
+        CONTROL "Area  ", DID_AREA,  69, 137, 42, 10, WC_BUTTON,
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", DID_AREA_CONV, 120, 137, 42, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        LTEXT  "", DID_AREA_R, 182, 137, 72, 8
+
+        CONTROL "Volume", DID_VOL,   69, 125, 42, 10, WC_BUTTON,
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "", DID_VOL_CONV, 120, 125, 42, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        LTEXT  "", DID_VOL_R, 182, 125, 72, 8
+
+
+        CONTROL "Major ~Item", DID_MAJORITEM+DID_STOFFSET, 5, 114, 50, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MAJORITEM, 7, 104, 39, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 67, 114, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 69, 103, 82, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~Unit Price", DID_UNITPRICE+DID_STOFFSET, 174, 114, 48, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNITPRICE, 176, 103, 60, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Major Item Catalog", 264, 7, 88, 98, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", MajItemEditDL, 7, 6, 334, 78, "LISTWINDOW", WS_GROUP | WS_TABSTOP | 
+                WS_VISIBLE
+
+
+        CONTROL "~OK", DID_OK, 259, 109, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 305, 109, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+//        CONTROL "~Help", 3, 257, 91, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 299, 91, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE JobBreakdownProfileE LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Job Breakdown Profile", JobBreakdownProfileE, 16, 30, 320, 123, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Current Parametric Profile:", DID_STOFFSET + DID_PROFILEID, 17, 110, 116, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "xxxxxxxxxxx", DID_PROFILEID, 135, 111, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~Parametric Profiles:", 257, 17, 79, 233, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", ParametricProfileL, 15, 9, 242, 69, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "~OK", DID_OK, 270, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 270, 37, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 270, 12, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+

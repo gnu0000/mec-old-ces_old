@@ -1,0 +1,82 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rZones.h"                                       
+
+:query rZonesQ.bin                                        
+
+ID_QUERY_DESC, "select ZoneTypeID, Description "
+ID_QUERY_DESC, "from ZoneType "
+ID_QUERY_DESC, "where Deleted is NULL "
+ID_QUERY_DESC, " and ZoneTypeKey = "
+
+
+ID_QUERY_LISTING, "select ZoneID, Zone.Description, MapID, Map.Description "
+ID_QUERY_LISTING, "from Zone, ZoneMap, Map "
+ID_QUERY_LISTING, "where Zone.Deleted is NULL "
+ID_QUERY_LISTING, " and Map.Deleted is NULL " 
+ID_QUERY_LISTING, " and Zone.ZoneKey = ZoneMap.ZoneKey "
+ID_QUERY_LISTING, " and ZoneMap.MapKey = Map.MapKey "
+ID_QUERY_LISTING, " and Zone.ZoneTypeKey = "
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "7"
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth,TtlText
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,     11,      11,      16,Zone-Type: "
+RPT_TTL_2,    "27,     3,      30,      48, - "  
+
+RPT_TTL_3,    "7,      5,      13,       8,Zone:"  
+RPT_TTL_4,    "21,     3,      24,      54, - "  
+
+RPT_TTL_5,    "18,     5,      24,       8,Maps:"  
+RPT_TTL_6,    "32,     3,      35,      43, - "  
+
+RPT_TTL_7,    "0,     18,      19,      16,(cont.) Zone-Type " 
+
+
+:FORMAT rZonesF.bin                                                  
+
+ID_QUERY_DESC,    "String", "String"
+ID_QUERY_LISTING, "String", "String", "String", "String"
+
+
+:query rZonesDQ.bin                                                  
+
+rZones_RptDlgBox,       "SELECT ZoneTypeKey "                             
+rZones_RptDlgBox,       "FROM ZoneType "                                  
+rZones_RptDlgBox,       "WHERE Deleted is NULL "                   
+rZones_RptDlgBox,       "AND ZoneTypeKey = %ZoneTypeKey "                   
+
+
+:Dialog rZonesDD.bin rZonesDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rZones_RptDlgBox, rZones_RptDlgBox, rZones_RptDlgBox, ZoneTypeKey, DID_KEY, "Number", "Number"
+
+
+  
+
+

@@ -1,0 +1,69 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!INCLUDE "..\makeopts"
+
+TARGET=dssProp
+TARGETDIR=..\dssProp^\
+
+all: $(EXEDIR)$(TARGET).exe 
+
+:FileList ModuleList = 
+   { 
+   dssProp, about, init, buildqry, replace
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itibase, itiglob,
+   itiwin,   iticrt,  itimenu,
+   itidbase, itimbase,itifmt,
+   itiutil  
+   }
+
+:FileList Resources = 
+   {
+   dssProp.rc,  dssProp.dlg,
+   dssProp.met, dssProp.ico
+   }
+
+:Expand ModuleList,{"$(CC) $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,includes
+
+
+~ build metadata resource files
+title.bin: $(TARGET).met
+   $(EXEDIR)BuildRes $(TARGET).met
+
+
+$(TARGET).res: {I: dssProp.rc} {F: Resources,,} title.bin $(TARGET).rc $(TARGET).pre
+   rc -r $(DEBUG) $*.rc
+
+
+$(EXEDIR)$(TARGET).exe: $(TARGET).def $(TARGET).res $(LIBDIR)*.lib {F: ModuleList,,obj} 
+   $(LINK) $(LFLAGS)$(LDEBUG) @<<tmp.lnk
+   {F: ModuleList,,}   +
+   crtexe
+   $(EXEDIR)$*.exe
+   $(@B).map
+   os2 {F: LibFiles,,}/NOD/NOE/BA/NOI
+   $(@B).def
+<<NOKEEP
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+   rc $(@B).res $*.exe
+
+
+

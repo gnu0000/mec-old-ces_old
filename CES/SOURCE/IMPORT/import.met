@@ -1,0 +1,270 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"
+#include "..\include\itiimp.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+
+
+:query impquery.bin
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------------
+ITIIMP_GETDISTINCTFKS,           "SELECT DISTINCT %ColumnName "
+ITIIMP_GETDISTINCTFKS,           "FROM %TableName "
+                                 
+ITIIMP_MSY_GETDISTINCTFKS, "SELECT DISTINCT %ColumnName, SpecYear, UnitType "
+ITIIMP_MSY_GETDISTINCTFKS, "FROM %TableName "
+
+ITIIMP_PARA_GETDISTINCTFKS, "SELECT DISTINCT %ColumnName "
+ITIIMP_PARA_GETDISTINCTFKS, "FROM %TableName "
+ITIIMP_PARA_GETDISTINCTFKS, "/* ITIIMP_PARA_GETDISTINCTFKS */ "
+
+                                 
+ITIIMP_GETDISTINCTFKSNONULL,     "SELECT DISTINCT %ColumnName "
+ITIIMP_GETDISTINCTFKSNONULL,     "FROM %TableName "
+ITIIMP_GETDISTINCTFKSNONULL,     "WHERE %ColumnName IS NOT NULL "
+
+                                 
+
+ITIIMP_UPDATECODEVALUE,    "/* both systems codes */ "
+ITIIMP_UPDATECODEVALUE,    "UPDATE %TableName "
+ITIIMP_UPDATECODEVALUE,    "SET %TargetColumn = "
+ITIIMP_UPDATECODEVALUE,    "(SELECT CodeValueKey "
+ITIIMP_UPDATECODEVALUE,    " FROM %ProductionDatabase..CodeValue CV, "
+ITIIMP_UPDATECODEVALUE,    " %ProductionDatabase..CodeTable CT "
+ITIIMP_UPDATECODEVALUE,    " WHERE CT.CodeTableKey=CV.CodeTableKey "
+ITIIMP_UPDATECODEVALUE,    " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.CodeValueID = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.UnitType = NULL "
+ITIIMP_UPDATECODEVALUE,    " OR ('%KeyValue'='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CV.CodeValueID ='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,     " AND CV.UnitType = NULL "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableKey=CV.CodeTableKey)) "
+ITIIMP_UPDATECODEVALUE,    "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    "AND UnitType = NULL "
+ITIIMP_UPDATECODEVALUE,    "AND %TargetColumn IS NULL  "
+
+ITIIMP_UPDATECODEVALUE,    "/* metric codes */ "
+ITIIMP_UPDATECODEVALUE,    "UPDATE %TableName "
+ITIIMP_UPDATECODEVALUE,    "SET %TargetColumn = "
+ITIIMP_UPDATECODEVALUE,    "(SELECT CodeValueKey "
+ITIIMP_UPDATECODEVALUE,    " FROM %ProductionDatabase..CodeValue CV, "
+ITIIMP_UPDATECODEVALUE,    " %ProductionDatabase..CodeTable CT "
+ITIIMP_UPDATECODEVALUE,    " WHERE CT.CodeTableKey=CV.CodeTableKey "
+ITIIMP_UPDATECODEVALUE,    " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.CodeValueID = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.UnitType = 1 "
+ITIIMP_UPDATECODEVALUE,    " OR ('%KeyValue'='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CV.CodeValueID ='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,       " AND CV.UnitType = 1 "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableKey=CV.CodeTableKey)) "
+ITIIMP_UPDATECODEVALUE,    "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    "AND UnitType = 1 "
+ITIIMP_UPDATECODEVALUE,    "AND %TargetColumn IS NULL "
+
+ITIIMP_UPDATECODEVALUE,    "/* english codes */ "
+ITIIMP_UPDATECODEVALUE,    "UPDATE %TableName "
+ITIIMP_UPDATECODEVALUE,    "SET %TargetColumn = "
+ITIIMP_UPDATECODEVALUE,    "(SELECT CodeValueKey "
+ITIIMP_UPDATECODEVALUE,    " FROM %ProductionDatabase..CodeValue CV, "
+ITIIMP_UPDATECODEVALUE,    " %ProductionDatabase..CodeTable CT "
+ITIIMP_UPDATECODEVALUE,    " WHERE CT.CodeTableKey=CV.CodeTableKey "
+ITIIMP_UPDATECODEVALUE,    " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.CodeValueID = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    " AND CV.UnitType = 0 "
+ITIIMP_UPDATECODEVALUE,    " OR ('%KeyValue'='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CV.CodeValueID ='N/A' "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE,       " AND CV.UnitType = 0 "
+ITIIMP_UPDATECODEVALUE,       " AND CT.CodeTableKey=CV.CodeTableKey)) "
+ITIIMP_UPDATECODEVALUE,    "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE,    "AND UnitType = 0 "
+ITIIMP_UPDATECODEVALUE,    "AND %TargetColumn IS NULL /* End */ "
+
+
+
+ITIIMP_UPDATECODEVALUE_CUR,    "/* current unit type code; for Vendor table only */ "
+ITIIMP_UPDATECODEVALUE_CUR,    "UPDATE %TableName "
+ITIIMP_UPDATECODEVALUE_CUR,    "SET %TargetColumn = "
+ITIIMP_UPDATECODEVALUE_CUR,    "(SELECT CodeValueKey "
+ITIIMP_UPDATECODEVALUE_CUR,    " FROM %ProductionDatabase..CodeValue CV, "
+ITIIMP_UPDATECODEVALUE_CUR,    " %ProductionDatabase..CodeTable CT "
+ITIIMP_UPDATECODEVALUE_CUR,    " WHERE CT.CodeTableKey=CV.CodeTableKey "
+ITIIMP_UPDATECODEVALUE_CUR,    " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE_CUR,    " AND CV.CodeValueID = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE_CUR,    " AND CV.UnitType = %UnitTypeValue "
+ITIIMP_UPDATECODEVALUE_CUR,    " OR ('%KeyValue'='N/A' "
+ITIIMP_UPDATECODEVALUE_CUR,       " AND CV.CodeValueID ='N/A' "
+ITIIMP_UPDATECODEVALUE_CUR,       " AND CT.CodeTableID = '%CodeTableName' "
+ITIIMP_UPDATECODEVALUE_CUR,       " AND CT.CodeTableKey=CV.CodeTableKey)) "
+ITIIMP_UPDATECODEVALUE_CUR,    "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_UPDATECODEVALUE_CUR,    "AND %TargetColumn IS NULL  "
+
+
+
+
+ITIIMP_UPDATE1,                  " /* ITIIMP_UPDATE1 */ "
+ITIIMP_UPDATE1,                  "UPDATE %TableName "
+ITIIMP_UPDATE1,                  "SET %TargetColumn = "
+ITIIMP_UPDATE1,                  "(SELECT %ProdKeyName "
+ITIIMP_UPDATE1,                  " FROM %ProductionDatabase..%ProdTableName "
+ITIIMP_UPDATE1,                  " WHERE %ProdIDName = '%KeyValue') "
+ITIIMP_UPDATE1,                  "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_UPDATE1,                  "AND %TargetColumn IS NULL "            
+
+
+ITIIMP_PARA_MIQ_SEL_FK, "/* ITIIMP_PARA_MIQ_SEL_FK */ "
+ITIIMP_PARA_MIQ_SEL_FK, "SELECT DISTINCT %ProdIDName "
+ITIIMP_PARA_MIQ_SEL_FK, "FROM DSShellImport..%ProdTableName "
+
+ITIIMP_PARA_MIQ_UPD_FK,   " /* ITIIMP_PARA_MIQTY_UPD_FK */ "
+ITIIMP_PARA_MIQ_UPD_FK,   "UPDATE %TableName "
+ITIIMP_PARA_MIQ_UPD_FK,   "SET %TargetColumn = "
+ITIIMP_PARA_MIQ_UPD_FK,   "(SELECT %ProdKeyName "
+ITIIMP_PARA_MIQ_UPD_FK,   " FROM DSShellImport..%ProdTableName "
+ITIIMP_PARA_MIQ_UPD_FK,   " WHERE %ProdIDName = '%KeyValue') "
+ITIIMP_PARA_MIQ_UPD_FK,   "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_PARA_MIQ_UPD_FK,   "AND %TargetColumn IS NULL "            
+
+
+
+ITIIMP_PARA_MIQTY_SEL_FK, "/* ITIIMP_PARA_MIQTY_SEL_FK */ "
+ITIIMP_PARA_MIQTY_SEL_FK, "SELECT DISTINCT %ProdIDName, SpecYear, UnitType "
+ITIIMP_PARA_MIQTY_SEL_FK, "FROM DSShellImport..%ProdTableName "
+
+ITIIMP_PARA_MIQTY_UPD_FK,   " /* ITIIMP_PARA_MIQTY_UPD_FK */ "
+ITIIMP_PARA_MIQTY_UPD_FK,   "UPDATE %TableName "
+ITIIMP_PARA_MIQTY_UPD_FK,   "SET %TargetColumn = "
+ITIIMP_PARA_MIQTY_UPD_FK,   "(SELECT %ProdKeyName "
+ITIIMP_PARA_MIQTY_UPD_FK,   " FROM DSShellImport..%ProdTableName "
+ITIIMP_PARA_MIQTY_UPD_FK,   " WHERE %ProdIDName = '%KeyValue') "
+ITIIMP_PARA_MIQTY_UPD_FK,   "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_PARA_MIQTY_UPD_FK,   "AND %TargetColumn IS NULL "            
+
+
+ITIIMP_PARA_SIGMI_SEL_FK, "/* ITIIMP_PARA_SIGMI_SEL_FK */ "
+ITIIMP_PARA_SIGMI_SEL_FK, "SELECT DISTINCT %ProdIDName, SpecYear, UnitType "
+ITIIMP_PARA_SIGMI_SEL_FK, "FROM DSShellImport..%ProdTableName "
+
+ITIIMP_PARA_SIGMI_UPD_FK,   " /* ITIIMP_PARA_SIGMI_UPD_FK */ "
+ITIIMP_PARA_SIGMI_UPD_FK,   "UPDATE %TableName "
+ITIIMP_PARA_SIGMI_UPD_FK,   "SET %TargetColumn = "
+ITIIMP_PARA_SIGMI_UPD_FK,   "(SELECT %ProdKeyName "
+ITIIMP_PARA_SIGMI_UPD_FK,   " FROM DSShellImport..%ProdTableName "
+ITIIMP_PARA_SIGMI_UPD_FK,   " WHERE %ProdIDName = '%KeyValue') "
+ITIIMP_PARA_SIGMI_UPD_FK,   "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_PARA_SIGMI_UPD_FK,   "AND %TargetColumn IS NULL "            
+
+
+
+ITIIMP_MSY_UPDATE,     " /* ITIIMP_MSY_UPDATE */ "
+ITIIMP_MSY_UPDATE,     "UPDATE %TableName "
+ITIIMP_MSY_UPDATE,     "SET %TargetColumn = "
+ITIIMP_MSY_UPDATE,     "(SELECT %ProdKeyName "
+ITIIMP_MSY_UPDATE,     " FROM %ProductionDatabase..%ProdTableName "
+ITIIMP_MSY_UPDATE,     " WHERE %ProdIDName = '%AltKeyValue' "
+ITIIMP_MSY_UPDATE,     " AND SpecYear = %SpecYearValue "
+ITIIMP_MSY_UPDATE,     " AND UnitType = %UnitTypeValue ) "
+ITIIMP_MSY_UPDATE,     "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_MSY_UPDATE,     " AND %TargetColumn IS NULL "            
+ITIIMP_MSY_UPDATE,     " AND UnitType = %UnitTypeValue "
+ITIIMP_MSY_UPDATE,     " AND SpecYear = %SpecYearValue "
+
+
+ITIIMP_KEYTEXT_UPDATE,     " /* ITIIMP_KEYTEXT_UPDATE */ "
+ITIIMP_KEYTEXT_UPDATE,     "UPDATE %TableName "
+ITIIMP_KEYTEXT_UPDATE,     "SET %TargetColumn = "
+ITIIMP_KEYTEXT_UPDATE,     "(SELECT %ProdKeyName "
+ITIIMP_KEYTEXT_UPDATE,     " FROM %ProductionDatabase..%ProdTableName "
+ITIIMP_KEYTEXT_UPDATE,     " WHERE %ProdIDName = '%AltKeyValue' "
+ITIIMP_KEYTEXT_UPDATE,     " AND SpecYear = %SpecYearValue "
+ITIIMP_KEYTEXT_UPDATE,     " AND UnitType = %UnitTypeValue ) "
+ITIIMP_KEYTEXT_UPDATE,     "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_KEYTEXT_UPDATE,     " AND %TargetColumn IS NULL "            
+/* ITIIMP_KEYTEXT_UPDATE,     " AND UnitType = %UnitTypeValue " */
+/* ITIIMP_KEYTEXT_UPDATE,     " AND SpecYear = %SpecYearValue " */
+
+/* The MajorItem table primary key is ID & SpecYear only, */
+/* so we do not care about the unit type.                 */
+ITIIMP_MI_KEYTEXT_UPDATE,     " /* ITIIMP_MI_KEYTEXT_UPDATE */ "
+ITIIMP_MI_KEYTEXT_UPDATE,     "UPDATE %TableName "
+ITIIMP_MI_KEYTEXT_UPDATE,     "SET %TargetColumn = "
+ITIIMP_MI_KEYTEXT_UPDATE,     "(SELECT %ProdKeyName "
+ITIIMP_MI_KEYTEXT_UPDATE,     " FROM %ProductionDatabase..%ProdTableName "
+ITIIMP_MI_KEYTEXT_UPDATE,     " WHERE %ProdIDName = '%AltKeyValue' "
+ITIIMP_MI_KEYTEXT_UPDATE,     " AND SpecYear = %SpecYearValue ) "
+ITIIMP_MI_KEYTEXT_UPDATE,     "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_MI_KEYTEXT_UPDATE,     " AND %TargetColumn IS NULL "            
+
+
+ITIIMP_PARA_UPDATE,   " /* ITIIMP_PARA_UPDATE */ "
+ITIIMP_PARA_UPDATE,   "UPDATE %TableName "
+ITIIMP_PARA_UPDATE,   "SET %TargetColumn = "
+ITIIMP_PARA_UPDATE,   "(SELECT %ProdKeyName "
+ITIIMP_PARA_UPDATE,   " FROM %ProductionDatabase..%ProdTableName "
+ITIIMP_PARA_UPDATE,   " WHERE %ProdIDName = %KeyValue ) "
+ITIIMP_PARA_UPDATE,   "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_PARA_UPDATE,   "AND %TargetColumn IS NULL "            
+
+
+ITIIMP_PARA_UPDATE_IMP,   " /* ITIIMP_PARA_UPDATE_IMP */ "
+ITIIMP_PARA_UPDATE_IMP,   "UPDATE %TableName "
+ITIIMP_PARA_UPDATE_IMP,   "SET %TargetColumn = "
+ITIIMP_PARA_UPDATE_IMP,   "(SELECT %ProdKeyName "
+ITIIMP_PARA_UPDATE_IMP,   " FROM DSShellImport..ParametricProfile "
+ITIIMP_PARA_UPDATE_IMP,   " WHERE ProfileID = '%KeyValue' ) "
+ITIIMP_PARA_UPDATE_IMP,   "WHERE %ColumnName = '%KeyValue' "
+ITIIMP_PARA_UPDATE_IMP,   "AND %TargetColumn IS NULL "            
+
+
+
+ITIIMP_UPDATEAREATYPEKEY,        "UPDATE %TableName "
+ITIIMP_UPDATEAREATYPEKEY,        "SET %TargetColumn = "
+ITIIMP_UPDATEAREATYPEKEY,        "(SELECT AreaTypeKey "
+ITIIMP_UPDATEAREATYPEKEY,        " FROM %ProductionDatabase..AreaType "
+ITIIMP_UPDATEAREATYPEKEY,        " WHERE AreaTypeID='%KeyValue') "
+ITIIMP_UPDATEAREATYPEKEY,        "WHERE %ColumnName='%KeyValue' "
+ITIIMP_UPDATEAREATYPEKEY,        "AND %TargetColumn IS NULL "
+
+ITIIMP_UPDATEAREAKEY,            "UPDATE %TableName "
+ITIIMP_UPDATEAREAKEY,            "SET %TargetColumn = "
+ITIIMP_UPDATEAREAKEY,            "(SELECT DISTINCT AreaKey "
+ITIIMP_UPDATEAREAKEY,            " FROM %ProductionDatabase..Area "
+ITIIMP_UPDATEAREAKEY,            " WHERE AreaID='%KeyValue'
+ITIIMP_UPDATEAREAKEY,            " AND AreaTypeKey = %AreaTypeKey) "
+ITIIMP_UPDATEAREAKEY,            "WHERE %ColumnName='%KeyValue' "
+ITIIMP_UPDATEAREAKEY,            "AND %TargetColumn IS NULL "
+
+ITIIMP_UPDATESTANDARDITEMKEY,    "UPDATE %TableName "
+ITIIMP_UPDATESTANDARDITEMKEY,    "SET %TargetColumn = "
+ITIIMP_UPDATESTANDARDITEMKEY,    "(SELECT StandardItemKey "
+ITIIMP_UPDATESTANDARDITEMKEY,    " FROM %ProductionDatabase..StandardItem "
+ITIIMP_UPDATESTANDARDITEMKEY,    " WHERE SpecYear = %SpecYear "
+ITIIMP_UPDATESTANDARDITEMKEY,    " AND StandardItemNumber = '%KeyValue') "
+ITIIMP_UPDATESTANDARDITEMKEY,    "WHERE %ColumnName='%KeyValue' "
+ITIIMP_UPDATESTANDARDITEMKEY,    " AND %TargetColumn IS NULL "
+
+ITIIMP_UPDATENAS,                "UPDATE %TableName "
+ITIIMP_UPDATENAS,                "SET %TargetColumn = 0 "
+ITIIMP_UPDATENAS,                "WHERE %ColumnName = 'N/A' "
+
+ITIIMP_ZERONULLSQRY,             "UPDATE %TableName "
+ITIIMP_ZERONULLSQRY,             "SET %TargetColumn = 0 "
+ITIIMP_ZERONULLSQRY,             "WHERE %TargetColumn IS NULL "
+

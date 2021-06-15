@@ -1,0 +1,15 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include <os2.h>
+#include "splitcsv.h"
+
+STRINGTABLE
+   BEGIN   
+      ID_STATE_NAME     "State Name"
+      ID_AGENCY_NAME    "Agency or Department Name"
+   END

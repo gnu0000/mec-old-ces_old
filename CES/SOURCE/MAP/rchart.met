@@ -1,0 +1,58 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"    
+#include "..\include\winid.h"     
+#include "..\include\metadecl.h"  
+#include "..\include\itirptdg.h"  
+#include "dialog.h"               
+#include "..\include\rChart.h"                   
+
+:query rChartQ.bin                    
+
+ID_QUERY_LISTING, "select MapID, Description "    
+ID_QUERY_LISTING, "  from Map "                   
+ID_QUERY_LISTING, " where MapKey = "              
+
+
+ID_QRY_MAP, "SELECT Vertex, Vertex "
+ID_QRY_MAP, "FROM MapVertex V, Map "
+ID_QRY_MAP, "WHERE V.MapKey = Map.MapKey "
+ID_QRY_MAP, " AND Deleted IS NULL "
+ID_QRY_MAP, " AND V.MapKey = "
+
+ID_CNJ_MAP, " ORDER BY VertexOrder "
+
+
+
+// Column titles                                      
+// ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//----------------------------------------------------------
+RPT_TTL_1,  "0,  8,  0,  8,ID"           
+RPT_TTL_2,  "9, 20,  9, 71,Description"  
+
+// Number of column titles    
+ID_RPT_TTL,    "2" 
+
+
+
+:FORMAT rChartF.bin                                
+
+ID_QUERY_LISTING,        "String", "String"    
+
+
+ID_QRY_MAP, "Position,<long><long number>", "Position,<lat><long number>"  
+

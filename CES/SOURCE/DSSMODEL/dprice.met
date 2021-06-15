@@ -1,0 +1,206 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "..\include\itirptdg.h"
+#include "dPrice.h"
+
+:query dPriceQ.bin
+LIST_WORK_TYPES,              "SELECT CV.CodeValueID, CV.CodeValueKey "
+LIST_WORK_TYPES,              "FROM CodeValue CV, CodeTable CT "
+LIST_WORK_TYPES,              "WHERE CT.CodeTableID = 'WRKTYP' "
+LIST_WORK_TYPES,              "AND CT.CodeTableKey = CV.CodeTableKey "
+LIST_WORK_TYPES,    "AND CV.UnitType = %CurUnitType "
+LIST_WORK_TYPES,    " ORDER BY 1 DESC "
+
+GET_MAJOR_ITEM_INFO,          "SELECT HPMI.WeightedAverageUnitPrice, HPMI.Quantity, "
+GET_MAJOR_ITEM_INFO,          "CVW.CodeValueID, "
+GET_MAJOR_ITEM_INFO,          "CVR.CodeValueID, "
+GET_MAJOR_ITEM_INFO,          "CVD.CodeValueID "
+GET_MAJOR_ITEM_INFO,          "FROM HistoricalProposal HP, "
+GET_MAJOR_ITEM_INFO,          "HistoricalProposalMajorItem HPMI, "
+GET_MAJOR_ITEM_INFO,          "CodeValue CVW, "
+GET_MAJOR_ITEM_INFO,          "CodeValue CVR, "
+GET_MAJOR_ITEM_INFO,          "CodeValue CVD "
+GET_MAJOR_ITEM_INFO,          "WHERE HP.ProposalKey = HPMI.ProposalKey "
+GET_MAJOR_ITEM_INFO,      "AND HPMI.WeightedAverageUnitPrice > 0 "
+GET_MAJOR_ITEM_INFO,      "AND HPMI.Quantity > 0 "
+GET_MAJOR_ITEM_INFO,          "AND CVW.CodeValueKey = HP.WorkType "
+GET_MAJOR_ITEM_INFO,          "AND CVR.CodeValueKey = HP.RoadType "
+GET_MAJOR_ITEM_INFO,          "AND CVD.CodeValueKey = HP.District "
+
+GET_MAJOR_ITEMS,              "SELECT DISTINCT HPMI.MajorItemKey, "
+GET_MAJOR_ITEMS,              "MI.MajorItemID, MI.Description "
+GET_MAJOR_ITEMS,         ", SUBSTRING(STR(MI.SpecYear),7,4) "
+GET_MAJOR_ITEMS,              "FROM HistoricalProposal HP, "
+GET_MAJOR_ITEMS,              "HistoricalProposalMajorItem HPMI, "
+GET_MAJOR_ITEMS,              "MajorItem MI "
+GET_MAJOR_ITEMS,              "WHERE HP.ProposalKey = HPMI.ProposalKey "
+GET_MAJOR_ITEMS,              "AND HPMI.MajorItemKey = MI.MajorItemKey "
+
+                                    
+DO_HISTOGRAM, "SELECT WeightedAverageUnitPrice "
+DO_HISTOGRAM, "FROM HistoricalProposal HP, HistoricalProposalMajorItem HPMI "
+DO_HISTOGRAM, "WHERE HP.ProposalKey = HPMI.ProposalKey "
+DO_HISTOGRAM, "AND HPMI.MajorItemKey = "
+
+
+DO_HISTOGRAM_10, "AND ( ((%s * 0.90) <= HPMI.WeightedAverageUnitPrice) "
+DO_HISTOGRAM_10,      "AND "
+DO_HISTOGRAM_10,      " ((HPMI.WeightedAverageUnitPrice < (%s * 1.10)) ) )"
+
+
+DO_HISTOGRAM_20, "AND ( ( (%s * 0.80) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_20,        "AND HPMI.WeightedAverageUnitPrice < (%s * .90)) "
+DO_HISTOGRAM_20,      "OR "
+DO_HISTOGRAM_20,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.20)) ) "
+DO_HISTOGRAM_20,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.10)) "
+
+
+DO_HISTOGRAM_30, "AND ( ( (%s * 0.70) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_30,        "AND HPMI.WeightedAverageUnitPrice < (%s * .80)) "
+DO_HISTOGRAM_30,      "OR "
+DO_HISTOGRAM_30,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.30)) ) "
+DO_HISTOGRAM_30,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.20)) "
+
+
+DO_HISTOGRAM_40, "AND ( ( (%s * 0.60) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_40,        "AND HPMI.WeightedAverageUnitPrice < (%s * .70)) "
+DO_HISTOGRAM_40,      "OR "
+DO_HISTOGRAM_40,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.40)) ) "
+DO_HISTOGRAM_40,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.30)) "
+
+
+DO_HISTOGRAM_50, "AND ( ( (%s * 0.50) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_50,        "AND HPMI.WeightedAverageUnitPrice < (%s * .60)) "
+DO_HISTOGRAM_50,      "OR "
+DO_HISTOGRAM_50,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.50)) ) "
+DO_HISTOGRAM_50,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.40)) "
+
+
+DO_HISTOGRAM_60, "AND ( ( (%s * 0.40) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_60,        "AND HPMI.WeightedAverageUnitPrice < (%s * .50)) "
+DO_HISTOGRAM_60,      "OR "
+DO_HISTOGRAM_60,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.60)) ) "
+DO_HISTOGRAM_60,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.50)) "
+
+
+DO_HISTOGRAM_70, "AND ( ( (%s * 0.30) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_70,        "AND HPMI.WeightedAverageUnitPrice < (%s * .40)) "
+DO_HISTOGRAM_70,      "OR "
+DO_HISTOGRAM_70,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.70)) ) "
+DO_HISTOGRAM_70,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.60)) "
+
+
+DO_HISTOGRAM_80, "AND ( ( (%s * 0.20) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_80,        "AND HPMI.WeightedAverageUnitPrice < (%s * .30)) "
+DO_HISTOGRAM_80,      "OR "
+DO_HISTOGRAM_80,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.80)) ) "
+DO_HISTOGRAM_80,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.70)) "
+
+
+DO_HISTOGRAM_90, "AND ( ( (%s * 0.10) <= HPMI.WeightedAverageUnitPrice "
+DO_HISTOGRAM_90,        "AND HPMI.WeightedAverageUnitPrice < (%s * .20)) "
+DO_HISTOGRAM_90,      "OR "
+DO_HISTOGRAM_90,      " ((HPMI.WeightedAverageUnitPrice <= (%s * 1.90)) ) "
+DO_HISTOGRAM_90,        "AND HPMI.WeightedAverageUnitPrice > (%s * 1.80)) "
+
+
+DO_HISTOGRAM_100, "AND ( (( %s * 0.10 ) > HPMI.WeightedAverageUnitPrice) "
+DO_HISTOGRAM_100,     "OR "
+DO_HISTOGRAM_100,     " (HPMI.WeightedAverageUnitPrice > (%s * 1.90)) ) "
+
+
+
+GET_QTYS,          "SELECT HPMI.Quantity, HPMI.Quantity "
+GET_QTYS,          "FROM HistoricalProposal HP, "
+GET_QTYS,          "HistoricalProposalMajorItem HPMI "
+GET_QTYS,          "WHERE HP.ProposalKey = HPMI.ProposalKey "
+GET_QTYS,          "AND HPMI.MajorItemKey = "
+
+
+GET_BASE_PRICE, "/* BASE_UNIT_PRICE */ SELECT EXP( %s + (( %s ) * LOG( %s )) ) "
+//                                          intercept     slope      MedianQty
+
+
+GET_ADJ_PCT, "/* GET_ADJ_PCT */ SELECT  EXP( ( 0 - ( %s) ) * LOG( %s ) ) -1 "
+//                                             C2{slope}        2 or 1/2
+
+
+GET_SLOPE, "select "
+GET_SLOPE, " ((count(*) * SUM(LOG(Quantity) * LOG(WeightedAverageUnitPrice)))"
+GET_SLOPE, "  - (SUM(LOG(Quantity)) * SUM(LOG(WeightedAverageUnitPrice))))"
+GET_SLOPE, " / ( (count(*) * SUM(LOG(Quantity) * LOG(Quantity)))"
+GET_SLOPE,      " - (SUM(LOG(Quantity)) * SUM(LOG(Quantity)))) "
+
+GET_INTERCEPT, "select AVG(LOG(WeightedAverageUnitPrice)) - (( %s ) * AVG(LOG(Quantity))) "
+//                                                          @slope
+
+GET_S_I, " from HistoricalProposalMajorItem HPMI, HistoricalProposal HP"
+GET_S_I, " where HPMI.ProposalKey = HP.ProposalKey "
+GET_S_I,  " and HP.AwardedBidTotal > 0 "
+GET_S_I, " and HPMI.MajorItemKey = "
+
+
+GET_WORKTYPE_INFO,            "SELECT DISTINCT WorkType "
+GET_WORKTYPE_INFO,            "FROM HistoricalProposal HP, "
+GET_WORKTYPE_INFO,                 "HistoricalProposalMajorItem HPMI "
+GET_WORKTYPE_INFO,            "WHERE HP.ProposalKey = HPMI.ProposalKey "
+
+
+GET_ROADTYPE_INFO,            "SELECT DISTINCT RoadType "
+GET_ROADTYPE_INFO,            "FROM HistoricalProposal HP, "
+GET_ROADTYPE_INFO,                 "HistoricalProposalMajorItem HPMI "
+GET_ROADTYPE_INFO,            "WHERE HP.ProposalKey = HPMI.ProposalKey "
+
+GET_DISTRICT_INFO,            "SELECT DISTINCT District "
+GET_DISTRICT_INFO,            "FROM HistoricalProposal HP, "
+GET_DISTRICT_INFO,                 "HistoricalProposalMajorItem HPMI "
+GET_DISTRICT_INFO,            "WHERE HP.ProposalKey = HPMI.ProposalKey "
+
+
+
+:FORMAT dPriceF.bin
+GET_MAJOR_ITEM_INFO,          "Number,...."
+GET_MAJOR_ITEM_INFO,          "Number,...."
+GET_MAJOR_ITEM_INFO,          "String"
+GET_MAJOR_ITEM_INFO,          "String"
+GET_MAJOR_ITEM_INFO,          "String"
+//GET_MAJOR_ITEM_INFO,          "Number,...."
+//GET_MAJOR_ITEM_INFO,          "Number,...."
+//GET_MAJOR_ITEM_INFO,          "Number,...."
+
+GET_MAJOR_ITEMS,              "Number"
+GET_MAJOR_ITEMS,              "String"
+GET_MAJOR_ITEMS,              "String"
+GET_MAJOR_ITEMS,              "String"
+
+DO_HISTOGRAM,                     "Number,.."
+
+GET_SLOPE,                     "Number,......"
+GET_INTERCEPT,                 "Number,......"
+
+GET_QTYS,                         "Number,,...",  "Number,..."
+
+GET_BASE_PRICE,                   "Number,$,...."
+GET_ADJ_PCT,                      "NUmber,%,.."
+
+GET_WORKTYPE_INFO,                "Number"
+GET_ROADTYPE_INFO,                "Number"
+GET_DISTRICT_INFO,                "Number"
+

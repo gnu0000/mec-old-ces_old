@@ -1,0 +1,168 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * SQLBrow.met
+ * This file contains metadata for the DSS Item brouser windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "..\include\colid.h"
+
+#define ITIWC_COMBOBOX 0xffff0002L
+
+
+
+//#define COORD_CHRAEN   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG
+#define ITIMB_BLWO     LWS_VSCROLL | LWS_MULTISELECT | LWS_BORDER
+
+//:static  static.bin
+//
+//
+// Static Window ID       Add,  Chg,  coords         CoordType       Window Options          Background Color
+//------------------------------------------------------------------------------------------------------------
+
+
+
+
+//:CHILD child.bin
+//
+//
+//
+// Parents Window ID       Type Child Window ID    uKind       Add,  Chg  coords         Coord type
+//-------------------------------------------------------------------------------------------------
+
+
+//:list list.bin
+//
+//
+// List WinID           Window Options       Background Color     Label Bkg Color       Labl ydata  Button ID
+//-----------------------------------------------------------------------------------------------------------
+
+
+
+//:DATA data.bin format.bin
+//
+//
+//
+// Window ID         NextID  coords            CoordType                            Foreground Clr  Txt Flags       colid               Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+
+//:label label.bin labeltxt.bin
+//
+//
+//
+// Window ID         NextID  coords            CoordType                            Foreground Color Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//:query query.bin
+//
+//
+//
+//
+// Window ID            Query String
+//------------------------------------------------------------------------------
+
+
+
+
+
+
+//:title title.bin
+//
+//
+// Window ID               Window Title
+//---------------------------------------------------------
+
+
+
+//:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID        Add Query ID   Change QID    Column name    Control ID      Format    Input Fmt
+//-------------------------------------------------------------------------------------------------
+
+
+
+
+:format results.bin
+ 1, "NoFormat"
+ 2, "NoFormat", "NoFormat"
+ 3, "NoFormat", "NoFormat", "NoFormat"
+ 4, "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+ 5, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+ 6, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+ 7, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+ 8, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+ 9, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+10, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+11, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+12, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+13, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+14, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+15, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+16, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+17, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+18, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+19, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+20, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+21, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+21, "NoFormat"
+22, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+22, "NoFormat", "NoFormat"
+23, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+23, "NoFormat", "NoFormat", "NoFormat"
+24, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+24, "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+25, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+25, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+26, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+26, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+27, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+27, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+28, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+28, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+29, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+29, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+30, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+30, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+31, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+31, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+32, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+32, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+33, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+33, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+34, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+34, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+35, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+35, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+36, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+36, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+37, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+37, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+38, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+38, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+39, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+39, "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat", "NoFormat"
+

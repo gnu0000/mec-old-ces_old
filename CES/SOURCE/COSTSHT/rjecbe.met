@@ -1,0 +1,833 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rJECbe.h"                                       
+
+
+
+//  /* REPORT (9-71) JOB ESTIMATE: COST BASED ESTIMATE */
+//  
+//  ----------------------------------------------------------------------------------------------------
+//  PRELIMINARY QUERIES -  USED TO RETRIEVE KEYS NEEDED FOR THE REPORT
+//  ----------------------------------------------------------------------------------------------------
+//  
+//  
+//  
+//  /* to obtain all the JobBreakdowns associated with this particular JobKey */
+//  
+//  
+//  select JobBreakdownKey, JobBreakdownID
+//  from JobBreakdown
+//  where JobKey =  %JobKey
+//  
+//  
+//  /* To deterimine the jobitems that are associated with a CostBasedEstimation */
+//  /* and belong to a particular job breakdown, and a particular Job            */
+//  
+//  SELECT JobItemKey
+//  FROM JobItem, ItemEstimationMethod
+//  WHERE JobItem.ItemEstimationMethodKey = ItemEstimationMethod.ItemEstimationMethodKey
+//  AND ItemEstimationMethodID = 'CBEst'
+//  AND JobKey = %JobKey  
+//  AND JobBreakdownKey = %JobBreakdownKey
+//  
+//  
+//  /* To retrieve all of the JobItemCostBasedEstimateKeys to which a particular JobItem */
+//  /* is associated                                                                     */
+//  
+//  
+//  SELECT JobItemCostBasedEstimateKey
+//  FROM JobCostBasedEstimate
+//  WHERE JobKey = %JobKey
+//  AND JobItemKey = %JobItemKey
+//  
+//  
+//  ---------------------------------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------------------------------
+//  
+//  
+//  
+//  
+//  
+//  /* first part of report */
+//  /* to retrieve item info used for a particular Job and JobBreakdown                    */
+//  /* this jobitem is one that has a CostBasedEstimate associated with it                 */
+//  /* as selected from the query above                                                    */
+//  /* Rounding Precision will be needed for calculations in the second part of the report */
+//  
+//  
+//  SELECT JobBreakdownID, StandardItemNumber, ShortDescription, 
+//  CostBasedEstimateID, JobCostBasedEstimate.Description, RoundingPrecision
+//  FROM JobBreakdown, JobItem, StandardItem, JobCostBasedEstimate
+//  WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey
+//  AND JobItem.JobKey = JobCostBasedEstimate.JobKey
+//  AND JobItem.JobItemKey = JobCostBasedEstimate.JobItemKey
+//  AND JobItem.JobKey = JobBreakdown.JobKey
+//  AND JobItem.JobBreakdownKey = JobBreakdown.JobBreakdownKey
+//  AND JobItem.JobKey = %JobKey
+//  AND JobItem.JobBreakdownKey = %JobBreakdownKey
+//  AND JobItem.JobItemKey = %JobItemKey
+//  AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey
+//  
+//  
+//  
+//  
+//  /* Second part of report */
+//  /* To retrieve the tasks, etc. for a particular JobItem, for a particular Job */
+//  /* and a specific CostBased Estimate */ 
+//  
+//  
+//  
+//  SELECT TaskID, Quantity = QuantityPerItemUnit * Quantity, JobCostSheet.UnitPrice, 
+//  CodeValueID, TaskDescription
+//  FROM JobCostSheet, JobItem, CodeValue
+//  WHERE Unit = CodeValueKey
+//  AND JobCostSheet.JobItemKey = JobItem.JobItemKey
+//  AND JobCostSheet.JobKey = JobItem.JobKey
+//  AND JobCostSheet.JobKey = %JobKey
+//  AND JobCostSheet.JobItemKey = %JobItemKey
+//  AND JobCostSheet.JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey
+//  
+//  
+//  
+//  /* The Extension column for this part must be calculated */
+//  /* Extension = Quantity (calculated above) * Price (retrieved above) */
+//  
+//  
+//  /* The Total for the Extension column must also be calculated */
+//  
+//  /* The Extension/Quantity must also be calculated and rounded */
+//  /* according to the Rounding Precision for this ItemNumber    */
+//  
+//  
+//  
+//  
+//  /* Third part of the report */
+//  /* This section retrieves information for a specific task associated */
+//  /* with the specified JobItem and JobCostBasedEstimate               */
+//  
+//  SELECT TaskID, JobCostSheetKey, CostSheetID, Description, ProductionRate, HoursPerDay,
+//  OvertimeHoursPerDay, ProductionGranularity
+//  FROM JobCostSheet
+//  WHERE JobKey = %JobKey
+//  AND JobItemCostBasedEstimateKey = %JobItemCostBasedEstimateKey
+//  AND JobItemKey = %JobItemKey
+// 
+//  AND TaskID = '%TaskID'
+//  
+//  
+//  
+//  /* Fourth part of the report - Cost Breakdown section */
+//  
+//  
+//  /* To obtain the Material Component for this Cost Sheet          */
+//  
+//  
+//  SELECT MaterialsUnitCost, MaterialsOverheadPct,
+//  OverheadAmt = MaterialsUnitCost * MaterialsOverheadPct,
+//  TotalCost = MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)
+//  FROM JobCostSheet
+//  WHERE JobKey =  %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  /* To obtain the Equipment Component for this Cost Sheet          */
+//  
+//  
+//  SELECT EquipmentDailyCost, EquipmentOverheadPct,
+//  OverheadAmt = EquipmentDailyCost * EquipmentOverheadPct,
+//  TotalCost = EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct)
+//  FROM JobCostSheet
+//  WHERE JobKey = %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  /* To obtain the Labor Component for this Cost Sheet          */
+//  
+//  
+//  SELECT LaborDailyCost, LaborOverheadPct,
+//  OverheadAmt = LaborDailyCost * LaborOverheadPct,
+//  TotalCost = LaborDailyCost + (LaborDailyCost * LaborOverheadPct)
+//  FROM JobCostSheet
+//  WHERE JobKey = %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//   
+//  /* This query will retrieve all of the three component info at once    */
+//  /* if you so desire                                                    */
+//  
+//  SELECT MaterialsUnitCost, MaterialsOverheadPct,
+//  MatOverheadAmt = MaterialsUnitCost * MaterialsOverheadPct,
+//  MatTotalCost = MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct),
+//  EquipmentDailyCost, EquipmentOverheadPct,
+//  EquipOverheadAmt = EquipmentDailyCost * EquipmentOverheadPct,
+//  EquipTotalCost = EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct),
+//  LaborDailyCost, LaborOverheadPct,
+//  LaborOverheadAmt = LaborDailyCost * LaborOverheadPct,
+//  LaborTotalCost = LaborDailyCost + (LaborDailyCost * LaborOverheadPct)
+//  FROM JobCostSheet
+//  WHERE JobKey =  %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  
+//  /* The Total for the three components, Material, Equipment, Labor is calculated */
+//  /* by the following query                                                       */
+//  
+//  SELECT TotalCost = (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct))
+//  + (EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct)) +
+//  (LaborDailyCost + (LaborDailyCost * LaborOverheadPct))
+//  FROM JobCostSheet
+//  WHERE JobKey = %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  
+//  /* To obtain the MarkUp percent and the MarkUp Amount */
+//  
+//  SELECT MarkUpPct, MarkUpAmt = (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)
+//  + EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct) +
+//  LaborDailyCost + (LaborDailyCost * LaborOverheadPct)) * MarkUpPct
+//  FROM JobCostSheet
+//  WHERE JobKey = %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  /* Unit Price must be calculated.  */
+//  /* Unit Price = TotalCost + MarkUpAmt */
+//  
+//  
+//  /* Fifth part  - Materials Used */
+//  
+//  SELECT MaterialID, Quantity, UnitPrice, CodeValueID, 
+//  Extension = Quantity * UnitPrice
+//  FROM JobMaterialUsed, Material, CodeValue
+//  WHERE JobMaterialUsed.Unit = CodeValueKey
+//  AND JobMaterialUsed.MaterialKey = Material.MaterialKey
+//  AND JobMaterialUsed.JobKey = %JobKey
+//  AND JobMaterialUsed.JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  
+//  /* Last part - Crew Used */
+//  
+//  /* To obtain all of the JobCrew Keys used for this Job and this Cost Sheet */
+//  
+//  SELECT CrewID, JobCrewKey, Description
+//  FROM JobCrewUsed
+//  WHERE JobKey = %JobKey
+//  AND JobCostSheetKey = %JobCostSheetKey
+//  
+//  
+//  
+//  
+//  /* To retrieve the equipment used for this Crew Used */
+//  
+//  SELECT Quantity, EquipmentID, Rate, HoursPerDay, 
+//  EquipRegTotal = Rate * HoursPerDay * Quantity,
+//  OvertimeRate, OvertimeHoursPerDay, 
+//  EquipOTTotal = OvertimeRate * OvertimeHoursPerDay * Quantity, 
+//  Equipment.Description, ProductionRate, CodeValueID
+//  FROM JobCrewEquipmentUsed, Equipment, JobCostSheet, CodeValue
+//  WHERE  JobCostSheet.Unit = CodeValueKey
+//  AND JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey
+//  AND JobCrewEquipmentUsed.JobKey = JobCostSheet.JobKey
+//  AND JobCrewEquipmentUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey
+//  AND JobCrewEquipmentUsed.JobKey = %JobKey
+//  AND JobCrewEquipmentUsed.JobCostSheetKey = %JobCostSheetKey
+//  AND JobCrewEquipmentUsed.JobCrewKey = %JobCrewKey
+//  
+//  
+//  /* To retrieve all of the laborers used for this Crew Used */
+//  
+//  SELECT Quantity, LaborerID, Rate, HoursPerDay, 
+//  LabRegTotal = Rate * HoursPerDay * Quantity,
+//  OvertimeRate, OvertimeHoursPerDay, 
+//  LabOTTotal = OvertimeRate * OvertimeHoursPerDay * Quantity, 
+//  Labor.Description, ProductionRate, CodeValueID
+//  FROM JobCrewLaborUsed, Labor, JobCostSheet, CodeValue
+//  WHERE JobCostSheet.Unit = CodeValueKey
+//  AND JobCrewLaborUsed.LaborerKey = Labor.LaborerKey
+//  AND JobCrewLaborUsed.JobKey = JobCostSheet.JobKey
+//  AND JobCrewLaborUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey
+//  AND JobCrewLaborUsed.JobKey = %JobKey
+//  AND JobCrewLaborUsed.JobCostSheetKey = JobCostSheetKey
+//  AND JobCrewLaborUsed.JobCrewKey = %JobCrewKey
+//  
+//  
+//  
+//  /* Total columns for Equipment and Labor must be calculated */
+//  
+//  /* Calculate Total/ProductionRate */
+//  /* Crew Unit Cost */
+
+
+
+
+
+:query rJECbeQ.bin                                        
+
+
+ID_QUERY_JOB_INFO, "select JobID, Description "    
+ID_QUERY_JOB_INFO, " from Job "                   
+ID_QUERY_JOB_INFO, " where JobKey = "              
+
+
+
+//  /* Obtains all the JobBreakdowns associated with this particular JobKey */
+
+ID_QUERY_JBDK, "select JobBreakdownKey, JobBreakdownID "
+ID_QUERY_JBDK, " from JobBreakdown "
+ID_QUERY_JBDK, " where JobKey = "
+ 
+
+//  /* To deterimine the jobitems that are associated with a CostBasedEstimation */
+//  /* and belong to a particular job breakdown, and a particular Job            */
+
+ID_QUERY_JIK, "SELECT JobItemKey, StandardItemNumber "
+ID_QUERY_JIK, "FROM JobItem, ItemEstimationMethod, StandardItem "
+ID_QUERY_JIK, "WHERE JobItem.ItemEstimationMethodKey = ItemEstimationMethod.ItemEstimationMethodKey "
+ID_QUERY_JIK, "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QUERY_JIK, "AND ItemEstimationMethodID = 'CBEst' "
+ID_QUERY_JIK, "AND JobKey = "
+
+ID_CONJ_JIK,  " AND JobBreakdownKey = "
+
+
+
+
+//  /* To retrieve all of the JobItemCostBasedEstimateKeys to which a particular JobItem */
+//  /* is associated                                                                     */
+
+ID_QUERY_JICBEK, "SELECT JobItemCostBasedEstimateKey, CostBasedEstimateID "
+ID_QUERY_JICBEK, "FROM JobCostBasedEstimate "
+ID_QUERY_JICBEK, "WHERE JobKey = "
+
+ID_CONJ_JICBEK,  " AND JobItemKey =  "
+
+
+
+//  JobBrkDwnItem Section
+//   To retrieve item info used for a particular Job and JobBreakdown                    
+//   this jobitem is one that has a CostBasedEstimate associated with it                 
+//   as selected from the query above.
+//   Rounding Precision will be needed for calculations in the second part
+//   of the report.
+
+
+ID_QRY_JOB_BRKDWN_ITEM, "SELECT JobBreakdownID, StandardItemNumber, ShortDescription, "
+ID_QRY_JOB_BRKDWN_ITEM, "CostBasedEstimateID, JobCostBasedEstimate.Description, RoundingPrecision "
+ID_QRY_JOB_BRKDWN_ITEM, "FROM JobBreakdown, JobItem, StandardItem, JobCostBasedEstimate "
+ID_QRY_JOB_BRKDWN_ITEM, "WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = JobCostBasedEstimate.JobKey "
+ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobItemKey = JobCostBasedEstimate.JobItemKey "
+ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = JobBreakdown.JobKey "
+ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobBreakdownKey = JobBreakdown.JobBreakdownKey "
+ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = "
+
+ID_CONJ_JOB_BRKDWN_ITEM_JBDK,  " AND JobItem.JobBreakdownKey = "
+
+ID_CONJ_JOB_BRKDWN_ITEM_JIK,   " AND JobItem.JobItemKey = "
+
+ID_CONJ_JOB_BRKDWN_ITEM_JICBEK," AND JobItemCostBasedEstimateKey = "
+
+
+
+
+//  /* Second part of report */
+//  /* To retrieve the tasks, etc. for a particular JobItem, for a particular Job */
+//  /* and a specific CostBased Estimate */ 
+//  
+//  
+//  
+ID_QRY_JOB_TASK_ITEM, "SELECT JobCostSheetKey, TaskID, QuantityPerItemUnit * Quantity, "
+ID_QRY_JOB_TASK_ITEM, "JobCostSheet.UnitPrice, CodeValueID, TaskDescription, "
+ID_QRY_JOB_TASK_ITEM, "QuantityPerItemUnit * Quantity * JobCostSheet.UnitPrice "
+
+ID_QRY_JOB_TASK_ITEM_TTL, "SELECT SUM(JCS.QuantityPerItemUnit * JI.Quantity * JCS.UnitPrice) "
+
+ID_QRY_JOB_TASK_ITEM_QUP, "SELECT JI.Quantity, JI.UnitPrice "
+
+
+ID_QRY_JOB_TASK_ITEM_FW, "FROM JobCostSheet JCS, JobItem JI, JobCostBasedEstimate JCBE , CodeValue CV "
+ID_QRY_JOB_TASK_ITEM_FW, "WHERE  JCS.Unit = CV.CodeValueKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCS.JobItemKey = JI.JobItemKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCS.JobKey = JI.JobKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCBE.JobKey = JI.JobKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCBE.JobItemKey = JI.JobItemKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCBE.JobKey = JCS.JobKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCBE.JobItemKey = JCS.JobItemKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JCS.JobItemCostBasedEstimateKey = JCBE.JobItemCostBasedEstimateKey "
+ID_QRY_JOB_TASK_ITEM_FW, "AND JI.JobKey = "
+
+ID_CONJ_JOB_TASK_ITEM_JIK, " AND JI.JobItemKey = "
+
+ID_CONJ_JOB_TASK_ITEM_JICBEK, " AND JCS.JobItemCostBasedEstimateKey = "
+
+
+// From this point down in the file DisplayedProductionRate was 
+// switched with the old ProductionRate to get the printed report
+// to match the displayed screen. (34 occurrences changed)
+
+// TaskProductivity section:
+
+ID_QRY_JOB_TASK_PROD, "SELECT TaskID, CostSheetID, " 
+ID_QRY_JOB_TASK_PROD, "Description, DisplayedProductionRate, HoursPerDay, "
+ID_QRY_JOB_TASK_PROD, "OvertimeHoursPerDay, ProductionGranularity "
+ID_QRY_JOB_TASK_PROD, "FROM JobCostSheet "
+ID_QRY_JOB_TASK_PROD, "WHERE JobKey = "
+
+ID_CONJ_JOB_TASK_PROD_JIK,    " AND JobItemKey = "
+
+ID_CONJ_JOB_TASK_PROD_JICBEK, " AND JobItemCostBasedEstimateKey = "
+
+ID_CONJ_JOB_TASK_PROD_JCSK,   " AND JobCostSheetKey = "
+
+ID_CONJ_JOB_TASK_PROD_TID,    " AND TaskID = "
+                                        // TaskID is quoted!  
+
+
+
+
+
+  
+//ID_QRY_CST_MEL, "SELECT MaterialsUnitCost, (MaterialsUnitCost * MaterialsOverheadPct), "
+//ID_QRY_CST_MEL, "MaterialsOverheadPct, "
+//ID_QRY_CST_MEL, "MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct), " 
+//
+//ID_QRY_CST_MEL, "EquipmentDailyCost, (EquipmentDailyCost * EquipmentOverheadPct), 
+//ID_QRY_CST_MEL, "EquipmentOverheadPct, "
+//ID_QRY_CST_MEL, "EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct), "
+//
+//ID_QRY_CST_MEL, "LaborDailyCost, (LaborDailyCost * LaborOverheadPct), "
+//ID_QRY_CST_MEL, "LaborOverheadPct, "
+//ID_QRY_CST_MEL, "LaborDailyCost + (LaborDailyCost * LaborOverheadPct) "
+//ID_QRY_CST_MEL, "FROM JobCostSheet "
+//ID_QRY_CST_MEL, "WHERE JobKey = "
+
+
+ID_QRY_CST_MEL, "SELECT MaterialsUnitCost, (MaterialsUnitCost * MaterialsOverheadPct), "
+ID_QRY_CST_MEL, "MaterialsOverheadPct, "
+ID_QRY_CST_MEL, "MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct), " 
+
+ID_QRY_CST_MEL, "EquipmentDailyCost/DisplayedProductionRate, ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct), 
+ID_QRY_CST_MEL, "EquipmentOverheadPct, "
+ID_QRY_CST_MEL, "EquipmentDailyCost/DisplayedProductionRate + ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct), "
+
+ID_QRY_CST_MEL, "LaborDailyCost/DisplayedProductionRate, ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct), "
+ID_QRY_CST_MEL, "LaborOverheadPct, "
+ID_QRY_CST_MEL, "LaborDailyCost/DisplayedProductionRate + ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct) "
+ID_QRY_CST_MEL, "FROM JobCostSheet "
+ID_QRY_CST_MEL, "WHERE JobKey = "
+
+
+
+//ID_CONJ_CST_MEL, " AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+  
+  
+//  /* The Total for the three components, Material, Equipment, Labor is calculated */
+//  /* by the following query                                                       */
+
+ID_QRY_CST_TTL, "SELECT (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)) "
+ID_QRY_CST_TTL, "+ (EquipmentDailyCost/DisplayedProductionRate + ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct)) "
+ID_QRY_CST_TTL, "+ (LaborDailyCost/DisplayedProductionRate + ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct)) "
+ID_QRY_CST_TTL, "FROM JobCostSheet "
+ID_QRY_CST_TTL, "WHERE JobKey = "
+//ID_CONJ_CST_TTL, " AND JobCostSheetKey = %JobCostSheetKey
+
+
+
+//  /* To obtain the MarkUp percent and the MarkUp Amount */
+ 
+ID_QRY_CST_MARKUP, "SELECT MarkUpPct, (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct) "
+ID_QRY_CST_MARKUP, "+ EquipmentDailyCost/DisplayedProductionRate + ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct) "
+ID_QRY_CST_MARKUP, "+ LaborDailyCost/DisplayedProductionRate + ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct)) * MarkUpPct "
+ID_QRY_CST_MARKUP, "FROM JobCostSheet "
+ID_QRY_CST_MARKUP, "WHERE JobKey = "
+
+//  AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+
+
+
+//  /* Unit Price must be calculated.  */
+//  /* Unit Price = TotalCost + MarkUpAmt */
+
+ID_QRY_CST_UNITPRICE, "SELECT (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)) "
+ID_QRY_CST_UNITPRICE, "+ (EquipmentDailyCost/DisplayedProductionRate + ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct)) "
+ID_QRY_CST_UNITPRICE, "+ (LaborDailyCost/DisplayedProductionRate + ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct)) "
+ID_QRY_CST_UNITPRICE, "+ ((MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct) "
+ID_QRY_CST_UNITPRICE,  "+ EquipmentDailyCost/DisplayedProductionRate + ((EquipmentDailyCost/DisplayedProductionRate) * EquipmentOverheadPct) "
+ID_QRY_CST_UNITPRICE,  "+ LaborDailyCost/DisplayedProductionRate + ((LaborDailyCost/DisplayedProductionRate) * LaborOverheadPct)) * MarkUpPct) "
+ID_QRY_CST_UNITPRICE, "FROM JobCostSheet "
+ID_QRY_CST_UNITPRICE, "WHERE JobKey = "
+
+//  AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+
+
+
+            
+ID_QUERY_MAT, "SELECT MaterialID, Quantity, UnitPrice, CodeValueID, "
+ID_QUERY_MAT, "(Quantity * UnitPrice), Material.Description "
+ID_QUERY_MAT, "FROM JobMaterialUsed, Material, CodeValue "
+ID_QUERY_MAT, "WHERE JobMaterialUsed.Unit = CodeValueKey "
+ID_QUERY_MAT, "AND JobMaterialUsed.MaterialKey = Material.MaterialKey "
+ID_QUERY_MAT, "AND JobMaterialUsed.JobKey = "
+
+ID_CONJ_MAT,  " AND JobMaterialUsed.JobCostSheetKey = "
+
+
+            
+ID_QUERY_MAT_SUM, "SELECT sum(Quantity * UnitPrice) "
+ID_QUERY_MAT_SUM, "FROM JobMaterialUsed, Material, CodeValue "
+ID_QUERY_MAT_SUM, "WHERE JobMaterialUsed.Unit = CodeValueKey "
+ID_QUERY_MAT_SUM, "AND JobMaterialUsed.MaterialKey = Material.MaterialKey "
+ID_QUERY_MAT_SUM, "AND JobMaterialUsed.JobKey = "
+
+//ID_CONJ_MAT,  " AND JobMaterialUsed.JobCostSheetKey = "
+
+
+
+//  /* To obtain all of the JobCrew Keys used for this Job and this Cost Sheet */
+//  
+ID_QUERY_CREW, "SELECT CrewID, JobCrewKey, Description "
+ID_QUERY_CREW, "FROM JobCrewUsed "
+ID_QUERY_CREW, "WHERE JobKey = "
+
+//ID_CONJ_CREW, " AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+
+ID_QUERY_CREWKEY, "SELECT JobCrewKey "
+ID_QUERY_CREWKEY, "FROM JobCrewUsed "
+ID_QUERY_CREWKEY, "WHERE JobKey = "
+
+
+
+
+//  /* To retrieve the equipment used for this Crew Used */
+//  
+ID_QUERY_CREW_EQP, "SELECT EquipmentID, Quantity, Rate, Equipment.Description, "
+ID_QUERY_CREW_EQP, "HoursPerDay, DisplayedProductionRate, Rate * HoursPerDay * Quantity, "
+ID_QUERY_CREW_EQP, "OvertimeRate, OvertimeHoursPerDay, "
+ID_QUERY_CREW_EQP, "OvertimeRate * OvertimeHoursPerDay * Quantity "
+ID_QUERY_CREW_EQP, "FROM JobCrewEquipmentUsed, Equipment, JobCostSheet "
+ID_QUERY_CREW_EQP, "WHERE JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP, "AND JobCrewEquipmentUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_EQP, "AND JobCrewEquipmentUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_EQP, "AND JobCrewEquipmentUsed.JobKey = "
+
+ID_CONJ_CREW_EQP_JCSK, " AND JobCrewEquipmentUsed.JobCostSheetKey = "
+ID_CONJ_CREW_EQP_JCK,  " AND JobCrewEquipmentUsed.JobCrewKey = "
+
+
+
+//  /* To retrieve all of the laborers used for this Crew Used */
+//  
+ID_QUERY_CREW_LBR, "SELECT LaborerID, Quantity, Rate, Labor.Description, "
+ID_QUERY_CREW_LBR, "HoursPerDay, DisplayedProductionRate, (Rate * HoursPerDay * Quantity), "
+ID_QUERY_CREW_LBR, "OvertimeRate, OvertimeHoursPerDay, "
+ID_QUERY_CREW_LBR, "(OvertimeRate * OvertimeHoursPerDay * Quantity) "
+ID_QUERY_CREW_LBR, "FROM JobCrewLaborUsed, Labor, JobCostSheet "
+ID_QUERY_CREW_LBR, "WHERE JobCrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR, "AND JobCrewLaborUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_LBR, "AND JobCrewLaborUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_LBR, "AND JobCrewLaborUsed.JobKey = "
+
+ID_CONJ_CREW_LBR_JCSK, " AND JobCrewLaborUsed.JobCostSheetKey = "
+ID_CONJ_CREW_LBR_JCK,  " AND JobCrewLaborUsed.JobCrewKey = "
+//  
+
+
+ID_QUERY_CREW_EQP_TTL, "SELECT "
+ID_QUERY_CREW_EQP_TTL, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_TTL, "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)), "
+ID_QUERY_CREW_EQP_TTL, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_TTL, "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)) "
+ID_QUERY_CREW_EQP_TTL, "FROM JobCrewEquipmentUsed, Equipment, JobCostSheet "
+ID_QUERY_CREW_EQP_TTL, "WHERE JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP_TTL, "AND JobCrewEquipmentUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_EQP_TTL, "AND JobCrewEquipmentUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_EQP_TTL, "AND JobCrewEquipmentUsed.JobKey = "
+
+ID_CONJ_CREW_EQP_TTL,  " AND JobCrewEquipmentUsed.JobCrewKey IN "
+
+
+ID_QUERY_CREW_LBR_TTL, "SELECT "
+ID_QUERY_CREW_LBR_TTL, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_TTL, "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)), "
+ID_QUERY_CREW_LBR_TTL, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_TTL, "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)) "
+ID_QUERY_CREW_LBR_TTL, "FROM JobCrewLaborUsed, Labor, JobCostSheet "
+ID_QUERY_CREW_LBR_TTL, "WHERE JobCrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR_TTL, "AND JobCrewLaborUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_LBR_TTL, "AND JobCrewLaborUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_LBR_TTL, "AND JobCrewLaborUsed.JobKey = "
+
+ID_CONJ_CREW_LBR_TTL,  " AND JobCrewLaborUsed.JobCrewKey IN "
+
+
+ID_QUERY_UNIT_DAY, "SELECT DisplayedProductionRate, CodeValueID "
+ID_QUERY_UNIT_DAY, "FROM JobCostSheet, CodeValue  "
+ID_QUERY_UNIT_DAY, "WHERE JobCostSheet.Unit = CodeValueKey "
+ID_QUERY_UNIT_DAY, "AND JobKey = %s "
+ID_QUERY_UNIT_DAY, "AND JobCostSheetKey = %s "
+
+
+ID_QUERY_CREW_EQP_PROD, "SELECT DisplayedProductionRate, CodeValueID, "
+ID_QUERY_CREW_EQP_PROD, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_PROD,  "sum(OvertimeRate * OvertimeHoursPerDay * Quantity))"
+ID_QUERY_CREW_EQP_PROD,  "/DisplayedProductionRate, "
+ID_QUERY_CREW_EQP_PROD,  "sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_PROD,  "sum(OvertimeRate * OvertimeHoursPerDay * Quantity) "
+ID_QUERY_CREW_EQP_PROD,  " + ((sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_PROD,       "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)) "
+ID_QUERY_CREW_EQP_PROD,      "/DisplayedProductionRate) "
+ID_QUERY_CREW_EQP_PROD, "FROM JobCrewEquipmentUsed, Equipment, JobCostSheet, CodeValue "
+ID_QUERY_CREW_EQP_PROD, "WHERE JobCrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP_PROD, "AND JobCostSheet.Unit = CodeValueKey "
+ID_QUERY_CREW_EQP_PROD, "AND JobCrewEquipmentUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_EQP_PROD, "AND JobCrewEquipmentUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_EQP_PROD, "AND JobCrewEquipmentUsed.JobKey = "
+
+//ID_CONJ_CREW_EQP_TTL,  " AND JobCrewEquipmentUsed.JobCrewKey IN "
+
+
+
+ID_QUERY_CREW_LBR_PROD, "SELECT DisplayedProductionRate, CodeValueID, "
+ID_QUERY_CREW_LBR_PROD, "(sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_PROD,  "sum(OvertimeRate * OvertimeHoursPerDay * Quantity))"
+ID_QUERY_CREW_LBR_PROD,  "/DisplayedProductionRate, "
+ID_QUERY_CREW_LBR_PROD,  "sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_PROD,  "sum(OvertimeRate * OvertimeHoursPerDay * Quantity) "
+ID_QUERY_CREW_LBR_PROD,  " + ((sum(Rate * HoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_PROD,       "sum(OvertimeRate * OvertimeHoursPerDay * Quantity)) "
+ID_QUERY_CREW_LBR_PROD,      "/DisplayedProductionRate) "
+ID_QUERY_CREW_LBR_PROD, "FROM JobCrewLaborUsed, Labor, JobCostSheet, CodeValue  "
+ID_QUERY_CREW_LBR_PROD, "WHERE JobCrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR_PROD, "AND JobCostSheet.Unit = CodeValueKey "
+ID_QUERY_CREW_LBR_PROD, "AND JobCrewLaborUsed.JobKey = JobCostSheet.JobKey "
+ID_QUERY_CREW_LBR_PROD, "AND JobCrewLaborUsed.JobCostSheetKey = JobCostSheet.JobCostSheetKey "
+ID_QUERY_CREW_LBR_PROD, "AND JobCrewLaborUsed.JobKey = "
+
+//ID_CONJ_CREW_LBR_TTL,  " AND JobCrewLaborUsed.JobCrewKey IN "
+
+
+
+
+// Column titles                                      
+//ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,  "0, 10, 10,  6,Breakdown "
+RPT_TTL_2, "16,  6, 21, 13,Item "  
+RPT_TTL_3, "34,  3, 37, 40, - "  
+RPT_TTL_4,  "0, 36, 36,  4,Estimated using Cost-Based Estimate "  
+RPT_TTL_5, "40,  3, 43, 35, - "  
+
+
+RPT_TTL_6,  "0,  5,  0,  0,Item "  
+RPT_TTL_7,  "0, 15,  0,  0, Task Breakdown"  
+RPT_TTL_8,  "2,  5,  2, 16,Task/"  
+RPT_TTL_9, "26,  8, 18, 16,Quantity"  
+RPT_TTL_10,"35,  1, 35,  0,@"
+RPT_TTL_11,"48,  5, 37, 17,Price"
+RPT_TTL_12,"54,  1, 56,  4,/"
+RPT_TTL_13,"56,  4, 56,  4,Unit"
+RPT_TTL_14,"61,  1, 63, 15,= "
+RPT_TTL_15,"68,  9, 63, 15,Extension" 
+RPT_TTL_16, "7, 31,  7, 53,Description                     "
+// RPT_TTL_16, "7, 31,  7, 53,Description     (Per Item Unit) "
+
+
+RPT_TTL_17, "1, 16, 63, 15,(Item Extension)"
+RPT_TTL_18,"56,  6, 63, 15,Total: "
+RPT_TTL_19, "1, 35, 63, 15,(/Item Quantity = Item Unit Price) "
+
+
+RPT_TTL_20, "0,  5,  5, 16,Task "
+RPT_TTL_21,"21, 31, 52,  8, is estimated using Cost Sheet "
+
+
+RPT_TTL_22, "4, 40, 44, 10,Productivity assumptions: Crew performs "
+RPT_TTL_23,"55, 11, 44, 10, units/day."
+
+RPT_TTL_24,"30, 11, 41,  5,Crew works "
+RPT_TTL_25,"46, 11, 40,  6, hours + "
+RPT_TTL_26,"54, 20, 54,  6, overtime hours/day."
+
+RPT_TTL_27,"30, 29, 59, 15,Crew works a whole number of "
+
+
+/* -- Task's CostSheet Cost BrkDwn */
+// defined SUBHEADER_INX   RPT_TTL_28
+
+RPT_TTL_28,    "0,     0,     0,     0, Cost Breakdown"
+RPT_TTL_29,    "3,     9,     3,     9,Component"
+RPT_TTL_30,   "21,     9,    14,    17,Unit Cost"
+RPT_TTL_31,   "34,    15,    33,    17,Overhead Amount"
+RPT_TTL_32,   "51,     7,    51,     6,(O.H.%)"
+RPT_TTL_33,   "67,    10,    61,    17,Total Cost"
+          
+RPT_TTL_34,    "0,     0,     0,     0, Materials Used"
+RPT_TTL_35,    "8,     5,     8,     4,Matl/"
+RPT_TTL_36,   "15,    13,    12,    16,Quantity/Unit"
+RPT_TTL_37,   "41,     5,    31,    16,Price"
+RPT_TTL_38,   "47,     6,    47,     6,/ Unit"
+RPT_TTL_39,   "62,     9,    56,    17,Extension"
+RPT_TTL_40,   "13,    12,    13,    40,Description"
+
+
+RPT_TTL_41,    "0,     0,     0,     0, Crew Used"
+RPT_TTL_42,    "0,     5,     0,    10,Crew/"
+RPT_TTL_43,   "11,    20,    11,    33,Crew Description/"
+
+RPT_TTL_44,    "0,     5,     0,     6,Count"
+RPT_TTL_45,    "7,     3,     7,     8,ID/"
+RPT_TTL_46,   "16,    11,    16,    11,Hourly Cost"
+RPT_TTL_47,   "32,    10,    32,     6,Daily Work"
+RPT_TTL_48,   "11,    11,    11,    33,Description"
+RPT_TTL_49,   "52,    10,    47,    15,Equipment"
+RPT_TTL_50,   "72,     5,    63,    15,Labor"
+
+RPT_TTL_51,   "36,    19,    56,    17,Material Unit Cost:"
+
+RPT_TTL_52,   "54,     6,    61,    17,Total:"
+RPT_TTL_53,   "43,    16,    61,    17, Mark-up "
+RPT_TTL_54,   "49,    11,    61,    17,Unit Price:"
+          
+RPT_TTL_55,   "36,    10,    25,    10,unit/day = "
+RPT_TTL_56,   "30,    16,    47,    17,Crew Unit Costs: "
+RPT_TTL_57,   "31,     0,    63,    17, (labor total) "
+
+
+
+RPT_TTL_58,   "3,     8,    50,     6,Material   OverheadPct (999.9%)"
+RPT_TTL_59,   "3,     9,    50,     6,Equipment  OverheadPct"
+RPT_TTL_60,   "3,     5,    50,     6,Labor      OverheadPct"
+RPT_TTL_61,  "52,     7,    45,     6,Mark-up"
+
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "61"
+
+
+
+
+
+:FORMAT rJECbeF.bin                                                  
+
+ID_QUERY_JOB_INFO, "String",  "String"                      
+
+ID_QUERY_JBDK,     "Number",  "String"
+
+ID_QUERY_JIK,      "Number",  "String"
+
+ID_QUERY_JICBEK,   "Number",  "String"
+
+
+ID_QRY_JOB_BRKDWN_ITEM, "String", "String", "String"
+ID_QRY_JOB_BRKDWN_ITEM, "String", "String", "Precision"
+
+ID_QRY_JOB_TASK_ITEM, "Number",         "String",      "Number,,..."
+ID_QRY_JOB_TASK_ITEM, "Number,$,....",  "String",      "String"
+ID_QRY_JOB_TASK_ITEM, "Number,$,.."
+
+ID_QRY_JOB_TASK_ITEM_TTL, "Number,$,.."
+
+ID_QRY_JOB_TASK_ITEM_QUP, "Number,,..", "Number,$,.."
+
+
+ID_QRY_JOB_TASK_PROD, "String",    "String"
+ID_QRY_JOB_TASK_PROD, "String",    "Number,,....", "Number,.."
+ID_QRY_JOB_TASK_PROD, "Number,..", "UnitOfTime"
+
+
+
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+
+
+ID_QRY_CST_TTL, "Number,$,...."
+
+ID_QRY_CST_MARKUP, "Number,%.",  "Number,$,...."
+
+ID_QRY_CST_UNITPRICE, "Number,$,...."
+
+
+ID_QUERY_MAT, "String",        "Number,,...", "Number,$,...",  "String"
+ID_QUERY_MAT, "Number,$,....", "String"
+
+ID_QUERY_MAT_SUM,  "Number,$,...."
+
+
+ID_QUERY_CREW, "String", "Number", "String"
+
+ID_QUERY_CREWKEY, "Number"
+
+ID_QUERY_CREW_EQP, "String",      "Number,..", "Number,$,..", "String"
+ID_QUERY_CREW_EQP, "Number,..",   "Number,..", "Number,$,.."
+ID_QUERY_CREW_EQP, "Number,$,..", "Number,..", "Number,$,.."
+
+//ID_QUERY_CREW_EQP, "String",      "Number,.......", "Number,$,......", "String"
+//ID_QUERY_CREW_EQP, "Number,......",   "Number,......", "Number,$,......"
+//ID_QUERY_CREW_EQP, "Number,$,......", "Number,......", "Number,$,......"
+
+
+
+ID_QUERY_CREW_LBR, "String",      "Number,..", "Number,$,..", "String"
+ID_QUERY_CREW_LBR, "Number,..",   "Number,..", "Number,$,.."
+ID_QUERY_CREW_LBR, "Number,$,..", "Number,..", "Number,$,.."
+
+ID_QUERY_CREW_EQP_TTL, "Number,$,..", "Number,...."
+//ID_QUERY_CREW_EQP_TTL, "Number,$,......", "Number,......"
+
+ID_QUERY_CREW_LBR_TTL, "Number,$,..", "Number,...."
+
+ID_QUERY_CREW_EQP_PROD, "Number,,....", "String", "Number,$,....", "Number,$,...."
+
+ID_QUERY_CREW_LBR_PROD, "Number,,....", "String", "Number,$,....", "Number,$,...."
+
+ID_QUERY_UNIT_DAY, "Number,,....", "String"
+
+:query rJECbeDQ.bin                                                  
+
+rJECbe_RptDlgBox,       "SELECT JobKey "                             
+rJECbe_RptDlgBox,       "FROM Job "                                  
+rJECbe_RptDlgBox,       "WHERE JobKey = %JobKey "                   
+
+
+:Dialog rJECbeDD.bin rJECbeDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rJECbe_RptDlgBox, rJECbe_RptDlgBox, rJECbe_RptDlgBox, JobKey, DID_KEY, "Number", "Number"            
+

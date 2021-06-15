@@ -1,0 +1,69 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!include "..\makeopts"
+
+
+TARGET=itiperm
+TARGETDIR=..\itiperm^\
+
+all: $(EXEDIR)$(TARGET).dll $(LIBDIR)$(TARGET).lib
+
+
+:FileList ModuleList =
+   {
+   init, itiperm, login, password, util, catalog, job, message
+   }
+
+:FileList Resources = 
+   {
+   itiperm.rc, itiperm.dlg
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itiglob, itibase, itiwin, iticrt, itidbase, 
+   itimbase, itiutil, opendlg, colid,  itifmt, itimenu,
+   cesutil
+   }
+
+:Expand ModuleList,{"$(CC) $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDE
+
+~ build metadata resource files
+calcqry.bin: $(TARGET).met
+   $(EXEDIR)BuildRes $(TARGET).met
+
+$(TARGET).res: {I: itiperm.rc} {F: Resources,,}  calcqry.bin
+   rc -r $*.rc
+
+
+
+$(EXEDIR)$(TARGET).dll: {F: ModuleList,,obj} $(LIBDIR)itidllc.obj $(TARGET).res $(TARGET).def $(TARGET).pre
+   $(LINK) @<<tmp.lnk
+   $(LFLAGS)$(LDEBUG) crtdll_i $(LIBDIR)itidllc +
+   {F: ModuleList,,}
+   $*.dll
+   $(@B).map
+   os2/NOE/NOD/NOI {F: LibFiles,,}
+   $(TARGET).def
+<<NOKEEP
+   rc $(TARGET).res $*.dll
+   mapsym /l $(@B).map
+   copy $(@B).sym $(EXEDIR)$(@B).sym
+
+$(LIBDIR)$(TARGET).lib: $(TARGET).def
+   implib /nologo $(LIBDIR)$(TARGET).lib $(TARGET).def
+

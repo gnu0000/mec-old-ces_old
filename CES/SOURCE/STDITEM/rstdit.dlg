@@ -1,0 +1,62 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGINCLUDE 1 "dialog.H"                                       
+DLGINCLUDE 2 "..\include\itirptdg.H"
+
+
+DLGTEMPLATE IDD_RSTDIT  LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+   DIALOG RPT_SESSION, IDD_RSTDIT, 90, 18, 178, 150, FS_NOBYTEALIGN | 
+               CS_HITTEST | FS_NOBYTEALIGN | FS_DLGBORDER
+               | WS_VISIBLE | WS_SAVEBITS | WS_SYNCPAINT,
+               FCF_SYSMENU | FCF_TITLEBAR 
+   BEGIN
+      CONTROL "Select reports to be printed: ", DID_RPT_LIST+DID_STOFFSET, 15, 136, 140, 10, 
+              WC_STATIC, SS_TEXT | DT_LEFT | DT_VCENTER | WS_GROUP | WS_VISIBLE
+      CONTROL "", DID_RPT_LIST, 15, 85, 150, 50,
+              WC_LISTBOX, LS_MULTIPLESEL | 
+              WS_TABSTOP | WS_VISIBLE
+
+      CONTROL "Spec Year:", DID_DATEEDIT+DID_STOFFSET, 15, 72, 56, 10, 
+              WC_STATIC, SS_TEXT | DT_LEFT | DT_VCENTER |
+              WS_GROUP | WS_VISIBLE
+      CONTROL "", DID_DATEEDIT,  15, 40, 56, 32,
+              WC_COMBOBOX, CBS_DROPDOWNLIST | 
+              WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+
+      CONTROL "BaseDate:", DID_BASEEDIT+DID_STOFFSET, 86, 72, 71, 10,
+              WC_STATIC, SS_TEXT | 
+              DT_LEFT | DT_VCENTER | WS_GROUP | WS_VISIBLE
+      CONTROL "", DID_BASEEDIT, 86, 40, 70, 32,
+              WC_COMBOBOX, CBS_DROPDOWNLIST | 
+              WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+      CONTROL " Selected Items only.", DID_SELECTED, 25, 30, 120, 10,
+              WC_BUTTON, BS_AUTOCHECKBOX | WS_VISIBLE       
+
+//      CONTROL " Incl Default-Unit-Prices.", DID_DFLT_PRICES, 25, 20, 120, 10,
+//              WC_BUTTON, BS_AUTOCHECKBOX | WS_VISIBLE       
+
+
+      CTRL_PCH
+
+      CONTROL "", DID_KEY, 0, 0, 0, 0, WC_ENTRYFIELD,                      
+              ES_LEFT | ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP             
+   END
+END
+

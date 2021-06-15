@@ -1,0 +1,176 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * DSSFACIL.met
+ * This file contains metadata for the DSS Prop brouser windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "dssprop.h"
+#include "..\include\colid.h"
+
+
+:static  static.bin
+//
+//
+// Static Window ID   Add,  Chg,  coords         CoordType       Window Options          Background Color
+//------------------------------------------------------------------------------------------------------------
+PropBrowserResultsS,  0,    0,    1, 2, 70, 15,  COORD_BLCHRRNG, ITI_FULLSTATICOPTIONS,  ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//
+// Parents Window ID  Type Child Window ID  uKind       Add, Chg  coords      Coord type
+//--------------------------------------------------------------------------------------
+PropBrowserResultsS,  PropBrowserResultsL,  ITIWC_LIST, 0,   0,   0, 0, 0, 0, COORD_REL
+
+
+
+:list list.bin
+//
+// List WinID         Window Options       Background Color      Label Bkg Color       Labl ydata  Button ID
+//-----------------------------------------------------------------------------------------------------------
+PropBrowserWorkL,     ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0, 0, 0
+PropBrowserRoadL,     ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0, 0, 0
+PropBrowserDistrictL, ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0, 0, 0
+PropBrowserBidderL,   ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0, 0, 0
+PropBrowserResultsL,  ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0, 0, 0
+
+
+
+:DATA data.bin format.bin
+//
+//
+// Window ID     nextID  coords        CoordType      Foreground Clr  Txt Flags       colid         Format String
+//--------------------------------------------------------------------------------------------------------------------------
+PropBrowserWorkL,     0, 1, 0,  4, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,  "String"
+PropBrowserWorkL,     0, 5, 0,  1, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,            "String"
+PropBrowserWorkL,     0, 6, 0,  0, 1,  COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,  "String"
+
+PropBrowserRoadL,     0, 1, 0,  4, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,  "String"
+PropBrowserRoadL,     0, 5, 0,  1, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,            "String"
+PropBrowserRoadL,     0, 6, 0,  0, 1,  COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,  "String"
+
+PropBrowserDistrictL, 0, 1, 0,  4, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,  "String"
+PropBrowserDistrictL, 0, 5, 0,  1, 1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,            "String"
+PropBrowserDistrictL, 0, 6, 0,  0, 1,  COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,  "String"
+
+PropBrowserBidderL,   0, 1, 0,  14,1,  COORD_CHRRNG , ITI_LDLGCOLOR,  ITI_LDATAFLAGS, VendorID,     "String"
+PropBrowserBidderL,   0, 15,0,  1, 1,  COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, ShortName,    "String"
+
+PropBrowserResultsL,  0, 1,  0, 15, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, ProposalID,   "String"
+PropBrowserResultsL,  0, 18, 0, 1,  1, COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Description,  "String"
+PropBrowserResultsL,  0, 1,  1, 14, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, VendorID,     "String"
+PropBrowserResultsL,  0, 18, 1, 12, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, AwardedBidTotal, "Number,$,.."
+PropBrowserResultsL,  0, 32, 1, 12, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, LowBidTotal,  "Number,$,.."
+PropBrowserResultsL,  0, 46, 1, 12, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, EngineersEstimate, "Number,$,.."
+
+
+:label label.bin labeltxt.bin
+//
+//
+// Window ID          NextID  coords         CoordType      Foreground Color Txt Flags        Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+PropBrowserWorkL,     0, 1,  0, 0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Included Work Types"
+PropBrowserRoadL,     0, 1,  0, 0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Included Road Types"
+PropBrowserDistrictL, 0, 1,  0, 0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Included Districts"
+PropBrowserBidderL,   0, 1,  0, 0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Included Bidders"
+
+PropBrowserResultsL,  0, 1,  0, 15, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Proposal ID"
+PropBrowserResultsL,  0, 18, 0, 1,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Proposal Description"
+PropBrowserResultsL,  0, 1,  1, 14, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Awarded Bidder ID"
+PropBrowserResultsL,  0, 18, 1, 12, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Awarded Bid"
+PropBrowserResultsL,  0, 32, 1, 12, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Low Bid Total"
+PropBrowserResultsL,  0, 46, 1, 12, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Eng. Est. Total"
+
+
+
+
+:query query.bin
+//
+//
+// Window ID            Query String
+//------------------------------------------------------------------------------
+PropBrowserWorkL,     " SELECT '-',CodeValueID,Translation,CodeValueKey "
+PropBrowserWorkL,     " FROM CodeValue, CodeTable "
+PropBrowserWorkL,     " WHERE CodeTableID = 'WRKTYP' "
+PropBrowserWorkL,     " AND CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+PropBrowserWorkL,     " AND CodeValue.Deleted IS NULL "
+PropBrowserWorkL,     " ORDER BY CodeValueID "
+
+PropBrowserRoadL,     " SELECT '-',CodeValueID,Translation,CodeValueKey "
+PropBrowserRoadL,     " FROM CodeValue, CodeTable "
+PropBrowserRoadL,     " WHERE CodeTableID = 'HWYTYPE' "
+// PropBrowserRoadL,     " WHERE CodeTableID = 'ROADSYS' "          APR 95
+// All refs to RoadSys should be HwyType for parametric estimation  APR 95
+PropBrowserRoadL,     " AND CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+PropBrowserRoadL,     " AND CodeValue.Deleted IS NULL "
+PropBrowserRoadL,     " ORDER BY CodeValueID "
+
+PropBrowserDistrictL, " SELECT '-',CodeValueID,Translation,CodeValueKey "
+PropBrowserDistrictL, " FROM CodeValue, CodeTable "
+PropBrowserDistrictL, " WHERE CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+PropBrowserDistrictL, " AND CodeTableID = 'DISTRIC' "
+PropBrowserDistrictL, " AND CodeValue.Deleted IS NULL "
+PropBrowserDistrictL, " ORDER BY CodeValueID "
+
+PropBrowserBidderL,   " SELECT VendorID, ShortName, VendorKey"
+PropBrowserBidderL,   " FROM Vendor"
+PropBrowserBidderL,   " WHERE Deleted IS NULL"
+PropBrowserBidderL,   " ORDER BY VendorID"
+
+
+PropCustomQuery,      " SELECT HP.ProposalID, HP.Description, V.VendorID,"
+PropCustomQuery,      " HP.LowBidTotal, HP.AwardedBidTotal, "
+PropCustomQuery,      " HP.EngineersEstimate"
+PropCustomQuery,      " FROM HistoricalProposal HP, Vendor V"
+PropCustomQuery,      " WHERE HP.AwardedBidderKey = V.VendorKey "
+
+
+
+:title title.bin
+//
+//
+// Window ID               Window Title
+//---------------------------------------------------------
+PropBrowserResultsS,  "BAMS/DSS Browser: Proposal Results"
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID  Add Query ID  Change QID    Column name   Control ID            Format    Input Fmt
+//-----------------------------------------------------------------------------------------------
+PropBrowserD, ITIWND_LIST,  ITIWND_LIST,  CodeValueKey, PropBrowserWorkL,     "Number", "Number"
+PropBrowserD, ITIWND_LIST,  ITIWND_LIST,  CodeValueKey, PropBrowserRoadL,     "Number", "Number"
+PropBrowserD, ITIWND_LIST,  ITIWND_LIST,  CodeValueKey, PropBrowserDistrictL, "Number", "Number"
+PropBrowserD, ITIWND_LIST,  ITIWND_LIST,  VendorKey,    PropBrowserBidderL,   "Number", "Number"
+
+
+
+

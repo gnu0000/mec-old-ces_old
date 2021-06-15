@@ -1,0 +1,424 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * material.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics     (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                                  RECTS               USHORT     LONG                  LONG
+//
+// Window ID    add         change          xpos ypos xsiz ysiz  CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+MaterialCatS,   MaterialD,  MaterialD,       5,   5,   45,  12,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+MaterialPriceS, MatPricesD, MatPricesD,      50,  24,  160, 111, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT             USHORT                USHORT                                             RECTS               USHORT
+//
+// Parents Window ID  Type Child Window ID  uKind      add                   change            <-   ^    ->   v    Coord
+//--------------------------------------------------------------------------------------------------------------------------------------
+MaterialCatS,  MaterialCatL,    ITIWC_LIST, MaterialD, MaterialD,    0,   0,   0,   0,   COORD_REL
+MaterialPriceS, MaterialPriceL,   ITIWC_LIST, MatPricesD, MatPricesD,    0,  24,   0,   0,   COORD_REL
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata  Button Window ID
+//------------------------------------------------------------------------------------------------------------------------------------
+MaterialCatL,            ITI_LISTOPTIONSV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+MaterialPriceL,           ITI_LISTOPTIONSV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT             USHORT                 RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                          NAME            PSZ
+//
+// Window ID     Next Window ID  xpos ypos xsiz ysiz CoordType                                  Foreground Color   Txt Flags                 Col Name        Format String
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+MaterialCatL,    MaterialPriceS,    2,   0,    8,  1, COORD_CHRRNG,                             ITI_LDATACOLOR,    ITI_LDATAFLAGS,           MaterialID,     "String"
+MaterialCatL,    MaterialPriceS,   10,   0,    6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,           Description,    "String"
+MaterialCatL,    MaterialPriceS,    1,   0,    4,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,           CodeValueID,    "String"
+
+MaterialPriceS, 0,                 11,   0,    1,  2, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAMULTILINEFLAGS,  Description,    "String"
+MaterialPriceS, 0,                 11,   2,    1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,           ZoneTypeID,     "String"
+MaterialPriceS, 0,                 21,   2,    1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, CLR_WHITE,         ITI_SDATAFLAGS,           UnitType,        "String"
+
+MaterialPriceL,   0,                       1, 0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                               ZoneID,          "String"
+MaterialPriceL,   0,                       7, 0,   13,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS, UnitPrice,       "Number,$,...."
+MaterialPriceL,   0,                       5, 0,    1,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,    ITI_LDATACTRFLAGS, 4,             "NoFormat"
+MaterialPriceL,   0,                       1, 0,    4,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, CodeValueID,       "String"
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT             USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID     Next Window ID   xpos ypos xsiz ysiz CoordType                                 Foreground Color    Txt Flags          Label String
+//---------------------------------------------------------------------------------------------------------------------------------------------
+MaterialCatL,    MaterialPriceS,    1,   0,    8,  1,  COORD_CHRRNG,                             ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Material"
+MaterialCatL,    MaterialPriceS,   10,   0,    6,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Description"
+MaterialCatL,    MaterialPriceS,    1,   0,    4,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Unit"
+
+MaterialPriceS,               0,    1,   0,   9,  1,   COORD_CHRRNG,                             ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Description:"
+MaterialPriceS,               0,    1,   2,   9,  1,   COORD_CHRRNG,                             ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Zone Type:"
+
+MaterialPriceL,               0,    1,   0,   8,  1,   COORD_CHRRNG,                             ITI_LLABELCOLOR,   ITI_LLABELFLAGS,     "Zone"
+MaterialPriceL,               0,    7,   0,  13,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Price"
+MaterialPriceL,               0,    5,   0,   1,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS,   "/"
+MaterialPriceL,               0,    1,   0,   4,  1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,      "Unit"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID                  Query String
+//----------------------------------------------------------------------------------------------------------------
+MaterialCatL,        " SELECT MaterialID, Material.Description,"
+MaterialCatL,        " CodeValueID, Material.ZoneTypeKey,"
+MaterialCatL,        " ZoneTypeID, MaterialKey, Unit"
+MaterialCatL,      ", UnitType"
+MaterialCatL,        " FROM Material M, CodeValue CV, ZoneType ZT"
+MaterialCatL,        " WHERE M.Unit = CV.CodeValueKey"
+MaterialCatL,        " AND ZT.ZoneTypeKey=M.ZoneTypeKey"
+MaterialCatL,        " AND M.Deleted IS NULL"
+MaterialCatL,        " AND (CV.UnitType = %CurUnitType "
+MaterialCatL,          " OR CV.UnitType = NULL)"
+MaterialCatL,        " ORDER BY MaterialID"
+
+MaterialPriceS,      "/* MaterialPriceS */"
+MaterialPriceS,      " SELECT M.Description, ZoneTypeID,"
+MaterialPriceS,      " M.ZoneTypeKey, MaterialKey, MaterialID"
+MaterialPriceS,   ", UnitType"
+MaterialPriceS,      " FROM Material M, ZoneType ZT, CodeValue CV"
+MaterialPriceS,      " WHERE M.ZoneTypeKey = ZT.ZoneTypeKey"
+MaterialPriceS,      " AND M.MaterialKey = %MaterialKey"
+MaterialPriceS,   " AND M.Unit = CV.CodeValueKey"
+
+MaterialPriceL,      "/* MaterialPriceL */"
+MaterialPriceL,      " SELECT Z.ZoneID, MP.UnitPrice, CV.CodeValueID, '/',"
+MaterialPriceL,      " MP.MaterialKey, MP.ZoneKey"
+MaterialPriceL,      ", MP.UnitType"
+MaterialPriceL,      " FROM MaterialPrice MP, Zone Z, Material M, CodeValue CV"
+MaterialPriceL,      " WHERE MP.MaterialKey = M.MaterialKey"
+MaterialPriceL,      " AND M.Unit = CV.CodeValueKey"
+MaterialPriceL,      " AND MP.ZoneKey = Z.ZoneKey"
+MaterialPriceL,      " AND MP.BaseDate = @UndeclaredBaseDate"
+MaterialPriceL,      " AND M.MaterialKey = %MaterialKey"
+MaterialPriceL,      " AND M.ZoneTypeKey = %Material.ZoneTypeKey"
+MaterialPriceL,      " AND M.ZoneTypeKey = Z.ZoneTypeKey"
+MaterialPriceL,      " AND (MP.Deleted IS NULL OR MP.Deleted = 0)"
+MaterialPriceL,      " AND MP.UnitType = %CurUnitType "
+MaterialPriceL,      " AND (CV.UnitType = MP.UnitType OR CV.UnitType = NULL) "
+MaterialPriceL,      " ORDER BY ZoneID"
+
+MaterialD,           "/* MaterialD */"
+MaterialD,           " SELECT MaterialID, Description, ZoneTypeKey, Unit"
+MaterialD,           " FROM Material"
+MaterialD,           " WHERE MaterialKey = %MaterialKey"
+
+MaterialUnitD,       "/* MaterialUnitD */" 
+MaterialUnitD,       " SELECT CodeValueID, CodeValueKey" 
+MaterialUnitD,       " FROM CodeValue, CodeTable"
+MaterialUnitD,       " WHERE CodeValue.CodeTableKey = CodeTable.CodeTableKey"
+MaterialUnitD,       " AND CodeTableID = 'UNITS'"
+MaterialUnitD,       " AND CodeValueID != '----' "
+MaterialUnitD,       " AND (CodeValue.Deleted IS NULL"
+MaterialUnitD,            " OR CodeValueKey = %Unit)"
+MaterialUnitD,       " AND (UnitType = %CurUnitType "
+MaterialUnitD,           " OR UnitType = NULL) "
+MaterialUnitD,       " ORDER BY CodeValueID"
+
+MatZTD,              "/* MatZTD */"
+MatZTD,              " SELECT ZoneTypeID, ZoneTypeKey"
+MatZTD,              " FROM ZoneType"
+MatZTD,              " ORDER BY ZoneTypeID"
+
+MatPricesD,          "/* MatPricesD */"
+MatPricesD,          " SELECT UnitPrice, ZoneKey"
+MatPricesD,          " FROM MaterialPrice"
+MatPricesD,          " WHERE MaterialKey = %MaterialKey"
+MatPricesD,          " AND ZoneKey = %ZoneKey"
+MatPricesD,          " AND UnitType = %CurUnitType "
+MatPricesD,          " AND BaseDate = @UndeclaredBaseDate "
+
+                                                         
+
+MatZonesC,           " SELECT ZoneID, ZoneKey"
+MatZonesC,           " FROM Zone"
+MatZonesC,           " WHERE ZoneTypeKey = %ZoneTypeKey"
+MatZonesC,           " AND ZoneKey = %ZoneKey"
+//MatZonesC,           " AND Zone.Deleted IS NULL"
+//MatZonesC,           " AND (ZoneKey IN "
+//MatZonesC,                            "(SELECT ZoneKey FROM MaterialPrice"
+//MatZonesC,                            " WHERE MaterialKey = %MaterialKey))"
+MatZonesC,           " ORDER BY ZoneID"
+
+MatZonesA,           " SELECT ZoneID, ZoneKey"
+MatZonesA,           " FROM Zone"
+MatZonesA,           " WHERE ZoneTypeKey = %ZoneTypeKey"
+MatZonesA,           " AND (Zone.Deleted IS NULL OR Zone.Deleted = 0)"
+//MatZonesA,           " AND (ZoneKey NOT IN"
+//MatZonesA,                              " (SELECT ZoneKey FROM MaterialPrice"
+//MatZonesA,                               " WHERE MaterialKey = %MaterialKey))"
+//MatZonesA,           " AND NOT ZoneKey = %ZoneKey"
+//MatZonesA,           " AND NOT ZoneKey = 1"
+MatZonesA,           " ORDER BY ZoneID"
+
+
+//MatZonesC,    " SELECT ZoneID, ZoneKey" 
+//MatZonesC,    " FROM Zone "
+//MatZonesC,    " WHERE "
+//MatZonesC,    "  Zone.Deleted IS NULL "
+//MatZonesC,    " AND (ZoneKey NOT IN "
+//MatZonesC,    " (SELECT ZoneKey FROM MaterialPrice ) "
+//MatZonesC,    " OR ZoneKey = 1) "
+//MatZonesC,    " ORDER BY ZoneID "
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+MaterialCatS,        "Material Catalog"
+MaterialPriceS,      "Prices for Material %MaterialID"
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id   Add Query ID   Change Query ID  Col Name     CtlID                 Format
+//------------------------------------------------------------------------------------------------------
+MaterialD,  MaterialD,     MaterialD,       MaterialID,  DID_MATERIALID,       "String",      "String"
+MaterialD,  MaterialD,     MaterialD,       Description, DID_MATERIALDESCR,    "String",      "String"
+MaterialD,  MaterialUnitD, MaterialUnitD,   CodeValueID, DID_MATERIALUNIT,     "String",      "Number"
+MaterialD,  MatZTD,        MatZTD,          ZoneTypeID,  DID_MATERIALZONETYPE, "String",      "Number"
+
+MatPricesD,  MatPricesD,   MatPricesD,      UnitPrice,   DID_UNITPRICE,        "Number,$,..", "Number,$,.."
+MatPricesD,  MatZonesA,    MatZonesC,       ZoneID,      DID_MATZONEID,        "String",      "Number"
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+MaterialD,           " UPDATE Material"
+MaterialD,           " SET"
+MaterialD,           " MaterialID=@MaterialID,"
+MaterialD,           " Description=@Description,"
+MaterialD,           " Unit=@CodeValueKey,"
+MaterialD,           " ZoneTypeKey=@"DID_MATERIALZONETYPE"ZoneTypeKey"
+MaterialD,           " WHERE MaterialKey=%MaterialKey"
+
+
+MatPricesD,          " UPDATE MaterialPrice"
+MatPricesD,          " SET"
+MatPricesD,          " ZoneKey = @"DID_MATZONEID"ZoneKey,"
+MatPricesD,          " UnitPrice = @UnitPrice"
+MatPricesD,          " WHERE MaterialKey = %MaterialKey"
+MatPricesD,          " AND ZoneKey = %ZoneKey"
+MatPricesD,          " AND BaseDate = @UndeclaredBaseDate"
+MatPricesD,          " AND UnitType = @CurrentUnitSys "
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+MaterialD,           " SELECT MaterialID, Description, Unit, ZoneTypeKey"
+MaterialD,           " FROM Material HOLDLOCK"
+MaterialD,           " WHERE MaterialKey = %MaterialKey"
+
+MatPricesD,          " SELECT UnitPrice, ZoneKey"
+MatPricesD,          " FROM MaterialPrice HOLDLOCK"
+MatPricesD,          " WHERE MaterialKey = %MaterialKey"
+MatPricesD,          " AND ZoneKey = %ZoneKey"
+MatPricesD,          " AND BaseDate = @UndeclaredBaseDate"
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+MaterialD,           " /* MaterialD */"
+MaterialD,           " INSERT INTO Material"
+MaterialD,           " (MaterialKey,MaterialID,Description,ZoneTypeKey,Unit)"
+MaterialD,           " VALUES"
+MaterialD,           " (@NewKey,@MaterialID,@Description,"
+MaterialD,           " @"DID_MATERIALZONETYPE"ZoneTypeKey,"
+MaterialD,           " @"DID_MATERIALUNIT"CodeValueKey)"
+// MaterialD,           " /* insert default ZT */ "
+// MaterialD,           "IF NOT EXISTS (SELECT ZoneTypeKey FROM Material "
+// MaterialD,               " WHERE ZoneTypeKey = 1 "
+// MaterialD,                 " AND MaterialKey = (select MAX(MaterialKey) from Material)) "
+// MaterialD,           " INSERT INTO Material"
+// MaterialD,           " (MaterialKey,MaterialID,Description,ZoneTypeKey,Unit)"
+// MaterialD,           " VALUES"
+// MaterialD,           " (@NewKey,@MaterialID,@Description,"
+// MaterialD,           " 1,"
+// MaterialD,           " @"DID_MATERIALUNIT"CodeValueKey)"
+
+
+MatPricesD,          " /* MatPricesD */"
+MatPricesD,          " INSERT INTO MaterialPrice"
+MatPricesD,          " (MaterialKey, ZoneKey, BaseDate, UnitPrice, UnitType )"
+MatPricesD,          " VALUES"
+MatPricesD,          " (%MaterialKey, @"DID_MATZONEID"ZoneKey,"
+MatPricesD,          " @UndeclaredBaseDate,@UnitPrice, @CurrentUnitSys )"
+// MatPricesD,           " /* insert default ZT */ "
+// MatPricesD,           "IF NOT EXISTS (SELECT ZoneTypeKey FROM Material "
+// MatPricesD,                          " WHERE ZoneTypeKey = 1 "
+// MatPricesD,                            " AND MaterialKey = %MaterialKey) "
+// MatPricesD,          " INSERT INTO MaterialPrice"
+// MatPricesD,          " (MaterialKey, ZoneKey, BaseDate, UnitPrice )"
+// MatPricesD,          " VALUES"
+// MatPricesD,          " (%MaterialKey, 1,"
+// MatPricesD,          " @UndeclaredBaseDate,@UnitPrice)"
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+MaterialCatL,        " UPDATE Material"
+MaterialCatL,        " SET Deleted = 1"
+MaterialCatL,        " WHERE MaterialKey IN (%MaterialKey{,%MaterialKey})"
+
+MaterialPriceL,      " UPDATE MaterialPrice"
+MaterialPriceL,      " SET Deleted = 1"
+MaterialPriceL,      " WHERE MaterialKey = %MaterialKey"
+MaterialPriceL,      " AND ZoneKey IS NULL "
+MaterialPriceL,      " AND ZoneKey IN (%ZoneKey{,%ZoneKey})"
+MaterialPriceL,      " AND BaseDate = @UndeclaredBaseDate"
+
+
+

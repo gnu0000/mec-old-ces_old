@@ -1,0 +1,60 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_LOGIN LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Login", IDD_LOGIN, 123, 125, 192, 51, FS_NOBYTEALIGN | FS_DLGBORDER |    WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU |    FCF_TITLEBAR
+    BEGIN
+        CONTROL "User ID:", DID_USERID + DID_STOFFSET, 3, 32, 48, 8, WC_STATIC, SS_TEXT | DT_RIGHT |    DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_USERID, 57, 32, 79, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |    ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Password:", DID_PASSWORD + DID_STOFFSET, 3, 14, 48, 8, WC_STATIC, SS_TEXT | DT_RIGHT |    DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PASSWORD, 57, 14, 79, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |    ES_MARGIN | WS_TABSTOP | WS_VISIBLE | ES_UNREADABLE
+        CONTROL "~OK", DID_OK, 151, 30, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT |    WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 151, 13, 38, 13, WC_BUTTON, BS_PUSHBUTTON |    WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE PasswordD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Password", PasswordD , 16, 18, 178, 90, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Old ~Password:", DID_OLD + DID_STOFFSET, 11, 76, 88, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_OLD, 14, 64, 102, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE | ES_UNREADABLE
+
+        CONTROL "~New Password:", DID_NEW + DID_STOFFSET, 11, 48, 88, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NEW, 14, 35, 102, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE | ES_UNREADABLE
+
+        CONTROL "~Verify:", DID_VERIFY + DID_STOFFSET, 11, 22, 88, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_VERIFY, 14, 9, 102, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE | ES_UNREADABLE
+
+        CONTROL "~OK", DID_OK, 132, 61, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 132, 33, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 132, 8, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

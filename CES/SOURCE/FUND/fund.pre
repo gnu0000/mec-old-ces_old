@@ -1,0 +1,91 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+
+~ Set the TARGET macro to be the name of what you are building.  
+TARGET=fund
+
+~ Set the TARGETDIR macro to be the relative path of the subdirectory you
+~ are working in.  For exaple, use "TARGET=..\mydir^\" if you are working
+~ in the directory mydir.  Note that the ^\ at the end of the path
+~ is required.
+TARGETDIR=..\fund^\
+
+
+
+~ Set the SourceFiles file list to be all of the source code files
+~ for your module.
+
+:FileList SourceFiles =
+   {
+   InitCat, fund
+   }
+
+
+~ Use the OtherObj to list any .obj files you may need to link to.
+~ For example, if you need to have DLL initialization code, you would
+~ have either itidlli or itidllc for the OtherObj.
+
+:FileList OtherObj = 
+   {
+   ..\lib\itidlli
+   }
+
+
+~ use LibFiles for the libraries in the ..\lib subdirectory.  For
+~ example, if you use the ItiMem functions, you would specify ItiBase.
+
+:FileList LibFiles =
+   {
+   itiwin, itiutil, itimbase, itimenu
+   }
+
+
+:FileList MetFiles =
+   {
+   child, data, format, list, label, query, title  , static
+   }
+
+!include "..\makeopts"
+
+all: $(EXEDIR)$(TARGET).dll
+
+
+
+~ build metadata resource files
+static.bin : $(TARGET).met {I: fund.met}
+   $(EXEDIR)BuildRes $(TARGET).met
+
+
+$(TARGET).res: {I: fund.rc} $(TARGET).rc static.bin
+   rc -r $(DEBUG) $*.rc
+
+:Expand SourceFiles,{"cl $(CSDLLFLAGS) $(CDEBUG) ..\$(TARGET)\$*.c"},,obj,,c,INCLUDES
+
+$(TARGET).lnk: $(TARGET).pre
+   echo {F: SourceFiles,,}/noi/nod +            >  $(TARGET).lnk
+   echo {F: OtherObj,,}$(LFLAGS) $(LDEBUG)      >> $(TARGET).lnk
+   echo $(EXEDIR)$(TARGET).dll                  >> $(TARGET).lnk
+   echo nul.                                    >> $(TARGET).lnk
+   echo {F: LibFiles,,} os2                     >> $(TARGET).lnk
+   echo $(TARGET).def                           >> $(TARGET).lnk
+
+$(EXEDIR)$(TARGET).dll: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).lnk $(TARGET).def  $(TARGET).res
+   link @$(TARGET).lnk
+   rc $(@B).res $*.dll
+
+
+

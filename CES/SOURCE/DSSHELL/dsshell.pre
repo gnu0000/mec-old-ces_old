@@ -1,0 +1,84 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!INCLUDE "..\makeopts"
+
+TARGET=dsshell
+TARGETDIR=..\dsshell^\
+DATDIR=metadata^\
+
+all: $(EXEDIR)$(TARGET).exe 
+
+:FileList ModuleList = 
+   { 
+   dsshell, about, init, command
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itibase, itiglob,
+   itiwin,   iticrt,  itimenu,
+   itidbase, itimbase,itifmt,
+   itiperm,  itiutil
+   }
+
+:FileList Resources = 
+   {
+   mainmenu.rc, accel.rc, help.rc, dsshell.ico,
+   dsshell.dlg
+   }
+
+
+:Expand ModuleList,{"$(CC) $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,includes
+
+:FileList MetList =
+   {
+   child,    list,    label,    data,
+   query,    title,   static
+   }
+
+~ build metadata resource files
+title.bin: $(TARGET).met
+   $(EXEDIR)BuildRes $(TARGET).met
+
+
+$(TARGET).res: {I: dsshell.rc} {F: Resources,,} title.bin $(TARGET).rc $(TARGET).pre
+   rc -r $(DEBUG) $*.rc
+
+
+$(EXEDIR)$(TARGET).exe: $(TARGET).def $(TARGET).res $(LIBDIR)*.lib {F: ModuleList,,obj} 
+   $(LINK) $(LFLAGS)$(LDEBUG) @<<tmp.lnk
+   {F: ModuleList,,}   +
+   crtexe
+   $(EXEDIR)$*.exe
+   $(@B).map
+   os2 {F: LibFiles,,}/NOD/NOE/BA/NOI
+   $(@B).def
+<<NOKEEP
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+   rc $(@B).res $*.exe
+#  cvpack /p $*.exe
+
+
+$(TARGET).itl: $(TARGET).bkm menu.h
+   RCPP $(DEBUG) -E -D RC_INVOKED -f $(TARGET).bkm -ef e:\pbin\RCPP.ERR -I d:\include\os2 -I d:\include \
+   | awk -f ipfccp.awk >$(TARGET).itl
+
+
+$(EXEDIR)$(TARGET).hlp: $(TARGET).itl
+   ipfc $(TARGET).itl
+   copy $(TARGET).hlp $(EXEDIR)
+

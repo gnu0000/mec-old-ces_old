@@ -1,0 +1,161 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+
+#include "rVend.h"                                       
+
+:query rVendQ.bin                                        
+
+ID_QUERY_DESC, "select VendorID, ShortName, Name, "
+ID_QUERY_DESC,   "A.CodeValueID, B.CodeValueID, C.CodeValueID, "
+ID_QUERY_DESC,   "A.Translation, B.Translation, C.Translation "
+ID_QUERY_DESC, "from Vendor, "
+ID_QUERY_DESC,   "CodeValue A, CodeValue B, CodeValue C "
+ID_QUERY_DESC, "where Vendor.Deleted is NULL "
+ID_QUERY_DESC,   "and A.CodeValueKey = Type "
+ID_QUERY_DESC,   "and B.CodeValueKey = Certification "
+ID_QUERY_DESC,   "and C.CodeValueKey = DBEClassification "
+ID_QUERY_DESC,   "and VendorKey = "
+
+ID_QUERY_ADDR, "select Address, City, State, ZipCode, "
+ID_QUERY_ADDR, "PhoneNumber, Location, Location "
+ID_QUERY_ADDR, "from VendorAddress "
+ID_QUERY_ADDR, "where VendorKey = "
+
+ID_QUERY_WORK, "select CodeValueID, Translation "
+ID_QUERY_WORK, "from VendorClassification, CodeValue "
+ID_QUERY_WORK, "where CodeValue.Deleted is NULL "
+ID_QUERY_WORK, " and VendorClassification = CodeValueKey "
+ID_QUERY_WORK, " and VendorKey = "
+
+
+
+
+// /* VENDOR LISTING: FACILITIES ( page 10-74 ) */
+
+// /* To obtain all the facilities for a particular vendor */
+
+ID_QUERY_FACIL_NUM, "SELECT VendorKey, FacilityNumber "
+ID_QUERY_FACIL_NUM, "FROM VendorFacility "
+ID_QUERY_FACIL_NUM, "WHERE VendorKey = "
+
+
+// /* To obtain facility info and materials for a particular facility */
+
+
+ID_QUERY_FACIL, "select DateOpened, DateClosed, PortableFlag, "
+ID_QUERY_FACIL,  "Location, Location, Name, MaterialID, Capacity, "
+ID_QUERY_FACIL,  "MAT.CodeValueID, FAC.CodeValueID, Description, StateApproved "
+ID_QUERY_FACIL, "from VendorFacility, County, FacilityMaterial, "
+ID_QUERY_FACIL,  "Material, CodeValue MAT, CodeValue FAC "
+ID_QUERY_FACIL, "where FacilityMaterial.VendorKey = VendorFacility.VendorKey "
+ID_QUERY_FACIL,  "and FacilityMaterial.FacilityNumber = VendorFacility.FacilityNumber "
+ID_QUERY_FACIL,  "and FacilityMaterial.MaterialKey = Material.MaterialKey "
+ID_QUERY_FACIL,  "and VendorFacility.CountyKey = County.CountyKey "
+ID_QUERY_FACIL,  "and Material.Unit = MAT.CodeValueKey "
+ID_QUERY_FACIL,  "and FacilityMaterial.ProductionMethod = FAC.CodeValueKey "
+ID_QUERY_FACIL,  "and VendorFacility.VendorKey = "
+
+ID_QUERY_FACIL_CONJ, " and VendorFacility.FacilityNumber = '"
+
+
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "26"
+
+// ppsz_Idx TtlCol TtlColWth DtaCol DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,      6,       0,  14,Vendor"           
+RPT_TTL_2,   "15,     16,      15,  35,Short Name/"  
+RPT_TTL_3,   "52,      5,      52,   8,Type/"
+RPT_TTL_4,   "15,      5,      15,  35,Name "  
+RPT_TTL_5,   "52,     14,      52,   8,Certification/"
+RPT_TTL_6,   "52,     17,      52,   8,DBE Certification"
+RPT_TTL_7,   "60,      3,      63,  15, - "           
+
+RPT_TTL_8,    "4,     10,      15,  29,Addresses: "
+RPT_TTL_9,   "45,     10,      56,  14,Longitude: "           
+RPT_TTL_10,  "46,      9,      56,  14,Latitude: "           
+
+RPT_TTL_11,   "1,     14,      15,   4,Work Classes: "           
+RPT_TTL_12,  "19,      3,      22,  40, - "           
+
+
+RPT_TTL_13,  " 5,     10,      15,  10,Facility: "
+RPT_TTL_14,  "27,      8,      34,  12, opened "  
+RPT_TTL_15,  "48,      8,      55,  12, closed "
+RPT_TTL_16,  "67,      4,      71,   9,.   "
+
+RPT_TTL_26,  "15,     11,      30,  15,Located at "           
+RPT_TTL_17,  "45,     12,      30,  15, longitude "
+RPT_TTL_18,  "72,      9,      57,  15,latitude"
+
+RPT_TTL_19,  "15,      3,      22,  27,in "           
+RPT_TTL_20,  "49,      8,      22,  27, county."           
+
+RPT_TTL_21,  " 7,     11,      11,   4,Materials: "
+RPT_TTL_22,  "12,      0,      16,  11, (capacity)"
+RPT_TTL_23,  "32,      6,      23,   8, /day "
+RPT_TTL_24,  "37,      1,      38,   8,("
+RPT_TTL_25,  "46,      3,      49,  25, - "
+
+
+
+
+
+:FORMAT rVendF.bin  
+
+ID_QUERY_DESC, "String", "String", "String", "String", "String", "String"
+ID_QUERY_DESC, "String", "String", "String"
+
+ID_QUERY_ADDR, "String", "String", "String", "String", "String"
+ID_QUERY_ADDR, "Position,<long><deg> deg <min>' <sec>"" N"
+ID_QUERY_ADDR, "Position,<lat><deg> deg <min>' <sec>"" W"
+
+ID_QUERY_WORK, "String", "String"
+
+
+ID_QUERY_FACIL_NUM, "String", "String"
+
+ID_QUERY_FACIL, "DateTime,mmm dd, yyyy", "DateTime,mmm dd, yyyy"
+ID_QUERY_FACIL, "Flag,Portable,Permanent"
+ID_QUERY_FACIL, "Position,<long><deg> deg <min>' <sec>"" "
+ID_QUERY_FACIL, "Position,<lat><deg> deg <min>' <sec>"" "
+ID_QUERY_FACIL, "String", "String", "Number,,.."
+ID_QUERY_FACIL, "String", "String", "String", "Flag,Appr,  "
+
+
+
+:query rVendDQ.bin                                                  
+
+rVend_RptDlgBox,       "SELECT VendorKey "                             
+rVend_RptDlgBox,       "FROM Vendor "                                  
+rVend_RptDlgBox,       "WHERE VendorKey = %VendorKey "                   
+
+:Dialog rVendDD.bin rVendDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt
+//--------------------------------------------------------------------------------------
+rVend_RptDlgBox, rVend_RptDlgBox, rVend_RptDlgBox, VendorKey, DID_KEY, "Number", "Number"
+
+

@@ -1,0 +1,13 @@
+LIBRARY         AD-HOC INITINSTANCE
+DESCRIPTION     'Info Tech Ad-Hoc price estimation module.  Copyright (C) 1991 Info Tech, Inc.'
+DATA            MULTIPLE        
+EXPORTS         ITIESTINSTALL
+                ITIESTDEINSTALL
+                ITIESTTABLECHANGED
+                ITIESTITEM
+                ITIDLLQUERYVERSION
+                ITIDLLQUERYMENUNAME
+                ITIDLLINITDLL
+                ITIESTQUERYMENUNAME
+                ITIESTQUERYAVAIL
+                ITIESTQUERYJOBAVAIL

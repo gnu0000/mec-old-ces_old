@@ -1,0 +1,70 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rBased.h"                                       
+
+
+:query rBasedQ.bin                                        
+
+ID_QUERY_LISTING,     "select BaseDate, ShortText, LongText "    
+ID_QUERY_LISTING,     "  from BaseDate, LongText "                   
+ID_QUERY_LISTING,     " where BaseDate.Comment = LongText.LongTextKey "                   
+ID_WHERE_CONJUNCTION, " and BaseDate = "              
+
+
+// Column titles                                      
+// Number of column titles                            
+ID_RPT_TTL,    "2"  
+//                 not three
+
+                                  
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,     12,       0,      13,        Base-Date"           
+RPT_TTL_2,    "14,     8,       14,     65,        Comment"
+RPT_TTL_3,    "22,     7,       14,     65,        (Long)"
+  
+
+
+:FORMAT rBasedF.bin                                                  
+
+#define DATE_FMT        "DateTime,mmm dd, yyyy"
+#define DLG_FMT         "DateTime, mmm dd yyyy "
+
+
+ID_QUERY_LISTING,        DATE_FMT, "String", "String"
+
+
+
+
+:query rBasedDQ.bin                                                  
+
+RBASED_RptDlgBox,       "SELECT BaseDate "                             
+RBASED_RptDlgBox,       "FROM BaseDate "
+// RBASED_RptDlgBox,       "WHERE BaseDate = %BaseDate "                   
+
+
+:Dialog rBasedDD.bin rBasedDF.bin                                        
+
+//DlgId           AddQueryID        ChangeQueryID     ColName   CtlID    DispFmt  InputFmt
+//----------------------------------------------------------------------------------------
+RBASED_RptDlgBox, RBASED_RptDlgBox, RBASED_RptDlgBox, BaseDate, DID_KEY, DLG_FMT, DLG_FMT
+

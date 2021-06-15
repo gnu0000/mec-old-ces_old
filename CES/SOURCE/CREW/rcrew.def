@@ -1,0 +1,27 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+;|                                                                          |
+;|       This program module is part of BAMS/CES, a module of BAMS,         |
+;|       The American Association of State Highway and Transportation       |
+;|       Officials' (AASHTO) Information System for Managing Transportation |
+;|       Programs, a proprietary product of AASHTO, no part of which may be |
+;|       reproduced or transmitted in any form or by any means, electronic, |
+;|       mechanical, or otherwise, including photocopying and recording     |
+;|       or in connection with any information storage or retrieval         |
+;|       system, without permission in writing from AASHTO.                 |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+LIBRARY     RCREW     INITINSTANCE  
+DESCRIPTION 'CES Crew Catalog Listing Report. Copyright (C) 1991-1992 AASHTO ' 
+DATA        MULTIPLE                  
+EXPORTS     ITIDLLQUERYVERSION        
+            ITIDLLQUERYCOMPATIBILITY  
+            ITIDLLQUERYMENUNAME       
+            ITIDLLQUERYAVAILABILITY   
+            ITIRPTDLLPRINTREPORT      
+            ITIDLLINITDLL             
+            ITIDLLRCREWRPTDLGPROC        
+

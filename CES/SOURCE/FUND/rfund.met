@@ -1,0 +1,68 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"
+
+#include "dialog.h"                                   
+#include "rFund.h"                                       
+
+
+:query rFundQ.bin                                        
+//                                                    
+ID_QUERY_LISTING,     "select FundID, Name, Description "
+ID_QUERY_LISTING,     "  from Fund "
+ID_QUERY_LISTING,     " where Deleted is NULL "
+ID_WHERE_CONJUNCTION, " and FundKey = "
+ID_WHERE_OR_CONJ,     " or FundKey = "
+
+
+// Column titles                                      
+//                                                    
+// Number of column titles                            
+ID_RPT_TTL,    "3"
+
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol DtaColWth TtlText       
+//---------------------------------------------------------     
+RPT_TTL_1,    "0,      7,       0,             7,Fund"
+RPT_TTL_2,    "7,      6,       7,            50,Name/"
+RPT_TTL_3,    "10,    12,      10,            65,Description"
+
+
+
+:FORMAT rFundF.bin                                                  
+//                                                               
+ID_QUERY_LISTING,      "String", "String", "String"
+
+
+
+:query rFundDQ.bin                                                  
+//                                                               
+rFund_RptDlgBox,       "SELECT FundKey "                             
+rFund_RptDlgBox,       "FROM Fund "                                  
+rFund_RptDlgBox,       "WHERE FundKey = %FundKey "                   
+
+
+
+
+:Dialog rFundDD.bin rFundDF.bin                                        
+//                                                               
+// Dlg Id        Add Query ID     Change Query ID  Col Name  CtlID      Disp Fmt  Input Fmt 
+//---------------------------------------------------------------------------------------- 
+rFund_RptDlgBox, rFund_RptDlgBox, rFund_RptDlgBox, FundKey,  DID_KEY,   "Number", "Number"      
+

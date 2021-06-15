@@ -1,0 +1,75 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 151, 91, 140, 108, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 88, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "BAMS/DSS Browser: Item", 257, 53, 98, 46, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 47, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "¸ 1991 AASHTO", 263, 5, 71, 131, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Version 0.00", DID_VERSION, 53, 87, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "444 North Capitol Street, NW #225", 258, 5, 57, 129, 6, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Washington, DC  20001", 262, 5, 47, 129, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Fax: (352) 373-9586", 265, 5, 37, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE PropBrowserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "BAMS/DSS Browser:Proposal", PropBrowserD, 11, 36, 405, 166, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "~Proposal ID:", DID_PROPID+DID_STOFFSET, 7, 151, 62, 8, WC_STATIC, SS_TEXT |  DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PROPID, 75, 151, 147, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Estimate:", DID_ESTIMATE1+DID_STOFFSET, 7, 137, 62, 8, WC_STATIC, SS_TEXT |  DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ESTIMATE1, 75, 137, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_ESTIMATE2+DID_STOFFSET, 141, 137, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER |  DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_ESTIMATE2, 161, 137, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Letting Date:", DID_LETTING1+DID_STOFFSET, 7, 123, 62, 8, WC_STATIC, SS_TEXT |  DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTING1, 75, 123, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~To", DID_LETTING2+DID_STOFFSET, 141, 123, 16, 8, WC_STATIC, SS_TEXT | DT_CENTER |  DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LETTING2, 161, 123, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Location Description:", DID_LOCATION+DID_STOFFSET, 7, 109, 92, 8, WC_STATIC,                 SS_TEXT | DT_RIGHT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LOCATION, 103, 109, 119, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL |  ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "LISTWINDOW", PropBrowserWorkL,     233, 114,  164, 49, "LISTWINDOW", WS_GROUP |  WS_TABSTOP | WS_VISIBLE
+        CONTROL "LISTWINDOW", PropBrowserRoadL,     233,  59,  164, 49, "LISTWINDOW", WS_GROUP |  WS_TABSTOP | WS_VISIBLE
+        CONTROL "LISTWINDOW", PropBrowserDistrictL, 233,   4,  164, 49, "LISTWINDOW", WS_GROUP |  WS_TABSTOP | WS_VISIBLE
+        CONTROL "LISTWINDOW", PropBrowserBidderL,     9,  46,  215, 58, "LISTWINDOW", WS_GROUP |  WS_TABSTOP | WS_VISIBLE
+        CONTROL "", DID_PROP_GROUP, 77, 3, 147, 42, WC_STATIC, SS_GROUPBOX | WS_GROUP |  WS_VISIBLE
+        CONTROL "Awarded Proposals Only",  DID_AWARDED_PROP , 82, 28, 136, 10, WC_BUTTON,  BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Rejected Proposals Only", DID_REJECTED_PROP, 82, 18, 136, 10, WC_BUTTON,  BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Include All Proposals",   DID_ALL_PROP     , 82, 8, 136, 10, WC_BUTTON,  BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Search", DID_SEARCH, 19, 24, 38, 13, WC_BUTTON, BS_PUSHBUTTON |  BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 19, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_HELP |  WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

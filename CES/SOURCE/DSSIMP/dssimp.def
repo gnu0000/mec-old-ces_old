@@ -1,0 +1,134 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+;|                                                                          |
+;|       This program module is part of BAMS/CES, a module of BAMS,         |
+;|       The American Association of State Highway and Transportation       |
+;|       Officials' (AASHTO) Information System for Managing Transportation |
+;|       Programs, a proprietary product of AASHTO, no part of which may be |
+;|       reproduced or transmitted in any form or by any means, electronic, |
+;|       mechanical, or otherwise, including photocopying and recording     |
+;|       or in connection with any information storage or retrieval         |
+;|       system, without permission in writing from AASHTO.                 |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+LIBRARY         DSSIMP INITINSTANCE
+DESCRIPTION     'Info Tech Import functions.  Copyright (C) 1991-1992 AASHTO'
+DATA            MULTIPLE
+EXPORTS         ITIIMPCOPYBIDDER
+                ITIIMPCOPYFACILITYMATERIAL
+                ITIIMPCOPYITEMBID
+                ITIIMPCOPYPROJECT
+                ITIIMPCOPYPROJECTCATEGORY
+                ITIIMPCOPYPROJECTITEM
+                ITIIMPCOPYPROPOSAL
+                ITIIMPCOPYPROPOSALITEM
+                ITIIMPCOPYPROPOSALMAJORITEM
+                ITIIMPCOPYVENDORFACILITY
+                ITIIMPDISTRICT
+                ITIIMPMAJORITEMKEY
+                ITIIMPMATERIALKEY
+                ITIIMPPRODUCTIONMETHOD
+                ITIIMPPROJECTKEY
+                ITIIMPPROPOSALITEMKEY
+                ITIIMPPROPOSALKEY
+                ITIIMPREASON
+                ITIIMPROADTYPE
+                ITIIMPPROPSTANDARDITEMKEY
+                ITIIMPPROJSTANDARDITEMKEY
+                ITIIMPSTATUS
+                ITIIMPSTRUCTURETYPE
+                ITIIMPURBANRURALCLASS
+                ITIIMPVENDORKEY
+                ITIIMPWORKTYPE
+                ITIIMPCOUNTYID
+                ITIIMPBIDDERITEMKEY
+                ITIIMPCALCMAJORITEM
+                ITIIMPCALCSIMI
+                ITIIMPCALCMIQVA
+                ITIIMPCALCPROPOSAL
+                ITIIMPCALCPROJECT
+                ITIIMPCALCBIDDER
+                ITIIMPTYPE
+                ITIIMPCERTIFICATION
+                ITIIMPDBECLASS
+                ITIIMPCOPYVENDOR
+                ITIIMPCALCPROPOSALITEM
+                ITIIMPCOPYCODETABLE
+                ITIIMPCOPYCODEVALUE
+                ITIIMPCODETABLEKEY
+                ITIIMPCOUNTYKEY
+                ITIIMPMAPKEY
+                ITIIMPCOPYFUND
+                ITIIMPCOPYMAP
+                ITIIMPCOPYMAJORITEM
+                ITIIMPCOPYMAPVERTEX
+                ITIIMPCOPYMATERIAL
+                ITIIMPCOMMONUNIT
+                ITIIMPUNIT
+                ITIIMPZONETYPEKEY
+                ITIIMPCOPYSIDEPENDENCY
+                ITIIMPCOPYSIMAJORITEM
+                ITIIMPSTANDARDITEMKEY
+                ITIIMPMISTANDARDITEMKEY
+                ITIIMPCOPYVENDORCLASS
+                ITIIMPCOPYVENDORADDRESS
+                ITIIMPCOPYZONE
+                ITIIMPCOPYZONEMAP
+                ITIIMPCOPYZONETYPE
+                ITIIMPZONEKEY
+                ITIIMPVENDORCLASS
+                ITIIMPKEY
+                ITIIMPSIGNIFICANTMAJORITEMKEY
+                ITIIMPPARAPROKEY
+                ITIIMPMIQTYREGKEY
+                ITIIMPMIQTYKEY
+                ITIIMPMIPRICEREGKEY
+                ITIIMPMIPRICEKEY
+                ITIIMPMERGEMAJORITEM
+                ITIEXPJOB
+                ITIEXPAREATYPE
+                ITIEXPZONETYPE
+                ITIEXPCOUNTY
+                ITIEXPMAP
+                ITIEXPFUND
+                ITIEXPDEFAULT
+                ITIEXPCODETABLE
+                ITIEXPUSER
+                ITIEXPCBE
+                ITIEXPCREW
+                ITIEXPLABOR
+                ITIEXPEQUIPMENT
+                ITIEXPMATERIAL
+                ITIEXPCOSTSHEET
+                ITIEXPMAJORITEM
+                ITIEXPMAJORITEMPRICEREG
+                ITIEXPMAJORITEMQUANTITYREG
+                ITIEXPPARAMETRICPROFILE
+                ITIEXPVENDOR
+                ITIEXPPROGRAM
+                ITIEXPPEMETHAVERAGE
+                ITIEXPPEMETHREGRESSION
+                ITIEXPSTANDARDITEM
+                ITIEXPGETWHERECLAUSE
+                ITIIMPCOPYPARAMETRICPROFILE
+                ITIIMPCOPYSIGMAJORITEM     
+                ITIIMPCOPYMIPA
+                ITIIMPCOPYMIPR
+                ITIIMPCOPYMIPV
+                ITIIMPCOPYMIQA
+                ITIIMPCOPYMIQR
+                ITIIMPCOPYMIQV
+                ITIIMPCALCHPMI
+                ITIIMPCALCPESPROJITEM
+                ITIIMPPESPROJITEMKEY
+                ITIIMPCOPYPESPROJITEM
+                ITIIMPCOPYPESPROJECT
+                ITIIMPCOPYPESCATEGORY
+                MAPJOBITEMPROJITEM
+                RESETCALCHPMIITEM
+                ITIDLLQUERYCOMPATIBILITY
+
+

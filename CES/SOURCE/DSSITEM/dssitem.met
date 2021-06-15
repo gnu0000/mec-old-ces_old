@@ -1,0 +1,179 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * DSSITEM.met
+ * This file contains metadata for the DSS Item brouser windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "..\include\colid.h"
+
+#define ITIWC_COMBOBOX 0xffff0002L
+
+
+
+//#define COORD_CHRAEN   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG
+#define ITIMB_BLWO     LWS_VSCROLL | LWS_MULTISELECT | LWS_BORDER
+
+:static  static.bin
+//
+//
+// Static Window ID       Add,  Chg,  coords         CoordType       Window Options          Background Color
+//------------------------------------------------------------------------------------------------------------
+ItemBrowserResultsS, 0,    0,    1, 2, 65, 15,  COORD_BLCHRRNG, ITI_FULLSTATICOPTIONS,  ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//
+//
+// Parents Window ID       Type Child Window ID    uKind       Add,  Chg  coords         Coord type
+//-------------------------------------------------------------------------------------------------
+ItemBrowserResultsS,  ItemBrowserResultsL, ITIWC_LIST, 0,    0,   0,  0,  0,  0, COORD_REL
+
+
+:list list.bin
+//
+//
+// List WinID           Window Options       Background Color     Label Bkg Color       Labl ydata  Button ID
+//-----------------------------------------------------------------------------------------------------------
+IBWorkTypeL,         ITIMB_BLWO,         ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+IBRoadTypeL,         ITIMB_BLWO,         ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+IBDistrictsL,        ITIMB_BLWO,         ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+ItemBrowserResultsL, ITI_LISTOPTIONSHV,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   14,    0
+
+
+
+:DATA data.bin format.bin
+//
+//
+//
+// Window ID         NextID  coords            CoordType                            Foreground Clr  Txt Flags       colid               Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+IBWorkTypeL,           0,  1,   0,  4,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,        "String"
+IBWorkTypeL,           0,  5,   0,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,                  "String"
+IBWorkTypeL,           0,  1,   0,  6,   1,  TR| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,        "String"
+
+IBRoadTypeL,            0,  1,   0,  4,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,        "String"
+IBRoadTypeL,            0,  5,   0,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,                  "String"
+IBRoadTypeL,            0,  1,   0,  6,   1,  TR| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,        "String"
+
+IBDistrictsL,           0,  1,   0,  4,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CodeValueID,        "String"
+IBDistrictsL,           0,  5,   0,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, 1,                  "String"
+IBDistrictsL,           0,  1,   0,  6,   1,  TR| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Translation,        "String"
+
+ItemBrowserResultsL,  0,  1,   0,  15,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, ProposalID,         "String"
+ItemBrowserResultsL,  0,  17,  0,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, 2,                  "String"
+ItemBrowserResultsL,  0,  1,   1,  13,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, StandardItemNumber, "String"
+ItemBrowserResultsL,  0,  15,  1,  15,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, 4,                  "Number,,..."
+ItemBrowserResultsL,  0,  38,  1,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,   "String"
+ItemBrowserResultsL,  0,  32,  1,  4,   1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,        "String"
+ItemBrowserResultsL,  0,  1,   2,  15,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, 6,                  "Number,$,.."
+ItemBrowserResultsL,  0,  20,  2,  15,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, 7,                  "Number,$,.."
+ItemBrowserResultsL,  0,  40,  2,  15,  1,  COORD_CHRRNG,                        ITI_LDATACOLOR, ITI_LDATAFLAGS, 8,                  "Number,$,.."
+
+
+:label label.bin labeltxt.bin
+//
+//
+//
+// Window ID         NextID  coords            CoordType                            Foreground Color Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+IBWorkTypeL,           0,  0,   0,  0,   0,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "x"
+
+IBRoadTypeL,            0,  0,   0,  0,   0,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "x"
+
+IBDistrictsL,           0,  0,   0,  0,   0,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "x"
+
+ItemBrowserResultsL,  0,  1,   0,  15,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Proposal ID"
+ItemBrowserResultsL,  0,  17,  0,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Proposal Description"
+ItemBrowserResultsL,  0,  1,   1,  13,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Number"
+ItemBrowserResultsL,  0,  15,  1,  15,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Quantity"
+ItemBrowserResultsL,  0,  38,  1,  1,   1,  TL| CHR| X0ABS| Y0ABS| X1REL| Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Item Description"
+ItemBrowserResultsL,  0,  32,  1,  4,   1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Unit"
+ItemBrowserResultsL,  0,  1,   2,  15,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Eng. Estimate"
+ItemBrowserResultsL,  0,  20,  2,  15,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Awarded Bid"
+ItemBrowserResultsL,  0,  40,  2,  15,  1,  COORD_CHRRNG,                        ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Low Bid"
+
+
+
+:query query.bin
+//
+//
+//
+//
+// Window ID            Query String
+//------------------------------------------------------------------------------
+IBWorkTypeL,          "SELECT '-',CodeValueID,Translation,CodeValueKey "
+IBWorkTypeL,          "FROM CodeValue, CodeTable "
+IBWorkTypeL,          "WHERE CodeTableID = 'WRKTYP' "
+IBWorkTypeL,          "AND CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+IBWorkTypeL,          "AND CodeValue.Deleted IS NULL "
+IBWorkTypeL,          "ORDER BY CodeValueID "
+
+IBRoadTypeL,           "SELECT '-',CodeValueID,Translation,CodeValueKey "
+IBRoadTypeL,           "FROM CodeValue, CodeTable "
+IBRoadTypeL,           "WHERE CodeTableID = 'HWYTYPE' "
+// IBRoadTypeL,           "WHERE CodeTableID = 'ROADSYS' "          APR 95   
+// All refs to RoadSys should be HwyType for parametric estimation  APR 95
+IBRoadTypeL,           "AND CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+IBRoadTypeL,           "AND CodeValue.Deleted IS NULL "
+IBRoadTypeL,           "ORDER BY CodeValueID "
+
+IBDistrictsL,          "SELECT '-',CodeValueID,Translation,CodeValueKey "
+IBDistrictsL,          "FROM CodeValue, CodeTable "
+IBDistrictsL,          "WHERE CodeValue.CodeTableKey=CodeTable.CodeTableKey "
+IBDistrictsL,          "AND CodeTableID = 'DISTRIC' "
+IBDistrictsL,          "AND CodeValue.Deleted IS NULL "
+IBDistrictsL,          "ORDER BY CodeValueID  DESC "
+
+
+
+
+
+
+:title title.bin
+//
+//
+// Window ID               Window Title
+//---------------------------------------------------------
+ItemBrowserResultsS,  "BAMS/DSS Browser: Item Results"
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID        Add Query ID   Change QID    Column name    Control ID      Format    Input Fmt
+//-------------------------------------------------------------------------------------------------
+IDD_ITEM_BROWSER,   ITIWND_LIST,   ITIWND_LIST,  CodeValueKey,  IBWorkTypeL,  "Number", "Number"
+IDD_ITEM_BROWSER,   ITIWND_LIST,   ITIWND_LIST,  CodeValueKey,  IBRoadTypeL,   "Number", "Number"
+IDD_ITEM_BROWSER,   ITIWND_LIST,   ITIWND_LIST,  CodeValueKey,  IBDistrictsL,  "Number", "Number"
+
+
+
+
+

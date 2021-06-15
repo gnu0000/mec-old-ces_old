@@ -1,0 +1,136 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rMat.h"                                       
+
+
+:query rMatQ.bin                                        
+
+ID_QUERY_LISTING,     "select DISTINCT MaterialID, CodeValueID, ZoneTypeID, M.Description "
+ID_QUERY_LISTING,     "  from Material M, ZoneType ZT, CodeValue CV "
+ID_QUERY_LISTING,     " where M.ZoneTypeKey = ZT.ZoneTypeKey "
+ID_QUERY_LISTING,     " and M.Deleted is NULL "
+ID_QUERY_LISTING,     " and CV.Deleted is NULL "
+ID_QUERY_LISTING,     " and CodeValueKey = Unit "
+
+ID_WHERE_CONJUNCTION, " and MaterialKey = "
+
+
+
+
+// /* REPORT (9-82) MATERIAL LISTING: PRICES */
+
+ID_QUERY_PRICES,     "select DISTINCT ZoneID, UnitPrice, MaterialID "
+ID_QUERY_PRICES,     "from Zone, MaterialPrice MP, Material M "
+ID_QUERY_PRICES,     "where MP.MaterialKey = M.MaterialKey "
+ID_QUERY_PRICES,     " and MP.ZoneKey = Zone.ZoneKey "
+ID_QUERY_PRICES,     " and M.ZoneTypeKey = Zone.ZoneTypeKey "
+ID_QUERY_PRICES, " AND MP.BaseDate = "UNDECLARED_BASE_DATE" "
+
+ID_QUERY_PRICES,     " and M.MaterialKey = "
+
+
+// ID_QUERY_PRICES_CONJ, " AND (MP.UnitType = /* 1 or 0 here MP table has no nulls */ "
+ID_QUERY_PRICES_CONJ,      " OR MP.UnitType = (select UnitType from CodeValue"
+ID_QUERY_PRICES_CONJ,         " where CodeValueKey = (select Unit from Material"
+ID_QUERY_PRICES_CONJ,                               " where MaterialKey =  "
+
+
+
+
+//ID_QUERY_KEYS,       "select MaterialKey from Material "                                  
+
+ID_QUERY_KEYS,     "select DISTINCT MaterialKey "
+ID_QUERY_KEYS,     "  from Material, ZoneType, CodeValue "
+ID_QUERY_KEYS,     " where Material.ZoneTypeKey = ZoneType.ZoneTypeKey "
+ID_QUERY_KEYS,     " and Material.Deleted is NULL "
+ID_QUERY_KEYS,     " and CodeValue.Deleted is NULL "
+ID_QUERY_KEYS,     " and CodeValueKey = Unit "
+
+
+
+
+// /* MATERIAL LISTING: FACILITIES  (page 10-62) */
+
+
+ID_QUERY_FACIL, "select FacilityNumber, Capacity, a.CodeValueID, "
+ID_QUERY_FACIL,  "StateApproved, b.CodeValueID, b.Translation, "
+ID_QUERY_FACIL,  "Material.MaterialID "
+ID_QUERY_FACIL, "from Material, FacilityMaterial, CodeValue a, CodeValue b "
+ID_QUERY_FACIL, "where Material.Unit = a.CodeValueKey "
+ID_QUERY_FACIL,  "and FacilityMaterial.ProductionMethod = b.CodeValueKey "
+ID_QUERY_FACIL,  "and FacilityMaterial.MaterialKey = Material.MaterialKey "
+ID_QUERY_FACIL,  "and FacilityMaterial.MaterialKey = "
+
+
+
+
+// Column titles                                      
+//                                                    
+// Number of column titles                            
+ID_RPT_TTL,    "12"
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol DtaColWth  TtlText       
+//---------------------------------------------------------     
+RPT_TTL_1,    " 0,          8,      2,         4,Material"
+RPT_TTL_2,    " 9,          4,      9,         4,Unit"
+RPT_TTL_3,    "64,         10,     64,        16,Zone-Type"
+RPT_TTL_4,    "14,         12,     14,        45,Description"
+
+RPT_TTL_5,    "23,          8,     23,         8,Zone"
+RPT_TTL_6,    "35,         15,     35,        15,Unit Price "
+                        
+RPT_TTL_7,    "14,         12,     18,        10,Facilities: "
+RPT_TTL_8,    " 0,          0,     29,        10, Capacity "
+RPT_TTL_9,    "48,          4,     40,         8,/Day UnitsPerDay"
+RPT_TTL_10,   "53,         18,     53,        18,State Approved "
+RPT_TTL_11,   " 0,          0,     23,         8, ProductionID"
+RPT_TTL_12,   "31,          3,     34,        40, -  translation"
+
+
+
+
+
+:FORMAT rMatF.bin                                                  
+ 
+ID_QUERY_LISTING,    "String", "String",        "String", "String"
+
+ID_QUERY_PRICES,     "String", "Number,$,...",  "String"
+
+ID_QUERY_KEYS,       "Number"
+
+
+ID_QUERY_FACIL,      "String", "Number,..", "String", "String", "String",
+ID_QUERY_FACIL,      "String", "String" 
+
+
+:query rMatDQ.bin                                                  
+//                                                               
+RMAT_RptDlgBox,       "SELECT MaterialKey "                             
+RMAT_RptDlgBox,       "FROM Material "                                  
+RMAT_RptDlgBox,       "WHERE MaterialKey = %MaterialKey "                   
+//                                                               
+//                                                               
+:Dialog rMatDD.bin rMatDF.bin                                        
+//                                                               
+// Dlg Id       Add Query ID    Change Query ID     Col Name     CtlID      Disp Fmt  Input Fmt 
+//-------------------------------------------------------------------------------------- 
+RMAT_RptDlgBox, RMAT_RptDlgBox, RMAT_RptDlgBox, MaterialKey, DID_KEY,   "Number", "Number"      
+

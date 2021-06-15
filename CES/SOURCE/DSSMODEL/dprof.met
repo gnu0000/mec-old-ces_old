@@ -1,0 +1,159 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dprof.h"                                       
+
+:query dprofQ.bin                                        
+LIST_WORK_TYPES,              " SELECT CV.CodeValueID, CV.CodeValueKey"
+LIST_WORK_TYPES,              " FROM CodeValue CV, CodeTable CT"
+LIST_WORK_TYPES,              " WHERE CT.CodeTableID = 'WRKTYP'"
+LIST_WORK_TYPES,              " AND CT.CodeTableKey = CV.CodeTableKey"
+LIST_WORK_TYPES,    " ORDER BY 1 DESC "
+
+GET_PROPOSAL_TOTAL,           "/* dprof.PROPOSAL_TOTAL */ "
+GET_PROPOSAL_TOTAL,           " SELECT SUM (HP.AwardedBidTotal)"
+GET_PROPOSAL_TOTAL,           " FROM HistoricalProposal HP "
+// GET_PROPOSAL_TOTAL,        ", HistoricalProposalMajorItem HPMI "
+// GET_PROPOSAL_TOTAL,        " WHERE HP.ProposalKey  = HPMI.ProposalKey "
+// GET_PROPOSAL_TOTAL,        " %Where "
+GET_PROPOSAL_TOTAL,        " WHERE HP.ProposalKey IN "
+GET_PROPOSAL_TOTAL,        "(select distinct HPMI.ProposalKey "
+GET_PROPOSAL_TOTAL,         " from HistoricalProposalMajorItem HPMI "
+GET_PROPOSAL_TOTAL,         ", HistoricalProposal HP "
+GET_PROPOSAL_TOTAL,         " where HPMI.ProposalKey = HP.ProposalKey  "
+
+
+
+GET_MAJORITEM_PERCENTS, "/* dprof.MAJORITEM_PERCENTS */ "
+GET_MAJORITEM_PERCENTS, "SELECT distinct MI.MajorItemID, SUM(HP.AwardedBidTotal), "
+GET_MAJORITEM_PERCENTS, "SUM (HPMI.ExtendedAmount), "
+GET_MAJORITEM_PERCENTS, "SUM (HPMI.ExtendedAmount) / SUM(HP.AwardedBidTotal), "
+// GET_MAJORITEM_PERCENTS, "MI.Description "
+GET_MAJORITEM_PERCENTS, " HPMI.MajorItemKey "
+GET_MAJORITEM_PERCENTS, ", SUM (HPMI.ExtendedAmount) / SUM(HP.AwardedBidTotal)  "
+GET_MAJORITEM_PERCENTS, "FROM MajorItem MI, HistoricalProposal HP, "
+GET_MAJORITEM_PERCENTS, "HistoricalProposalMajorItem HPMI "
+GET_MAJORITEM_PERCENTS, "WHERE HP.ProposalKey  = HPMI.ProposalKey "
+GET_MAJORITEM_PERCENTS, "AND   MI.MajorItemKey = HPMI.MajorItemKey "
+GET_MAJORITEM_PERCENTS, " %Where "
+GET_MAJORITEM_PERCENTS, "GROUP BY HPMI.MajorItemKey, MI.MajorItemID "
+// GET_MAJORITEM_PERCENTS, ",HPMI.ProposalKey, HP.ProposalKey "
+GET_MAJORITEM_PERCENTS, "ORDER BY MI.MajorItemID "
+
+// GET_MAJORITEM_PERCENTS,       "/* dprof.MAJORITEM_PERCENTS */ "
+// GET_MAJORITEM_PERCENTS,       "SELECT MI.MajorItemID, $%ProposalTotal, "
+// GET_MAJORITEM_PERCENTS,       "SUM (HPMI.ExtendedAmount), "
+// GET_MAJORITEM_PERCENTS,       "SUM (HPMI.ExtendedAmount) / $%ProposalTotal, "
+// GET_MAJORITEM_PERCENTS,       "MI.Description, "
+// GET_MAJORITEM_PERCENTS,       "HPMI.ExtendedAmount / $%ProposalTotal  "
+// GET_MAJORITEM_PERCENTS,       "FROM MajorItem MI, HistoricalProposal HP, "
+// GET_MAJORITEM_PERCENTS,       "HistoricalProposalMajorItem HPMI "
+// GET_MAJORITEM_PERCENTS,       "WHERE HP.ProposalKey  = HPMI.ProposalKey "
+// GET_MAJORITEM_PERCENTS,       "AND   MI.MajorItemKey = HPMI.MajorItemKey "
+// // GET_MAJORITEM_PERCENTS,       "%Where "
+// GET_MAJORITEM_PERCENTS,       "GROUP BY HPMI.MajorItemKey, MI.MajorItemKey, "
+// GET_MAJORITEM_PERCENTS,       "HPMI.ProposalKey, HP.ProposalKey "
+// GET_MAJORITEM_PERCENTS,       "ORDER BY MI.MajorItemID "
+
+
+GET_MAJORITEM_TOTAL,          "/* dprof.MAJORITEM_TOTAL */ "
+GET_MAJORITEM_TOTAL,          "SELECT $%ProposalTotal, "
+GET_MAJORITEM_TOTAL,          "SUM (HPMI.ExtendedAmount),  "
+GET_MAJORITEM_TOTAL,          "SUM (HPMI.ExtendedAmount) / $%ProposalTotal "
+GET_MAJORITEM_TOTAL,          "FROM HistoricalProposal HP,  "
+GET_MAJORITEM_TOTAL,          "HistoricalProposalMajorItem HPMI  "
+GET_MAJORITEM_TOTAL,          "WHERE HP.ProposalKey = HPMI.ProposalKey "
+GET_MAJORITEM_TOTAL,          " %Where "
+
+//GET_MAJORITEM_PERCENTS,       "SELECT MI.MajorItemID, "
+//GET_MAJORITEM_PERCENTS,       "$%ProposalTotal, "
+//GET_MAJORITEM_PERCENTS,       "SUM (HPI.Quantity * HIB.UnitPrice * "
+//GET_MAJORITEM_PERCENTS,       "     SIMI.PercentofCost), "
+//GET_MAJORITEM_PERCENTS,       "SUM (HPI.Quantity * HIB.UnitPrice * "
+//GET_MAJORITEM_PERCENTS,       "     SIMI.PercentofCost) / $%ProposalTotal, "
+//GET_MAJORITEM_PERCENTS,       "MI.Description, "
+//GET_MAJORITEM_PERCENTS,       "SUM (HPI.Quantity * HIB.UnitPrice * "
+//GET_MAJORITEM_PERCENTS,       "     SIMI.PercentofCost) / $%ProposalTotal "
+//GET_MAJORITEM_PERCENTS,       "FROM MajorItem MI, HistoricalProposal HP, "
+//GET_MAJORITEM_PERCENTS,       "HistoricalProposalItem HPI, "
+//GET_MAJORITEM_PERCENTS,       "HistoricalBidder HB, "
+//GET_MAJORITEM_PERCENTS,       "HistoricalItemBid HIB, "
+//GET_MAJORITEM_PERCENTS,       "StandardItemMajorItem SIMI "
+//GET_MAJORITEM_PERCENTS,       "WHERE HP.ProposalKey      = HPI.ProposalKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HP.ProposalKey      = HB.ProposalKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HP.AwardedBidderKey = HB.VendorKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HB.VendorKey        = HIB.VendorKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HP.ProposalKey      = HIB.ProposalKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HPI.ProposalItemKey = HIB.ProposalItemKey "
+//GET_MAJORITEM_PERCENTS,       "AND   HPI.ItemKey         = SIMI.StandardItemKey "
+//GET_MAJORITEM_PERCENTS,       "AND   MI.MajorItemKey     = SIMI.MajorItemKey "
+//GET_MAJORITEM_PERCENTS,       "%Where "
+//GET_MAJORITEM_PERCENTS,       "GROUP BY MajorItemID "
+//GET_MAJORITEM_PERCENTS,       "ORDER BY MajorItemID "
+//
+//GET_MAJORITEM_TOTAL,          "SELECT $%ProposalTotal, "
+//GET_MAJORITEM_TOTAL,          "SUM (HPI.Quantity * HIB.UnitPrice *  "
+//GET_MAJORITEM_TOTAL,          "     SIMI.PercentofCost),  "
+//GET_MAJORITEM_TOTAL,          "SUM (HPI.Quantity * HIB.UnitPrice *  "
+//GET_MAJORITEM_TOTAL,          "     SIMI.PercentofCost) / $%ProposalTotal "
+//GET_MAJORITEM_TOTAL,          "FROM MajorItem MI, HistoricalProposal HP,  "
+//GET_MAJORITEM_TOTAL,          "HistoricalProposalItem HPI,  "
+//GET_MAJORITEM_TOTAL,          "HistoricalBidder HB,  "
+//GET_MAJORITEM_TOTAL,          "HistoricalItemBid HIB,  "
+//GET_MAJORITEM_TOTAL,          "StandardItemMajorItem SIMI  "
+//GET_MAJORITEM_TOTAL,          "WHERE HP.ProposalKey      = HPI.ProposalKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HP.ProposalKey      = HB.ProposalKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HP.AwardedBidderKey = HB.VendorKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HB.VendorKey        = HIB.VendorKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HP.ProposalKey      = HIB.ProposalKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HPI.ProposalItemKey = HIB.ProposalItemKey  "
+//GET_MAJORITEM_TOTAL,          "AND   HPI.ItemKey         = SIMI.StandardItemKey "
+//GET_MAJORITEM_TOTAL,          "AND   MI.MajorItemKey     = SIMI.MajorItemKey  "
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "5,     12,        8,             4,Major Item/ "
+RPT_TTL_2,   "23,     14,       17,            21,Proposal Total"
+RPT_TTL_3,   "42,     16,       39,            20,Major Item Total"
+RPT_TTL_4,   "60,     10,       61,             7,% of Value"
+RPT_TTL_5,   "12,     11,       12,            40,Description "
+
+RPT_TTL_6,    "6,      6,        0,             0,Totals"
+
+// Number of column titles                            
+ID_RPT_TTL,    "6" 
+
+
+
+:FORMAT dprofF.bin                                                  
+
+GET_MAJORITEM_PERCENTS,       "String"
+GET_MAJORITEM_PERCENTS,       "Number,$,.."
+GET_MAJORITEM_PERCENTS,       "Number,$,.."
+GET_MAJORITEM_PERCENTS,       "Number,%.."
+GET_MAJORITEM_PERCENTS,       "String"
+GET_MAJORITEM_PERCENTS,       "Number,%.."
+
+GET_MAJORITEM_TOTAL,          "Number,$,.."
+GET_MAJORITEM_TOTAL,          "Number,$,.."
+GET_MAJORITEM_TOTAL,          "Number,%.."
+
+

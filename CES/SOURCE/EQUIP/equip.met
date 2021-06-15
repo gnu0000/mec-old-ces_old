@@ -1,0 +1,369 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+/*
+ * equip.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                                  RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID   add                change             xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+EquipmentCatS, EquipmentD, EquipmentD,  10,  10,  348, 120, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+EquipmentS,     EquipRateD,  EquipRateD,   14,  18,  250, 120, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+//EquipmentL,       0,                 0,                14,  40,  250, 120, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT              USHORT                USHORT                                               RECTS               USHORT
+//
+// Parents Window ID   Type Child Window ID  uKind       add                      change         <-   ^    ->   v    Coord
+//-------------------------------------------------------------------------------------------------------------------------------------
+EquipmentCatS,  EquipmentCatL,   ITIWC_LIST, EquipmentD,    EquipmentD, 0,  0,   0,   0,   COORD_CHRREL
+EquipmentS,     EquipmentL,      ITIWC_LIST, EquipRateD,     EquipRateD,  0,  3,   0,   0,   COORD_CHRREL
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT               LONG               LONG                 LONG                     USHORT USHORT  USHORT
+// List Window ID       Window Options     Background Color     Label Bkg Color           Label ydata   Button Window ID
+//------------------------------------------------------------------------------------------------------------------
+EquipmentCatL,     ITI_LISTOPTIONSV, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,                0,  0,     0
+EquipmentL,         ITI_LISTOPTIONSV, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,                0,  0,     0
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT           USHORT            RECTS (DLG|UL|RNG)  USHORT     LONG               LONG              NAME                   PSZ
+// Window ID        Next Window ID    xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags         Col Name               Format String
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+EquipmentCatL, EquipmentS, 1,  0, 8,  1, COORD_CHRRNG,                             ITI_LDATACOLOR, ITI_LDATAFLAGS,   EquipmentID,           "String"
+EquipmentCatL, EquipmentS, 10, 0, 17, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Equipment.Description, "String"
+EquipmentCatL, EquipmentS, 0,  0, 16, 1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ZoneTypeID,            "String"
+
+EquipmentS,   0,                13, 0, 1,  2, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS,  Equipment.Description, "String"
+EquipmentS,   0,                13, 2, 1,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   ZoneTypeID,            "String"
+
+EquipmentL,     0,                1,  0, 30, 1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   ZoneID,                "String"
+EquipmentL,     0,                31, 0, 60, 1, TL | CHR | X0PCT | Y0ABS | X1PCT | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Rate,                  "Number,$,.."
+EquipmentL,     0,                61, 0, 1,  1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, OvertimeRate,          "Number,$,.."
+
+
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT           USHORT            RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID        Next Window ID    xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+EquipmentCatL, EquipmentS,  1,  0, 8,  1, COORD_CHRRNG,                                ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Equipment"
+EquipmentCatL, EquipmentS,  10, 0, 17, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG,    ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+EquipmentCatL, EquipmentS,  0,  0, 16, 1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG,    ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Zone Type"
+
+EquipmentS,   0,                1,   0,  11,  1, COORD_CHRRNG,                             ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Description:"
+EquipmentS,   0,                1,   2,  11,  1, COORD_CHRRNG,                             ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Zone Type:"
+
+EquipmentL,     0,                1,   0, 30,  1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Zone"
+EquipmentL,     0,                31,  0, 60,  1, TL | CHR | X0PCT | Y0ABS | X1PCT | Y1RNG,  ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Hourly Rate"
+EquipmentL,     0,                61,  0, 1,   1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,  ITI_LLABELCOLOR, ITI_LLABELRTFLAGS, "Overtime Rate"
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT           char []
+// Window ID        Query String
+//------------------------------------------------------------------------------------------------------
+EquipmentCatL,    " SELECT E.EquipmentID, E.Description, ZT.ZoneTypeID, "
+EquipmentCatL,    " E.EquipmentKey, E.ZoneTypeKey "
+EquipmentCatL,    " FROM Equipment E, ZoneType ZT"
+EquipmentCatL,    " WHERE E.ZoneTypeKey = ZT.ZoneTypeKey "
+EquipmentCatL,    " AND E.Deleted IS NULL "
+EquipmentCatL,    " ORDER BY E.EquipmentID "
+
+EquipmentS,       " SELECT E.Description, ZT.ZoneTypeID, "
+EquipmentS,       " E.ZoneTypeKey, E.EquipmentKey, E.EquipmentID "
+EquipmentS,       " FROM Equipment E, ZoneType ZT"
+EquipmentS,       " WHERE E.ZoneTypeKey = ZT.ZoneTypeKey "
+EquipmentS,       " AND E.EquipmentKey = %EquipmentKey "
+
+EquipmentL,       " SELECT Z.ZoneID, ER.Rate, ER.OvertimeRate, ER.ZoneKey, "
+EquipmentL,       " ER.EquipmentKey "
+EquipmentL,       " FROM EquipmentRate ER, Zone Z, Equipment E"
+EquipmentL,       " WHERE ER.EquipmentKey = E.EquipmentKey "
+EquipmentL,       " AND ER.ZoneKey = Z.ZoneKey "
+EquipmentL,       " AND Z.ZoneTypeKey = E.ZoneTypeKey "
+EquipmentL,       " AND E.EquipmentKey = %EquipmentKey "
+EquipmentL,       " AND E.ZoneTypeKey = %Equipment.ZoneTypeKey "
+EquipmentL,       " AND ER.BaseDate = @UndeclaredBaseDate "
+EquipmentL,       " AND ER.Deleted IS NULL "
+EquipmentL,       " ORDER BY Z.ZoneID "
+
+EquipmentD,       " SELECT EquipmentKey, EquipmentID, Description, ZoneTypeKey "
+EquipmentD,       " FROM Equipment "
+EquipmentD,       " WHERE EquipmentKey = %EquipmentKey "
+
+EquipZTD,         " SELECT ZoneTypeID, ZoneTypeKey "
+EquipZTD,         " FROM ZoneType "
+EquipZTD,         " ORDER BY ZoneTypeID "
+                  
+EquipRateD,       " SELECT Rate, OvertimeRate "
+EquipRateD,       " FROM EquipmentRate "
+EquipRateD,       " WHERE EquipmentKey = %EquipmentKey "
+EquipRateD,       " AND ZoneKey = %ZoneKey "
+EquipRateD,       " AND BaseDate = @UndeclaredBaseDate "
+
+
+EquipZonesCombo,  " SELECT ZoneID, ZoneKey "
+EquipZonesCombo,  " FROM Zone "
+EquipZonesCombo,  " WHERE ZoneTypeKey = %ZoneTypeKey "
+EquipZonesCombo,  " AND NOT ZoneKey = %ZoneKey "
+EquipZonesCombo,  " AND (Zone.Deleted IS NULL OR Zone.Deleted = 0)"
+//EquipZonesCombo,  " AND ZoneKey NOT IN "
+//EquipZonesCombo,  " (SELECT ZoneKey FROM EquipmentRate "
+//EquipZonesCombo,  " WHERE EquipmentKey = %EquipmentKey) "
+//EquipZonesCombo,  " OR ZoneKey = %ZoneKey "
+EquipZonesCombo,  " ORDER BY ZoneID "
+
+
+EquipZonesComboC,  " SELECT ZoneID, ZoneKey "
+EquipZonesComboC,  " FROM Zone "
+EquipZonesComboC,  " WHERE ZoneTypeKey = %ZoneTypeKey "
+EquipZonesComboC,  " AND ZoneKey = %ZoneKey "
+//                      Deleted zones affect new additions, not changes.
+//EquipZonesComboC,  " AND Zone.Deleted IS NULL "
+//EquipZonesComboC,  " AND ZoneKey NOT IN "
+//EquipZonesComboC,  " (SELECT ZoneKey FROM EquipmentRate "
+//EquipZonesComboC,  " WHERE EquipmentKey = %EquipmentKey) "
+//EquipZonesComboC,  " OR ZoneKey = %ZoneKey "
+EquipZonesComboC,  " ORDER BY ZoneID "
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+EquipmentCatS,         "Equipment Catalog"
+EquipmentS,             "Equipment %EquipmentID"
+
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id          Add Query ID       Change Query ID    Col Name     CtlID            Format
+//----------------------------------------------------------------------------------------------------------
+EquipmentD, EquipmentD, EquipmentD, EquipmentID, DID_EQUIPMENTID,       "String",      "String"
+EquipmentD, EquipmentD, EquipmentD, Description, DID_EQUIPDESCR,        "String",      "String"
+EquipmentD, EquipZTD,  EquipZTD,  ZoneTypeID,  DID_EQUIPZONETYPE,     "String",      "Number"
+
+EquipRateD,  EquipRateD,  	EquipRateD,  Rate,         DID_HOURLYRATE,       "Number,$,..", "Number,$,.."
+EquipRateD,  EquipRateD,  	EquipRateD,  OvertimeRate, DID_OVERTIMERATE,     "Number,$,..", "Number,$,.."
+EquipRateD,  EquipZonesCombo,   EquipZonesComboC,   ZoneID,       DID_EQUIPZONEID,      "String",      "Number"
+
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+EquipmentD,    "UPDATE Equipment "
+EquipmentD,    "SET "
+EquipmentD,    "EquipmentID=@EquipmentID, "
+EquipmentD,    "Description=@Description, "
+EquipmentD,    "ZoneTypeKey=@"DID_EQUIPZONETYPE"ZoneTypeKey "
+EquipmentD,    "WHERE EquipmentKey = %EquipmentKey "
+
+EquipRateD,     "UPDATE EquipmentRate "
+EquipRateD,     "SET "
+EquipRateD,     "Rate=@Rate, "
+EquipRateD,     "OvertimeRate=@OvertimeRate, "
+EquipRateD,     "ZoneKey=@ZoneKey "
+EquipRateD,     "WHERE EquipmentKey = %EquipmentKey "
+EquipRateD,     "AND ZoneKey = %ZoneKey "
+EquipRateD,     "AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+EquipmentD,    "SELECT EquipmentID, Description, ZoneTypeKey "
+EquipmentD,    "FROM Equipment HOLDLOCK "
+EquipmentD,    "WHERE EquipmentKey = %EquipmentKey "
+
+EquipRateD,     "SELECT Rate, OvertimeRate "
+EquipRateD,     "FROM EquipmentRate HOLDLOCK "
+EquipRateD,     "WHERE EquipmentKey = %EquipmentKey "
+EquipRateD,     "AND ZoneKey = %ZoneKey "
+EquipRateD,     "AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+EquipmentD,    "INSERT INTO Equipment "
+EquipmentD,    "(EquipmentKey,EquipmentID,Description,ZoneTypeKey) "
+EquipmentD,    "VALUES "
+EquipmentD,    "(@NewKey,@EquipmentID,@Description,@"DID_EQUIPZONETYPE"ZoneTypeKey) "
+
+
+EquipRateD,     "INSERT INTO EquipmentRate "
+EquipRateD,     "(EquipmentKey, ZoneKey, BaseDate, Rate, OvertimeRate) "
+EquipRateD,     "VALUES "
+EquipRateD,     "(%EquipmentKey, @"DID_EQUIPZONEID"ZoneKey, @UndeclaredBaseDate, @Rate, "
+EquipRateD,     "@OvertimeRate )"
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+//EquipmentCatL, "DELETE FROM Equipment "
+//EquipmentCatL, "WHERE EquipmentKey = %EquipmentKey "
+//EquipmentCatL, "DELETE EquipmentRate "
+//EquipmentCatL, "WHERE EquipmentKey = %EquipmentKey "
+
+EquipmentCatL,   "UPDATE Equipment "
+EquipmentCatL,   "SET Deleted = 1 "
+EquipmentCatL,   "WHERE EquipmentKey IN (%EquipmentKey{,%EquipmentKey}) "
+
+EquipmentL,       "UPDATE EquipmentRate "
+EquipmentL,       "SET Deleted = 1 "
+EquipmentL,       "WHERE EquipmentKey = %EquipmentKey "
+EquipmentL,       "AND ZoneKey != 1 "
+EquipmentL,       "AND ZoneKey IN (%ZoneKey{,%ZoneKey}) "
+EquipmentL,       "AND BaseDate = @UndeclaredBaseDate "
+

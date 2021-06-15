@@ -1,0 +1,705 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * stditem.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "stditem.h"
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// Static Window ID     add,    change, xpos ypos xsiz ysiz  CoordType     Window Options     Background Color
+//-----------------------------------------------------------------------------------------------------------------
+StandardItemCatS, StanItemDAdd, StanItemD,  8,   10,  120, 22,  COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+StandardItemS,            0,         0,  1,   1,   65,  20,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                 USHORT                  USHORT              RECTS               USHORT
+// ParentsWindowID TypeChildWindowID  uKind       add,       change,  Coord
+//------------------------------------------------------------------------------------------------------
+StandardItemS,     StandardItemL1,    ITIWC_LIST, 0,         0,        30,  1,   16,   7,   COORD_CHRRNG
+StandardItemS,     StandardItemL2,    ITIWC_LIST, 0,         0,        47,  1,   16,   7,   COORD_CHRRNG
+StandardItemS,     StandardItemL3,    ITIWC_LIST, 0,         0,         0,   11,  0,   0,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1REL
+StandardItemCatS,  StandardItemCatL,  ITIWC_LIST, StanItemDAdd, StanItemD, 0,   0,   0,   0,   COORD_REL
+StandardItemCatS,  StdItemDefUPL,     ITIWC_LIST, StanItemDAdd, StanItemD, 0,   0,   0,   0,   COORD_REL
+StandardItemCatS,  StdItemCBEstL,     ITIWC_LIST, StanItemDAdd, StanItemD, 0,   0,   0,   0,   COORD_REL
+StandardItemCatS,  StdItemPemethAvgL, ITIWC_LIST, StanItemDAdd, StanItemD, 0,   0,   0,   0,   COORD_REL
+StandardItemCatS,  StdItemPemethRegL, ITIWC_LIST, StanItemDAdd, StanItemD, 0,   0,   0,   0,   COORD_REL
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT               LONG                   LONG                 LONG                 USHORT USHORT USHORT
+// List Window ID       Window Options     Background Color     Label Bkg Color       Label ydata  Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+StandardItemL1,    ITI_LISTOPTIONSHV| LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StandardItemL2,    ITI_LISTOPTIONSHV| LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StandardItemL3,    ITI_LISTOPTIONSHV,             ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StandardItemCatL,  ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StdItemDefUPL,     ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StdItemCBEstL,     ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StdItemPemethAvgL, ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+StdItemPemethRegL, ITI_LISTOPTIONSV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,   0,     0
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT        USHORT                RECTS           USHORT        LONG            LONG            NAME                PSZ
+// Window ID     Next Window ID                        CoordType     Foreground Clr  Txt Flags       Col Name            Format String
+//-------------------------------------------------------------------------------------------------------------------------------------------
+StandardItemS,   0,                    16,  1, 52,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, StandardItemNumber,    "String"
+StandardItemS,   0,                    16,  2, 16,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, CodeValueID,           "String"
+StandardItemS,   0,                    2,   2, 240, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, LumpSum,               "Flag,,(Lump Sum)"
+StandardItemS,   0,                    16,  3, 44,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, DefaultProductionRate, "Number,,...."
+StandardItemS,   0,                    16,  4, 16,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, DefaultStartTime,      "Number,,"
+StandardItemS,   0,                    16,  5, 56,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, RoundingPrecision,     "Precision"
+StandardItemS,   0,                    16,  6, 16,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, SpecYear,              "Year,yyyy"
+StandardItemS,   0,                    16,  7, 240, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, UnitType,               "Flag,English,Metric"
+StandardItemS,   0,                    16,  8, 400, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, ShortDescription,      "String"
+StandardItemS,   0,                    16,  9, 1,   2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS, LongDescription,       "String"
+// StandardItemS,   0,                    7,  10, 240, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, LumpSum,               "Flag,,Lump Sum Item"
+
+
+StandardItemL1,    StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, StandardItemNumber,    "String"
+StandardItemL1,    StandardItemS, 13,  0, 3,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Link,                  "Dependency,s"
+StandardItemL1,    StandardItemS, 17,  0, 4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Lag,                   "Number"
+
+StandardItemL2,    StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, StandardItemNumber,    "String"
+StandardItemL2,    StandardItemS, 13,  0, 3,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Link,                  "Dependency,s"
+StandardItemL2,    StandardItemS, 17,  0, 4,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Lag,                   "Number"
+
+StandardItemL3,    MajorItemS, 1,   0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATACTRFLAGS, MajorItemID,           "String"
+StandardItemL3,    MajorItemS, 10,  0, 8,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,    CodeValueID,           "String"
+StandardItemL3,    MajorItemS, 21,  0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,    Description,           "String"
+
+//StandardItemCatL, StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, StandardItemNumber,    "String"
+//StandardItemCatL, StandardItemS, 15,  0, 40,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,      "String"
+//StandardItemCatL, StandardItemS, 57,  0, 5,   1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,           "String"
+StandardItemCatL, StandardItemS, 1,   0, 12, 1, COORD_CHRRNG,                   ITI_LDATACOLOR,  ITI_LDATAFLAGS, StandardItemNumber,         "String"
+StandardItemCatL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,  "String"
+StandardItemCatL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,       "String"
+StdItemDefUPL,    StandardItemS, 1,   0, 12, 1, COORD_CHRRNG,                   ITI_LDATACOLOR,  ITI_LDATAFLAGS, StandardItemNumber,         "String"
+StdItemDefUPL,    StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,  "String"
+StdItemDefUPL,    StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,       "String"
+StdItemCBEstL,    StandardItemS, 1,   0, 12, 1, COORD_CHRRNG,                   ITI_LDATACOLOR,  ITI_LDATAFLAGS, StandardItemNumber,         "String"
+StdItemCBEstL,    StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,  "String"
+StdItemCBEstL,    StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,       "String"
+StdItemPemethAvgL, StandardItemS, 1,   0, 12, 1, COORD_CHRRNG,                   ITI_LDATACOLOR,  ITI_LDATAFLAGS, StandardItemNumber,         "String"
+StdItemPemethAvgL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,  "String"
+StdItemPemethAvgL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,       "String"
+StdItemPemethRegL, StandardItemS, 1,   0, 12, 1, COORD_CHRRNG,                   ITI_LDATACOLOR,  ITI_LDATAFLAGS, StandardItemNumber,         "String"
+StdItemPemethRegL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, ShortDescription,  "String"
+StdItemPemethRegL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, CodeValueID,       "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT      USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID   Next Window ID          xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+StandardItemS,   0,                    1,   1, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Item Number:"
+StandardItemS,   0,                    1,   2, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Unit:"
+StandardItemS,   0,                    1,   3, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Default Production:"
+StandardItemS,   0,                    1,   4, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Default Start Time:"
+StandardItemS,   0,                    1,   5, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Rounding Precision:"
+StandardItemS,   0,                    1,   6, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Spec Year:"
+StandardItemS,   0,                    1,   7, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Measurement Units:"
+StandardItemS,   0,                    1,   8, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Short Description:"
+StandardItemS,   0,                    1,   9, 14, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Long Description:"
+
+StandardItemL1,    StandardItemS, 1,   0, 14, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Predecessors"
+
+StandardItemL2,    StandardItemS, 1,   0, 14, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Successors"
+
+StandardItemL3,    MajorItemS, 1,   0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Major Item"
+StandardItemL3,    MajorItemS, 10,  0, 10,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Common Unit"
+StandardItemL3,    MajorItemS, 21,  0, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+//StandardItemCatL, StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+//StandardItemCatL, StandardItemS, 15,  0, 40,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+//StandardItemCatL, StandardItemS, 57,  0, 5,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+StandardItemCatL, StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+StandardItemCatL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+StandardItemCatL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+StdItemDefUPL,    StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+StdItemDefUPL,    StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+StdItemDefUPL,    StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+StdItemCBEstL,    StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+StdItemCBEstL,    StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+StdItemCBEstL,    StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+StdItemPemethAvgL, StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+StdItemPemethAvgL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+StdItemPemethAvgL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+StdItemPemethRegL, StandardItemS, 1,   0, 12,  1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Item Number"
+StdItemPemethRegL, StandardItemS, 14,  0, 6,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Description"
+StdItemPemethRegL, StandardItemS, 0,   0, 5,  1, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Unit"
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//---------------------------------------------------------------------------------------------------------
+StandardItemS,   "SELECT StandardItemNumber, CodeValueID, "
+StandardItemS,   "DefaultProductionRate, DefaultStartTime, "
+StandardItemS,   "RoundingPrecision, SpecYear, LumpSum, "
+StandardItemS,   "ShortDescription, LongDescription, "
+StandardItemS,   "StandardItemKey, SI.UnitType "
+StandardItemS,   "FROM StandardItem SI, CodeValue "
+StandardItemS,   "WHERE StandardItem.Unit = CodeValue.CodeValueKey "
+StandardItemS,   "AND StandardItemKey = %StandardItemKey "
+// StandardItemS,   "AND (SI.UnitType = (SELECT UnitType FROM UnitTypeSystem) "
+// StandardItemS,        "OR SI.UnitType = NULL) "
+
+StandardItemL1,    "SELECT StandardItemNumber, Link, Lag, "
+StandardItemL1,    "StandardItemKey "
+StandardItemL1,    "FROM StandardItem, StandardItemDependency "
+StandardItemL1,    "WHERE PredecessorItemKey = StandardItemKey "
+StandardItemL1,    "AND SuccessorItemKey = %StandardItemKey "
+StandardItemL1,    "ORDER BY StandardItemNumber "
+
+StandardItemL2,    "SELECT StandardItemNumber, Link, Lag, "
+StandardItemL2,    "StandardItemKey "
+StandardItemL2,    "FROM StandardItem, StandardItemDependency "
+StandardItemL2,    "WHERE SuccessorItemKey = StandardItemKey "
+StandardItemL2,    "AND PredecessorItemKey = %StandardItemKey "
+StandardItemL2,    "ORDER BY StandardItemNumber "
+
+StandardItemL3,    "SELECT MajorItemID, CodeValueID, Description, "
+StandardItemL3,    "MajorItem.MajorItemKey "
+StandardItemL3,    "FROM MajorItem, StandardItemMajorItem, CodeValue "
+StandardItemL3,    "WHERE MajorItem.MajorItemKey = StandardItemMajorItem.MajorItemKey "
+StandardItemL3,    "AND StandardItemKey = %StandardItemKey "
+StandardItemL3,    "AND CodeValueKey = CommonUnit "
+StandardItemL3,    "ORDER BY MajorItemID "
+
+StandardItemCatL, "/* StandardItemCatL */ "
+StandardItemCatL, " SELECT StandardItemNumber, ShortDescription, "
+StandardItemCatL, "CodeValueID, StandardItemKey, Unit, SI.UnitType "
+StandardItemCatL,   ", SI.SpecYear "
+StandardItemCatL, "FROM StandardItem SI, CodeValue CV "
+StandardItemCatL, "WHERE Unit = CodeValueKey "
+StandardItemCatL, "AND CodeTableKey = 1000016 "
+StandardItemCatL, "AND SI.Deleted IS NULL "
+StandardItemCatL, "AND "
+// StandardItemCatL,    " ( "
+StandardItemCatL,    " SI.UnitType = %CurUnitType "
+// StandardItemCatL,      "OR SI.UnitType = NULL) "
+StandardItemCatL, "AND SpecYear = %CurSpecYear "
+StandardItemCatL, "ORDER BY StandardItemNumber "
+
+StanItemD,         "SELECT StandardItemKey, StandardItemNumber, SpecYear, "
+StanItemD,         "ShortDescription, LongDescription, Unit, "
+StanItemD,         "LumpSum, DefaultProductionRate, DefaultStartTime, "
+StanItemD,         "RoundingPrecision, UnitType "
+StanItemD,         "FROM StandardItem "
+StanItemD,         "WHERE StandardItemKey = %StandardItemKey "
+
+
+StanItemDAdd,         "SELECT StandardItemKey, StandardItemNumber, SpecYear, "
+StanItemDAdd,         "ShortDescription, LongDescription, Unit, "
+StanItemDAdd,         "LumpSum, DefaultProductionRate, DefaultStartTime, "
+StanItemDAdd,         "RoundingPrecision, UnitType "
+StanItemDAdd,         "FROM StandardItem "
+StanItemDAdd,         "WHERE StandardItemKey = %StandardItemKey "
+
+
+
+
+StanItemEditUnitC,   " /* StanItemEditUnitC */ "
+StanItemEditUnitC,   " SELECT CodeValueID + '        ' + STR(CV.UnitType), CodeValueKey "
+StanItemEditUnitC,   " FROM CodeValue CV, CodeTable CT"
+StanItemEditUnitC,   " WHERE CV.CodeTableKey = CT.CodeTableKey "
+StanItemEditUnitC,   " AND CodeTableID = 'UNITS' "
+StanItemEditUnitC,   " AND (CV.Deleted is null "
+StanItemEditUnitC,        " OR CodeValueKey = %Unit) "
+StanItemEditUnitC, " AND (CV.UnitType = %CurUnitType "
+StanItemEditUnitC,      " OR (CV.UnitType = NULL"
+StanItemEditUnitC,         " AND CV.CodeValueID NOT IN"
+StanItemEditUnitC,         " (select CodeValueID from CodeValue CXV" 
+StanItemEditUnitC,         " where CXV.UnitType = %CurUnitType ) "
+StanItemEditUnitC, ")) AND CV.CodeValueID != '----' "
+StanItemEditUnitC,   " ORDER BY CodeValueID, CV.UnitType "
+
+// StanItemEditSY,  "IF ((select count(*) from StandardItem) > 1 )"
+StanItemEditSY,  " SELECT DISTINCT SpecYear FROM StandardItem "
+StanItemEditSY,  " WHERE SpecYear > 1900 ORDER BY SpecYear DESC " 
+// StanItemEditSY,  "ELSE SELECT 1900 "
+
+StdItemDefUPL, "/* StdItemDefUPL */ "
+StdItemDefUPL, "SELECT DISTINCT StandardItemNumber, ShortDescription, "
+StdItemDefUPL, "CodeValueID, SI.StandardItemKey, Unit "
+StdItemDefUPL, "FROM StandardItem SI, CodeValue CV "
+StdItemDefUPL, "WHERE Unit = CodeValueKey "
+StdItemDefUPL, "AND CodeTableKey =  "
+// StdItemDefUPL,   " (select CodeTableKey from CodeTable where CodeTableID = 'UNITS') "
+StdItemDefUPL,   " 1000016 "
+StdItemDefUPL, "AND SI.StandardItemKey IN (SELECT StandardItemKey FROM StdItemDefaultPrices) "
+StdItemDefUPL, "AND SI.Deleted IS NULL "
+StdItemDefUPL, "AND SpecYear = %CurSpecYear "
+StdItemDefUPL,  "AND (SI.UnitType = %CurUnitType "
+StdItemDefUPL,       "OR SI.UnitType = NULL) " 
+StdItemDefUPL, "ORDER BY StandardItemNumber "
+
+StdItemCBEstL, "/* StdItemCBEstL */ "
+StdItemCBEstL, "SELECT DISTINCT StandardItemNumber, ShortDescription, "
+StdItemCBEstL, "CodeValueID, SI.StandardItemKey, Unit "
+StdItemCBEstL, "FROM StandardItem SI, CodeValue CV "
+StdItemCBEstL, "WHERE Unit = CodeValueKey "
+StdItemCBEstL,   "AND CV.CodeTableKey = 1000016 "
+StdItemCBEstL, "AND SI.StandardItemKey "
+StdItemCBEstL, "IN (SELECT StandardItemKey FROM CostBasedEstimate) "
+StdItemCBEstL, "AND SI.Deleted IS NULL "
+StdItemCBEstL, "AND SpecYear = %CurSpecYear "
+StdItemCBEstL, "AND (SI.UnitType = %CurUnitType "
+StdItemCBEstL,      "OR SI.UnitType = NULL) "
+StdItemCBEstL, "ORDER BY StandardItemNumber "
+
+StdItemPemethAvgL, "/* StdItemPemethAvgL */ "
+StdItemPemethAvgL, "SELECT DISTINCT StandardItemNumber, ShortDescription, "
+StdItemPemethAvgL, "CodeValueID, SI.StandardItemKey, Unit "
+StdItemPemethAvgL, "FROM StandardItem SI, CodeValue CV "
+StdItemPemethAvgL, "WHERE Unit = CodeValueKey "
+StdItemPemethAvgL,   "AND CV.CodeTableKey = 1000016 "
+StdItemPemethAvgL, "AND SI.StandardItemKey "
+StdItemPemethAvgL, "IN (SELECT StandardItemKey "
+StdItemPemethAvgL,     "FROM StandardItemPEMETHAverage "
+StdItemPemethAvgL,     "WHERE ImportDate = (SELECT MAX(ImportDate) FROM StandardItemPEMETHAverage)) "
+// StdItemPemethAvgL,     "WHERE BaseDate IN (SELECT MAX(BaseDate) FROM StandardItemPEMETHAverage)) "
+StdItemPemethAvgL, "AND SI.Deleted IS NULL "
+StdItemPemethAvgL, "AND SpecYear = %CurSpecYear "
+StdItemPemethAvgL, "AND (SI.UnitType = %CurUnitType "
+StdItemPemethAvgL,      "OR SI.UnitType = NULL) "
+StdItemPemethAvgL, "ORDER BY StandardItemNumber "
+
+StdItemPemethRegL, "/* StdItemPemethRegL */ "
+StdItemPemethRegL, "SELECT DISTINCT StandardItemNumber, ShortDescription, "
+StdItemPemethRegL, "CodeValueID, SI.StandardItemKey, Unit "
+StdItemPemethRegL, "FROM StandardItem SI, CodeValue CV "
+StdItemPemethRegL, "WHERE Unit = CodeValueKey "
+StdItemPemethRegL,   "AND CV.CodeTableKey = 1000016 "
+StdItemPemethRegL, "AND SI.StandardItemKey "
+StdItemPemethRegL, "IN (SELECT StandardItemKey "
+StdItemPemethRegL,     "FROM StandardItemPEMETHRegression "
+StdItemPemethRegL,     "WHERE ImportDate = (SELECT MAX(ImportDate) FROM StandardItemPEMETHRegression)) "
+//  StdItemPemethRegL,     "WHERE BaseDate IN (SELECT MIN(BaseDate) FROM StandardItemPEMETHRegression)) "
+StdItemPemethRegL, "AND SI.Deleted IS NULL "
+StdItemPemethRegL, "AND SpecYear = %CurSpecYear "
+StdItemPemethRegL, "AND (SI.UnitType = %CurUnitType "
+StdItemPemethRegL,      "OR SI.UnitType = NULL) "
+StdItemPemethRegL, "ORDER BY StandardItemNumber "
+
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+StandardItemS,          "Standard Item %StandardItemNumber"
+StandardItemCatS,      "Standard Item Catalog"
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+ //
+//                                    
+// Dlg Id        Add Query ID        Change Query ID     Col Name               CtlID                  out Fmt   in fmt
+//-----------------------------------------------------------------------------------------------------------------------
+StanItemD,        StanItemD,         StanItemD,          StandardItemNumber,    DID_ITEMNUMBER      ,  "String", "String"
+StanItemD,        StanItemEditUnitC, StanItemEditUnitC,  CodeValueID,           DID_UNIT            ,  "String", "Number"
+StanItemD,        StanItemD,         StanItemD,          DefaultProductionRate, DID_DEFPRODUCTION   ,  "Number,...", "Number,..."
+StanItemD,        StanItemD,         StanItemD,          DefaultStartTime,      DID_STARTTIME       ,  "Number,%", "Number,.."
+StanItemD,        StanItemEditSY,    StanItemEditSY,     SpecYear,              DID_SPECYEAR        ,  "String", "Number"
+StanItemD,        StanItemD,         StanItemD,          ShortDescription,      DID_SHORTDESCRIPTION,  "String", "String"
+StanItemD,        StanItemD,         StanItemD,          LongDescription,       DID_LONGDESCRIPTION ,  "String", "*String"
+StanItemD,        StanItemD,         StanItemD,          LumpSum,               DID_LUMPSUM         ,  "Flag,0,1", "Flag,0,1"
+StanItemD,        StanItemD,         StanItemD,          UnitType,               DID_UNITSYS         ,  "Flag,0,1", "Flag"
+StanItemD,        ITIWND_ENUM,       ITIWND_ENUM,        RoundingPrecision,     DID_PRECISION       ,  "Precision", "Precision"
+
+StanItemDAdd,     StanItemDAdd,         StanItemD,          StandardItemNumber,    DID_ITEMNUMBER      ,  "String", "String"
+StanItemDAdd,     StanItemEditUnitC, StanItemEditUnitC,  CodeValueID,           DID_UNIT            ,  "String", "Number"
+StanItemDAdd,     StanItemDAdd,         StanItemD,          DefaultProductionRate, DID_DEFPRODUCTION   ,  "Number,...", "Number,..."
+StanItemDAdd,     StanItemDAdd,         StanItemD,          DefaultStartTime,      DID_STARTTIME       ,  "Number,%", "Number,.."
+StanItemDAdd,     StanItemEditSY,    StanItemEditSY,     SpecYear,              DID_SPECYEAR        ,  "String", "Number"
+StanItemDAdd,     StanItemDAdd,         StanItemD,          ShortDescription,      DID_SHORTDESCRIPTION,  "String", "String"
+StanItemDAdd,     StanItemDAdd,         StanItemD,          LongDescription,       DID_LONGDESCRIPTION ,  "String", "*String"
+StanItemDAdd,     StanItemDAdd,         StanItemD,          LumpSum,               DID_LUMPSUM         ,  "Flag,0,1", "Flag,0,1"
+StanItemDAdd,     StanItemDAdd,         StanItemD,          UnitType,               DID_UNITSYS         ,  "Flag,0,1", "Flag"
+StanItemDAdd,     ITIWND_ENUM,       ITIWND_ENUM,        RoundingPrecision,     DID_PRECISION       ,  "Precision", "Precision"
+
+StdItemAddPredD,  ITIWND_LIST,       ITIWND_LIST,        StandardItemNumber,    StandardItemCatL,      "Number", "Number"
+StdItemAddPredD,  ITIWND_ENUM,       ITIWND_ENUM,        Link,                  DID_LINK,              "Dependency", "Dependency"
+
+StdItemDelPredD,  ITIWND_LIST,       ITIWND_LIST,        StandardItemNumber,    StandardItemL1,        "Number", "Number"
+StdItemDelPredD,  ITIWND_LIST,       ITIWND_LIST,        StandardItemNumber,    StandardItemL2,        "Number", "Number"
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+StanItemD,      " /* StanItemD */ "
+StanItemD,      "UPDATE StandardItem SET "
+StanItemD,      "UnitType = (SELECT UnitType FROM CodeValue "
+StanItemD,                   "WHERE CodeValueKey = @CodeValueKey ) "
+StanItemD,      "WHERE StandardItemKey = %StandardItemKey "
+StanItemD,      " /* StanItemD */ "
+StanItemD,      "UPDATE StandardItem "
+StanItemD,      "SET "
+StanItemD,      "StandardItemNumber = @StandardItemNumber,"
+StanItemD,      "SpecYear = @SpecYear, "
+StanItemD,      "ShortDescription = @ShortDescription,"
+StanItemD,      "LongDescription = @LongDescription, "
+StanItemD,      "LumpSum = @LumpSum, "
+StanItemD,      "DefaultProductionRate = @DefaultProductionRate, "
+StanItemD,      "DefaultStartTime = @ DefaultStartTime, "
+StanItemD,      "Unit = @CodeValueKey, "
+StanItemD,      "RoundingPrecision = @RoundingPrecision "
+StanItemD,      "WHERE StandardItemKey = %StandardItemKey "
+
+
+
+StanItemDAdd,      " /* StanItemDAdd */ "
+StanItemDAdd,      "UPDATE StandardItem SET "
+StanItemDAdd,      "UnitType = (SELECT UnitType FROM CodeValue "
+StanItemDAdd,                   "WHERE CodeValueKey = @CodeValueKey ) "
+StanItemDAdd,      "WHERE StandardItemKey = %StandardItemKey "
+StanItemDAdd,      " /* StanItemDAdd */ "
+StanItemDAdd,      "UPDATE StandardItem "
+StanItemDAdd,      "SET "
+StanItemDAdd,      "StandardItemNumber = @StandardItemNumber,"
+StanItemDAdd,      "SpecYear = @SpecYear, "
+StanItemDAdd,      "ShortDescription = @ShortDescription,"
+StanItemDAdd,      "LongDescription = @LongDescription, "
+StanItemDAdd,      "LumpSum = @LumpSum, "
+StanItemDAdd,      "DefaultProductionRate = @DefaultProductionRate, "
+StanItemDAdd,      "DefaultStartTime = @ DefaultStartTime, "
+StanItemDAdd,      "Unit = @CodeValueKey, "
+StanItemDAdd,      "RoundingPrecision = @RoundingPrecision "
+StanItemDAdd,      "WHERE StandardItemKey = %StandardItemKey "
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+StanItemD,      "SELECT StandardItemNumber, SpecYear, ShortDescription, "
+StanItemD,      "LongDescription, LumpSum, DefaultProductionRate, DefaultStartTime, "
+StanItemD,      "Unit, RoundingPrecision "
+// StanItemD,      ", UnitType "
+StanItemD,      "FROM StandardItem HOLDLOCK "
+StanItemD,      "WHERE StandardItemKey = %StandardItemKey "
+
+
+StanItemDAdd,      "SELECT StandardItemNumber, SpecYear, ShortDescription, "
+StanItemDAdd,      "LongDescription, LumpSum, DefaultProductionRate, DefaultStartTime, "
+StanItemDAdd,      "Unit, RoundingPrecision "
+// StanItemDAdd,      ", UnitType "
+StanItemDAdd,      "FROM StandardItem HOLDLOCK "
+StanItemDAdd,      "WHERE StandardItemKey = %StandardItemKey "
+
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+StanItemD,      " /* StanItemD */ "
+StanItemD,      "INSERT INTO StandardItem "
+StanItemD,      "(StandardItemKey, StandardItemNumber, SpecYear, "
+StanItemD,      "ShortDescription, LongDescription, Unit, LumpSum, "
+StanItemD,      "DefaultProductionRate, DefaultStartTime, RoundingPrecision "
+ StanItemD,      ", UnitType "
+StanItemD,      ") VALUES "
+StanItemD,      "(@NewKey, @StandardItemNumber, @SpecYear, " 
+StanItemD,      "@ShortDescription, @LongDescription, @"DID_UNIT"CodeValueKey, @LumpSum, "
+StanItemD,      "@DefaultProductionRate, @DefaultStartTime, @RoundingPrecision "
+ StanItemD,      ", %CurUnitType "
+StanItemD,      ") "
+
+
+StanItemDAdd,      " /* StanItemDAdd */ "
+StanItemDAdd,      "INSERT INTO StandardItem "
+StanItemDAdd,      "(StandardItemKey, StandardItemNumber, SpecYear, "
+StanItemDAdd,      "ShortDescription, LongDescription, Unit, LumpSum, "
+StanItemDAdd,      "DefaultProductionRate, DefaultStartTime, RoundingPrecision "
+// StanItemDAdd,      ", UnitType "
+StanItemDAdd,      ") VALUES "
+StanItemDAdd,      "(@NewKey, @StandardItemNumber, @SpecYear, " 
+StanItemDAdd,      "@ShortDescription, @LongDescription, @"DID_UNIT"CodeValueKey, @LumpSum, "
+StanItemDAdd,      "@DefaultProductionRate, @DefaultStartTime, @RoundingPrecision "
+// StanItemDAdd,      ", @UnitType "
+StanItemDAdd,      ") "
+
+
+
+
+
+// _StdItemAddPredD,  " /* StdItemAddPredD */ "
+// _StdItemAddPredD,  "INSERT INTO StandardItemDependency "
+// _StdItemAddPredD,  "(PredecessorItemKey, SuccessorItemKey,Link,Lag) "
+// _StdItemAddPredD,  "VALUES (@StandardItemKey, @StandardItemKey, "
+// _StdItemAddPredD,         " @Link, @Lag) "
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+// Window ID            Query String
+//-------------------------------------------------------------------------
+
+
+StandardItemCatL, "UPDATE StandardItem "
+StandardItemCatL, "SET Deleted = 1 "
+StandardItemCatL, "WHERE StandardItemKey IN (%StandardItemKey{,%StandardItemKey}) "
+
+
+
+:query impquery.bin
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------------
+COPYSTANDARDITEM,       "INSERT INTO %ProductionDatabase..StandardItem "
+COPYSTANDARDITEM,       "(StandardItemKey, StandardItemNumber, SpecYear, "
+COPYSTANDARDITEM,       "ShortDescription, LongDescription, Unit, LumpSum, "
+COPYSTANDARDITEM,       "DefaultProductionRate, DefaultStartTime, "
+COPYSTANDARDITEM,       "RoundingPrecision "
+COPYSTANDARDITEM,       ", UnitType "
+COPYSTANDARDITEM,       ") SELECT "
+COPYSTANDARDITEM,       "StandardItemKey, StandardItemNumber, SpecYear, "
+COPYSTANDARDITEM,       "ShortDescription, LongDescription, Unit, LumpSum, "
+COPYSTANDARDITEM,       "DefaultProductionRate, DefaultStartTime, "
+COPYSTANDARDITEM,       "RoundingPrecision "
+COPYSTANDARDITEM,       ", UnitType "
+COPYSTANDARDITEM,       "FROM StandardItem "
+COPYSTANDARDITEM,       "WHERE Unit is NOT NULL "
+COPYSTANDARDITEM,       "AND StandardItemKey is NOT NULL "
+COPYSTANDARDITEM,       "AND StandardItemNumber NOT "
+COPYSTANDARDITEM,       "IN (SELECT "
+COPYSTANDARDITEM,           "PD.StandardItemNumber "
+COPYSTANDARDITEM,           "FROM %ProductionDatabase..StandardItem PD,"
+COPYSTANDARDITEM,           " StandardItem SI "
+COPYSTANDARDITEM,           "WHERE PD.SpecYear = SI.SpecYear "
+COPYSTANDARDITEM,           "AND PD.StandardItemNumber = SI.StandardItemNumber) "
+// 920807-4101 mdh: commented below line out, because the SpecYear column
+//                  in the import database is not nullable.
+//COPYSTANDARDITEM,       "AND SpecYear is NOT NULL "
+
+
+FINDDUPLICATES,       "SELECT StandardItemNumber, SpecYear "
+FINDDUPLICATES,       "FROM %ProductionDatabase..StandardItem "
+FINDDUPLICATES,       "WHERE StandardItemNumber "
+FINDDUPLICATES, "IN (SELECT "
+FINDDUPLICATES,     "StandardItemNumber "
+FINDDUPLICATES,     "FROM StandardItem "
+FINDDUPLICATES,     "WHERE %ProductionDatabase..StandardItem.SpecYear = SpecYear) "
+// 2 NOV 94 tlb  Note same clause must be used above in COPYSTANDARDITEM!
+// FINDDUPLICATES,       "WHERE Unit is NOT NULL "
+// FINDDUPLICATES,       "AND StandardItemKey is NOT NULL "
+
+
+
+COPYSTANDARDITEM_METRIC,       " /* COPYSTANDARDITEM_METRIC */ "
+COPYSTANDARDITEM_METRIC,       "INSERT INTO %ProductionDatabase..StandardItem "
+COPYSTANDARDITEM_METRIC,       "(StandardItemKey, StandardItemNumber, SpecYear, "
+COPYSTANDARDITEM_METRIC,       "ShortDescription, LongDescription, Unit, LumpSum, "
+COPYSTANDARDITEM_METRIC,       "DefaultProductionRate, DefaultStartTime, "
+COPYSTANDARDITEM_METRIC,       "RoundingPrecision "
+COPYSTANDARDITEM_METRIC,       ", UnitType "
+COPYSTANDARDITEM_METRIC,       ") SELECT "
+COPYSTANDARDITEM_METRIC,       "StandardItemKey, StandardItemNumber, SpecYear, "
+COPYSTANDARDITEM_METRIC,       "ShortDescription, LongDescription, Unit, LumpSum, "
+COPYSTANDARDITEM_METRIC,       "DefaultProductionRate, DefaultStartTime, "
+COPYSTANDARDITEM_METRIC,       "RoundingPrecision "
+COPYSTANDARDITEM_METRIC,       ", UnitType "
+COPYSTANDARDITEM_METRIC,       "FROM StandardItem "
+COPYSTANDARDITEM_METRIC,       "WHERE Unit is NOT NULL "
+COPYSTANDARDITEM_METRIC,       "AND StandardItemKey is NOT NULL "
+COPYSTANDARDITEM_METRIC,       "AND SpecYear > 1900 "
+COPYSTANDARDITEM_METRIC,       "AND StandardItemNumber NOT "
+COPYSTANDARDITEM_METRIC,       "IN (SELECT "
+COPYSTANDARDITEM_METRIC,           "PD.StandardItemNumber "
+COPYSTANDARDITEM_METRIC,           "FROM %ProductionDatabase..StandardItem PD,"
+COPYSTANDARDITEM_METRIC,           " StandardItem SI "
+COPYSTANDARDITEM_METRIC,           "WHERE PD.SpecYear = SI.SpecYear "
+COPYSTANDARDITEM_METRIC,           "AND PD.UnitType = SI.UnitType "
+COPYSTANDARDITEM_METRIC,           "AND PD.StandardItemNumber = SI.StandardItemNumber) "
+
+
+FINDDUPLICATES_METRIC, " /* FINDDUPLICATES_METRIC */ "
+FINDDUPLICATES_METRIC, "SELECT "
+FINDDUPLICATES_METRIC,        " P.StandardItemKey"
+FINDDUPLICATES_METRIC,       ", I.ShortDescription"
+FINDDUPLICATES_METRIC,       ", I.LongDescription"
+FINDDUPLICATES_METRIC,       ", I.Unit"
+FINDDUPLICATES_METRIC,       ", I.LumpSum"
+FINDDUPLICATES_METRIC,       ", I.DefaultProductionRate"
+FINDDUPLICATES_METRIC,       ", I.DefaultStartTime"
+FINDDUPLICATES_METRIC,       ", I.RoundingPrecision"
+FINDDUPLICATES_METRIC,       ", I.StandardItemNumber"
+FINDDUPLICATES_METRIC,       ", I.SpecYear "
+FINDDUPLICATES_METRIC,       ", I.UnitType "
+FINDDUPLICATES_METRIC, "FROM %ProductionDatabase..StandardItem P "
+FINDDUPLICATES_METRIC,     ", DSShellImport..StandardItem I "
+FINDDUPLICATES_METRIC, "WHERE I.StandardItemNumber = P.StandardItemNumber "
+FINDDUPLICATES_METRIC,  " AND P.StandardItemKey > 999999 "
+FINDDUPLICATES_METRIC,  " AND P.SpecYear = I.SpecYear "
+FINDDUPLICATES_METRIC,  " AND P.Deleted = NULL "
+FINDDUPLICATES_METRIC,  " AND (P.UnitType = I.UnitType "
+FINDDUPLICATES_METRIC,       " OR (P.UnitType = NULL "
+FINDDUPLICATES_METRIC,           " AND I.UnitType = NULL )  "
+FINDDUPLICATES_METRIC,       " OR P.UnitType = NULL  "
+FINDDUPLICATES_METRIC,      " ) "
+
+UPDATEDUPLICATES_METRIC, " /* StdItem.met.UPDATEDUPLICATES_METRIC */ "
+UPDATEDUPLICATES_METRIC, "UPDATE %s..StandardItem "
+UPDATEDUPLICATES_METRIC,    "SET  StandardItemKey = %s "
+UPDATEDUPLICATES_METRIC,       ", ShortDescription = '%s' "
+UPDATEDUPLICATES_METRIC,       ", LongDescription = '%s' "
+UPDATEDUPLICATES_METRIC,       ", Unit = %s "
+UPDATEDUPLICATES_METRIC,       ", LumpSum = %s "
+UPDATEDUPLICATES_METRIC,       ", DefaultProductionRate = %s "
+UPDATEDUPLICATES_METRIC,       ", DefaultStartTime = %s "
+UPDATEDUPLICATES_METRIC,       ", RoundingPrecision = %s "
+UPDATEDUPLICATES_METRIC, "WHERE StandardItemNumber = '%s' "
+UPDATEDUPLICATES_METRIC,  " AND Deleted = NULL "
+UPDATEDUPLICATES_METRIC,  " AND SpecYear = %s "
+UPDATEDUPLICATES_METRIC,  " AND UnitType = %s "
+
+UPDATEDUPS, " /* StdItem.met.UPDATEDUPS */ "
+UPDATEDUPS, "UPDATE %s..StandardItem "
+UPDATEDUPS,    "SET "
+UPDATEDUPS,       " StandardItemKey = %s "
+
+UPDATEDUPS_SHORT,       ", ShortDescription = '%s' "
+
+UPDATEDUPS_LONG,        ", LongDescription = '%s' "
+
+UPDATEDUPS_UNIT,        ", Unit = %s "
+
+UPDATEDUPS_LUMPSUM,     ", LumpSum = %s "
+
+UPDATEDUPS_DEFPROD,     ", DefaultProductionRate = %s "
+
+UPDATEDUPS_DEFSTART,    ", DefaultStartTime = %s "
+
+UPDATEDUPS_RNDPREC,     ", RoundingPrecision = %s "
+
+UPDATEDUPS_WHERE, "WHERE StandardItemNumber = '%s' "
+UPDATEDUPS_WHERE,  " AND Deleted = NULL "
+UPDATEDUPS_WHERE,  " AND SpecYear = %s "
+UPDATEDUPS_WHERE,  " AND UnitType = %s "
+
+

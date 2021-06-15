@@ -1,0 +1,90 @@
+~ template premake file
+
+
+~ Set the TARGET macro to be the name of what you are building.  
+
+TARGET=ad-hoc
+
+~ Set the TARGETDIR macro to be the relative path of the subdirectory you
+~ are working in.  For exaple, use "TARGET=..\mydir^\" if you are working
+~ in the directory mydir.  Note that the ^\ at the end of the path
+~ is required.
+TARGETDIR=..\ad-hoc^\
+
+
+~ Set the SourceFiles file list to be all of the source code files
+~ for your module.
+
+:FileList SourceFiles =
+   {
+   InitCat, ad-hoc 
+   }
+
+
+~ Use the OtherObj to list any .obj files you may need to link to.
+~ For example, if you need to have DLL initialization code, you would
+~ have either itiblli or itidllc for the OtherObj.
+
+:FileList OtherObj = 
+   {
+   ..\lib\itidllc
+   }
+
+
+~ use LibFiles for the libraries in the ..\lib subdirectory.  For
+~ example, if you use the ItiMem functions, you would specify ItiBase.
+
+:FileList LibFiles =
+   {
+   itibase, itiutil, iticrt, itidbase, itifmt, 
+   itiest,  itiwin, itimbase, itimenu
+   }
+
+
+
+:FileList MetFiles =
+   {
+   child, data, format, list, label, query, title  , static
+   }
+
+!include "..\makeopts"
+
+all: $(EXEDIR)$(TARGET).dll
+
+
+
+~ build metadata resource files
+static.bin : $(TARGET).met {I: ad-hoc.met}
+   $(EXEDIR)BuildRes $(TARGET).met
+
+$(TARGET).res: {I: ad-hoc.rc} static.bin $(TARGET).rc 
+   rc -r $(DEBUG) $*.rc
+
+
+
+
+$(LIBDIR)ad-hoc.lib: ad-hoc.def
+   implib -nologo $*.lib $?
+
+
+
+
+:Expand SourceFiles,{"cl $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+
+$(EXEDIR)$(TARGET).dll: {F: SourceFiles,,obj} {F: OtherObj,$(LIBDIR),obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def $(TARGET).pre $(TARGET).RES
+   link @<<$(TARGET).lnk
+      {F: SourceFiles,,}/nologo/noi/nod$(LDEBUG) +
+      {F: OtherObj,,}  crtdll_i
+      $(EXEDIR)$(TARGET).dll
+      $(@B).map
+      {F: LibFiles,,} os2
+      $(TARGET).def
+<<NOKEEP
+   rc $(@B).res $*.dll
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+
+
+
+

@@ -1,0 +1,56 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 22, 25, 167, 123, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 102, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "DS/Shell Browser", 257, 53, 111, 93, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 67, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "¸ %s Info Tech, Inc.", DID_COPY2, 5, 77, 158, 8, 
+                WC_STATIC, SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Release %s%s", DID_VERSION, 54, 101, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "5700 SW 34th Street", 258, 5, 57, 158, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Suite 1235", 262, 5, 47, 155, 6, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Gainesville, FL  32608", 265, 5, 37, 157, 8, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 158, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_INITIAL PRELOAD MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_INITIAL, 73, 88, 192, 52, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 7, 29, 21, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "DS/Shell Browser", 257, 35, 38, 92, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "Release %s %s", DID_VERSION, 35, 28, 150, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "¸ %s Info Tech, Inc.", DID_COPY2, 4, 15, 186, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+

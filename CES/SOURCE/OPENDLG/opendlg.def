@@ -1,0 +1,44 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+;|                                                                          |
+;|       This program module is part of DS/Shell (PC), Info Tech's          |
+;|       database interfaces for OS/2, a proprietary product of             |
+;|       Info Tech, Inc., no part of which may be reproduced or             |
+;|       transmitted in any form or by any means, electronic,               |
+;|       mechanical, or otherwise, including photocopying and recording     |
+;|       or in connection with any information storage or retrieval         |
+;|       system, without permission in writing from Info Tech, Inc.         |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+LIBRARY OPENDLG  INITINSTANCE
+PROTMODE
+
+DESCRIPTION 'OS/2 File Dialog Library'
+
+STUB        'OS2STUB.EXE'
+
+HEAPSIZE    2048
+
+DATA NONSHARED
+
+SEGMENTS
+    _TEXT	PRELOAD		CONFORMING	IOPL
+    _INIT	PRELOAD
+    _FILE
+
+EXPORTS
+    ALERTBOX		@21
+    LSTRLEN		@22
+    LSTRCAT		@23
+    LSTRCPY		@24
+    LSTRCMP		@25
+    SETUPDLF		@26
+    DLGFILE		@27
+    OPENFILE		@28
+    FILEINPATH		@29
+    LCOPYSTRUCT		@30
+    LFILLSTRUCT		@31
+

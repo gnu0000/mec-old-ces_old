@@ -1,0 +1,38 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1994 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+TARGET=csvrep
+TARGETDIR=..\csvrep^\
+
+:FileList SourceFiles =   { csvrep }
+
+:FileList LibFiles =   { ItiUtil,
+                         iticrt }
+
+:FileList OtherObj = { crtexe }
+
+!include "..\makeopts"
+
+all: $(TARGET).exe 
+
+:Expand SourceFiles,{"cl $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"} ,,obj,,c,INCLUDES
+
+
+$(TARGET).exe: {F: SourceFiles,,obj} {F: LibFiles,$(LIBDIR),lib} $(TARGET).def 
+   $(LINK) @<<$(TARGET).lnk
+           $(LFLAGS) $(LDEBUG)/NOI/NOD/M +
+           {F: SourceFiles,,} +
+           {F: OtherObj,,} 
+           $*.exe
+           $(@B).map
+           {F: LibFiles,$(LIBDIR),LIB} os2.lib
+           $(@B).def
+<<NOKEEP
+   cvpack /p $*.exe
+#   copy $(TARGET).exe   $(EXEDIR)$(TARGET).exe
+
+

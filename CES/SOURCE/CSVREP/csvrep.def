@@ -1,0 +1,11 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1994 by Info Tech, Inc.  All Rights Reserved.        |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+NAME           CSVREP  WINDOWCOMPAT
+DESCRIPTION    'Info Tech CSV Utility.  Copyright (C) 1994 Info Tech, Inc.'
+STACKSIZE      12000
+

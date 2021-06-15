@@ -1,0 +1,95 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 151, 91, 140, 108, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 88, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "BAMS/DSS Browser: Item", 257, 53, 98, 46, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 47, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "¸ 1991 AASHTO", 263, 5, 71, 131, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Version 0.00", DID_VERSION, 53, 87, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "444 North Capitol Street, NW #225", 258, 5, 57, 129, 6, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Washington, DC  20001", 262, 5, 47, 129, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Fax: (352) 373-9586", 265, 5, 37, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 129, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE SQLBrowserDialog LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "BAMS/CES Browser: SQL", SQLBrowserDialog, 16, 4, 308, 168, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "SQL Query:", DID_QUERY + DID_STOFFSET, 4, 158, 98, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUERY, 4, 94, 254, 64, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Copy", DID_COPYQUERY, 264, 112, 37, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+        CONTROL "~Paste", DID_PASTE, 264, 94, 37, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+        CONTROL "~Execute", DID_EXECUTE, 264, 142, 37, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+
+        CONTROL "SQL Results:", DID_RESULTS + DID_STOFFSET, 4, 84, 98, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_RESULTS, 4, 0, 254, 84, WC_MLE, MLS_BORDER | MLS_READONLY | 
+                MLS_HSCROLL | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Cop~y", DID_COPYRESULTS, 264, 72, 37, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+        CONTROL "~Search", DID_SEARCH, 264, 44, 37, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+        CONTROL "Clea~r", DID_CLEARRESULTS, 264, 26, 37, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+        CONTROL "~Help", DID_HELP, 264, 8, 37, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE | BS_NOPOINTERFOCUS
+    END
+END
+
+
+DLGTEMPLATE IDD_SEARCH LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Search", IDD_SEARCH, 58, 89, 161, 60, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Search For:", DID_SEARCH + DID_STOFFSET, 6, 49, 48, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_SEARCH, 8, 37, 140, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", DID_OK, 18, 10, 29, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 61, 10, 32, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 107, 10, 29, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+

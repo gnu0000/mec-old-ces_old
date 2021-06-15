@@ -1,0 +1,158 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+                                                                                                                       
+DLGTEMPLATE StanItemD LOADONCALL MOVEABLE DISCARDABLE                                                        
+BEGIN                                                                                                              
+    DIALOG "Standard Item", StanItemD, 9, 44, 375, 165, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR 
+    BEGIN                   
+        CONTROL "~Standard Item Number",    DID_ITEMNUMBER+DID_STOFFSET,       9,     151,  102,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_ITEMNUMBER,                    11,    139,  90,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Spec ~Year",               DID_SPECYEAR+DID_STOFFSET,         115,   151,  46,   8,   WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_SPECYEAR,                      111,   102,  54,  47,   WC_COMBOBOX,   CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        //   CONTROL "",                         DID_SPECYEAR,                      117,   139,  39,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Default Start ~Time",      DID_STARTTIME+DID_STOFFSET,        171,   151,  86,   8,   WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_STARTTIME,                     175,   139,  66,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Default Production ~Rate",     DID_DEFPRODUCTION+DID_STOFFSET,258,   151,  108,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_DEFPRODUCTION,                 260,   139,  96,   9,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Short ~Description",       DID_SHORTDESCRIPTION+DID_STOFFSET, 9,     127,  76,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_SHORTDESCRIPTION,              11,    116,  351,  8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Long Description",        DID_LONGDESCRIPTION+DID_STOFFSET,  9,     103,  77,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_LONGDESCRIPTION,               9,     69,   357,  32,  WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit",                    DID_UNIT+DID_STOFFSET,             43,    57,   20,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_UNIT,                          11,    8,    98,   47,  WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Rounding ~Precision",      DID_PRECISION+DID_STOFFSET,        135,   57,   88,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_PRECISION,                     124,   9,    115,  46,  WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Lump Sum",                 DID_LUMPSUM,                       259,   53,   60,   10,  WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Add Dependency",           DID_ADDEP,                         14,    13,   91,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Delete Dependency",        DID_DEDEP,                         124,   13,   91,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK",                      1,                                 267,   31,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel",                  2,                                 318,   31,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help",                    3,                                 267,   13,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | BS_HELP | WS_TABSTOP | WS_VISIBLE
+    //    CONTROL "Add ~More",                4,                                 316,   13,   45,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+                                                                                                                       
+DLGTEMPLATE StanItemDAdd LOADONCALL MOVEABLE DISCARDABLE                                                        
+BEGIN                                                                                                              
+    DIALOG "Standard Item", StanItemD, 9, 44, 375, 165, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR 
+    BEGIN                   
+        CONTROL "~Standard Item Number",    DID_ITEMNUMBER+DID_STOFFSET,       9,     151,  102,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_ITEMNUMBER,                    11,    139,  90,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Spec ~Year",               DID_SPECYEAR+DID_STOFFSET,         115,   151,  46,   8,   WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_SPECYEAR,                      111,   102,  54,  47,   WC_COMBOBOX,   CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        //   CONTROL "",                         DID_SPECYEAR,                      117,   139,  39,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Default Start ~Time",      DID_STARTTIME+DID_STOFFSET,        171,   151,  86,   8,   WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_STARTTIME,                     175,   139,  66,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Default Production ~Rate",     DID_DEFPRODUCTION+DID_STOFFSET,258,   151,  108,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_DEFPRODUCTION,                 260,   139,  96,   9,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Short ~Description",       DID_SHORTDESCRIPTION+DID_STOFFSET, 9,     127,  76,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_SHORTDESCRIPTION,              11,    116,  351,  8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Long Description",        DID_LONGDESCRIPTION+DID_STOFFSET,  9,     103,  77,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_LONGDESCRIPTION,               9,     69,   357,  32,  WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit",                    DID_UNIT+DID_STOFFSET,             43,    57,   20,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_UNIT,                          11,    8,    98,   47,  WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Rounding ~Precision",      DID_PRECISION+DID_STOFFSET,        135,   57,   88,   8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",                         DID_PRECISION,                     124,   9,    115,  46,  WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Lump Sum",                 DID_LUMPSUM,                       259,   53,   60,   10,  WC_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+
+  //      CONTROL "Add Dependency",           DID_ADDEP,                         14,    13,   91,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+  //      CONTROL "Delete Dependency",        DID_DEDEP,                         124,   13,   91,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK",                      1,                                 267,   31,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel",                  2,                                 318,   31,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help",                    3,                                 267,   13,   38,   13,  WC_BUTTON, BS_PUSHBUTTON | BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More",                4,                                 316,   13,   45,   13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+DLGTEMPLATE StdItemAddPredD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Text", StdItemAddPredD, 31, 76, 360, 140, FS_NOBYTEALIGN | FS_DLGBORDER | 
+             WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Standard Item Catalog", 200,              11,   97,  138, 8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                      StandardItemCatL, 13,   16,  255, 79,  "LISTWINDOW", WS_GROUP | WS_VISIBLE
+
+        CONTROL "Std Item Number",       200,              13,   125, 81,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                      DID_ITEMNUMBER,   15,   114, 72,  8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Lag",                   200,              101,  125, 81,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                      DID_LAG,          103,  114, 68,  8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Link Type",             200,              186,  126, 81,  8,   WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                      DID_LINK,         185,  74,  80,  50,  WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Link As",               200,              276,  101, 78,  34,  WC_STATIC, SS_GROUPBOX | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Predecessor",           DID_PRED,         281,  116, 66,  10,  WC_BUTTON, BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Successor",             DID_SUCC,         281,  105, 58,  10,  WC_BUTTON, BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "OK",                    1,                303,  53,  48,  13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Cancel",                2,                303,  36,  48,  13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add More",              4,                303,  18,  48,  13,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE StdItemDelPredD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Text", StdItemDelPredD, 101, 56, 314, 154, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU |                 FCF_TITLEBAR
+    BEGIN
+        CONTROL "Predecessor Items",   200,         9,     140,  95,   8,    WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                    StandardItemL1,   9,     80,   236,  58,   "LISTWINDOW", WS_GROUP | WS_VISIBLE
+//        CONTROL "",                  PredLinkL,   9,     80,   236,  58,   "LISTWINDOW", WS_GROUP | WS_VISIBLE
+        CONTROL "Delete\nPredecessor", DID_PRED,    248,   116,  57,   23,   WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Successor Items",     200,         9,     67,   95,   8,    WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "",                    StandardItemL2,   9,     6,    236,  58,   "LISTWINDOW", WS_GROUP | WS_VISIBLE
+//        CONTROL "",                  SuccLinkL,   9,     6,    236,  58,   "LISTWINDOW", WS_GROUP | WS_VISIBLE
+        CONTROL "Delete\nSuccessor",   DID_SUCC,    248,   42,   57,   23,   WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "OK",                  DID_OK,      271,   6,    38,   13,   WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+

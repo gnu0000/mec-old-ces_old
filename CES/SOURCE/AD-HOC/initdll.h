@@ -1,0 +1,3 @@
+
+extern HMODULE hmod;
+

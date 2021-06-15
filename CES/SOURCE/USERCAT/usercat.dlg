@@ -1,0 +1,159 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+DLGTEMPLATE UserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "User", UserD, 11, 35, 292, 131, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~User ID", DID_USERID+DID_STOFFSET, 13, 118, 36, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_USERID, 15, 107, 120, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "U~ser Type", DID_USERTYPE+DID_STOFFSET, 165, 118, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_USERTYPE, 165, 74, 84, 42, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Password", DID_PASSWORD+DID_STOFFSET, 13, 89, 46, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PASSWORD, 15, 77, 263, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Name", DID_NAME+DID_STOFFSET, 13, 62, 28, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NAME, 15, 50, 265, 7, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "P~hone Number", DID_PHONENUMBER+DID_STOFFSET 13, 34, 65, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PHONENUMBER, 15, 22, 266, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 56, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 100, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 145, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 190, 4, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE DefJobUserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG " Default Job User", DefJobUserD, 46, 39, 273, 93, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "", DID_USERID, 30, 70, 75, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "User ~Granted Privilege", DID_USERID+DID_STOFFSET, 20, 81, 98, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+
+        CONTROL "Access Privilege", 261, 177, 44, 81, 44, WC_STATIC, SS_GROUPBOX | 
+                WS_GROUP | WS_VISIBLE
+
+        CONTROL "O~wner", DID_OWNER, 195, 68, 41, 10, WC_BUTTON, BS_RADIOBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~User", DID_USER, 195, 58, 32, 10, WC_BUTTON, BS_RADIOBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Viewer", DID_VIEWER, 195, 48, 47, 10, WC_BUTTON, BS_RADIOBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "User Catalog", 263, 56, 55, 62, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 174, 25, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 221, 25, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 171, 10, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 219, 10, 44, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "LISTWINDOW", DefJobUserL, 12, 5, 146, 48, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CatalogUserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "User's Catalog Access", CatalogUserD, 18, 22, 183, 90, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Catalog:", DID_CATALOGID + DID_STOFFSET, 6, 77, 38, 8, WC_STATIC, SS_TEXT | DT_RIGHT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CATALOGID, 56, 77, 121, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+
+        CONTROL "User:", DID_USERID + DID_STOFFSET, 6, 65, 38, 8, WC_STATIC, SS_TEXT | DT_RIGHT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_USERID, 56, 65, 121, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NAME, 56, 55, 121, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+
+        CONTROL "~Permission:", DID_PERMISSION + DID_STOFFSET, 9, 47, 78, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PERMISSION, 9, 10, 100, 35, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 15, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 74, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 130, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE ApplicationUserD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Application Users", ApplicationUserD, 18, 17, 209, 102, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Application:", DID_APPLICATIONID + DID_STOFFSET, 8, 91, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_RIGHT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_APPLICATIONID, 64, 91, 132, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+
+        CONTROL "~User:", ApplicationUserDL + DID_STOFFSET, 9, 77, 28, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "LISTWINDOW", ApplicationUserDL, 10, 26, 185, 48, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 11, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 64, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 114, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Add More", DID_ADDMORE, 159, 5, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+

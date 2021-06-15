@@ -1,0 +1,285 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * MENU.rc
+ * Mark Hampton
+ * Copyright (C) 1990 Info Tech, Inc.
+ *
+ * This file contains the accellerators and menus for ces
+ * There are 2 menus here, only one of which is used at a
+ * time, depending on the state of the pre-processor constant
+ * DEBUG 
+ */
+
+
+/*
+ * This file contains the default accelerator table for DS/Shell.
+ * This file is rcincluded by dsshell.rc.
+ */
+ACCELTABLE BAMSDSS_ACCELERATORS
+   {
+   VK_INSERT, IDM_COPY,    VIRTUALKEY, CONTROL
+   VK_DELETE, IDM_CUT,     VIRTUALKEY, CONTROL
+   VK_INSERT, IDM_PASTE,   VIRTUALKEY, SHIFT
+   VK_DELETE, IDM_DELETE,  VIRTUALKEY
+   VK_INSERT, IDM_ADD,     VIRTUALKEY
+   "c",       IDM_CHANGE,  CHAR,       CONTROL
+   "C",       IDM_CHANGE,  CHAR,       CONTROL
+   VK_F4,     SC_CLOSE,    VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F5,     SC_RESTORE,  VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F6,     SC_NEXT,     VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F7,     SC_MOVE,     VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F8,     SC_SIZE,     VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F9,     SC_MINIMIZE, VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F10,    SC_MAXIMIZE, VIRTUALKEY, CONTROL, SYSCOMMAND
+   VK_F11,    IDM_NORMALSIZE, VIRTUALKEY, CONTROL, SYSCOMMAND
+   "-",       IDM_SYSMENU, CHAR,       ALT,     SYSCOMMAND
+   }
+
+
+
+#if !defined (DEBUG)
+
+/*
+ * This file contains the default main menu resource.  This file is 
+ * rcincluded by BAMSDSS.rc.
+ */
+MENU BAMSDSS_MAIN_MENU
+   {
+   SUBMENU "~File",                          IDM_FILE_MENU
+      {
+      MENUITEM "Open Propo~sal...",          IDM_OPEN_PROPOSAL
+      MENUITEM "Open Pro~ject...",           IDM_OPEN_PROJECT
+      SUBMENU "Open Ca~talog",               IDM_OPEN_CATALOG_MENU
+         {
+         }
+      MENUITEM "~Close",                     IDM_CLOSE
+      MENUITEM SEPARATOR
+      SUBMENU "~Print",                      IDM_PRINT_MENU
+         {
+         }
+      MENUITEM "Printer ~Setup...",          IDM_PRINTER_SETUP   
+      MENUITEM SEPARATOR
+      MENUITEM "~Import...",                 IDM_IMPORT
+      MENUITEM "~Export...",                 IDM_EXPORT
+      MENUITEM SEPARATOR
+      SUBMENU "~Run",                        IDM_RUN_MENU
+         {
+         MENUITEM "~Item Browser",           IDM_RUN_ITEM_BROWSER
+         MENUITEM "Proposal ~Browser",       IDM_RUN_PROPOSAL_BROWSER
+         MENUITEM "~Facility Browser",       IDM_RUN_FACILITY_BROWSER
+         MENUITEM "S~QL Browser",            IDM_RUN_SQL_BROWSER
+         MENUITEM SEPARATOR
+         MENUITEM "Parametric ~Profile Analysis",  IDM_PROFILE_ANAL
+         MENUITEM "Major Item ~Quantity Analysis", IDM_QUANTITY_ANAL
+         MENUITEM "Major Item P~rice Analysis",    IDM_PRICE_ANAL
+         MENUITEM SEPARATOR
+         MENUITEM "~Other...",               IDM_RUN_OTHER
+         }
+//      MENUITEM "Pr~ocess Status",            IDM_PROCESS_STATUS
+      MENUITEM SEPARATOR
+      MENUITEM "E~xit",                      IDM_EXIT
+      }
+
+   SUBMENU "~Edit",                          IDM_EDIT_MENU
+      {
+      MENUITEM "~Add...\tIns",               IDM_ADD
+      MENUITEM "~Change...\t^C",             IDM_CHANGE
+      MENUITEM "~Delete\tDel",               IDM_DELETE
+      MENUITEM SEPARATOR
+      MENUITEM "C~ut\tShift-Del",            IDM_CUT
+      MENUITEM "Co~py\tCtrl-Ins",            IDM_COPY
+      MENUITEM "~Paste\tShift-Ins",          IDM_PASTE
+      }
+
+   SUBMENU "~View",                          IDM_VIEW_MENU
+      {
+      MENUITEM "~Parent",                    IDM_PARENT
+      }
+
+
+   SUBMENU "~Utilities",                     IDM_UTILITIES_MENU
+      {
+      MENUITEM "~Find...",                   IDM_FIND
+      MENUITEM "~Sort...",                   IDM_SORT
+      MENUITEM SEPARATOR
+      MENUITEM "Set ~Preferences...",        IDM_SET_PREFERENCES
+      MENUITEM "~Change Password...",        IDM_CHANGE_PASSWORD
+      MENUITEM SEPARATOR
+      SUBMENU  "Select SpecYear",            IDM_OPEN_SPECYEAR_MENU
+         {
+         }
+      MENUITEM "Switch English/Metric",      IDM_TOGGLE_SPECBOOK
+      MENUITEM SEPARATOR
+      MENUITEM "Show ~Users...",             IDM_SHOW_USERS
+      MENUITEM "Send ~Message...",           IDM_SEND_MESSAGE
+      MENUITEM SEPARATOR
+      MENUITEM "~Install...",                IDM_INSTALL
+      MENUITEM "~Deny Logon...",             IDM_DENY_LOGON
+      MENUITEM SEPARATOR
+      MENUITEM "~Generate Support Request...", IDM_GENERATE_SUPPORT_REQUEST
+      MENUITEM SEPARATOR
+      MENUITEM "Recalc HP Major Items",         IDM_SYS_MGR
+      }
+
+   SUBMENU "~Window",                        IDM_WINDOW_MENU
+      {
+      MENUITEM "Arrange ~Cascaded",          IDM_ARRANGE_CASCADED
+      MENUITEM "Arrange ~Tiled",             IDM_ARRANGE_TILED
+      }
+   SUBMENU "~Help",                          IDM_HELPMENU, MIS_BUTTONSEPARATOR
+      {
+      MENUITEM "~Index",                     IDM_INDEX
+      MENUITEM "~Keyboard",                  IDM_KEYBOARD
+      MENUITEM "~Mouse",                     IDM_MOUSE
+      MENUITEM SEPARATOR
+      MENUITEM "~Commands",                  IDM_COMMANDS
+      MENUITEM "~Procedures",                IDM_PROCEDURES
+      MENUITEM "~Glossary",                  IDM_GLOSSARY
+      MENUITEM SEPARATOR
+      MENUITEM "~Using Help",                IDM_GENERALHELP
+      MENUITEM SEPARATOR
+      MENUITEM "~About...",                  IDM_ABOUT
+      }
+   
+   }
+
+#endif
+
+
+
+
+#if defined (DEBUG)
+
+/*
+ * This file contains the default main menu for dubeggin versions of
+ * BAMS/DSS.  This file is rcincluded by BAMSDSS.rc.
+ */
+MENU BAMSDSS_MAIN_MENU
+   {
+   SUBMENU "~File",                          IDM_FILE_MENU
+      {
+      MENUITEM "Open ~Proposal...",          IDM_OPEN_PROPOSAL
+      MENUITEM "Open Pro~ject...",           IDM_OPEN_PROJECT
+      SUBMENU "Open Ca~talog",               IDM_OPEN_CATALOG_MENU
+         {
+         }
+      MENUITEM "~Close",                     IDM_CLOSE
+      MENUITEM SEPARATOR
+      SUBMENU "~Print",                      IDM_PRINT_MENU
+         {
+         }
+      MENUITEM "Printer ~Setup...",          IDM_PRINTER_SETUP   
+      MENUITEM SEPARATOR
+      MENUITEM "~Import...",                 IDM_IMPORT
+      MENUITEM "~Export...",                 IDM_EXPORT
+      MENUITEM SEPARATOR
+      SUBMENU "~Run",                        IDM_RUN_MENU
+         {
+         MENUITEM "~Item Browser",           IDM_RUN_ITEM_BROWSER
+         MENUITEM "Proposal ~Browser",       IDM_RUN_PROPOSAL_BROWSER
+         MENUITEM "~Facility Browser",       IDM_RUN_FACILITY_BROWSER
+         MENUITEM "S~QL Browser",            IDM_RUN_SQL_BROWSER
+         MENUITEM SEPARATOR
+         MENUITEM "Parametric ~Profile Analysis",  IDM_PROFILE_ANAL
+         MENUITEM "Major Item ~Quantity Analysis", IDM_QUANTITY_ANAL
+         MENUITEM "Major Item P~rice Analysis",    IDM_PRICE_ANAL
+         MENUITEM SEPARATOR
+         MENUITEM "~Other...",               IDM_RUN_OTHER
+         }
+//      MENUITEM "Pr~ocess Status",            IDM_PROCESS_STATUS
+      MENUITEM SEPARATOR
+      MENUITEM "E~xit",                      IDM_EXIT
+      }
+
+   SUBMENU "~Edit",                          IDM_EDIT_MENU
+      {
+      MENUITEM "~Add...\tIns",               IDM_ADD
+      MENUITEM "~Change...\t^C",             IDM_CHANGE
+      MENUITEM "~Delete\tDel",               IDM_DELETE
+      MENUITEM SEPARATOR
+      MENUITEM "C~ut\tShift-Del",            IDM_CUT
+      MENUITEM "Co~py\tCtrl-Ins",            IDM_COPY
+      MENUITEM "~Paste\tShift-Ins",          IDM_PASTE
+      }
+
+   SUBMENU "~View",                          IDM_VIEW_MENU
+      {
+      MENUITEM "~Parent",                    IDM_PARENT
+      }
+
+
+   SUBMENU "~Utilities",                     IDM_UTILITIES_MENU
+      {
+      MENUITEM "~Find...",                   IDM_FIND
+      MENUITEM "~Sort...",                   IDM_SORT
+      MENUITEM SEPARATOR
+      MENUITEM "Set ~Preferences...",        IDM_SET_PREFERENCES
+      MENUITEM "~Change Password...",        IDM_CHANGE_PASSWORD
+      MENUITEM SEPARATOR
+      SUBMENU  "Select SpecYear",            IDM_OPEN_SPECYEAR_MENU
+         {
+         }
+      MENUITEM "Switch English/Metric",      IDM_TOGGLE_SPECBOOK
+      MENUITEM SEPARATOR
+      MENUITEM "Show ~Users...",             IDM_SHOW_USERS
+      MENUITEM "Send ~Message...",           IDM_SEND_MESSAGE
+      MENUITEM SEPARATOR
+      MENUITEM "~Install...",                IDM_INSTALL
+      MENUITEM "~Deny Logon...",             IDM_DENY_LOGON
+      MENUITEM SEPARATOR
+      MENUITEM "~Generate Support Request...", IDM_GENERATE_SUPPORT_REQUEST
+      MENUITEM SEPARATOR
+      MENUITEM "Recalc HP Major Items",                IDM_SYS_MGR
+      }
+
+   SUBMENU "~Window",                        IDM_WINDOW_MENU
+      {
+      MENUITEM "Arrange ~Cascaded",          IDM_ARRANGE_CASCADED
+      MENUITEM "Arrange ~Tiled",             IDM_ARRANGE_TILED
+      }
+//   SUBMENU "~Debug",                         IDM_DEBUG_MENU
+//      {
+//      MENUITEM "~Die scum!",                 IDM_DIE_SCUM
+//      MENUITEM "Debug ~Break",               IDM_DEBUG_BREAK
+//      MENUITEM SEPARATOR
+//      MENUITEM "Stack ~Info...",             IDM_STACK_INFO
+//      MENUITEM "Stack ~Clear",               IDM_STACK_CLEAR
+//      MENUITEM SEPARATOR
+//      MENUITEM "~Hide Debug Stuff",          IDM_HIDE_DEBUG_STUFF
+//      }
+   SUBMENU "~Help",                          IDM_HELPMENU, MIS_BUTTONSEPARATOR
+      {
+      MENUITEM "~Index",                     IDM_INDEX
+      MENUITEM "~Keyboard",                  IDM_KEYBOARD
+      MENUITEM "~Mouse",                     IDM_MOUSE
+      MENUITEM SEPARATOR
+      MENUITEM "~Commands",                  IDM_COMMANDS
+      MENUITEM "~Procedures",                IDM_PROCEDURES
+      MENUITEM "~Glossary",                  IDM_GLOSSARY
+      MENUITEM SEPARATOR
+      MENUITEM "~Using Help",                IDM_GENERALHELP
+      MENUITEM SEPARATOR
+      MENUITEM "~About...",                  IDM_ABOUT
+      }
+   }
+#endif
+
+
+
+
+

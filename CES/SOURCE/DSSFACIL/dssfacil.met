@@ -1,0 +1,151 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * DSSFACIL.met
+ * This file contains metadata for the DSS Facility brouser windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "dssfacil.h"
+#include "..\include\colid.h"
+
+
+:static  static.bin
+//
+//
+// Static Window ID       Add,  Chg,  coords         CoordType       Window Options          Background Color
+//------------------------------------------------------------------------------------------------------------
+FacilityBrowserResultsS,  0,    0,    1, 2, 70, 15,  COORD_BLCHRRNG, ITI_FULLSTATICOPTIONS,  ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//
+// Parents Window ID     Type Child Window ID     uKind       Add, Chg  coords      Coord type
+//--------------------------------------------------------------------------------------------
+FacilityBrowserResultsS, FacilityBrowserResultsL, ITIWC_LIST, 0,   0,   0, 0, 0, 0, COORD_REL
+
+
+:list list.bin
+//
+// List WinID           Window Options       Background Color      Label Bkg Color       Labl ydata  Button ID
+//-----------------------------------------------------------------------------------------------------------
+FacilityBrowserCountyL,   ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+FacilityBrowserMaterialL, ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+FacilityBrowserVendorL,   ITI_LISTOPTIONSV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+FacilityBrowserResultsL,  ITI_LISTOPTIONSV,               ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,     0
+
+
+
+:DATA data.bin format.bin
+//
+//
+// Window ID          nextID coords            CoordType   Foreground Clr  Txt Flags       colid          Format String
+//--------------------------------------------------------------------------------------------------------------------------
+FacilityBrowserCountyL,   0, 1,  0,  4,  1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CountyID,      "String"
+FacilityBrowserCountyL,   0, 7,  0,  0,  1, COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Name,          "String"
+                           
+FacilityBrowserMaterialL, 0, 1,  0,  4,  1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, MaterialID,    "String"  
+FacilityBrowserMaterialL, 0, 7,  0,  0,  1, COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Description,   "String"
+
+FacilityBrowserVendorL,   0, 1,  0,  14, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, VendorID,      "String"
+FacilityBrowserVendorL,   0, 17, 0,  0,  1, COORD_CHRRELX, ITI_LDLGCOLOR,  ITI_LDATAFLAGS, ShortName,     "String"
+
+FacilityBrowserResultsL,  0, 1,  0,  10, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, FacilityNumber,"String"
+FacilityBrowserResultsL,  0, 13, 0,  26, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Description,   "String"
+FacilityBrowserResultsL,  0, 29, 0,  32, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, MaterialID,    "String"
+FacilityBrowserResultsL,  0, 37, 0,  39, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, PortableFlag,  "Flag,No,Yes"
+FacilityBrowserResultsL,  0, 45, 0,  48, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, CountyID,      "String"
+FacilityBrowserResultsL,  0, 50, 0,  70, 1, COORD_CHRRNG,  ITI_LDLGCOLOR,  ITI_LDATAFLAGS, Name,          "String"
+
+
+:label label.bin labeltxt.bin
+//
+//
+// Window ID         NextID  coords         CoordType      Foreground Color Txt Flags        Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+FacilityBrowserCountyL,   0, 1,  0,  0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "County"
+FacilityBrowserMaterialL, 0, 1,  0,  0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Materials Produced"
+FacilityBrowserVendorL,   0, 1,  0,  0, 1,  COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Vendor"
+
+FacilityBrowserResultsL,  0, 1,  0,  10, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Facility"
+FacilityBrowserResultsL,  0, 13, 0,  26, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Vendor"
+FacilityBrowserResultsL,  0, 29, 0,  32, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Material"
+FacilityBrowserResultsL,  0, 37, 0,  39, 1, COORD_CHRRNG,  ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Portable"
+FacilityBrowserResultsL,  0, 45, 0,  0,  1, COORD_CHRRELX, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "County"
+
+:query query.bin
+//
+//
+// Window ID            Query String
+//------------------------------------------------------------------------------
+FacilityBrowserCountyL,    " SELECT CountyID, Name, CountyKey"
+FacilityBrowserCountyL,    " FROM County"
+FacilityBrowserCountyL,    " WHERE Deleted IS NULL"
+FacilityBrowserCountyL,    " ORDER BY CountyID"
+
+FacilityBrowserMaterialL,  " SELECT MaterialID, Description, MaterialKey"
+FacilityBrowserMaterialL,  " FROM Material"
+FacilityBrowserMaterialL,  " WHERE Deleted IS NULL"
+FacilityBrowserMaterialL,  " ORDER BY MaterialID"
+
+FacilityBrowserVendorL,    " SELECT VendorID, ShortName, VendorKey"
+FacilityBrowserVendorL,    " FROM Vendor"
+FacilityBrowserVendorL,    " WHERE Deleted IS NULL"
+FacilityBrowserVendorL,    " ORDER BY VendorID"
+
+FacilityCustomQuery,       " SELECT VF.FacilityNumber, Description,"
+FacilityCustomQuery,       "   MaterialID, PortableFlag,"
+FacilityCustomQuery,       "   CountyID, C.Name"
+FacilityCustomQuery,       " FROM Vendor V, VendorFacility VF,"
+FacilityCustomQuery,       " FacilityMaterial FM, Material M, County C"
+FacilityCustomQuery,       " WHERE V.VendorKey = VF.VendorKey"
+FacilityCustomQuery,       " AND FM.VendorKey = V.VendorKey"
+FacilityCustomQuery,       " AND FM.FacilityNumber = VF.FacilityNumber"
+FacilityCustomQuery,       " AND VF.CountyKey = C.CountyKey"
+FacilityCustomQuery,       " AND FM.MaterialKey = M.MaterialKey"
+
+:title title.bin
+//
+//
+// Window ID               Window Title
+//---------------------------------------------------------
+FacilityBrowserResultsS,  "BAMS/DSS Browser: Facility Results"
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID      Add Query ID  Change QID    Column name   Control ID                Format    Input Fmt
+//-------------------------------------------------------------------------------------------------------
+FacilityBrowserD, ITIWND_LIST,  ITIWND_LIST,  CountyKey,    FacilityBrowserCountyL,   "Number", "Number"
+FacilityBrowserD, ITIWND_LIST,  ITIWND_LIST,  MaterialKey,  FacilityBrowserMaterialL, "Number", "Number"
+FacilityBrowserD, ITIWND_LIST,  ITIWND_LIST,  VendorKey,    FacilityBrowserVendorL,   "Number", "Number"
+
+
+
+

@@ -1,0 +1,36 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * Average.rc
+ *
+ */
+
+#include "..\include\iti.h"
+#include "..\include\itimbase.h"
+#include "..\include\winid.h"
+#include "..\include\dialog.h"
+
+RESOURCE ITIRT_SWMET    ITIRID_WND    static.bin
+RESOURCE ITIRT_CHILD    ITIRID_WND    child.bin
+RESOURCE ITIRT_DATA     ITIRID_WND    data.bin
+RESOURCE ITIRT_FORMAT   ITIRID_WND    format.bin
+RESOURCE ITIRT_LABEL    ITIRID_WND    label.bin
+RESOURCE ITIRT_LABELTXT ITIRID_WND    labeltxt.bin
+RESOURCE ITIRT_QUERY    ITIRID_WND    query.bin
+RESOURCE ITIRT_TITLE    ITIRID_WND    title.bin
+RESOURCE ITIRT_QUERY    ITIRID_IMPORT impquery.bin
+

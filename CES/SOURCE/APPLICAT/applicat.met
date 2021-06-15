@@ -1,0 +1,176 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * applicat.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+
+
+
+
+
+:static  static.bin
+//
+// USHORT                                               RECTS               USHORT     LONG                  LONG
+// Static Window ID   Add, Change   xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------
+ApplicationS,         0,   0,       10,  10,  335, 120, COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+// USHORT             USHORT                 USHORT      RECTS               USHORT
+// Parents Window ID  Type Child Window ID   uKind       Add, Change <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------
+ApplicationS,         ApplicationL,          ITIWC_LIST, 0,   0,     0,   0,   0,   0,   COORD_REL
+
+
+
+
+:list list.bin
+//
+// USHORT            LONG                LONG                  LONG                   USHORT USHORT  USHORT
+// List Window ID    Window Options      Background Color      Label Bkg Color        Label  ydata   Button Window ID
+//---------------------------------------------------------------------------------------------------------------------------------------
+ApplicationL,        ITI_LISTOPTIONSHV,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,  0,     0,      0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT     USHORT    RECTS          USHORT     LONG            LONG            NAME           PSZ
+// Window ID  NextID                             CoordType     Foreground Colr Txt Flags       Col Name       Format Str
+//---------------------------------------------------------------------------------------------------------
+ApplicationL, ApplicationUserS,   1,  0, 16,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, ApplicationID, "String"
+ApplicationL, ApplicationUserS,   3,  1, 255, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, Description,   "String"
+ApplicationL, 0,                  19, 0, 255, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, CodeFile,      "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT         USHORT  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID      NexID                         CoordType     Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+ApplicationL, ApplicationUserS, 1,  0, 16,  1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Application\"
+ApplicationL, ApplicationUserS, 3,  1, 255, 1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+ApplicationL, 0,                19, 0, 255, 1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Code File"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID                  Query String
+//----------------------------------------------------------------------------------------------------------------
+ApplicationL,             " SELECT ApplicationKey, ApplicationID, "
+ApplicationL,             " Description, CodeFile"
+ApplicationL,             " FROM Application"
+ApplicationL,             " ORDER BY ApplicationID"
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+ApplicationS,           "Application"
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id           Add Query ID    Change Query ID           Col Name           CtlID            Format
+//--------------------------------------------------------------------------------
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+

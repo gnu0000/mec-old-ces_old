@@ -1,0 +1,335 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * Average.met
+ * This file contains the metadata for the 
+ * PEMETH Average dll windows
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "average.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+:static static.bin
+//
+// Static WinID  add   change   xpos ypos xsiz ysiz CoordType     Window Options     Background Color
+//-------------------------------------------------------------------------------------------------------
+JobPemethAvgS,   0,    0,       2,   0,   70,  23,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+PemethAvgS,      0,    0,       2,   0,   70,  21,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+:CHILD child.bin
+//
+//ParentID  ChildID      uKind        add  chg  Coord
+//---------------------------------------------------------------------------
+PemethAvgS, PAWorkTypeC, ITIWC_COMBO, 0,   0,   17,  5,  15,  6, COORD_CHRRNG
+PemethAvgS, PAAreaC,     ITIWC_COMBO, 0,   0,   34,  5,  15,  6, COORD_CHRRNG
+PemethAvgS, PABaseDateC, ITIWC_COMBO, 0,   0,   51,  5,  15,  6, COORD_CHRRNG
+
+
+:DATA data.bin format.bin
+//
+// Window ID   Next  Coords                       Foreground Clr  Txt Flags        Col Name          Format String
+//------------------------------------------------------------------------------------------------------------
+JobPemethAvgS, 0,   6,  1,  60, 2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, LongDescription,  "String"
+JobPemethAvgS, 0,   18, 18, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,          CodeValueID,      "String"
+JobPemethAvgS, 0,   29, 18, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,          Translation,      "String"
+JobPemethAvgS, 0,   18, 19, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,          BaseDate,         "DateTime,mm/dd/yyyy hh:nn:ssa"
+JobPemethAvgS, 0,   56, 5,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,          UnitPrice,        "Number,$,.."
+JobPemethAvgS, 0,   56, 6,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,          Quantity,         "Number,,..."
+
+
+PemethAvgS,    0,   6,  1,  60, 2, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, LongDescription,  "String"
+
+
+
+:label label.bin labeltxt.bin
+//
+// Window ID   NextD  Coords         CoordType     Foreground Color  Txt Flags         Label String
+//---------------------------------------------------------------------------------------------------
+JobPemethAvgS, 0,     17, 14, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,    ""
+JobPemethAvgS, 0,     36, 14, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELCTRFLAGS, ""
+JobPemethAvgS, 0,     55, 14, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+
+JobPemethAvgS, 0,     6,  5,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+JobPemethAvgS, 0,     6,  9,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+JobPemethAvgS, 0,     6,  13, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+                                                                    
+JobPemethAvgS, 0,     18, 17, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,     "" /*-area     -*/
+JobPemethAvgS, 0,     18, 20, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,     "" /*-imp date -*/
+JobPemethAvgS, 0,     27, 18, 1,  1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,     "-"
+
+JobPemethAvgS, 0,     45, 5,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Unit Price:"
+JobPemethAvgS, 0,     45, 6,  10, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Quantity:"
+JobPemethAvgS, 0,     1,  0,  40, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Job Item Description:"
+
+JobPemethAvgS, 0,     1,  17, 16, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Area:"
+JobPemethAvgS, 0,     1,  18, 16, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "WorkType:"
+JobPemethAvgS, 0,     1,  19, 16, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Base Date:"
+JobPemethAvgS, 0,     1,  20, 16, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Import Date:"
+                                                                                      
+JobPemethAvgS, 0,     26, 16, 30, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "ITEM QUANTITY LEVEL"
+
+JobPemethAvgS, 0,     1,  5,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "U"
+JobPemethAvgS, 0,     1,  6,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "N"
+JobPemethAvgS, 0,     1,  7,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "I"
+JobPemethAvgS, 0,     1,  8,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "T"
+JobPemethAvgS, 0,     1,  10, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "P"
+JobPemethAvgS, 0,     1,  11, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "R"
+JobPemethAvgS, 0,     1,  12, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "I"
+JobPemethAvgS, 0,     1,  13, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "C"
+JobPemethAvgS, 0,     1,  14, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "E"
+
+
+
+
+
+PemethAvgS, 0,     17, 16, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,    ""
+PemethAvgS, 0,     36, 16, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELCTRFLAGS, ""
+PemethAvgS, 0,     55, 16, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+
+PemethAvgS, 0,     6,  7,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+PemethAvgS, 0,     6,  11, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+PemethAvgS, 0,     6,  15, 11, 1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELRTFLAGS,  ""
+
+PemethAvgS, 0,     1,  0,  40, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Item Description:"
+
+PemethAvgS, 0,     17, 4, 11,  1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,  "Work Type"
+PemethAvgS, 0,     34, 4, 11,  1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,  "Area"
+PemethAvgS, 0,     51, 4, 11,  1, COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SLABELFLAGS,  "Base Date"
+
+PemethAvgS, 0,     26, 18, 30, 1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "ITEM QUANTITY LEVEL"
+PemethAvgS, 0,     1,  7,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "U"
+PemethAvgS, 0,     1,  8,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "N"
+PemethAvgS, 0,     1,  9,  2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "I"
+PemethAvgS, 0,     1,  10, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "T"
+PemethAvgS, 0,     1,  12, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "P"
+PemethAvgS, 0,     1,  13, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "R"
+PemethAvgS, 0,     1,  14, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "I"
+PemethAvgS, 0,     1,  15, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "C"
+PemethAvgS, 0,     1,  16, 2,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS, "E"
+
+
+
+:title title.bin
+//
+// Window ID   Window Title
+//--------------------------------------------------------------------
+JobPemethAvgS, "PEMETH Averages for Job %JobID, Job Item %StandardItemNumber"
+PemethAvgS,    "PEMETH Averages for Item %StandardItemNumber"
+
+
+:query query.bin
+//
+// Window ID   Query String
+//----------------------------------------------------------------------------------------------------------------
+
+JobPemethAvgS, " SELECT SI.StandardItemKey, SI.StandardItemNumber,"
+JobPemethAvgS, "   SI.LongDescription, J.BaseDate, J.WorkType, J.JobKey,"
+JobPemethAvgS, "   CV.CodeValueID, CV.Translation, JI.UnitPrice, "
+JobPemethAvgS, "   JI.Quantity, J.JobID"
+JobPemethAvgS, " FROM StandardItem SI, Job J, JobItem JI, CodeValue CV"
+JobPemethAvgS, " WHERE SI.StandardItemKey = %StandardItemKey"
+JobPemethAvgS, "  AND J.JobKey  = %JobKey"
+JobPemethAvgS, "  AND JI.JobKey = J.JobKey"
+JobPemethAvgS, "  AND JI.StandardItemKey = SI.StandardItemKey"
+JobPemethAvgS, "  AND CV.CodeValueKey = J.WorkType"
+
+
+PemethAvgS, " SELECT StandardItemKey, StandardItemNumber,"
+PemethAvgS, "  LongDescription "
+PemethAvgS, " FROM StandardItem"
+PemethAvgS, " WHERE StandardItemKey = %StandardItemKey"
+
+PemethAvgS2, " SELECT PA.ImportDate, PA.AreaTypeKey, FifthPercentile,"
+PemethAvgS2, "  TwentyFifthPercentile, FiftiethPercentile,"
+PemethAvgS2, "  SeventyFifthPercentile, NinetyFifthPercentile"
+PemethAvgS2, " FROM StandardItemPEMETHAverage SIPA, PEMETHAverage PA"
+PemethAvgS2, " WHERE SIPA.StandardItemKey = %s"
+PemethAvgS2, "  AND SIPA.BaseDate = '%s'"
+PemethAvgS2, "  AND PA.ImportDate = SIPA.ImportDate"
+PemethAvgS2, "  AND PA.StandardItemKey = SIPA.StandardItemKey"
+
+PemethAvgS3, " SELECT QuantityLevel, WeightedAverageUnitPrice"
+PemethAvgS3, " FROM WeightedAverageUnitPrice"
+PemethAvgS3, " WHERE StandardItemKey = %s"
+PemethAvgS3, " AND ImportDate = '%s'"
+PemethAvgS3, " AND (AreaKey   = %s OR AreaKey   = 1)"
+PemethAvgS3, " AND (WorkType  = %s OR WorkType  = 1)"
+PemethAvgS3, " ORDER BY WorkType, AreaKey "
+
+
+/*===========Base Date Combo ===============*/
+PABaseDateC, " SELECT BaseDate, BaseDate"
+PABaseDateC, " FROM StandardItemPEMETHAverage"
+PABaseDateC, " WHERE StandardItemKey = %s"
+PABaseDateC, " ORDER BY BaseDate DESC"
+
+/*===========Work Type Combo based on base date only ===============*/
+PAWorkTypeC, " SELECT DISTINCT CV.CodeValueID, CV.CodeValueKey"
+PAWorkTypeC, " FROM CodeValue CV, WeightedAverageUnitPrice WAUP,"
+PAWorkTypeC, " PEMETHAverage PA, StandardItemPEMETHAverage SIPA"
+PAWorkTypeC, " WHERE CV.CodeValueKey      = WAUP.WorkType"
+PAWorkTypeC, " AND   WAUP.StandardItemKey = PA.StandardItemKey"
+PAWorkTypeC, " AND   WAUP.ImportDate      = PA.ImportDate"
+PAWorkTypeC, " AND   PA.StandardItemKey   = SIPA.StandardItemKey"
+PAWorkTypeC, " AND   PA.ImportDate        = SIPA.ImportDate"
+PAWorkTypeC, " AND   SIPA.StandardItemKey = %s"
+PAWorkTypeC, " AND   SIPA.BaseDate        = '%s'"
+
+
+/*===========Area Combo based on base date only ===============*/
+PAAreaC,     " SELECT DISTINCT A.AreaID, A.AreaKey"
+PAAreaC,     " FROM Area A, WeightedAverageUnitPrice WAUP,"
+PAAreaC,     " PEMETHAverage PA, StandardItemPEMETHAverage SIPA"
+PAAreaC,     " WHERE A.AreaKey            = WAUP.AreaKey"
+PAAreaC,     " AND   WAUP.StandardItemKey = PA.StandardItemKey"
+PAAreaC,     " AND   WAUP.ImportDate      = PA.ImportDate"
+PAAreaC,     " AND   PA.StandardItemKey   = SIPA.StandardItemKey"
+PAAreaC,     " AND   PA.ImportDate        = SIPA.ImportDate"
+PAAreaC,     " AND   SIPA.StandardItemKey = %s"
+PAAreaC,     " AND   SIPA.BaseDate        = '%s'"
+
+
+
+
+
+:query impquery.bin
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------------
+//UPDATEAREAKEY,        " UPDATE %TableName"
+//UPDATEAREAKEY,        " SET %TargetColumn ="
+//UPDATEAREAKEY,        " (SELECT DISTINCT A.AreaKey"
+//UPDATEAREAKEY,        "  FROM %ProductionDatabase..Area A,"
+//UPDATEAREAKEY,        "  %ProductionDatabase..AreaType AT, PEMETHAverage,"
+//UPDATEAREAKEY,        "  WeightedAverageUnitPrice"
+//UPDATEAREAKEY,        "  WHERE AreaID='%KeyValue'"
+//UPDATEAREAKEY,        "  AND AT.AreaTypeKey=A.AreaTypeKey"
+//UPDATEAREAKEY,        "  AND PEMETHAverage.AreaTypeKey=AT.AreaTypeKey"
+//UPDATEAREAKEY,        "  AND WeightedAverageUnitPrice.StandardItemKey = PEMETHAverage.StandardItemKey"
+//UPDATEAREAKEY,        "  AND WeightedAverageUnitPrice.ImportDate = PEMETHAverage.ImportDate)"
+//UPDATEAREAKEY,        " WHERE %ColumnName='%KeyValue'"
+
+
+DELETEMAPPING,          " /* average.met DELETEMAPPING */" 
+DELETEMAPPING,          " DELETE FROM %ProductionDatabase..PEMETHAverage"
+DELETEMAPPING,          " WHERE ImportDate = (SELECT MAX(ImportDate) "
+DELETEMAPPING,           " FROM %ProductionDatabase..StandardItemPEMETHAverage"
+DELETEMAPPING,           " WHERE BaseDate ='%KeyValue' )"
+DELETEMAPPING,          " AND StandardItemKey IN"
+DELETEMAPPING,          " (SELECT StandardItemKey"
+DELETEMAPPING,          "  FROM PEMETHAverage)"
+
+DELETEMAPPING_2,          " /* average.met DELETEMAPPING 2 */" 
+DELETEMAPPING_2,          " DELETE FROM %ProductionDatabase..WeightedAverageUnitPrice"
+DELETEMAPPING_2,          " WHERE ImportDate = (SELECT MAX(ImportDate) "
+DELETEMAPPING_2,           " FROM %ProductionDatabase..StandardItemPEMETHAverage"
+DELETEMAPPING_2,           " WHERE BaseDate ='%KeyValue' )"
+DELETEMAPPING_2,          " AND StandardItemKey IN"
+DELETEMAPPING_2,          " (SELECT StandardItemKey"
+DELETEMAPPING_2,          "  FROM PEMETHAverage)"
+
+DELETEMAPPING_3,          " /* average.met DELETEMAPPING 3 */" 
+DELETEMAPPING_3,          " DELETE FROM %ProductionDatabase..StandardItemPEMETHAverage"
+DELETEMAPPING_3,          " WHERE BaseDate ='%KeyValue'"
+DELETEMAPPING_3,          " AND StandardItemKey IN"
+DELETEMAPPING_3,          " (SELECT StandardItemKey"
+DELETEMAPPING_3,          "  FROM PEMETHAverage)"
+
+MAKEMAPPING,            "/* average.met MAKEMAPPING */"
+MAKEMAPPING,            " INSERT INTO %ProductionDatabase..StandardItemPEMETHAverage"
+MAKEMAPPING,            " (StandardItemKey, BaseDate, ImportDate)"
+MAKEMAPPING,            " SELECT StandardItemKey, '%KeyValue', ImportDate"
+MAKEMAPPING,            " FROM PEMETHAverage PA"
+MAKEMAPPING,            " WHERE StandardItemKey IS NOT NULL"
+MAKEMAPPING,            " AND AreaTypeKey IS NOT NULL"
+//MAKEMAPPING,            " AND PA.SpecYear = ??? "
+
+COPYAVERAGES,           "/* average.met COPYAVERAGES */"
+COPYAVERAGES,           " INSERT INTO %ProductionDatabase..PEMETHAverage"
+COPYAVERAGES,           " (StandardItemKey, ImportDate,"
+COPYAVERAGES,           " AreaTypeKey, FifthPercentile,"
+COPYAVERAGES,           " TwentyFifthPercentile, FiftiethPercentile,"
+COPYAVERAGES,           " SeventyFifthPercentile, NinetyFifthPercentile)"
+COPYAVERAGES,           " SELECT"
+COPYAVERAGES,           " StandardItemKey, ImportDate,"
+COPYAVERAGES,           " AreaTypeKey, FifthPercentile,"
+COPYAVERAGES,           " TwentyFifthPercentile, FiftiethPercentile,"
+COPYAVERAGES,           " SeventyFifthPercentile, NinetyFifthPercentile"
+COPYAVERAGES,           " FROM PEMETHAverage"
+COPYAVERAGES,           " WHERE StandardItemKey IS NOT NULL"
+COPYAVERAGES,           " AND AreaTypeKey IS NOT NULL"
+
+COPYAVERAGEPRICES,      "/* average.met COPYAVERAGEPRICES */"
+COPYAVERAGEPRICES,      " INSERT INTO %ProductionDatabase..WeightedAverageUnitPrice"
+COPYAVERAGEPRICES,      " (StandardItemKey, ImportDate,"
+COPYAVERAGEPRICES,      " AreaKey, QuantityLevel, WorkType,"
+COPYAVERAGEPRICES,      " WeightedAverageUnitPrice)"
+COPYAVERAGEPRICES,      " SELECT"
+COPYAVERAGEPRICES,      " StandardItemKey, ImportDate,"
+COPYAVERAGEPRICES,      " AreaKey, QuantityLevel, WorkType,"
+COPYAVERAGEPRICES,      " WeightedAverageUnitPrice"
+COPYAVERAGEPRICES,      " FROM WeightedAverageUnitPrice"
+COPYAVERAGEPRICES,      " WHERE StandardItemKey IS NOT NULL"
+COPYAVERAGEPRICES,      " AND AreaKey IS NOT NULL"
+COPYAVERAGEPRICES,      " AND WorkType IS NOT NULL"
+
+
+UPDATESTANDARDITEMKEY,  "/* average.met UPDATESTANDARDITEMKEY */ " 
+UPDATESTANDARDITEMKEY,  " UPDATE %TableName"
+UPDATESTANDARDITEMKEY,  " SET %TargetColumn = %StdItemKey"
+UPDATESTANDARDITEMKEY,   " WHERE "
+// UPDATESTANDARDITEMKEY,   "  %TargetColumn IS NULL AND"
+UPDATESTANDARDITEMKEY,   " StandardItemNumber = '%StdItemNumber' "
+UPDATESTANDARDITEMKEY,   " AND SpecYear = %TargetSpecYear "
+
+UPDATESTDITEMKEY_SUBQRY,  "/* average.met UPDATESTDITEMKEY_SUBQRY */ " 
+UPDATESTDITEMKEY_SUBQRY,  " SELECT DISTINCT SI.StandardItemKey"
+UPDATESTDITEMKEY_SUBQRY,  ", SI.StandardItemNumber"
+UPDATESTDITEMKEY_SUBQRY,  ", SI.SpecYear"
+UPDATESTDITEMKEY_SUBQRY,   " FROM %ProductionDatabase..StandardItem SI"
+UPDATESTDITEMKEY_SUBQRY,   " , %TableName TN"
+UPDATESTDITEMKEY_SUBQRY,   " WHERE "
+UPDATESTDITEMKEY_SUBQRY,   " SI.StandardItemNumber = TN.%ColumnName"
+UPDATESTDITEMKEY_SUBQRY,   " AND SI.SpecYear = TN.SpecYear "
+// UPDATESTDITEMKEY_SUBQRY,   " AND SI.UnitType = %TargetUnitType "
+
+
+
+UPDATEAREAKEY,    " UPDATE %TableName"
+UPDATEAREAKEY,    " SET %TargetColumn ="
+UPDATEAREAKEY,    " (SELECT AreaKey"
+UPDATEAREAKEY,    " FROM %ProductionDatabase..Area, PEMETHAverage PA"
+UPDATEAREAKEY,    " WHERE %ProductionDatabase..Area.AreaID ="
+UPDATEAREAKEY,    " %TableName.%ColumnName"
+UPDATEAREAKEY,    " AND %ProductionDatabase..Area.AreaTypeKey ="
+UPDATEAREAKEY,    " PA.AreaTypeKey"
+UPDATEAREAKEY,    " AND PA.StandardItemNumber = %TableName.StandardItemNumber"
+UPDATEAREAKEY,    " AND PA.ImportDate= %TableName.ImportDate) "
+
+UPDATEAREATYPEKEY,      " UPDATE %TableName"
+UPDATEAREATYPEKEY,      " SET %TargetColumn ="
+UPDATEAREATYPEKEY,      " (SELECT AreaTypeKey"
+UPDATEAREATYPEKEY,      " FROM %ProductionDatabase..AreaType"
+UPDATEAREATYPEKEY,      " WHERE %ProductionDatabase..AreaType.AreaTypeID ="
+UPDATEAREATYPEKEY,      " %TableName.%ColumnName)"
+

@@ -1,0 +1,191 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGINCLUDE 1 "dialog.h"
+DLGINCLUDE 2 "..\include\dialog.h"
+
+
+DLGTEMPLATE IDD_CHOOSE_ACTIVE_WINDOW LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Activate Window", IDD_CHOOSE_ACTIVE_WINDOW, 12, 22, 294, 89, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Choose a ~window to activate:", 257, 7, 72, 134, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_VISIBLE
+        CONTROL "", DID_WINDOW_LIST, 3, 3, 288, 66, WC_LISTBOX, LS_HORZSCROLL | WS_TABSTOP | 
+                WS_VISIBLE
+        CONTROL "~Ok", 1, 155, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 205, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 258, 251, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_LWSEARCH LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "List Window Search", IDD_LWSEARCH, 37, 78, 188, 108, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Data Field", 1401, 5, 96, 180, 8, WC_STATIC, SS_TEXT | DT_MNEMONIC | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_FIELD, 5, 14, 178, 80, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Match String (Wildcards OK)", 1402, 5, 70, 180, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE | DT_MNEMONIC
+        CONTROL "", DID_MATCH, 6, 58, 176, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Search Mode", 1403, 5, 43, 120, 8, WC_STATIC, SS_TEXT | DT_MNEMONIC |
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MODE, 5, 6, 120, 36, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", DID_OK, 145, 37, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | BS_DEFAULT | 
+                WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 145, 21, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 145, 5, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | 
+                WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_LWSORT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Sort List Window", IDD_LWSORT, 71, 57, 218, 95, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Primary Field", 1405, 5, 82, 140, 8, WC_STATIC, SS_TEXT | DT_MNEMONIC | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_FIRSTC, 6, 32, 140, 47, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Ascending", DID_FIRSTD, 150, 67, 60, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Secondary Field", 1407, 5, 54, 140, 8, WC_STATIC, SS_TEXT | DT_MNEMONIC | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_SECONDC, 6, 4, 140, 47, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Ascending", DID_SECONDD, 150, 39, 60, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", DID_OK, 30, 13, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | 
+                WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 85, 13, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 140, 13, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_SUPPORT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Generate Support Request", IDD_SUPPORT, 53, 69, 324, 145, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Request Type",           1410,          11,        131,  98,  8,  WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE | DT_MNEMONIC 
+        CONTROL "",                       DID_TYPE,      9,         45,   98,  82, WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Priority",               1411,          117,       131,  98,  8,  WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE | DT_MNEMONIC 
+        CONTROL "",                       DID_PRIORITY,  115,       45,   98,  82, WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Topic",                  100,           223,       131,  98,  8,  WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE | DT_MNEMONIC 
+        CONTROL "",                       DID_TOPIC,     221        45,   98,  82, WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Description of Request", 1413,          10,        102,  198, 8,  WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE | DT_MNEMONIC 
+        CONTROL "",                       DID_LDESC,     9,         25,   309, 75, WC_MLE, MLS_BORDER | WS_GROUP | WS_TABSTOP | WS_VISIBLE | MLS_WORDWRAP | MLS_VSCROLL 
+        CONTROL "~OK",                     1,             170,       6,    38,  13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel",                 2,             225,       6,    38,  13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help",                   3,             280,       6,    38,  13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+//        CONTROL "",                       256,           9,         25,   309, 75, WC_MLE, MLS_BORDER | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+//        CONTROL "",                       257,           9,         25,   309, 75, WC_MLE, MLS_BORDER | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+//        CONTROL "",                       258,           9,         25,   309, 75, WC_MLE, MLS_BORDER | WS_GROUP | WS_TABSTOP | WS_VISIBLE                                                       
+    END
+END
+
+
+
+DLGTEMPLATE IDD_PRINTER_SETUP LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "Printer Setup",  IDD_PRINTER_SETUP, 70, 18, 146, 100, FS_NOBYTEALIGN | 
+               FS_DLGBORDER | FS_SCREENALIGN | WS_VISIBLE | WS_SAVEBITS, 
+               FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+
+      CONTROL "~Printer: ", DID_PRNLST,  7, 78, 50, 10, 
+              WC_STATIC, SS_TEXT | DT_LEFT | DT_VCENTER | WS_GROUP | WS_VISIBLE | DT_MNEMONIC 
+      CONTROL "", DID_PRINTER, 7, 25, 85, 50,
+              WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+//                          | LS_MULTIPLESEL 
+
+                                                        
+      CONTROL "~Set",  DID_PRN_SET, 101, 62, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE                   
+                                                        
+      CONTROL "~Reset",  DID_PRN_RESET, 101, 42, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE                   
+
+
+      CONTROL "~OK",     1, 7, 5, 38, 13,        
+              WC_BUTTON, BS_PUSHBUTTON |                
+              WS_TABSTOP | WS_VISIBLE  |                
+              BS_DEFAULT                                
+                                                        
+      CONTROL "~Cancel"  2, 54, 5, 38, 13,      
+              WC_BUTTON, BS_PUSHBUTTON |                
+              WS_TABSTOP | WS_VISIBLE                   
+                                                        
+      CONTROL "Help",   3, 101, 5, 38, 13,       
+              WC_BUTTON, BS_PUSHBUTTON |                
+              WS_TABSTOP | WS_VISIBLE                   
+              | BS_HELP  | BS_NOPOINTERFOCUS            
+    END
+END
+
+
+
+
+
+
+DLGTEMPLATE ShowUsersD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Show Users", ShowUsersD, 18, 29, 320, 87, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR | FCF_MINBUTTON
+    BEGIN
+        CONTROL "LISTWINDOW", ShowUsersDL, 7, 18, 308, 64, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "~OK", DID_OK, 150, 2, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE SendMessageD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Send Message", SendMessageD, 14, 40, 265, 120, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~To User:", SendMessageDL + DID_STOFFSET, 6, 108, 41, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", SendMessageDL, 6, 60, 249, 46, "LISTWINDOW", WS_GROUP | WS_VISIBLE
+
+        CONTROL "~Message:", DID_MESSAGE + DID_STOFFSET, 4, 48, 85, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MESSAGE, 5, 20, 251, 26, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", DID_OK, 4, 2, 35, 14, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", DID_CANCEL, 48, 2, 35, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", DID_HELP, 88, 2, 35, 14, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

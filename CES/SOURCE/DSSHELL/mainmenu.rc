@@ -1,0 +1,114 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * MainMenu.rc
+ * Mark Hampton
+ * Copyright (C) 1990 Info Tech, Inc.
+ *
+ * This file contains the default main menu resource.  This file is 
+ * rcincluded by DSShell.rc.
+ */
+
+
+MENU DSSHELL_MAIN_MENU
+   {
+   SUBMENU "~File",                          IDM_FILE_MENU
+      {
+      SUBMENU "Open Ca~talog",               IDM_OPEN_CATALOG_MENU
+         {
+         }
+      MENUITEM "~Close",                     IDM_CLOSE
+      MENUITEM SEPARATOR
+      SUBMENU "~Print",                      IDM_PRINT_MENU
+         {
+         MENUITEM "~Code Table Listing...",  IDM_PRINT_CODE_TABLE_LISTING
+         MENUITEM "~User Listing...",        IDM_PRINT_USER_LISTING
+         }
+      MENUITEM "Printer ~Setup...",          IDM_PRINTER_SETUP   
+      MENUITEM SEPARATOR
+      MENUITEM "~Import...",                 IDM_IMPORT
+      MENUITEM "~Export...",                 IDM_EXPORT
+      MENUITEM SEPARATOR
+      SUBMENU "~Run",                        IDM_RUN_MENU
+         {
+         MENUITEM "~Item Browser",           IDM_RUN_ITEM_BROWSER
+         MENUITEM "Proposal ~Browser",       IDM_RUN_PROPOSAL_BROWSER
+         MENUITEM "~Facility Browser",       IDM_RUN_FACILITY_BROWSER
+         MENUITEM "S~QL Browser",            IDM_RUN_SQL_BROWSER
+         MENUITEM SEPARATOR
+         MENUITEM "~Other...",               IDM_RUN_OTHER
+         }
+      MENUITEM SEPARATOR
+      MENUITEM "E~xit",                      IDM_EXIT
+      }
+
+   SUBMENU "~Edit",                          IDM_EDIT_MENU
+      {
+      MENUITEM "~Add...\tIns",               IDM_ADD
+      MENUITEM "~Change...\t^C",             IDM_CHANGE
+      MENUITEM "~Delete\tDel",               IDM_DELETE
+      MENUITEM SEPARATOR
+      MENUITEM "C~ut\tShift-Del",            IDM_CUT
+      MENUITEM "Co~py\tCtrl-Ins",            IDM_COPY
+      MENUITEM "~Paste\tShift-Ins",          IDM_PASTE
+      }
+
+   SUBMENU "~View",                          IDM_VIEW_MENU
+      {
+      MENUITEM "~Parent",                    IDM_PARENT
+      }
+
+
+   SUBMENU "~Utilities",                     IDM_UTILITIES_MENU
+      {
+      MENUITEM "~Find...",                   IDM_FIND
+      MENUITEM "~Sort...",                   IDM_SORT
+      MENUITEM SEPARATOR
+      MENUITEM "Set ~Preferences...",        IDM_SET_PREFERENCES
+      MENUITEM "~Change Password...",        IDM_CHANGE_PASSWORD
+      MENUITEM SEPARATOR
+      MENUITEM "Show ~Users...",             IDM_SHOW_USERS
+      MENUITEM "Send ~Message...",           IDM_SEND_MESSAGE
+      MENUITEM SEPARATOR
+      MENUITEM "~Install...",                IDM_INSTALL
+      MENUITEM "~Deny Logon...",             IDM_DENY_LOGON
+      MENUITEM SEPARATOR
+      MENUITEM "~Generate Support Request...", IDM_GENERATE_SUPPORT_REQUEST
+      }
+   SUBMENU "~Window",                        IDM_WINDOW_MENU
+      {
+      MENUITEM "Arrange ~Cascaded",          IDM_ARRANGE_CASCADED
+      MENUITEM "Arrange ~Tiled",             IDM_ARRANGE_TILED
+      }
+   SUBMENU "~Help",                          IDM_HELPMENU, MIS_BUTTONSEPARATOR
+      {
+      MENUITEM "~Index",                     IDM_INDEX
+      MENUITEM "~Keyboard",                  IDM_KEYBOARD
+      MENUITEM "~Mouse",                     IDM_MOUSE
+      MENUITEM SEPARATOR
+      MENUITEM "~Commands",                  IDM_COMMANDS
+      MENUITEM "~Procedures",                IDM_PROCEDURES
+      MENUITEM "~Glossary",                  IDM_GLOSSARY
+      MENUITEM SEPARATOR
+      MENUITEM "~Using Help",                IDM_GENERALHELP
+      MENUITEM SEPARATOR
+      MENUITEM "~About...",                  IDM_ABOUT
+      }
+   
+   }
+
+
+

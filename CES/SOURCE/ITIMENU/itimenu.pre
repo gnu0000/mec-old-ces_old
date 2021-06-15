@@ -1,0 +1,78 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!include "..\makeopts"
+
+
+TARGET=itimenu
+TARGETDIR=..\itimenu^\
+
+all: $(EXEDIR)$(TARGET).dll $(LIBDIR)$(TARGET).lib $(EXEDIR)dumpdll.exe
+
+
+:FileList ModuleList =
+   {
+   menu,     arrange,   window, 
+   catalog,  init,      print, 
+   doimport, find,      sort,
+   support,  utility,   prnsetup, 
+   dumpdll,  specyr
+   }
+
+:FileList Resources = 
+   {
+   itimenu.rc, itimenu.dlg
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itiglob, itibase, itiwin, iticrt, itidbase, 
+   itimbase, itiutil, opendlg, colid,  itiperm,
+   itifmt,   itiprt,  itirptut, dssimp
+   }
+
+:Expand ModuleList,{"$(CC) $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDE
+
+query.bin: $(TARGET).met 
+   ..\exe\buildres $(TARGET).met
+
+$(TARGET).res: {I: itimenu.rc} {F: Resources,,} query.bin
+   rc -r $*.rc
+
+
+
+$(EXEDIR)$(TARGET).dll: {F: ModuleList,,obj} $(LIBDIR)itidllc.obj $(TARGET).res $(TARGET).def $(TARGET).pre
+   $(LINK) @<<tmp.lnk
+   $(LFLAGS)$(LDEBUG) crtdll_i $(LIBDIR)itidllc +
+   {F: ModuleList,,}
+   $*.dll
+   $(@B).map
+   os2/NOE/NOD/NOI {F: LibFiles,,}
+   $(TARGET).def
+<<NOKEEP
+   rc $(TARGET).res $*.dll
+   mapsym /l $(@B).map
+   copy $(@B).sym $(EXEDIR)
+
+$(LIBDIR)$(TARGET).lib: $(TARGET).def
+   implib /nologo $(LIBDIR)$(TARGET).lib $(TARGET).def
+
+$(EXEDIR)dumpdll.exe: dumpdll2.obj
+   link /nod/noe dumpdll2.obj,$(EXEDIR)dumpdll.exe,nul.map,os2 llibcep,dumpdll.def
+   bind $(EXEDIR)dumpdll.exe
+
+dumpdll2.obj: dumpdll.c
+   cl /AL /DEXEONLY /c /Fodumpdll2.obj /W3 /G2s /Zp dumpdll.c
+

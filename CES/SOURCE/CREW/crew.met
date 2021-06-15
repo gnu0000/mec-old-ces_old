@@ -1,0 +1,382 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * crew.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+:static  static.bin
+//
+//
+// USHORT                                         RECTS               USHORT     LONG                  LONG
+// StaticID add        change      xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+CrewCatS,   CrewD,     CrewD,      71,  13,  332, 133, COORD_RNG,    ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+CrewS,      CrewLbEqD, CrewLbEqD,  5,   5,   60,  13,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+:CHILD child.bin
+//
+//
+// USHORT            USHORT               USHORT                            RECTS               USHORT
+// Parents Window ID Type Child Window ID uKind       add               change          <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------
+CrewCatS,     CrewCatL,  ITIWC_LIST,  CrewD,      CrewD,     0,  0, 0,  0, COORD_REL
+CrewS,        CrewL1,    ITIWC_LIST,  CrewLbEqD,  CrewLbEqD, 0,  2, 50, 0, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+CrewS,        CrewL2,    ITIWC_LIST,  CrewLbEqD,  CrewLbEqD, 50, 2, 0,  0, TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+
+
+
+
+:list list.bin
+//
+//
+// USHORT         LONG               LONG                 LONG                  USHORT USHORT  USHORT
+// List WinID  Window Options     Background Color     Label Bkg Color       Label ydata Button Window ID
+//---------------------------------------------------------------------------------------------------------
+CrewCatL,   ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+CrewL1,     ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+CrewL2,     ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+
+CrewLaborL, ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+CrewEquipL, ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+
+LaborCat2L, ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+EquipCatL,  ITI_LISTOPTIONSHV| LWS_BORDER,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+
+
+
+
+:DATA data.bin format.bin
+//
+//
+// USHORT      USHORT       RECTS (DLG|UL|RNG)   USHORT     LONG               LONG             NAME                    PSZ
+// Window ID   Next WinID   xpos ypos xsiz ysiz  CoordType  Foreground Color   Txt Flags        Col Name                Format String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+CrewCatL,      CrewS,         1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,      CrewID,                 "String"
+CrewCatL,      CrewS,         10,  0,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,      Description,            "String"
+
+CrewS,         CrewCatS,      11,  0,  255,  2,  COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAMULTILINEFLAGS, Description,    "String"
+
+CrewL1,        LaborCatS,     1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, LaborerID,               "String"
+CrewL1,        LaborCatS,     1,   0,  7,    1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewL1,        LaborCatS,     3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Labor.Description,       "String"
+
+CrewL2,        EquipmentCatS, 1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, EquipmentID,         "String"
+CrewL2,        EquipmentCatS, 1,   0,  7,    1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewL2,        EquipmentCatS, 3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Equipment.Description,  "String"
+
+CrewLaborL,    0,             1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, LaborerID,             "String"
+CrewLaborL,    0,             1,   0,  7,    1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewLaborL,    0,             3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Labor.Description,     "String"
+
+CrewEquipL,    0,             1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, EquipmentID,           "String"
+CrewEquipL,    0,             1,   0,  7,    1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS, Quantity, "Number,,.."
+CrewEquipL,    0,             3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS, Equipment.Description,    "String"
+
+LaborCat2L,    0,             1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, LaborerID,             "String"
+LaborCat2L,    0,             3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Labor.Description,     "String"
+
+EquipCatL,     0,             1,   0,  8,    1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, EquipmentID,           "String"
+EquipCatL,     0,             3,   1,  255,  1,  COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, Equipment.Description, "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+// USHORT      USHORT                RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID   Next WinID            xpos ypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+CrewCatL,      CrewS,          1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Crew"
+CrewCatL,      CrewS,          10, 0, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewS,         CrewCatS,       1,  0, 9,   1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,   "Description:"
+
+CrewL1,        LaborCatS,      1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Laborer /"
+CrewL1,        LaborCatS,      1,  0, 7,   1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewL1,        LaborCatS,      3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewL2,        EquipmentCatS,  1,  0, 9,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Equipment /"
+CrewL2,        EquipmentCatS,  1,  0, 7,   1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewL2,        EquipmentCatS,  3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+CrewLaborL,    0,              1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Laborer"             
+CrewLaborL,    0,              1,  0, 7,   1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS, "Quantity"
+CrewLaborL,    0,              3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+CrewEquipL,    0,              1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Equipment"           
+CrewEquipL,    0,              1,  0, 7,   1,   TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,   "Quantity"
+CrewEquipL,    0,              3,  1, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+LaborCat2L,    0,              1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Laborer" 
+LaborCat2L,    0,              10, 0, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+EquipCatL,     0,              1,  0, 8,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Equipment" 
+EquipCatL,     0,              10, 0, 255, 1,   COORD_CHRRNG, ITI_LLABELCOLOR,    ITI_LLABELFLAGS, "Description"         
+
+
+
+:query query.bin
+//
+//
+// USHORT      char []
+// Window ID   Query String
+//-------------------------------------------------------------------------------------------------
+CrewCatL,     " SELECT CrewID, Description, CrewKey"
+CrewCatL,     " FROM Crew"
+CrewCatL,     " WHERE Deleted IS NULL"
+CrewCatL,     " ORDER BY CrewID"
+
+CrewS,        " SELECT CrewID, CrewKey, Description"
+CrewS,        " FROM Crew"
+CrewS,        " WHERE CrewKey = %CrewKey"
+
+CrewL1,       " SELECT LaborerID, Labor.Description, Quantity"
+CrewL1,       " FROM Crew, CrewLabor, Labor"
+CrewL1,       " WHERE Crew.CrewKey = CrewLabor.CrewKey"
+CrewL1,       " AND CrewLabor.LaborerKey = Labor.LaborerKey"
+CrewL1,       " AND Crew.CrewKey = %CrewKey"
+CrewL1,       " ORDER BY LaborerID"
+
+CrewL2,       " SELECT EquipmentID, Equipment.Description, Quantity"
+CrewL2,       " FROM Equipment, CrewEquipment, Crew"
+CrewL2,       " WHERE Crew.CrewKey = CrewEquipment.CrewKey"
+CrewL2,       " AND CrewEquipment.EquipmentKey = Equipment.EquipmentKey"
+CrewL2,       " AND Crew.CrewKey = %CrewKey"
+CrewL2,       " ORDER BY EquipmentID"
+
+CrewD,        " SELECT CrewKey, CrewID, Description"
+CrewD,        " FROM Crew"
+CrewD,        " WHERE CrewKey = %CrewKey"
+
+CrewLaborL,   " SELECT LaborerID, Labor.Description, Quantity,"
+CrewLaborL,   " CrewLabor.CrewKey, CrewLabor.LaborerKey"
+CrewLaborL,   " FROM Crew, CrewLabor, Labor"
+CrewLaborL,   " WHERE Crew.CrewKey = CrewLabor.CrewKey"
+CrewLaborL,   " AND CrewLabor.LaborerKey = Labor.LaborerKey"
+CrewLaborL,   " AND Crew.CrewKey = %CrewKey"
+CrewLaborL,   " ORDER BY LaborerID"
+
+CrewEquipL,   " SELECT EquipmentID, Equipment.Description, Quantity,"
+CrewEquipL,   " CrewEquipment.CrewKey, CrewEquipment.EquipmentKey"
+CrewEquipL,   " FROM Equipment, CrewEquipment, Crew"
+CrewEquipL,   " WHERE Crew.CrewKey = CrewEquipment.CrewKey"
+CrewEquipL,   " AND CrewEquipment.EquipmentKey = Equipment.EquipmentKey"
+CrewEquipL,   " AND Crew.CrewKey = %CrewKey"
+CrewEquipL,   " ORDER BY EquipmentID"
+
+CrewLbEqD,    " SELECT Description, CrewKey"
+CrewLbEqD,    " FROM Crew"
+CrewLbEqD,    " WHERE CrewKey = %CrewKey"
+
+CrewLaborD,   " SELECT Quantity, CrewKey, LaborerKey"
+CrewLaborD,   " FROM CrewLabor"
+CrewLaborD,   " WHERE CrewKey = %CrewKey"
+CrewLaborD,   " AND LaborerKey = %LaborerKey"
+
+CrewEquipD,   " SELECT Quantity, CrewKey, EquipmentKey"
+CrewEquipD,   " FROM CrewEquipment"
+CrewEquipD,   " WHERE CrewKey = %CrewKey"
+CrewEquipD,   " AND EquipmentKey = %EquipmentKey "
+
+
+LaborCat2L,   " SELECT LaborerKey, LaborerID, Description"
+LaborCat2L,   " FROM Labor"
+LaborCat2L,   " WHERE Deleted = NULL "
+LaborCat2L,   " ORDER BY LaborerID "
+
+EquipCatL,    " SELECT EquipmentKey, EquipmentID, Description "
+EquipCatL,    " FROM Equipment "
+EquipCatL,    " WHERE Deleted = NULL "
+EquipCatL,    " ORDER BY EquipmentID "
+
+
+
+
+:title title.bin
+//
+//
+// USHORT        char []
+// Window ID     Window Title
+//---------------------------
+CrewCatS, "Crew Catalog"
+CrewS,     "Crew %CrewID"
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+//Dlg Id    Add ID         Change ID    Col Name       CtlID            Format
+//----------------------------------------------------------------------------------------------------
+CrewD,       CrewD,        CrewD,       CrewID,        DID_CREWID,      "String",     "String"
+CrewD,       CrewD,        CrewD,       Description,   DID_CREWDESCR,   "String",     "String"
+
+CrewLbEqD,   CrewLbEqD,    CrewLbEqD,   Description,   DID_CREWDESCR,   "String",     "String"
+CrewLbEqD,   0,            0,           0,             CrewLaborL,      "",           ""
+CrewLbEqD,   0,            0,           0,             CrewEquipL,      "",           ""
+
+CrewLaborD,  CrewLaborD,   CrewLaborD,  Quantity,      DID_QUANTITY,    "Number,,..", "Number,,.."
+CrewLaborD,  ITIWND_LIST,  ITIWND_LIST, LaborerKey,    LaborCat2L,      "Number",     "Number"
+                                        
+CrewEquipD,  CrewEquipD,   CrewEquipD,  Quantity,      DID_QUANTITY,    "Number,,..", "Number,,.."
+CrewEquipD,  ITIWND_LIST,  ITIWND_LIST, EquipmentKey,  EquipCatL,       "Number",     "Number"
+
+
+
+:query update.bin
+//
+// USHORT              char []
+// Window ID           Query String
+//-------------------------------------------------------------------------
+CrewD,       " UPDATE Crew"
+CrewD,       " SET"
+CrewD,       " CrewID=@CrewID,"
+CrewD,       " Description=@Description"
+CrewD,       " WHERE CrewKey = %CrewKey"
+
+CrewLbEqD,   " UPDATE Crew"
+CrewLbEqD,   " SET"
+CrewLbEqD,   " Description = @Description"
+CrewLbEqD,   " WHERE CrewKey = %CrewKey"
+
+CrewLaborD,  " UPDATE CrewLabor"
+CrewLaborD,  " SET"
+CrewLaborD,  " Quantity = @Quantity,"
+CrewLaborD,  " LaborerKey = @"LaborCat2L"LaborerKey"
+CrewLaborD,  " WHERE CrewKey = %CrewKey"
+CrewLaborD,  " AND LaborerKey = %LaborerKey"
+
+CrewEquipD,  " UPDATE CrewEquipment"
+CrewEquipD,  " SET"
+CrewEquipD,  " Quantity = @Quantity,"
+CrewEquipD,  " EquipmentKey = @"EquipCatL"EquipmentKey"
+CrewEquipD,  " WHERE CrewKey = %CrewKey"
+CrewEquipD,  " AND EquipmentKey = %EquipmentKey"
+
+
+
+
+
+
+
+:query lock.bin
+//
+// USHORT     char []
+// Window ID  Query String
+//-------------------------------------------------------------------------
+CrewD,        " SELECT CrewID, Description"
+CrewD,        " FROM Crew HOLDLOCK"
+CrewD,        " WHERE CrewKey = %CrewKey"
+
+CrewLbEqD,    " SELECT Description"
+CrewLbEqD,    " FROM Crew HOLDLOCK"
+CrewLbEqD,    " WHERE CrewKey = %CrewKey"
+
+CrewLaborD,   " SELECT Quantity"
+CrewLaborD,   " FROM CrewLabor HOLDLOCK"
+CrewLaborD,   " WHERE CrewKey = %CrewKey"
+CrewLaborD,   " AND LaborerKey = %LaborerKey"
+
+CrewEquipD,   " SELECT Quantity, EquipmentKey"
+CrewEquipD,   " FROM CrewEquipment HOLDLOCK"
+CrewEquipD,   " WHERE CrewKey = %CrewKey"
+CrewEquipD,   " AND EquipmentKey = %EquipmentKey"
+
+
+
+:query insert.bin
+//
+// This is themetadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT     char []
+// Window ID  Query String
+//-------------------------------------------------------------------------
+CrewD,        " INSERT INTO Crew"
+CrewD,        " (CrewKey,CrewID,Description)"
+CrewD,        " VALUES"
+CrewD,        " (@NewKey,@CrewID,@Description)"
+
+CrewLaborD,   " INSERT INTO CrewLabor"
+CrewLaborD,   " (CrewKey, LaborerKey, Quantity)"
+CrewLaborD,   " VALUES"
+CrewLaborD,   " (%CrewKey, @"LaborCat2L"LaborerKey, @Quantity)"
+
+CrewEquipD,   " INSERT INTO CrewEquipment"
+CrewEquipD,   " (CrewKey, EquipmentKey, Quantity)"
+CrewEquipD,   " VALUES"
+CrewEquipD,   " (%CrewKey, @"EquipCatL"EquipmentKey, @Quantity)"
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+//CrewCatL,      "DELETE FROM Crew "
+//CrewCatL,      "WHERE CrewKey = %CrewKey "
+//CrewCatL,      "DELETE CrewLabor "
+//CrewCatL,      "WHERE CrewKey = %CrewKey "
+//CrewCatL,      "DELETE CrewEquipment "
+//CrewCatL,      "WHERE CrewKey = %CrewKey "
+
+CrewCatL,        "UPDATE Crew "
+CrewCatL,        "SET Deleted = 1 "
+CrewCatL,        "WHERE CrewKey IN (%CrewKey{,%CrewKey}) "
+
+CrewLaborL,        "DELETE FROM CrewLabor "
+CrewLaborL,        "WHERE LaborerKey IN (%LaborerKey{,%LaborerKey}) "
+CrewLaborL,        "AND CrewKey = %CrewKey "
+
+CrewEquipL,        "DELETE FROM CrewEquipment "
+CrewEquipL,        "WHERE EquipmentKey IN (%EquipmentKey{,%EquipmentKey}) "
+CrewEquipL,        "AND CrewKey = %CrewKey "
+
+//CrewL1,          "DELETE FROM Crew "
+//CrewL1,          "WHERE CrewKey = %CrewKey "
+//CrewL1,          "DELETE CrewLabor "
+//CrewL1,          "WHERE CrewKey = %CrewKey "
+//CrewL1,          "DELETE CrewEquipment "
+//CrewL1,          "WHERE CrewKey = %CrewKey "
+
+
+

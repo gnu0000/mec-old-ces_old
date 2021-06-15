@@ -1,0 +1,304 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/* codetabl.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+:static  static.bin
+//
+// USHORT         RECTS        USHORT      LONG             LONG
+//
+// Static WinID   add          change                       CoordType     Window Options     Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+CodeTableS,       CodeTableD,  CodeTableD, 7,  5,  60,  12, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+CodeValueS,       CodeValueD,  CodeTableD, 10, 8,  120, 27, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+
+:CHILD child.bin
+//
+//
+//
+// Parents ID Child ID     uKind       add         change      Coord
+//------------------------------------------------------------------------------------------------------------------------------------
+CodeTableS,   CodeTableL,  ITIWC_LIST, CodeTableD, CodeTableD, 0, 0, 0, 0, COORD_CHRREL
+CodeValueS,   CodeValueL,  ITIWC_LIST, CodeValueD, CodeValueD, 0, 5, 0, 0, COORD_BLKREL
+
+
+
+
+:list list.bin
+//
+//
+// USHORT       LONG               LONG                 LONG                     USHORT USHORT  USHORT
+// List ID      Window Options     Background Color     Label Bkg Color           Label ydata   Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+CodeTableL,     ITI_LISTOPTIONSHV, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,      0,   0,      0
+CodeValueL,     ITI_LISTOPTIONSV,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,      0,   0,      0
+
+
+
+
+:DATA data.bin format.bin
+//
+//
+// Window ID   Next ID     xpos ypos xsiz ysiz CoordType     Foreground Color   Txt Flags                                    Col Name           Format String
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------
+CodeTableL,    CodeValueS, 1,   0,   8,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                              CodeTableID,       "String"
+CodeTableL,    CodeValueS, 10,  0,   11,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATACTRFLAGS,                           MaximumCodeLength, "Number,,"
+CodeTableL,    CodeValueS, 22,  0,   40,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                              Description,       "String"
+
+CodeValueS,    CodeTableS, 11,  0,   8,   1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,                              CodeTableID,       "String"
+CodeValueS,    CodeTableS, 20,  0,   1,   1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  Description,       "String"
+CodeValueS,    CodeTableS, 15,  1,   4,   1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,                              MaximumCodeLength, "Number"
+CodeValueS,    CodeTableS, 21,  1,   8,   1,   COORD_CHRRNG, CLR_WHITE,         ITI_SDATAFLAGS,                              CodeTableKey,      "String"
+
+CodeValueL,    0,          1,   0,   8,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,                              CodeValueID,       "String"
+CodeValueL,    0,          11,  0,   1,   1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Translation,       "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//
+// USHORT     USHORT             RECTS           USHORT     LONG                LONG               char []
+// Window ID  Next ID                                Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------
+CodeTableL,   CodeValueS,  1,   0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Code Table"
+CodeTableL,   CodeValueS,  10,  0, 11,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Max Code Len."
+CodeTableL,   CodeValueS,  22,  0, 40,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+CodeValueS,   CodeTableS,  1,   0, 10,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Code Table:"
+CodeValueS,   CodeTableS,  19,  0, 1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,   "-"
+CodeValueS,   CodeTableS,  1,   1, 14,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Max Code Length:"
+
+CodeValueL,   0,           1,   0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Code Value"
+CodeValueL,   0,           11,  0, 1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Translation"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//--------------------------------------------------------------------------------------------------------
+CodeTableL,  " /* CodeTableL */"
+CodeTableL,  " SELECT CodeTableID, MaximumCodeLength, Description,"
+CodeTableL,  " CodeTableKey"
+CodeTableL,  " FROM CodeTable"
+CodeTableL,  " WHERE Deleted = NULL"
+CodeTableL,  " ORDER BY CodeTableID"
+
+CodeValueS,  " /* CodeValueS */"
+CodeValueS,  " SELECT CodeTableID, Description, MaximumCodeLength,"
+CodeValueS,  " CodeTableKey"
+CodeValueS,  " FROM CodeTable"
+CodeValueS,  " WHERE CodeTableKey = %CodeTableKey"
+
+CodeValueL,  " /* CodeValueL */"
+CodeValueL,  " SELECT CodeValueID, Translation, CodeValueKey,"
+CodeValueL,  " CodeTableKey, UnitType"
+CodeValueL,  " FROM CodeValue"
+CodeValueL,  " WHERE CodeTableKey = %CodeTableKey"
+CodeValueL,      " AND UnitType = %CurUnitType " 
+CodeValueL,  " AND Deleted = NULL"
+CodeValueL,  " ORDER BY UnitType DESC, CodeValueID "
+
+CodeValueD,  " /* CodeValueD */"
+CodeValueD,  " SELECT CodeValueID, Translation"
+CodeValueD,        ", CodeValueKey, CodeTableKey, UnitType"
+CodeValueD,  " FROM CodeValue"
+CodeValueD,  " WHERE CodeTableKey = %CodeTableKey"
+CodeValueD,      " AND UnitType = %CurUnitType " 
+CodeValueD,  " AND   CodeValueKey = %CodeValueKey"
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT           char []
+// Window ID        Window Title
+//----------------------------------------------------------
+CodeTableS,  "Code Table Catalog"
+CodeValueS,  "Code Value for %CodeTableID"
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id      Add ID       Change ID     Col Name           CtlID            Disp Fmt  Input Fmt
+//---------------------------------------------------------------------------------------------------------------
+CodeTableD,    CodeValueS,  CodeValueS,   CodeTableID,       DID_NAME,        "String", "String"
+CodeTableD,    CodeValueS,  CodeValueS,   Description,       DID_DESCRIPTION, "String", "String"
+CodeTableD,    CodeValueS,  CodeValueS,   MaximumCodeLength, DID_MAXCODELEN,  "Number", "Number"
+
+CodeValueD,    CodeValueD,  CodeValueD,   CodeValueID,       DID_CODEVAL,     "String", "String"
+CodeValueD,    CodeValueD,  CodeValueD,   Translation,       DID_XLATE,       "String", "*String"
+ 
+
+:query update.bin
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeTableD,   " UPDATE CodeTable"
+CodeTableD,   " SET CodeTableID = @CodeTableID,"
+CodeTableD,   " Description = @Description,"
+CodeTableD,   " MaximumCodeLength = @MaximumCodeLength"
+CodeTableD,   " WHERE CodeTableKey = %CodeTableKey"
+
+
+
+
+CodeValueD,   "/* CodeValueD */"
+CodeValueD,   " UPDATE CodeValue"
+CodeValueD,   " SET CodeValueID = @CodeValueID,"
+CodeValueD,   " Translation = @Translation"
+CodeValueD,   " WHERE CodeTableKey = %CodeTableKey"
+CodeValueD,   " AND CodeValueKey = %CodeValueKey "
+CodeValueD,   " AND CodeValueID != '----' "
+CodeValueD,   " AND CodeValueKey > 200 "
+
+// CodeValueD2,   " , UnitType = %s "
+// CodeValueD2,   " WHERE CodeTableKey = %CodeTableKey"
+// CodeValueD2,   " AND CodeValueKey = %CodeValueKey "
+
+
+:query lock.bin
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeTableD,     " SELECT CodeTableID, Description, MaximumCodeLength"
+CodeTableD,     " FROM CodeTable HOLDLOCK"
+CodeTableD,     " WHERE CodeTableKey = %CodeTableKey"
+
+CodeValueD,     " SELECT CodeValueID, Translation"
+CodeValueD,     " FROM CodeValue HOLDLOCK"
+CodeValueD,     " WHERE CodeTableKey = %CodeTableKey"
+CodeValueD,     " AND CodeValueKey = %CodeValueKey"
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeTableD,    " INSERT INTO CodeTable"
+CodeTableD,    " (CodeTableKey,CodeTableID, Description, MaximumCodeLength)"
+CodeTableD,    " VALUES"
+CodeTableD,    " (@NewKey,@CodeTableID,@Description,@MaximumCodeLength)"
+       
+             
+CodeValueD,    " /* codetab.met CodeValueD from here no longer used */"
+CodeValueD,    " SELECT MAX(CodeValueKey) FROM CodeValue "
+// CodeValueD,    " INSERT INTO CodeValue"
+// CodeValueD,    " (CodeValueKey, CodeTableKey, CodeValueID, Translation)"
+// CodeValueD,    " VALUES"
+// CodeValueD,    " (@NewKey,%CodeTableKey,@CodeValueID,@Translation)"
+
+
+
+
+:query delete.bin
+//
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+//CodeTableL,  " DELETE FROM CodeTable"
+//CodeTableL,  " WHERE CodeTableKey = %CodeTableKey"
+//CodeTableL,  " { OR CodeTableKey = %CodeTableKey}"
+//CodeTableL,  " DELETE FROM CodeValue"
+//CodeTableL,  " WHERE CodeTableKey = %CodeTableKey"
+//CodeTableL,  " {OR CodeTableKey = %CodeTableKey }"
+
+//CodeTableL,  " DELETE FROM CodeTable"
+//CodeTableL,  " WHERE CodeTableKey IN (%CodeTableKey{,%CodeTableKey})"
+//CodeTableL,  " DELETE FROM CodeValue"
+//CodeTableL,  " WHERE CodeTableKey IN (%CodeTableKey{,%CodeTableKey})"
+
+//CodeValueL,  " DELETE FROM CodeValue"
+//CodeValueL,  " WHERE CodeTableKey = %CodeTableKey"
+//CodeValueL,  " AND (CodeValueKey = %CodeValueKey"
+//CodeValueL,  " {OR CodeValueKey = %CodeValueKey })"
+
+//CodeValueL,  " DELETE FROM CodeValue"
+//CodeValueL,  " WHERE CodeValueKey = %CodeValueKey"
+//CodeValueL,  " {OR CodeValueKey = %CodeValueKey }"
+
+//CodeValueL,  " DELETE FROM CodeValue"
+//CodeValueL,  " WHERE CodeValueKey IN (%CodeValueKey{,%CodeValueKey})"
+
+              
+CodeTableL,    " UPDATE CodeTable"
+CodeTableL,    " SET Deleted = 1"
+CodeTableL,    " WHERE CodeTableKey IN (%CodeTableKey{,%CodeTableKey})"
+CodeTableL,    " AND CodeTableKey > 1000031 "
+CodeTableL,    " AND CodeTableID NOT IN "
+CodeTableL,    " ('BRDGTYP ','CERTTYP ','DBETYPE ','DISTRIC ','HWYTYPE ' "
+CodeTableL,    " ,'ITEMCLS ','PRICSRC ','PROJTYP ','PROPTYP ','ROADSYS ' "
+CodeTableL,    " ,'UNITS   ','VENDTYP ','VWRKCLS ','WRKTYP  ') "
+
+CodeTableL,    " UPDATE CodeValue"
+CodeTableL,    " SET Deleted = 1"
+CodeTableL,    " WHERE CodeTableKey IN (%CodeTableKey{,%CodeTableKey})"
+CodeTableL,    " AND CodeValueKey > 200 "
+CodeTableL,    " AND CodeTableKey NOT IN "
+CodeTableL,    " (SELECT CodeTableKey FROM CodeTable WHERE CodeTableID IN  "
+CodeTableL,      " ('BRDGTYP ','CERTTYP ','DBETYPE ','DISTRIC ','HWYTYPE ' "
+CodeTableL,      " ,'ITEMCLS ','PRICSRC ','PROJTYP ','PROPTYP ','ROADSYS ' "
+CodeTableL,      " ,'UNITS   ','VENDTYP ','VWRKCLS ','WRKTYP  ') ) "
+
+
+CodeValueL,    " UPDATE CodeValue"
+CodeValueL,    " SET Deleted = 1"
+CodeValueL,    " WHERE CodeValueKey IN (%CodeValueKey{,%CodeValueKey})"
+CodeValueL,    " AND CodeTableKey = %CodeTableKey"
+CodeValueL,    " AND CodeValueKey > 200 "
+
+

@@ -1,0 +1,39 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+~ This makefile makes:
+~  sqlexec.EXE
+~ 
+
+!include "..\makeopts"
+
+TARGET=sqlexec
+TARGETDIR=..\sqlexec^\
+
+all: $(EXEDIR)sqlexec.exe
+
+:FileList SourceFiles = 
+   {
+   sqlexec, dbqry, harderr, arg2, exec
+   }
+
+:Expand SourceFiles,{"cl -c -W3 -Od -ALw -G2sc -Zp -FPi -nologo $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES
+
+sqlexec.exe: {F: SourceFiles,,obj} $(TARGET).pre  
+  link {F: SourceFiles,,}, $*, NUL,os2 pdblib llibcep/NOD/NOE/LI/CO/BA/NOI/NOLOGO,$*.def
+
+$(EXEDIR)$(TARGET).exe : $(TARGET).exe
+  copy $(TARGET).exe $(EXEDIR)$(TARGET).exe
+

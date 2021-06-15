@@ -1,0 +1,96 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rCrew.h"                                       
+
+
+//  /* Crew Catalog Listing report */
+//  /* pg. 9-67                    */
+
+
+:query rCrewQ.bin 
+
+ID_QUERY_ALL,  "SELECT CrewKey "
+ID_QUERY_ALL,  "  FROM Crew "
+ID_QUERY_ALL,  "  WHERE Deleted IS NULL "
+  
+
+ID_QUERY_LISTING,     "select CrewID, Description "    
+ID_QUERY_LISTING,     "  from Crew "                   
+ID_QUERY_LISTING,     "where CrewKey = "
+
+
+ID_QUERY_EQP, "SELECT Quantity, EquipmentID, Description "
+ID_QUERY_EQP, "FROM CrewEquipment, Equipment "
+ID_QUERY_EQP, "WHERE CrewEquipment.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_EQP, "AND CrewEquipment.CrewKey = "
+
+  
+ID_QUERY_LBR, "SELECT Quantity, LaborerID, Description "
+ID_QUERY_LBR, "FROM CrewLabor, Labor "
+ID_QUERY_LBR, "WHERE CrewLabor.LaborerKey = Labor.LaborerKey "
+ID_QUERY_LBR, "AND CrewLabor.CrewKey = "
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "8"
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,      0,       0,       8, (ID)"
+RPT_TTL_2,    "8,      3,       8,      65, -  (Description)"  
+
+RPT_TTL_3,    "0,      5,       0,       6,Count  (equipment)"
+RPT_TTL_4,    "7,      9,       7,       8,Equipment"
+RPT_TTL_5,   "16,      0,      16,      20, (desc)"
+
+
+RPT_TTL_6,   "40,      5,      40,       6,Count  (labor)"
+RPT_TTL_7,   "47,      7,      47,       8,Laborer"
+RPT_TTL_8,   "56,      0,      56,      20, (desc)"
+
+
+
+
+:FORMAT rCrewF.bin                                                  
+
+ID_QUERY_ALL,      "Number"
+
+ID_QUERY_LISTING,  "String", "String"                      
+
+ID_QUERY_EQP, "Number,..",   "String",  "String" 
+ID_QUERY_LBR, "Number,..",   "String",  "String" 
+
+
+:query rCrewDQ.bin                                                  
+
+rCrew_RptDlgBox,       "SELECT CrewKey "                             
+rCrew_RptDlgBox,       "FROM Crew "                                  
+rCrew_RptDlgBox,       "WHERE CrewKey = %CrewKey "                   
+
+
+:Dialog rCrewDD.bin rCrewDF.bin                                        
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rCrew_RptDlgBox, rCrew_RptDlgBox, rCrew_RptDlgBox, CrewKey, DID_KEY, "Number", "Number"            
+

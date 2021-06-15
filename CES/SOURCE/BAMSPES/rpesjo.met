@@ -1,0 +1,168 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rPESjo.h"                                       
+
+
+
+//Report (11-16) JOB/PROJECTLISTING
+//  
+//  
+//  SELECT JobID, Job.Description
+//  FROM Job
+//  WHERE JobKey = %JobKey
+//  
+//  
+//  /* To obtain all the ProjectControlNumbers and descriptions */
+//  /* associated with a particular Job */
+//  
+//  SELECT JobProject.ProjectControlNumber, Description
+//  FROM JobProject, Project
+//  WHERE JobProject.ProjectControlNumber = Project.ProjectControlNumber
+//  AND JobProject.JobKey = %JobKey
+//  
+//  
+//  
+//  /* To obtain the categories associated with each project */
+//  
+//  SELECT Category
+//  FROM ProjectCategory
+//  WHERE ProjectControlNumber = '%ProjectControlNumber'
+//  
+//  
+//  /* To obtain all of the items associated with this job */
+//  
+//  SELECT JobItem.JobItemKey, StandardItemNumber, JobItem.Quantity, CodeValueID, 
+//  JobItemProjectItem.ProjectControlNumber,
+//  JobItemProjectItem.Category, JobItemProjectItem.SequenceNumber, 
+//  JobItem.ExtendedAmount, StandardItem.ShortDescription, ProjectItem.Quantity,
+//  ProjectItem.ExtendedAmount
+//  FROM JobItem, StandardItem, CodeValue, JobItemProjectItem, ProjectItem
+//  WHERE JobItemProjectItem.JobKey = JobItem.JobKey
+//  AND JobItemProjectItem.JobItemKey = JobItem.JobItemKey
+//  AND JobItem.StandardItemKey = StandardItem.StandardItemKey
+//  AND StandardItem.Unit = CodeValueKey
+//  AND JobItemProjectItem.ProjectControlNumber = ProjectItem.ProjectControlNumber
+//  AND JobItemProjectItem.Category = ProjectItem.Category
+//  AND JobItemProjectItem.SequenceNumber = ProjectItem.SequenceNumber
+//  AND JobItem.JobKey = %JobKey
+
+
+
+
+:query rPESjoQ.bin                                        
+
+ID_QUERY_KEYS, "SELECT JobKey FROM Job "
+
+ID_QUERY_LISTING, "select JobID, Description "    
+ID_QUERY_LISTING, "from Job "                   
+ID_QUERY_LISTING, "where JobKey = "              
+
+
+//  /* To obtain all the ProjectControlNumbers and descriptions */
+//  /* associated with a particular Job */
+
+ID_QUERY_PCN, "SELECT JobProject.ProjectControlNumber, Description "
+ID_QUERY_PCN, "FROM JobProject, Project "
+ID_QUERY_PCN, "WHERE JobProject.ProjectControlNumber = Project.ProjectControlNumber "
+ID_QUERY_PCN, "AND JobProject.JobKey = "
+
+//  /* To obtain the categories associated with each project */
+
+ID_QUERY_CAT, "SELECT Category "
+ID_QUERY_CAT, "FROM ProjectCategory "
+ID_QUERY_CAT, "WHERE ProjectControlNumber = '"
+//                                  Add closing quote mark
+
+
+
+//  /* To obtain all of the items associated with this job */
+
+ID_QUERY_ITM, "SELECT StandardItemNumber, JobItem.Quantity, "
+ID_QUERY_ITM, "CodeValueID, JobItemProjectItem.ProjectControlNumber, "
+ID_QUERY_ITM, "JobItemProjectItem.Category, JobItemProjectItem.SequenceNumber, "
+ID_QUERY_ITM, "ProjectItem.Quantity, StandardItem.ShortDescription "
+ID_QUERY_ITM, "FROM JobItem, StandardItem, CodeValue, JobItemProjectItem, ProjectItem "
+ID_QUERY_ITM, "WHERE JobItemProjectItem.JobKey = JobItem.JobKey "
+ID_QUERY_ITM, "AND JobItemProjectItem.JobItemKey = JobItem.JobItemKey "
+ID_QUERY_ITM, "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QUERY_ITM, "AND StandardItem.Unit = CodeValueKey "
+ID_QUERY_ITM, "AND JobItemProjectItem.ProjectControlNumber = ProjectItem.ProjectControlNumber "
+ID_QUERY_ITM, "AND JobItemProjectItem.Category = ProjectItem.Category "
+ID_QUERY_ITM, "AND JobItemProjectItem.SequenceNumber = ProjectItem.SequenceNumber "
+ID_QUERY_ITM, "AND JobItem.JobKey = "
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "13"
+
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,  "0,  4,  4, 16,Job "
+RPT_TTL_2, "20,  3, 23, 55, - "
+RPT_TTL_3,  "0,  9,  9, 13,Project: "
+RPT_TTL_4, "22,  3, 25, 55, - "
+RPT_TTL_5,  "5, 12, 17,  6,Categories: "
+
+RPT_TTL_6,  "0,  5,  0, 14,Item/ "
+RPT_TTL_7, "18, 12, 14, 16,Job Quantity"
+RPT_TTL_8, "32,  4, 32,  8,Unit"
+RPT_TTL_9, "42,  7, 41, 13,Project"
+RPT_TTL_10,"55,  4, 55,  4,Catg"
+RPT_TTL_11,"60,  4, 60,  4,Seq#"
+RPT_TTL_12,"72,  8, 64, 16,Quantity"
+
+RPT_TTL_13, "0, 11,  0, 40,Description"
+
+
+
+:FORMAT rPESjoF.bin                                                  
+
+ID_QUERY_KEYS,    "Number"
+
+ID_QUERY_LISTING, "String", "String"                      
+
+ID_QUERY_PCN,     "String", "String"
+
+ID_QUERY_CAT,     "String"
+
+ID_QUERY_ITM,     "String", "Number,,..."
+ID_QUERY_ITM,     "String", "String"
+ID_QUERY_ITM,     "String", "String"
+ID_QUERY_ITM,     "Number,,...", "String"
+
+
+:query rPESjoDQ.bin                                                  
+
+rPESjo_RptDlgBox,       "SELECT JobKey "                             
+rPESjo_RptDlgBox,       "FROM Job "                                  
+rPESjo_RptDlgBox,       "WHERE JobKey = %JobKey "                   
+
+
+:Dialog rPESjoDD.bin rPESjoDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rPESjo_RptDlgBox, rPESjo_RptDlgBox, rPESjo_RptDlgBox, JobKey, DID_KEY, "Number", "Number"            
+

@@ -1,0 +1,542 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+/*
+ * vendor.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics     (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID add            change           xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+VendorCatS,  VendorD, VendorD,  2,   4,  138,  20,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+VendorS,      VenEditD, VenEditD,  2,   4,   66,  19,  COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT                       USHORT                         USHORT                      RECTS               USHORT
+//
+// Parents Window ID  Type Child Window ID    uKind       add   change                     <-   ^    ->   v    Coord
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+VendorS,        VendorL1,           ITIWC_LIST, VenEditD, VenEditD,  0,   0,  91,  15,   TR | BLK | X0ABS | Y0ABS | X1REL | Y1ABS
+VendorS,        VendorL2,           ITIWC_LIST, VenEditD, VenEditD,                            0,  15,   0,   0,   COORD_BLKREL
+VendorCatS,     VendorCatL,         ITIWC_LIST, VendorD,  VendorD,   0,   0,   0,   0,   COORD_REL                                   
+
+
+
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata  Button Window ID
+//------------------------------------------------------------------------------------------------------------------------------------
+VendorL1,                 ITI_LISTOPTIONSHV | LWS_BORDER,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,     0
+VendorL2,                 ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,      0,   0,      0,   0,     0
+VendorCatL,               ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,       0,   0,      0,   0,     0
+
+VenEditL1,                 ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,    0,   0,      0,   0,     0
+
+VenEditL2,                 ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,    0,   0,      0,   0,     0
+
+WorkClassL,                ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,    0,   0,      0,   0,     0
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT       USHORT             RECTS (DLG|UL|RNG)  USHORT     LONG               LONG              NAME               PSZ
+//
+// Window ID    Next Window ID     xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags         Col Name           Format String
+//---------------------------------------------------------------------------------------------------------------------------------------
+VendorS,      0,             11,  0,   34,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   VendorID,       "String"
+VendorS,      0,             11,  1,   34,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   ShortName,      "String"
+VendorS,      0,             11,  2,   34,  2,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAMULTILINEFLAGS,   Name,  "String"
+VendorS,      0,             11,  4,    8,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   5,              "String"
+VendorS,      0,             20,  4,   29,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   6,              "String"
+VendorS,      0,             11,  5,    8,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   7,              "String"
+VendorS,      0,             20,  5,   29,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   8,              "String"
+VendorS,      0,             11,  6,    8,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   9,              "String"
+VendorS,      0,             20,  6,   29,  1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  10,              "String"
+
+VendorL1,       0,              1,  0,    4,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   CodeValueID,    "String"
+VendorL1,       0,              5,  0,    1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,    ITI_LDATACTRFLAGS,2,             "String"
+VendorL1,       0,              6,  0,   40,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Translation,    "String"
+
+VendorL2,       0,              1,  0,  255,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Address,        "String"
+VendorL2,       0,              3,  1,  20,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   City,           "String"
+VendorL2,       0,             25,  1,   3,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   State,          "String"
+VendorL2,       0,             31,  1,   9,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   ZipCode,        "String"
+VendorL2,       0,             42,  1,   20,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   PhoneNumber,    "String"
+
+VendorCatL,    VendorS, 1,   0,   14,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   VendorID,       "String"
+VendorCatL,    VendorS, 16,  0,   32,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   ShortName,      "String"
+VendorCatL,    VendorS, 50,  0,   4,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   3,              "String"
+VendorCatL,    VendorS, 56,  0,   4,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   4,              "String"
+VendorCatL,    VendorS, 62,  0,   4,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   5,              "String"
+
+VenEditL1,       0,              1,  0, 255,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   Address,        "String"
+VenEditL1,       0,              1,  1,  24,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   City,           "String"
+VenEditL1,       0,              26, 1,   5,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   State,          "String"
+VenEditL1,       0,              33, 1,  10,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   ZipCode,        "String"
+VenEditL1,       0,              45, 1,  32,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   PhoneNumber,    "String"
+
+
+VenEditL2,       0,              1,  0,   8,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,   CodeValueID,    "String"
+VenEditL2,       0,              9,  0,   1,   1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_LDATACTRFLAGS,  2,            "String"
+VenEditL2,       0,             11,  0,  40,   1,   COORD_CHRRNG, ITI_LDLGCOLOR,     ITI_LDATAFLAGS,    Translation,   "String"
+
+WorkClassL,      0,              1,  0,    8,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   CodeValueID,    "String"
+WorkClassL,      0,              9,  0,    1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_LDATACTRFLAGS,  2,            "String"
+WorkClassL,      0,             11,  0,   40,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Translation,    "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT        USHORT          RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID     Next Window ID  xposypos  xsiz ysiz CoordType     Foreground Color   Txt Flags          Label String
+//--------------------------------------------------------------------------------------------------------------------------------
+VendorS,   0,              1,   0,    9,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Vendor:"
+VendorS,   0,              1,   1,    9,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Short Name:"
+VendorS,   0,              1,   2,    9,  2,   COORD_CHRRNG, ITI_SLABELCOLOR,   DT_RIGHT, "Name:"
+VendorS,   0,              1,   4,    9,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Type:"
+VendorS,   0,             19,   4,    1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "-"
+VendorS,   0,              1,   5,    9,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "Certification:"
+VendorS,   0,             19,   5,    1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "-"
+VendorS,   0,              1,   6,    9,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS, "DBE Class:"
+VendorS,   0,             19,   6,    1,  1,   COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "-"
+
+VendorL1,    0,              1,   0,    9,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Work Class"
+
+VendorL2,    0,              1,   0,  255,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Vendor Address"
+VendorL2,    0,              3,   1,   20,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "City"
+VendorL2,    0,             25,   1,    5,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "State"
+VendorL2,    0,             31,   1,    9,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Zip Code"
+VendorL2,    0,             42,   1,   20,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Phone Number"
+
+VendorCatL, VendorS,  1,   0,   14,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Vendor"
+VendorCatL, VendorS,  16,  0,   32,  1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Short Name"
+VendorCatL, VendorS,  50,  0,   4,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Type"
+VendorCatL, VendorS,  56,  0,   5,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Class"
+VendorCatL, VendorS,  62,  0,   4,   1,   COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "DBE"
+
+VenEditL1,    0,               1,  0, 255,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Vendor Address"
+VenEditL1,    0,               1,  1,  24,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "City"
+VenEditL1,    0,               26, 1,   5,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "State"
+VenEditL1,    0,               33, 1,  10,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Zip Code"
+VenEditL1,    0,               45, 1,  32,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Phone Number"
+
+VenEditL2,    0,               1,  0,  10,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Work Class"    
+
+WorkClassL,   0,               1,  0,  10,   1,   COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Work Class"    
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT            char []
+//
+// Window ID         Query String
+//-------------------------------------------------------------------------------------------------------
+VendorS,       " SELECT VendorKey, VendorID, ShortName, Name, CV1.CodeValueID, CV1.Translation, "
+VendorS,       " CV2.CodeValueID, CV2.Translation, CV3.CodeValueID, CV3.Translation, "
+VendorS,       " Type, Certification, DBEClassification "
+VendorS,       " FROM Vendor, CodeValue CV1, CodeValue CV2, CodeValue CV3 "
+VendorS,       " WHERE Type = CV1.CodeValueKey "
+VendorS,       " AND Certification = CV2.CodeValueKey "
+VendorS,       " AND DBEClassification = CV3.CodeValueKey "
+VendorS,       " AND VendorKey = %VendorKey "
+VendorS,       " ORDER BY VendorID"
+
+VendorL1,        " SELECT CodeValueID, ""-"", Translation "
+VendorL1,        " FROM VendorClassification, CodeValue "
+VendorL1,        " WHERE VendorClassification = CodeValueKey "
+VendorL1,        " AND VendorKey = %VendorKey "
+VendorL1,        " ORDER BY CodeValueID "
+
+VendorL2,        " SELECT VendorAddressKey, AddressSequenceNumber, Address, City, "
+VendorL2,        " State, ZipCode, PhoneNumber, VendorKey "
+VendorL2,        " FROM VendorAddress "
+VendorL2,        " WHERE VendorKey = %VendorKey ORDER BY AddressSequenceNumber "
+
+VendorCatL,     " SELECT VendorID, ShortName, CV1.CodeValueID, CV2.CodeValueID, "
+VendorCatL,     " CV3.CodeValueID, VendorKey, Type, Certification, DBEClassification "
+VendorCatL,     " FROM Vendor, CodeValue CV1, CodeValue CV2, CodeValue CV3 "
+VendorCatL,     " WHERE Type = CV1.CodeValueKey "
+VendorCatL,     " AND Certification = CV2.CodeValueKey "
+VendorCatL,     " AND DBEClassification = CV3.CodeValueKey "
+VendorCatL,     " AND Vendor.Deleted IS NULL "
+VendorCatL,     " ORDER BY VendorID"
+
+VendorD,      " SELECT VendorID, ShortName, Name, VendorKey "
+VendorD,      " FROM Vendor "
+VendorD,      " WHERE VendorKey = %VendorKey "
+
+VendorTypeD,  " SELECT CodeValueID, CodeValueKey "
+VendorTypeD,  " FROM CodeValue CV, CodeTable "
+VendorTypeD,  " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey "
+VendorTypeD,  " AND CodeTableID = ""VENDTYP"" "
+VendorTypeD,  " AND CV.UnitType = %CurUnitType " 
+VendorTypeD,  " AND (CodeValue.Deleted is null "
+VendorTypeD,  " OR CodeValueKey = %Type) "
+VendorTypeD,  " ORDER BY CodeValueID "
+
+
+VendorCertD,  " SELECT CodeValueID, CodeValueKey "
+VendorCertD,  " FROM CodeValue CV, CodeTable "
+VendorCertD,  " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey "
+VendorCertD,  " AND CodeTableID = ""CERTTYP"" "
+VendorCertD,  " AND CV.UnitType = %CurUnitType " 
+VendorCertD,  " AND (CodeValue.Deleted is null "
+VendorCertD,  " OR CodeValueKey = %Certification) "
+VendorCertD,  " ORDER BY CodeValueID "
+
+
+
+VendorClassD, " SELECT CodeValueID , CodeValueKey "
+VendorClassD, " FROM CodeValue CV, CodeTable "
+VendorClassD, " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey "
+VendorClassD, " AND CodeTableID = ""DBETYPE"" "
+VendorClassD,  " AND CV.UnitType = %CurUnitType " 
+VendorClassD, " AND (CodeValue.Deleted is null "
+VendorClassD, " OR CodeValueKey = %DBEClassification) "
+VendorClassD, " ORDER BY CodeValueID "
+
+
+VenEditD,      " SELECT VendorID, ShortName, Name, VendorKey "
+VenEditD,      " FROM Vendor "
+VenEditD,      " WHERE VendorKey = %VendorKey "
+
+VenEditL1,        " SELECT AddressSequenceNumber, "
+VenEditL1,        " Address, City, State, ZipCode, PhoneNumber, "
+VenEditL1,        " VendorKey, VendorAddressKey "
+VenEditL1,        " FROM VendorAddress "
+VenEditL1,        " WHERE VendorKey = %VendorKey "
+
+
+VenEditL2,        " SELECT CodeValueID, ""-"", Translation, VendorClassification, "
+VenEditL2,        " VendorKey "
+VenEditL2,        " FROM VendorClassification, CodeValue "
+VenEditL2,        " WHERE VendorClassification = CodeValueKey "
+VenEditL2,        " AND VendorKey = %VendorKey "
+VenEditL2,        " ORDER BY CodeValueID "
+
+
+VendorAddressD, " SELECT AddressSequenceNumber, Address, City, State, "
+VendorAddressD, " ZipCode, PhoneNumber, Location, VendorKey, VendorAddressKey " 
+VendorAddressD, " FROM VendorAddress "
+VendorAddressD, " WHERE VendorKey = %VendorKey "
+VendorAddressD, " AND VendorAddressKey = %VendorAddressKey "
+
+
+WorkClassL,        "SELECT  CodeValueID, ""-"", Translation, CodeValue.CodeValueKey "
+WorkClassL,        "FROM CodeValue, CodeTable " 
+WorkClassL,        "WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey "
+WorkClassL,        "AND CodeTableID = ""VWRKCLS"" "
+WorkClassL,        "AND (CodeValueKey = %VendorClassification "
+WorkClassL,        "OR CodeValue.Deleted  is null "
+WorkClassL,        "AND CodeValue.CodeValueKey not in "
+WorkClassL,        "(SELECT VendorClassification "
+WorkClassL,        "FROM VendorClassification "
+WorkClassL,        "WHERE VendorKey = %VendorKey)) "
+WorkClassL,        "ORDER BY CodeValueID "
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+VendorS,                 "Vendor %VendorID"
+VendorCatS,             "Vendor Catalog"
+
+
+
+
+:Dialog dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id             Add Query ID         Change Query ID      Col Name                 CtlID              Format
+//-----------------------------------------------------------------------------------------------------------------------------
+VendorD,       VendorD,      VendorD,      VendorID,               DID_VENDORID,      "String", "String"
+VendorD,       VendorD,      VendorD,      ShortName,              DID_SHORTNAME,     "String", "String"
+VendorD,       VendorD,      VendorD,      Name,                   DID_NAME,          "String", "String"
+VendorD,       VendorTypeD,  VendorTypeD,  CodeValueID,            DID_TYPE,          "String", "Number"
+VendorD,       VendorCertD,  VendorCertD,  CodeValueID,            DID_CERTIFICATION, "String", "Number"
+VendorD,       VendorClassD, VendorClassD, CodeValueID,            DID_DBECLASSIF,    "String", "Number"
+                
+VenEditD,       VenEditD,      VenEditD,      VendorID,               DID_VENDORID,      "String", "String"
+VenEditD,       VenEditD,      VenEditD,      ShortName,              DID_SHORTNAME,     "String", "String"
+VenEditD,       VenEditD,      VenEditD,      Name,                   DID_NAME,          "String", "String"
+VenEditD,       VendorTypeD,  VendorTypeD,  CodeValueID,            DID_TYPE,          "String", "Number"
+VenEditD,       VendorCertD,  VendorCertD,  CodeValueID,            DID_CERTIFICATION, "String", "Number"
+VenEditD,       VendorClassD, VendorClassD, CodeValueID,            DID_DBECLASSIF,    "String", "Number"
+VenEditD,       ITIWND_LIST,         ITIWND_LIST,         0,                      VenEditL1,      "",       ""
+VenEditD,       ITIWND_LIST,         ITIWND_LIST,         0,                      VenEditL2,      "",       ""
+
+VendorAddressD, VendorAddressD,VendorAddressD, AddressSequenceNumber, DID_ADDRSEQNUM,    "Number", "Number"
+VendorAddressD, VendorAddressD,VendorAddressD, Address,               DID_VENADDRESS,    "String", "String"
+VendorAddressD, VendorAddressD,VendorAddressD, City,                  DID_CITY,          "String", "String"
+VendorAddressD, VendorAddressD,VendorAddressD, State,                 DID_STATE,         "String", "String"
+VendorAddressD, VendorAddressD,VendorAddressD, ZipCode,               DID_ZIPCODE,       "String", "*String"
+VendorAddressD, VendorAddressD,VendorAddressD, PhoneNumber,           DID_PHONENUM,      "String", "*String"
+VendorAddressD, VendorAddressD,VendorAddressD, Location,              DID_LOCATION,      "Position,Long<long> <deg>D <min>M <sec>S, Lat<lat> <deg>D <min>M <sec>S", "*Position"
+
+WorkClassD,     ITIWND_LIST,         ITIWND_LIST,         CodeValueKey,          WorkClassL,      "Number", "Number"   
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+VendorD,       "UPDATE Vendor "
+VendorD,       "SET "
+VendorD,       "VendorID = @VendorID, "
+VendorD,       "ShortName = @ShortName, "
+VendorD,       "Name = @Name, Type = @"DID_TYPE"CodeValueKey, "
+VendorD,       "Certification = @"DID_CERTIFICATION"CodeValueKey, "
+VendorD,       "DBEClassification = @"DID_DBECLASSIF"CodeValueKey "
+VendorD,       "WHERE VendorKey = %VendorKey "
+
+VenEditD,       "UPDATE Vendor "
+VenEditD,       "SET "
+VenEditD,       "VendorID = @VendorID, "
+VenEditD,       "ShortName = @ShortName, "
+VenEditD,       "Name = @Name, Type = @"DID_TYPE"CodeValueKey, "
+VenEditD,       "Certification = @"DID_CERTIFICATION"CodeValueKey, "
+VenEditD,       "DBEClassification = @"DID_DBECLASSIF"CodeValueKey "
+VenEditD,       "WHERE VendorKey = %VendorKey "
+
+VendorAddressD, "UPDATE VendorAddress "
+VendorAddressD, "SET "
+VendorAddressD, "AddressSequenceNumber = @AddressSequenceNumber, "
+VendorAddressD, "Address = @Address, City = @City, State = @State, "
+VendorAddressD, "ZipCode = @ZipCode, PhoneNumber = @PhoneNumber, "
+VendorAddressD, "Location = @Location "
+VendorAddressD, "WHERE VendorKey = %VendorKey "
+VendorAddressD, "AND VendorAddressKey = %VendorAddressKey "
+
+WorkClassD,     "UPDATE VendorClassification "
+WorkClassD,     "SET "
+WorkClassD,     "VendorClassification=@"WorkClassL"CodeValueKey "
+WorkClassD,     "WHERE VendorKey = %VendorKey "
+WorkClassD,     "AND VendorClassification = %VendorClassification "
+
+
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+VendorD,       "SELECT VendorID, ShortName, Name, Type, "
+VendorD,       "Certification, DBEClassification "
+VendorD,       "FROM Vendor HOLDLOCK "
+VendorD,       "WHERE VendorKey = %VendorKey "
+
+
+VenEditD,       "SELECT VendorID, ShortName, Name, Type, "
+VenEditD,       "Certification, DBEClassification "
+VenEditD,       "FROM Vendor HOLDLOCK "
+VenEditD,       "WHERE VendorKey = %VendorKey "
+
+
+VendorAddressD, "SELECT AddressSequenceNumber, Address, City, State, ZipCode, "
+VendorAddressD, "PhoneNumber, Location "
+VendorAddressD, "FROM VendorAddress HOLDLOCK "
+VendorAddressD, "WHERE VendorKey = %VendorKey "
+VendorAddressD, "AND VendorAddressKey = %VendorAddressKey "
+
+WorkClassD,     "SELECT VendorClassification "
+WorkClassD,     "FROM VendorClassification HOLDLOCK "
+WorkClassD,     "WHERE VendorKey = %VendorKey "
+WorkClassD,     "AND VendorClassification = %VendorClassification "
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+VendorD,       "INSERT INTO Vendor "
+VendorD,       "(VendorKey, VendorID, ShortName, Name, Type, "
+VendorD,       "Certification, DBEClassification) "
+VendorD,       "VALUES "
+VendorD,       "(@NewKey, @VendorID, @ShortName, @Name, "
+VendorD,       "@"DID_TYPE"CodeValueKey, "
+VendorD,       "@"DID_CERTIFICATION"CodeValueKey, "
+VendorD,       "@"DID_DBECLASSIF"CodeValueKey )"
+
+
+VenEditD,       "INSERT INTO Vendor "
+VenEditD,       "(VendorKey, VendorID, ShortName, Name, Type, "
+VenEditD,       "Certification, DBEClassification) "
+VenEditD,       "VALUES "
+VenEditD,       "(@NewKey, @VendorID, @ShortName, @Name, "
+VenEditD,       "@"DID_TYPE"CodeValueKey, "
+VenEditD,       "@"DID_CERTIFICATION"CodeValueKey, "
+VenEditD,       "@"DID_DBECLASSIF"CodeValueKey )"
+
+
+ 
+
+VendorAddressD, "INSERT INTO VendorAddress "
+VendorAddressD, "(VendorKey, VendorAddressKey, AddressSequenceNumber, "
+VendorAddressD, "Address, City, "
+VendorAddressD, "State, ZipCode, PhoneNumber, Location) "
+VendorAddressD, "VALUES "
+VendorAddressD, "(%VendorKey, @NewKey, @"DID_ADDRSEQNUM"AddressSequenceNumber, "
+VendorAddressD, "@"DID_VENADDRESS"Address, "
+VendorAddressD, "@"DID_CITY"City, @"DID_STATE"State, @"DID_ZIPCODE"ZipCode, "
+VendorAddressD, "@"DID_PHONENUM"PhoneNumber, "
+VendorAddressD, "@"DID_LOCATION"Location )"
+
+WorkClassD,     "INSERT INTO VendorClassification "
+WorkClassD,     "(VendorKey, VendorClassification) "
+WorkClassD,     "VALUES "
+WorkClassD,     "(%VendorKey, @"WorkClassL"CodeValueKey ) "
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+VendorCatL,      "UPDATE Vendor "
+VendorCatL,      "SET Deleted = 1 "
+VendorCatL,      "WHERE VendorKey IN (%VendorKey{,%VendorKey}) "
+
+
+
+VenEditL2,         "DELETE FROM VendorClassification "
+VenEditL2,         "WHERE VendorClassification IN (%VendorClassification{,%VendorClassification}) "
+VenEditL2,         "AND VendorKey = %VendorKey "
+
+
+VenEditL1,         "DELETE FROM VendorAddress "
+VenEditL1,         "WHERE VendorAddressKey IN (%VendorAddressKey{,%VendorAddressKey}) "
+VenEditL1,         "AND VendorKey = %VendorKey "
+

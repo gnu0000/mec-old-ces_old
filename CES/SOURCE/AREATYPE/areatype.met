@@ -1,0 +1,361 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * areatype.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "areaimp.h"
+
+
+
+
+
+:static  static.bin
+//
+// Static WinID  add            change         xpos ypos xsiz ysiz CoordType     Window Options     Background Color
+//----------------------------------------------------------------------------------------------------------------------
+AreaTypeCatS,    AreaTypeCatD,  AreaTypeCatD,  2,   4,   60,  10,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+AreaTypeS,       AreaTypeD1,    AreaTypeD1,    1,   5,   65,  11,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+
+:CHILD child.bin
+//
+// Parents ID  Child WinID    uKind        add            change         Coord
+//------------------------------------------------------------------------------------------------------------------------------------
+AreaTypeCatS,  AreaTypeCatL,  ITIWC_LIST,  AreaTypeCatD,  AreaTypeCatD,  0,  0,   0, 0,  COORD_REL
+AreaTypeS,     AreaTypeL1,    ITIWC_LIST,  AreaTypeD1,    AreaTypeD1,    0,  0,  64, 0,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+AreaTypeS,     AreaTypeL2,    ITIWC_LIST,  AreaTypeD2,    AreaTypeD2,    65, 1,  0,  0,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+
+
+
+
+:list list.bin
+//
+// List WinID  Window Options                  Background Color     Label Bkg Color        Lbl ydata  Button WinID
+//--------------------------------------------------------------------------------------------------------------------
+AreaTypeCatL,  ITI_LISTOPTIONSHV,              ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,  0,     10
+AreaTypeL1,    ITI_LISTOPTIONSHV | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,  0,     1
+AreaTypeL2,    ITI_LISTOPTIONHVQ | LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,  0,  0,     5
+
+
+
+
+
+:DATA data.bin format.bin
+//
+// Window ID   Next WinID   Coords                       Foreground Color Txt Flags        Col Name      Format String
+//------------------------------------------------------------------------------------------------------------------------------
+AreaTypeCatL,  AreaTypeS,  1,   0, 16,  1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  AreaTypeID,   "String"
+AreaTypeCatL,  AreaTypeS,  19,  0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  Description,  "String"
+
+AreaTypeL1,    0,          1,   0, 9,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  AreaID,       "String"
+AreaTypeL1,    0,          11,  0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  Description,  "String"
+
+AreaTypeL2,    0,          1,   0, 5,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  CountyID,     "String"
+AreaTypeL2,    0,          7,   0, 30,  1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  Name,         "String"
+
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//
+// Window ID   Next WinID  Coords          CoordType       Foreground Color  Txt Flags         Label String
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+AreaTypeCatL,  AreaTypeS,  1,   0, 16,  1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Area Type"
+AreaTypeCatL,  AreaTypeS,  19,  0, 255, 1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Description"
+
+AreaTypeS,     0,          65,  0, 82,  1, COORD_CHRPCTX,  ITI_SLABELCOLOR,  ITI_SLABELFLAGS,  "Counties for"
+AreaTypeS,     0,          83,  0, 99,  1, COORD_CHRPCTX,  ITI_SDATACOLOR,   ITI_SDATAFLAGS,   " "
+
+AreaTypeL1,    0,          1,   0, 9,   1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Area"
+AreaTypeL1,    0,          11,  0, 255, 1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Description"
+
+AreaTypeL2,    0,          1,   0, 5,   1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Code"
+AreaTypeL2,    0,          7,   0, 30,  1, COORD_CHRRNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,  "Name"
+
+
+
+
+:title title.bin
+//
+//
+//
+// Window ID   Window Title
+//--------------------------------------------------------------------
+AreaTypeCatS,  "Area Type Catalog"
+AreaTypeS,     "Areas for %AreaTypeID"
+
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id      add query ID,  change Qry ID  Col Name     CtlID            Format
+//-----------------------------------------------------------------------------------------------------------
+AreaTypeCatD,  AreaTypeCatD,  AreaTypeCatD,  AreaTypeID,  DID_AREATYPEID,    "String", "String"
+AreaTypeCatD,  AreaTypeCatD,  AreaTypeCatD,  Description, DID_AREATYPEDESCR, "String", "String"
+
+AreaTypeD1,    AreaTypeD1,    AreaTypeD1,    AreaID,      DID_AREAID,        "String", "String"
+AreaTypeD1,    AreaTypeD1,    AreaTypeD1,    Description, DID_AREADESCR,     "String", "String"
+
+AreaTypeD2,    AreaTypeD2L1,  AreaTypeD2L1,  Name,        AreaTypeD2L1,      "String", "String"
+AreaTypeD2,    AreaTypeD2L2,  AreaTypeD2L2,  Name,        AreaTypeD2L2,      "String", "String"
+
+
+
+
+
+
+:query query.bin
+//
+//
+// Window ID   Query String
+//----------------------------------------------------------------------------------------------------------------
+AreaTypeCatL,  " SELECT AreaTypeID, Description, AreaTypeKey "
+AreaTypeCatL,  " FROM AreaType "
+AreaTypeCatL,  " WHERE Deleted IS NULL "
+AreaTypeCatL,  " ORDER BY AreaTypeID "
+
+AreaTypeS,     " SELECT AreaTypeID, AreaTypeKey "
+AreaTypeS,     " FROM AreaType "
+AreaTypeS,     " WHERE AreaTypeKey = %AreaTypeKey "
+
+AreaTypeL1,    " SELECT AreaID, Description, AreaKey, AreaTypeKey "
+AreaTypeL1,    " FROM Area "
+AreaTypeL1,    " WHERE AreaTypeKey = %AreaTypeKey "
+AreaTypeL1,    " AND Deleted IS NULL "
+AreaTypeL1,    " ORDER BY AreaID "
+
+AreaTypeL2,    " SELECT CountyID, Name, Area.AreaTypeKey,"
+AreaTypeL2,    " Area.AreaKey, County.CountyKey "
+AreaTypeL2,    " FROM County, AreaCounty, Area "
+AreaTypeL2,    " WHERE County.CountyKey = AreaCounty.CountyKey "
+AreaTypeL2,    " AND AreaCounty.AreaTypeKey = Area.AreaTypeKey "
+AreaTypeL2,    " AND AreaCounty.AreaKey = Area.AreaKey "
+AreaTypeL2,    " AND Area.AreaTypeKey = %AreaTypeKey "
+AreaTypeL2,    " AND Area.AreaKey = %AreaKey "
+AreaTypeL2,    " AND BaseDate = "UNDECLARED_BASE_DATE" "
+AreaTypeL2,    " ORDER BY CountyID "
+
+AreaTypeCatD,  " SELECT AreaTypeID, Description "
+AreaTypeCatD,  " FROM AreaType "
+AreaTypeCatD,  " WHERE AreaTypeKey = %AreaTypeKey "
+
+AreaTypeD1,    " SELECT AreaID, Description, AreaTypeKey, AreaKey "
+AreaTypeD1,    " FROM Area "
+AreaTypeD1,    " WHERE AreaKey = %AreaKey "
+
+
+
+AreaTypeD2L1,  " SELECT CountyID, Name, AreaCounty.AreaTypeKey, AreaCounty.AreaKey, "
+AreaTypeD2L1,  " AreaCounty.CountyKey "
+AreaTypeD2L1,  " FROM Area, AreaCounty, County "
+AreaTypeD2L1,  " WHERE Area.AreaKey = AreaCounty.AreaKey "
+AreaTypeD2L1,  " AND Area.AreaTypeKey = AreaCounty.AreaTypeKey "
+AreaTypeD2L1,  " AND AreaCounty.CountyKey = County.CountyKey "
+AreaTypeD2L1,  " AND Area.AreaTypeKey = %AreaTypeKey "
+AreaTypeD2L1,  " AND Area.AreaKey = %AreaKey "
+AreaTypeD2L1,  " AND BaseDate = "UNDECLARED_BASE_DATE" "
+AreaTypeD2L1,  " ORDER BY Name"
+
+AreaTypeD2L2,  " SELECT CountyID, Name, County.CountyKey "
+AreaTypeD2L2,  " FROM County "
+AreaTypeD2L2,  " WHERE CountyKey NOT IN"
+AreaTypeD2L2,  "     (SELECT CountyKey"
+AreaTypeD2L2,  "      FROM AreaCounty"
+AreaTypeD2L2,  "      WHERE AreaTypeKey = %AreaTypeKey)"
+AreaTypeD2L2,  " ORDER BY CountyID "
+
+
+
+
+
+
+
+:query update.bin
+//
+//
+// Window ID          Query String
+//-------------------------------------------------------------------------
+AreaTypeCatD,  " UPDATE AreaType"
+AreaTypeCatD,  " SET AreaTypeID = @AreaTypeID,"
+AreaTypeCatD,  " Description = @Description"
+AreaTypeCatD,  " WHERE AreaTypeKey = %AreaTypeKey"
+
+AreaTypeD1,    " UPDATE Area"
+AreaTypeD1,    " SET AreaID = @AreaID,"
+AreaTypeD1,    " Description = @Description"
+AreaTypeD1,    " WHERE AreaTypeKey = %AreaTypeKey"
+AreaTypeD1,    " AND AreaKey = %AreaKey"
+
+AreaTypeD2,    " UPDATE AreaCounty"
+AreaTypeD2,    " SET CountyKey = @"CountyCatL"CountyKey"
+AreaTypeD2,    " WHERE AreaTypeKey = %AreaTypeKey"
+AreaTypeD2,    " AND CountyKey = %CountyKey"
+AreaTypeD2,    " AND AreaKey = %AreaKey"
+
+
+
+
+
+:query lock.bin
+//
+//
+// Window ID          Query String
+//-------------------------------------------------------------------------
+AreaTypeCatD,  " SELECT AreaTypeID, Description"
+AreaTypeCatD,  " FROM AreaType HOLDLOCK"
+AreaTypeCatD,  " WHERE AreaTypeKey = %AreaTypeKey"
+
+AreaTypeD1,    " SELECT AreaID, Description"
+AreaTypeD1,    " FROM Area HOLDLOCK"
+AreaTypeD1,    " WHERE AreaTypeKey = %AreaTypeKey"
+AreaTypeD1,    " AND AreaKey = %AreaKey"
+
+AreaTypeD2,    " SELECT CountyKey"
+AreaTypeD2,    " FROM AreaCounty HOLDLOCK"
+AreaTypeD2,    " WHERE AreaTypeKey = %AreaTypeKey"
+AreaTypeD2,    " AND AreaKey = %AreaKey"
+
+
+
+
+:query insert.bin
+//
+//
+// Window ID          Query String
+//-------------------------------------------------------------------------
+AreaTypeCatD,  " INSERT INTO AreaType"
+AreaTypeCatD,  " (AreaTypeKey,AreaTypeID,Description)"
+AreaTypeCatD,  " VALUES " 
+AreaTypeCatD,  " (@NewKey,@AreaTypeID,@Description)"
+AreaTypeCatD,  " INSERT INTO Area"
+AreaTypeCatD,  " (AreaTypeKey, AreaKey, AreaID, Description)"
+AreaTypeCatD,  " VALUES " 
+AreaTypeCatD,  " (@NewKey, 1, '*', 'Default all Areas') "
+
+
+AreaTypeD1,    " INSERT INTO Area"
+AreaTypeD1,    " (AreaTypeKey, AreaKey, AreaID, Description)"
+AreaTypeD1,    " VALUES " 
+AreaTypeD1,    " (%AreaTypeKey, @NewKey, @AreaID, @Description)"
+
+AreaTypeD2,    " INSERT INTO AreaCounty"
+AreaTypeD2,    " (AreaTypeKey, CountyKey, AreaKey, BaseDate)"
+AreaTypeD2,    " VALUES " 
+AreaTypeD2,    " (%AreaTypeKey, @"CountyCatL"CountyKey, %AreaKey,"
+AreaTypeD2,    " @UndeclaredBaseDate)"
+
+
+
+
+
+:query delete.bin
+//
+//
+// Window ID          Query String
+//-------------------------------------------------------------------------
+AreaTypeCatL,  " UPDATE AreaType"
+AreaTypeCatL,  " SET Deleted = 1"
+AreaTypeCatL,  " WHERE AreaTypeKey IN (%AreaTypeKey{,%AreaTypeKey})"
+AreaTypeCatL,  " AND AreaTypeKey != 1"
+AreaTypeCatL,  " UPDATE Area"
+AreaTypeCatL,  " SET Deleted = 1"
+AreaTypeCatL,  " WHERE AreaTypeKey IN (%AreaTypeKey{,%AreaTypeKey})"
+AreaTypeCatL,  " AND AreaTypeKey != 1"
+
+AreaTypeL1,    " UPDATE Area"    
+AreaTypeL1,    " SET Deleted = 1"
+AreaTypeL1,    " WHERE AreaKey IN (%AreaKey{,%AreaKey})"
+AreaTypeL1,    " AND AreaKey != 1"    
+AreaTypeL1,    " AND AreaTypeKey = %AreaTypeKey"
+
+
+
+:query impquery.bin
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------------
+UPDATEAREATYPEKEY,      " UPDATE %TableName"
+UPDATEAREATYPEKEY,      " SET %TargetColumn ="
+UPDATEAREATYPEKEY,      " (SELECT AreaTypeKey"
+UPDATEAREATYPEKEY,      " FROM %ProductionDatabase..AreaType"
+UPDATEAREATYPEKEY,      " WHERE %ProductionDatabase..AreaType.AreaTypeID ="
+UPDATEAREATYPEKEY,      " %TableName.%ColumnName)"
+
+UPDATEAREAKEY,          " UPDATE %TableName"
+UPDATEAREAKEY,          " SET %TargetColumn ="
+UPDATEAREAKEY,          " (SELECT AreaKey"
+UPDATEAREAKEY,          " FROM %ProductionDatabase..Area"
+UPDATEAREAKEY,          " WHERE %ProductionDatabase..Area.AreaID ="
+UPDATEAREAKEY,          " %TableName.%ColumnName"
+UPDATEAREAKEY,          " AND %ProductionDatabase..Area.AreaTypeKey ="
+UPDATEAREAKEY,          " %TableName.AreaTypeKey)"
+
+UPDATECOUNTYKEY,        " UPDATE %TableName"
+UPDATECOUNTYKEY,        " SET %TargetColumn ="
+UPDATECOUNTYKEY,        " (SELECT CountyKey"
+UPDATECOUNTYKEY,        " FROM %ProductionDatabase..County"
+UPDATECOUNTYKEY,        " WHERE %ProductionDatabase..County.CountyID ="
+UPDATECOUNTYKEY,        " %TableName.%ColumnName)"
+
+COPYAREATYPE,           " INSERT INTO %ProductionDatabase..AreaType"
+COPYAREATYPE,           " (AreaTypeKey,AreaTypeID,Description)"
+COPYAREATYPE,           " SELECT AreaTypeKey,AreaTypeID,Description"
+COPYAREATYPE,           " FROM AreaType"
+COPYAREATYPE,           " WHERE AreaTypeKey IS NOT NULL"
+
+COPYAREA,               " INSERT INTO %ProductionDatabase..Area"
+COPYAREA,               " (AreaTypeKey,AreaKey,AreaID,Description)"
+COPYAREA,               " SELECT AreaTypeKey,AreaKey,AreaID,Description"
+COPYAREA,               " FROM Area"
+COPYAREA,               " WHERE AreaTypeKey IS NOT NULL"
+COPYAREA,               " AND AreaKey IS NOT NULL"
+
+COPYAREACOUNTY,         " INSERT INTO %ProductionDatabase..AreaCounty"
+COPYAREACOUNTY,         " (AreaTypeKey,AreaKey,CountyKey,BaseDate)"
+COPYAREACOUNTY,         " SELECT DISTINCT AreaTypeKey,AreaKey,CountyKey,'%KeyValue'"
+COPYAREACOUNTY,         " FROM AreaCounty"
+COPYAREACOUNTY,         " WHERE AreaTypeKey IS NOT NULL"
+COPYAREACOUNTY,         " AND AreaKey IS NOT NULL"
+COPYAREACOUNTY,         " AND CountyKey IS NOT NULL"
+
+INSERTSTAR,             " INSERT INTO %TableName"
+INSERTSTAR,             " (AreaTypeKeyText,AreaKey,AreaID, Description)"
+INSERTSTAR,             " SELECT DISTINCT AreaTypeKeyText, 1, '*',"
+INSERTSTAR,             "  'All Areas'"
+INSERTSTAR,             " FROM %TableName"
+
+

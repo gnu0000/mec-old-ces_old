@@ -1,0 +1,126 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE 13270 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Standard Item", 13270, 9, 44, 375, 165, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Standard Item Number", 1100, 9, 151, 102, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 100, 11, 139, 90, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Spec ~Year", 1105, 115, 151, 46, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 105, 117, 139, 39, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Default Start ~Time", 1103, 171, 151, 86, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 103, 175, 139, 66, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Default Production ~Rate", 1102, 258, 151, 108, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 102, 260, 139, 96, 9, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Short ~Description", 1106, 9, 127, 76, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 106, 11, 116, 351, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Long Description", 1107, 9, 103, 77, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "~Unit", 1101, 43, 57, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 101, 11, 8, 98, 47, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Rounding ~Precision", 1104, 135, 57, 88, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 104, 124, 9, 115, 46, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Lump Sum", 108, 259, 53, 60, 10, WC_BUTTON, BS_AUTOCHECKBOX | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add Dependency", 115, 14, 13, 91, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Delete Dependency", 116, 124, 13, 91, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", 1, 267, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 318, 31, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 267, 13, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 316, 13, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE 13365 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Text", 13365, 31, 76, 360, 140, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Standard Item Catalog", 200, 11, 97, 138, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 13300, 13, 16, 255, 79, MYCONTROL, WS_GROUP | WS_VISIBLE
+        CONTROL "Std Item Number", 200, 13, 125, 81, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 100, 15, 114, 72, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Lag", 200, 101, 125, 81, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 102, 103, 114, 68, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Link Type", 200, 186, 126, 81, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 103, 185, 74, 80, 50, WC_COMBOBOX, CBS_DROPDOWNLIST | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Link As", 200, 276, 101, 78, 34, WC_STATIC, SS_GROUPBOX | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Predecessor", 104, 281, 116, 66, 10, WC_BUTTON, BS_AUTORADIOBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Successor", 105, 281, 105, 58, 10, WC_BUTTON, BS_AUTORADIOBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "OK", 1, 303, 53, 48, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | 
+                WS_VISIBLE
+        CONTROL "Cancel", 2, 303, 36, 48, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add More", 4, 303, 18, 48, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE 256 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Text", 256, 101, 56, 314, 154, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "MYCONTROL", 256, 9, 80, 236, 58, "MYCONTROL", WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Delete Predecessor", 257, 248, 116, 57, 22, WC_BUTTON, 
+                BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "MYCONTROL", 258, 8, 6, 238, 58, "MYCONTROL", WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Delete Successor", 259, 249, 42, 58, 23, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Predecessor Items", 260, 9, 140, 95, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "Successor Items", 261, 9, 67, 94, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "OK", 262, 271, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | 
+                WS_VISIBLE
+    END
+END
+

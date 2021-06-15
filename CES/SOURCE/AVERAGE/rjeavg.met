@@ -1,0 +1,293 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rJEAvg.h"                                       
+
+
+
+
+
+
+// /*** JobEstimate:  PEMETH AVERAGES ***/
+// 
+// 
+// /* ???????????? this query is not complete */
+// 
+// 
+// 
+// /* to obtain the name of the county */
+// 
+// select Name
+// from County, Job
+// where Job.PrimaryCountyKey = County.CountyKey
+// and JobKey = 1
+// 
+// 
+// 
+// /* to obtain all the JobBreakdowns associated with this particular JobKey */
+// 
+// 
+// select JobBreakdownKey, JobBreakdownID
+// from JobBreakdown
+// where JobKey = 
+// 
+// 
+// 
+// /* ??? higher %tile needs to be retrieved.  How is the higher percentile */
+// /* determined ?????? */
+// /* QuantityLevel must be calculated */
+// 
+// 
+// 
+// select JobBreakdownID, StandardItemNumber, ShortDescription, FifthPercentile,
+// Quantity, AR1.AreaID, AreaTypeID, CV1.CodeValueID,  
+// QuantityLevel, CV2.CodeValueID, AR2.AreaID 
+// from Job, JobItem, JobBreakdown, StandardItem, AreaCounty, Area AR1,
+// Area AR2, AreaType, County, PEMETHAverage,
+// WeightedAverageUnitPrice, CodeValue CV1, CodeValue CV2
+// where JobBreakdown.JobKey = Job.JobKey and
+// JobItem.JobKey = JobBreakdown.JobKey and
+// JobItem.JobBreakdownKey = JobBreakdown.JobBreakdownKey and
+// JobItem.StandardItemKey = StandardItem.StandardItemKey and
+// StandardItem.StandardItemKey = PEMETHAverage.StandardItemKey and
+// PEMETHAverage.StandardItemKey = WeightedAverageUnitPrice.StandardItemKey and
+// PEMETHAverage.ImportDate = WeightedAverageUnitPrice.ImportDate and
+// WeightedAverageUnitPrice.AreaKey = AR2.AreaKey and
+// Job.PrimaryCountyKey = AreaCounty.CountyKey and
+// AreaCounty.CountyKey = County.CountyKey and
+// AreaCounty.AreaTypeKey = Area.AreaTypeKey and
+// AreaCounty.AreaKey = AR1.AreaKey and 
+// Area.AreaTypeKey = AreaType.AreaTypeKey and
+// JobBreakdown.WorkType = CV1.CodeValueKey and
+// WeightedAverageUnitPrice.WorkType = CV2.CodeValueKey
+// and JobBreakdown.JobKey = 1
+// and JobBreakdown.JobBreakdownKey = 50 
+// 
+
+
+ 
+
+
+
+
+:query rJEAvgQ.bin                                        
+
+
+ID_QRY_TITLE_NAMES, "select JobID, Name, CountyID, CountyKey, Job.BaseDate "
+ID_QRY_TITLE_NAMES, "from County, Job "
+ID_QRY_TITLE_NAMES, "where Job.PrimaryCountyKey = County.CountyKey "
+ID_QRY_TITLE_NAMES, "and JobKey = "
+
+
+// /* To obtain all the JobBreakdowns for this particular Job */
+
+ID_QRY_JOB_BRKDWN, "SELECT JobBreakdownKey, JobBreakdownID, WorkType "
+ID_QRY_JOB_BRKDWN, "FROM JobBreakdown "
+ID_QRY_JOB_BRKDWN, "WHERE JobKey = "
+
+
+
+
+// /* To obtain all the job items associated with a particular Job Breakdown */
+// /* where the estimation method is of type average. */
+
+ID_QRY_JOB_ITEM, "SELECT JobItemKey, StandardItemNumber, ShortDescription, "
+ID_QRY_JOB_ITEM,        " SI.StandardItemKey, Quantity "
+ID_QRY_JOB_ITEM, "FROM  JobItem JI, ItemEstimationMethod IEM, StandardItem SI "
+ID_QRY_JOB_ITEM, "WHERE JI.StandardItemKey = SI.StandardItemKey "
+ID_QRY_JOB_ITEM, "AND JI.ItemEstimationMethodKey = IEM.ItemEstimationMethodKey "
+ID_QRY_JOB_ITEM, "AND IEM.ItemEstimationMethodID = 'Average' "
+ID_QRY_JOB_ITEM, "AND JI.JobKey = "
+
+ID_CONJ_JOB_ITEM, " AND JI.JobBreakdownKey = "
+
+
+
+ID_QRY_PCTS, "select AreaTypeKey, FifthPercentile, TwentyFifthPercentile, "
+ID_QRY_PCTS,       " FiftiethPercentile, SeventyFifthPercentile, NinetyFifthPercentile, "
+ID_QRY_PCTS,       " ImportDate "
+ID_QRY_PCTS, "from PEMETHAverage "
+ID_QRY_PCTS, "where ImportDate = (select ImportDate "
+ID_QRY_PCTS,                    " from StandardItemPEMETHAverage "
+ID_QRY_PCTS,                    " where BaseDate = "
+
+//ID_QRY_PCTS,                    and StandardItemKey = 9999999)
+ID_CONJ_PCTS, " AND StandardItemKey = "
+// NOTICE: need two SIK clauses with same key, separated by  ") "
+
+
+
+          
+ID_QRY_AREA_INFO, "SELECT distinct A.AreaID "
+ID_QRY_AREA_INFO, "FROM AreaCounty AC, Job, Area A "
+ID_QRY_AREA_INFO, "WHERE Job.PrimaryCountyKey = AC.CountyKey "
+ID_QRY_AREA_INFO, "AND A.AreaTypeKey = AC.AreaTypeKey "
+ID_QRY_AREA_INFO, "AND A.AreaKey = AC.AreaKey "
+ID_QRY_AREA_INFO, "AND AC.AreaTypeKey = A.AreaTypeKey "
+ID_QRY_AREA_INFO, "AND Job.JobKey = "
+
+//ID_CONJ_AREA_INFO_TYPE, " AND AT.AreaTypeKey = "
+
+
+ID_CONJ_AREA_INFO_BDK, " AND JobBreakdown.JobBreakdownKey = "
+ID_CONJ_AREA_INFO_SIK, " AND JobItem.StandardItemKey = "
+
+
+
+          
+ID_QRY_AREA_TYPE_INFO, "SELECT AreaTypeID "
+ID_QRY_AREA_TYPE_INFO, "FROM AreaType "
+ID_QRY_AREA_TYPE_INFO, "WHERE AreaTypeKey =  "
+
+
+
+
+          
+ID_QRY_WORK_TYPE_INFO, "SELECT CodeValueID, Translation "
+ID_QRY_WORK_TYPE_INFO, "FROM  CodeValue "
+ID_QRY_WORK_TYPE_INFO, "WHERE CodeValue.CodeValueKey = "
+
+
+
+
+   
+ID_QRY_PRICES, "SELECT DISTINCT StandardItemNumber, QuantityLevel, CodeValueID, "
+ID_QRY_PRICES,        "AreaID, WeightedAverageUnitPrice, WAUP.AreaKey "
+ID_QRY_PRICES, "FROM StandardItem, WeightedAverageUnitPrice WAUP, "
+ID_QRY_PRICES, " PEMETHAverage PA, Area, CodeValue, StandardItemPEMETHAverage SIPA, "
+ID_QRY_PRICES, " Job, JobItem, JobBreakdown "
+ID_QRY_PRICES, "WHERE JobBreakdown.JobKey = Job.JobKey "
+ID_QRY_PRICES, " AND JobItem.JobKey = JobBreakdown.JobKey "
+ID_QRY_PRICES, " AND JobItem.JobBreakdownKey = JobBreakdown.JobBreakdownKey "
+ID_QRY_PRICES, " AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+ID_QRY_PRICES, " AND StandardItem.StandardItemKey = PA.StandardItemKey "
+ID_QRY_PRICES, " AND PA.StandardItemKey = WAUP.StandardItemKey "
+ID_QRY_PRICES, " AND PA.ImportDate = WAUP.ImportDate "
+ID_QRY_PRICES, " AND WAUP.AreaKey = Area.AreaKey "
+ID_QRY_PRICES, " AND WAUP.WorkType = CodeValue.CodeValueKey "
+ID_QRY_PRICES, " AND PA.StandardItemKey = WAUP.StandardItemKey "
+ID_QRY_PRICES, " AND PA.ImportDate = WAUP.ImportDate "
+ID_QRY_PRICES, " AND SIPA.StandardItemKey = PA.StandardItemKey "
+ID_QRY_PRICES, " AND SIPA.ImportDate      = PA.ImportDate "
+ID_QRY_PRICES, " AND SIPA.StandardItemKey = StandardItem.StandardItemKey "
+ID_QRY_PRICES, " AND StandardItem.StandardItemKey = "
+
+ID_CONJ_PRICES_JOB_KEY,    " and JobBreakdown.JobKey = "
+ID_CONJ_PRICES_JOB_BD_KEY, " and JobBreakdown.JobBreakdownKey = "
+
+
+ID_QRY_PRICES_BASEDATE, " AND StandardItemPEMETHAverage.BaseDate = "
+
+ID_QRY_PRICES_ORDER, " order by QuantityLevel, CodeValueID, AreaID "
+
+
+
+
+ID_QUERY_LISTING,     "select JobID, Description "    
+ID_QUERY_LISTING,     "  from Job "                   
+ID_WHERE_CONJUNCTION, " where JobKey = "              
+
+
+// Column titles                                      
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,  10,   10,       8,Breakdown "           
+RPT_TTL_2,   "16,   5,   21,      14,Item "  
+RPT_TTL_3,   "34,   3,   37,      40, - "  
+
+RPT_TTL_4,   "13, 55, 21, 14,      (  th %ile <=         qty     <   th %ile)"  
+RPT_TTL_5,   "13, 55, 21, 14,(999,999,999.999 <= 999,999,999.999 < 999,999,999.999)"  
+
+RPT_TTL_6,    "3, 18, 21, 16,Quantity Level is "           
+RPT_TTL_7,    "3,  8, 11, 16,Area is "
+RPT_TTL_8,   "20, 15, 33, 25, in Area-Type "
+RPT_TTL_9,    "3, 13, 16,  8,Work Type is "           
+RPT_TTL_10,  "24,  3, 27, 40, - "           
+
+RPT_TTL_11,   "0,  7,  0,  0,th %ile"
+
+RPT_TTL_12,"10, 14, 13,  9,Quantity Level"
+RPT_TTL_13,"26,  9, 28,  4,Work Type"
+RPT_TTL_14,"37,  8, 37,  8,  Area  "
+RPT_TTL_15,"48, 16, 48, 16,      Avg Price "
+
+RPT_TTL_16, "18, 50, 0,  0, - No PEMETH Average data for this item." 
+
+RPT_TTL_17,  "3, 13, 0,  0,Best Match-> "
+
+// Number of column titles                            
+ID_RPT_TTL,    "17" 
+
+
+
+:FORMAT rJEAvgF.bin                                                  
+
+
+ID_QRY_TITLE_NAMES, "String",  "String",  "String"
+ID_QRY_TITLE_NAMES, "Number",  "DateTime, 'mmm dd, yyyy hh:nn' "
+
+ID_QRY_JOB_BRKDWN, "Number", "String,~,; ~", "String"
+
+
+ID_QRY_JOB_ITEM, "String", "String", "String", "Number", "Number,..."
+
+ID_QRY_PCTS, "Number"
+ID_QRY_PCTS, "Number,...", "Number,...", "Number,...", "Number,...", "Number,..."
+ID_QRY_PCTS, "DateTime, 'mmm dd, yyyy hh:nnA' "
+
+
+ID_QRY_AREA_INFO, "String"
+
+ID_QRY_AREA_TYPE_INFO, "String"
+
+ID_QRY_WORK_TYPE_INFO, "String", "String" 
+
+ID_QUERY_LISTING,     "String", "String" 
+
+
+#define   PCTL    "Number,,..."
+
+//ID_QUERY_NUMBER,   "String"
+
+//ID_QUERY_LISTING,  "String", "String", "DateTime,mmm dd, yyyy", "String"
+//ID_QUERY_LISTING,  PCTL, PCTL, PCTL, PCTL, PCTL
+
+ID_QRY_PRICES,   "String", "QuantityLevel,f", "String", "String", "Number,$,....", "Number"
+
+#undef    PCTL
+
+
+
+
+:query rJEAvgDQ.bin                                                  
+
+rJEAvg_RptDlgBox,       "SELECT JobKey "                             
+rJEAvg_RptDlgBox,       "FROM Job "                                  
+rJEAvg_RptDlgBox,       "WHERE JobKey = %JobKey "                   
+
+
+:Dialog rJEAvgDD.bin rJEAvgDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rJEAvg_RptDlgBox, rJEAvg_RptDlgBox, rJEAvg_RptDlgBox, JobKey, DID_KEY, "Number", "Number"
+
+

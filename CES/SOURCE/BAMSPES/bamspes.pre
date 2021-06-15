@@ -1,0 +1,82 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                |
+#|                                                                          |
+#|       This program module is part of BAMS/CES, a module of BAMS,         |
+#|       The American Association of State Highway and Transportation       |
+#|       Officials' (AASHTO) Information System for Managing Transportation |
+#|       Programs, a proprietary product of AASHTO, no part of which may be |
+#|       reproduced or transmitted in any form or by any means, electronic, |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from AASHTO.                 |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+!INCLUDE "..\makeopts"
+
+TARGET=BAMSPES
+TARGETDIR=..\BAMSPES^\
+
+all: $(EXEDIR)$(TARGET).exe 
+
+:FileList ModuleList = 
+   { 
+   BAMSPES,  about,   init,    
+   command,  open,    utility, 
+   jobproj,  projitem, Fred
+   }
+
+:FileList LibFiles = 
+   {
+   itierror, itibase, itiglob,
+   itiwin,   iticrt,  itimenu,
+   itidbase, itimbase,itifmt,
+   itiutil,  itiest,  opendlg,
+   itiperm
+   }
+
+:FileList Resources = 
+   {
+   BAMSPES.rc,  BAMSPES.dlg,
+   BAMSPES.met, BAMSPES.ico,
+   menu.rc,     help.rc
+   }
+
+:Expand ModuleList,{"$(CC) $(CEXEFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,includes
+
+
+~ build metadata resource files
+title.bin: $(TARGET).met
+   $(EXEDIR)BuildRes $(TARGET).met
+
+
+$(TARGET).res: {I: BAMSPES.rc} {F: Resources,,} title.bin $(TARGET).rc $(TARGET).pre $(TARGET).dlg
+   rc -r $(DEBUG) $*.rc
+
+
+$(EXEDIR)$(TARGET).exe: $(TARGET).def $(TARGET).res $(LIBDIR)*.lib {F: ModuleList,,obj} 
+   $(LINK) $(LFLAGS)$(LDEBUG) @<<tmp.lnk
+   {F: ModuleList,,}   +
+   crtexe
+   $(EXEDIR)$*.exe
+   $(@B).map
+   os2 {F: LibFiles,,}/NOD/NOE/BA/NOI
+   $(@B).def
+<<NOKEEP
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+   rc $(@B).res $*.exe
+#  cvpack /p $*.exe
+
+
+$(TARGET).itl: $(TARGET).bkm menu.h
+   RCPP $(DEBUG) -E -D RC_INVOKED -f $(TARGET).bkm -ef e:\pbin\RCPP.ERR -I d:\include\os2 -I d:\include \
+   | awk -f ipfccp.awk >$(TARGET).itl
+
+
+$(EXEDIR)$(TARGET).hlp: $(TARGET).itl
+   ipfc $(TARGET).itl
+   copy $(TARGET).hlp $(EXEDIR)
+

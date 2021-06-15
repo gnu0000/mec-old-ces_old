@@ -1,0 +1,398 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * BAMSPES.met
+ * This file contains metadata for the BAMS/DES windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+:static  static.bin
+//
+// Static Window ID     Add,         Change,          Coordinates       CoordType     Window Options     Background Color
+//---------------------------------------------------------------------------------------------------------------------------
+ProjectsForJobS,   ProjectsD,        ProjectsD,       2,  1,  126,  36, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+ProjectCategoryS,  ProjectCategoryD, 0,               8,  9,   30,   8, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+ProjectItemS,      0,                ProjectItemD,    2,  4,  140,  36, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+                               
+
+:CHILD child.bin
+//
+// Parents Window ID  Child ID          uKind            Add,              Change        <-    ^   ->   v   Coord
+//--------------------------------------------------------------------------------------------------------------------------------------------
+ProjectsForJobS,      ProjectsForJobL,  ITIWC_LIST,      ProjectsD,        ProjectsD,    0,  20,  0,   0,  COORD_REL
+ProjectCategoryS,     ProjectCategoryL, ITIWC_LIST,      ProjectCategoryD, 0,            0,   0,  0,   0,  COORD_CHRREL
+ProjectItemS,         ProjectItemL1,    ITIWC_LIST,      0,                ProjectItemD, 0,   2,  27,  1,  TL| CHR| X0ABS| Y0ABS| X1RNG| Y1REL
+ProjectItemS,         ProjectItemL2,    ITIWC_LIST,      0,                ProjectItemD, 27,  0,  0,   0,  COORD_CHRREL
+ProjectItemS,         ProjectItemC,     ITIWC_COMBOBOX,  0,                ProjectItemD, 24,  1,  29,  12, COORD_BLKRNG
+                  
+
+
+:list list.bin
+//
+// List Window ID    Window Options                                          Background Color     Label Bkg Color    Label ydata Button ID
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+ProjectsForJobL,     ITI_LISTOPTIONSV,                                       ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+ProjectCategoryL,    ITI_LISTOPTIONSV,                                       ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+OpenJobProjectDL,    ITI_LISTOPTIONSHV| LWS_BORDER,                          ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+ProjectItemL1,       LWS_BORDER| LWS_SELECT,                                 ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+ProjectItemL2,       LWS_HSCROLL|LWS_VSCROLL|LWS_LABEL|LWS_SELECT|LWS_QBUTTON|LWS_BORDER, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,   0,     0
+ProjectItemDL,       ITI_LISTOPTIONVQ | LWS_BORDER,                          ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 6,   6,     0
+
+
+:DATA data.bin format.bin
+//
+// Window ID                 Next ID               Coords          CoordType                       Foreground Clr  Txt Flags          uIndex               Format String
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OpenJobProjectDL, 0,                    1,   0,  16, 1, COORD_CHRRNG,                   ITI_LDLGCOLOR,  ITI_LDATAFLAGS,    JobID,               "String"
+OpenJobProjectDL, 0,                    19,  0, 255, 1, COORD_CHRRNG,                   ITI_LDLGCOLOR,  ITI_LDATAFLAGS,    Description,         "String"
+                             
+ProjectsForJobS,  0,                    26,  0,   1, 2, TL|BLK|X0ABS|Y0ABS|X1REL|Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,    Description,         "String"
+ProjectsForJobS,  0,                    13,  1,  15, 1, COORD_CHRRNG,                   ITI_SLINKCOLOR, ITI_SDATARTFLAGS,  EstimatedCost,       "Number,$,.."
+ProjectsForJobS,  0,                    0,   0,   0, 0, COORD_CHRRNG,                   ITI_SLINKCOLOR, ITI_SDATARTFLAGS,  Location,            "Position,Long<long> <deg>D <min>M <sec>S, Lat<lat> <deg>D <min>M <sec>S"
+
+ProjectsForJobL,  ProjectCategoryS,     1,   0,  13, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    ProjectControlNumber,"String"
+ProjectsForJobL,  ProjectCategoryS,     14,  0,   4, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATACTRFLAGS, 2,                   "String"
+ProjectsForJobL,  ProjectCategoryS,     19,  0,  40, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    3,                   "String"
+ProjectsForJobL,  ProjectCategoryS,     14,  1,   4, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATACTRFLAGS, 4,                   "String"
+ProjectsForJobL,  ProjectCategoryS,     19,  1,  40, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    5,                   "String"
+
+ProjectCategoryL, 0,                    1,   0,   4, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    Category,            "String"
+
+ProjectItemL1,    0,                    1,   0,  11, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    StandardItemNumber,  "String"
+ProjectItemL1,    0,                    12,  0,  14, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATARTFLAGS,  Quantity,            "Number,,..."
+ProjectItemL1,    0,                    115, 0,  0,  0, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATARTFLAGS,  ExtendedAmount,      "Number,$,.."
+
+ProjectItemL2,    0,                    0,   0,  14, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATARTFLAGS,  Quantity,            "Number,,..."
+ProjectItemL2,    0,                    0,   0,  0,  1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATARTFLAGS,  ExtendedAmount,      "Number,$,.."
+ProjectItemL2,    0,                    0,   0,  0,  1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATARTFLAGS,  3,                   "Number,%.."
+
+ProjectItemDL,    0,                    1,   0,  13, 1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    ProjectControlNumber, "String"
+ProjectItemDL,    0,                    15,  0,  5,  1, COORD_CHRRNG,                   ITI_LDATACOLOR, ITI_LDATAFLAGS,    Category,             "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+// Window ID             Next ID Coordinates    CoordType     Foreground Color  Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------
+OpenJobProjectDL, 0,  1,  0, 16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Job"
+OpenJobProjectDL, 0,  19, 0, 255, 1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+ProjectsForJobS,  0,  1,  0, 24,  2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Description:"
+ProjectsForJobS,  0,  1,  1, 12,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS, "Estimated Cost: "
+
+ProjectsForJobL,  0,  1,  0, 4,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "PCN"
+ProjectsForJobL,  0,  14, 0, 10,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Work Type/"
+
+ProjectsForJobL,  0,  14, 1, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "District"
+
+ProjectCategoryL, 0,  1,  0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Category"
+
+ProjectItemS,     0,  1,  1, 8,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Job Item"
+                                 
+ProjectItemL2,    0,  1,  0, 13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "PCN"
+ProjectItemL2,    0,  1,  1, 13,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELCTRFLAGS, "Category"
+
+ProjectItemDL,    0,  1,  0,  13, 1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "PCN"
+ProjectItemDL,    0,  15, 0,  9,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Category"
+
+
+
+:query query.bin
+//
+// Window ID                 Query String
+//---------------------------------------------------------------------------------------------------------------
+OpenJobProjectDL, " SELECT JobID, Description, JobKey"
+OpenJobProjectDL, " FROM Job"
+OpenJobProjectDL, " ORDER BY JobID"
+
+ProjectsForJobS,   " SELECT JobID, JobKey, Description, EstimatedCost,"
+ProjectsForJobS,   " WorkType, District, Location, SpecYear"
+ProjectsForJobS,   " FROM Job"
+ProjectsForJobS,   " WHERE JobKey = %JobKey"
+
+ProjectsForJobL,     " SELECT P.ProjectControlNumber, a.CodeValueID,"
+ProjectsForJobL,     " a.Translation, b.CodeValueID, b.Translation, J.SpecYear"
+ProjectsForJobL,     " FROM Job J, Project P, JobProject JP, CodeValue a, CodeValue b"
+ProjectsForJobL,     " WHERE P.WorkType = a.CodeValueKey"
+ProjectsForJobL,     " AND P.District = b.CodeValueKey"
+ProjectsForJobL,     " AND JP.ProjectControlNumber = P.ProjectControlNumber"
+ProjectsForJobL,     " AND J.JobKey = JP.JobKey"
+ProjectsForJobL,     " AND J.UnitType = a.UnitType"
+ProjectsForJobL,     " AND J.UnitType = b.UnitType"
+ProjectsForJobL,     " AND JP.JobKey = %JobKey"
+
+// removed specyear
+ProjectsD,        " SELECT ProjectControlNumber, Description,"
+ProjectsD,        " WorkType, District, Location"
+ProjectsD,        " FROM Project"
+ProjectsD,        " WHERE ProjectControlNumber = '%ProjectControlNumber'"
+
+ProjectsDistrictC,  " SELECT CodeValueID, CodeValueKey"
+ProjectsDistrictC,  " FROM CodeValue, CodeTable"
+ProjectsDistrictC,  " WHERE CodeValue.CodeTableKey = CodeTable.CodeTableKey"
+ProjectsDistrictC,  " AND CodeTableID = 'DISTRIC'"
+ProjectsDistrictC,  " AND (CodeValue.Deleted is null"
+ProjectsDistrictC,  " OR CodeValueKey = %District)"
+ProjectsDistrictC,  " ORDER BY CodeValueID"
+
+ProjectsWorkTypeC,  " SELECT CodeValueID, CodeValueKey"
+ProjectsWorkTypeC,  " FROM CodeValue, CodeTable"
+ProjectsWorkTypeC,  " WHERE CodeTable.CodeTableKey = CodeValue.CodeTableKey"
+ProjectsWorkTypeC,  " AND CodeTableID = 'WRKTYP'"
+ProjectsWorkTypeC,  " AND (CodeValue.Deleted is null"
+ProjectsWorkTypeC,  " OR CodeValueKey = %WorkType)"
+ProjectsWorkTypeC,  " ORDER BY CodeValueID"
+
+ProjectCategoryS,  " SELECT P.ProjectControlNumber, JobKey"
+ProjectCategoryS,  " FROM Project P, JobProject JP"
+ProjectCategoryS,  " WHERE P.ProjectControlNumber = '%ProjectControlNumber'"
+ProjectCategoryS,  " AND JP.ProjectControlNumber = P.ProjectControlNumber"
+
+
+ProjectCategoryL,    " SELECT PC.Category, PC.ProjectControlNumber"
+ProjectCategoryL,    " FROM ProjectCategory PC "
+ProjectCategoryL,    " WHERE PC.ProjectControlNumber = '%ProjectControlNumber'"
+
+ProjectCategoryD, " SELECT PC.Category, PC.ProjectControlNumber, JP.JobKey"
+ProjectCategoryD, " FROM ProjectCategory PC, JobProject JP"
+ProjectCategoryD, " WHERE PC.ProjectControlNumber = '%ProjectControlNumber'"
+ProjectCategoryD, " AND PC.Category = '%Category'"
+ProjectCategoryD, " AND JP.ProjectControlNumber = '%ProjectControlNumber'"
+
+
+ProjectItemS,           " SELECT JobID, JobKey"
+ProjectItemS,           " FROM Job"
+ProjectItemS,           " WHERE JobKey = %JobKey"
+
+ProjectItemL1,          " SELECT DISTINCT StandardItemNumber," 
+ProjectItemL1,          " JI.Quantity, JI.ExtendedAmount,"
+ProjectItemL1,          " JI.JobItemKey, JIPI.JobKey" 
+ProjectItemL1,          " FROM StandardItem SI, ProjectItem PI," 
+ProjectItemL1,          " JobItemProjectItem JIPI, JobItem JI"  
+ProjectItemL1,          " WHERE JIPI.ProjectControlNumber = PI.ProjectControlNumber"  
+ProjectItemL1,          " AND JIPI.Category = PI.Category" 
+ProjectItemL1,          " AND JIPI.SequenceNumber = PI.SequenceNumber"  
+ProjectItemL1,          " AND PI.StandardItemKey = SI.StandardItemKey"  
+ProjectItemL1,          " AND JIPI.JobItemKey = JI.JobItemKey"  
+ProjectItemL1,          " AND JIPI.JobKey = JI.JobKey"  
+ProjectItemL1,          " AND JIPI.JobKey = %JobKey"  
+ProjectItemL1,          " ORDER BY StandardItemNumber, JI.JobItemKey"
+
+ProjectItemDL,          " SELECT PC.Category, PC.ProjectControlNumber,"
+ProjectItemDL,          " PI.Quantity, PI.SequenceNumber "
+ProjectItemDL,          " FROM ProjectCategory PC, JobProject JP, "
+ProjectItemDL,          " ProjectItem PI, JobItemProjectItem JIPI"
+ProjectItemDL,          " WHERE JP.JobKey             = %JobKey"
+ProjectItemDL,          " AND JIPI.JobKey             = %JobKey"
+ProjectItemDL,          " AND JIPI.JobItemKey         = %JobItemKey"
+ProjectItemDL,          " AND JP.ProjectControlNumber = PC.ProjectControlNumber"
+ProjectItemDL,          " AND PI.ProjectControlNumber = PC.ProjectControlNumber"
+ProjectItemDL,          " AND PI.ProjectControlNumber = JIPI.ProjectControlNumber"
+ProjectItemDL,          " AND PI.SequenceNumber       = JIPI.SequenceNumber"
+ProjectItemDL,          " AND PI.Category             = PC.Category"
+ProjectItemDL,          " AND PI.Category             = JIPI.Category"
+ProjectItemDL,          " ORDER BY PC.ProjectControlNumber, PC.Category"
+
+
+ProjectItemD,           " SELECT Quantity, UnitPrice"
+ProjectItemD,           " FROM JobItem"
+ProjectItemD,           " WHERE JobKey= %JobKey"
+ProjectItemD,           " AND JobItemKey = %JobItemKey"
+
+
+
+:title title.bin
+//
+//
+// Window ID           Window Title
+//--------------------------------------------------------------------
+ProjectsForJobS,  "Projects for Job %JobID"
+
+ProjectCategoryS, "Categories for Project %ProjectControlNumber"
+
+ProjectItemS,         "Project Items for Job %JobID"
+
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID     Add Query ID       Change Query ID    Column name           Control ID        Format    Input Fmt
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OpenJobProjectD, ITIWND_LIST,       ITIWND_LIST,       JobKey,               OpenJobProjectDL, "Number",  "Number"
+
+ProjectsD,       ProjectsD,         ProjectsD,         ProjectControlNumber, DID_PCN,          "String",  "String"
+ProjectsD,       ProjectsD,         ProjectsD,         Description,          DID_DESCRIP,      "String",  "String"
+ProjectsD,       ProjectsWorkTypeC, ProjectsWorkTypeC, CodeValueID,          DID_WORKTYPE,     "String",  "Number"
+ProjectsD,       ProjectsDistrictC, ProjectsDistrictC, CodeValueID,          DID_DISTRICT,     "String",  "Number"
+ProjectsD,       ProjectsD,         ProjectsD,         Location,             DID_LOCATION,     "Position,Long<long> <deg>D <min>M <sec>S, Lat<lat> <deg>D <min>M <sec>S", "Position"
+
+ProjectCategoryD,ProjectCategoryD,  ProjectCategoryD,  Category,             DID_CATEGORY,     "String",  "BamsNumber"
+
+ProjectItemD,    ITIWND_LIST,       ITIWND_LIST,       JobKey,               ProjectItemDL,    "Number",  "Number"
+ProjectItemD,    ProjectItemD,      ProjectItemD,      Quantity,             DID_PIT,          "Number,...",  "Number,..."
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+ProjectsD,        "UPDATE Project "
+ProjectsD,        "SET "
+ProjectsD,        "ProjectControlNumber = @ProjectControlNumber, "
+ProjectsD,        "Description = @Description, "
+ProjectsD,        "SpecYear = %SpecYear, "
+ProjectsD,        "WorkType = @"DID_WORKTYPE"CodeValueKey, "
+ProjectsD,        "District = @"DID_DISTRICT"CodeValueKey, "
+ProjectsD,        "Location = @Location "
+ProjectsD,        "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+ProjectsD,        "SELECT ProjectControlNumber, "
+ProjectsD,        "Description, SpecYear, WorkType, District, "
+ProjectsD,        "Location "
+ProjectsD,        "FROM Project HOLDLOCK "
+ProjectsD,        "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+ProjectsD,        " INSERT INTO Project "
+ProjectsD,        " (ProjectControlNumber, Description, SpecYear, "
+ProjectsD,        " WorkType, District, Location) "
+ProjectsD,        " VALUES "
+ProjectsD,        " (@"DID_PCN"ProjectControlNumber, "
+ProjectsD,        " @Description, %SpecYear, @"DID_WORKTYPE"CodeValueKey, "
+ProjectsD,        " @"DID_DISTRICT"CodeValueKey, @Location) "
+
+ProjectsD,        " INSERT INTO JobProject "
+ProjectsD,        " (JobKey, ProjectControlNumber) "
+ProjectsD,        " VALUES "
+ProjectsD,        " (%JobKey, @"DID_PCN"ProjectControlNumber) "
+
+ProjectsD,        " INSERT INTO ProjectCategory "
+ProjectsD,        " (ProjectControlNumber,Category) "
+ProjectsD,        " VALUES (@"DID_PCN"ProjectControlNumber, '0001')"
+
+
+
+
+
+ProjectCategoryD, "INSERT INTO ProjectCategory "
+ProjectCategoryD, "(ProjectControlNumber, Category) "
+ProjectCategoryD, "VALUES "
+ProjectCategoryD, "('%ProjectControlNumber', '@Category') "
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+ProjectsForJobL,   "DELETE FROM Project "
+ProjectsForJobL,   "WHERE ProjectControlNumber IN ('%ProjectControlNumber'{,'%ProjectControlNumber'}) "
+
+ProjectsForJobL,   "DELETE FROM JobProject "
+ProjectsForJobL,   "WHERE JobKey = %JobKey "
+ProjectsForJobL,   "AND ProjectControlNumber IN ('%ProjectControlNumber'{,'%ProjectControlNumber'}) "
+
+ProjectsForJobL,   "DELETE FROM ProjectCategory "
+ProjectsForJobL,   "WHERE ProjectControlNumber IN ('%ProjectControlNumber'{,'%ProjectControlNumber'}) "
+
+ProjectsForJobL,   "DELETE FROM ProjectItem "
+ProjectsForJobL,   "WHERE ProjectControlNumber IN ('%ProjectControlNumber'{,'%ProjectControlNumber'}) "
+
+ProjectsForJobL,   "DELETE FROM JobItemProjectItem "
+ProjectsForJobL,   "WHERE JobKey = %JobKey "
+ProjectsForJobL,   "AND ProjectControlNumber IN ('%ProjectControlNumber'{,'%ProjectControlNumber'}) "
+
+
+
+ProjectCategoryL,  "DELETE FROM ProjectCategory "
+ProjectCategoryL,  "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+ProjectCategoryL,  "AND Category IN ('%Category'{,'%Category'}) "
+
+ProjectCategoryL,  "DELETE FROM ProjectItem "
+ProjectCategoryL,  "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+ProjectCategoryL,  "AND Category IN ('%Category'{,'%Category'}) "
+
+ProjectCategoryL,  "DELETE FROM JobItemProjectItem "
+ProjectCategoryL,  "WHERE ProjectControlNumber = '%ProjectControlNumber' "
+ProjectCategoryL,  "AND Category IN ('%Category'{,'%Category'}) "
+

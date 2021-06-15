@@ -1,0 +1,34 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE 256 LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", 256, 39, 106, 404, 88, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE |                 WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL "Job Item", 100, 5, 68, 40, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", ProjectItemC, 81, 42, 76, 40, WC_COMBOBOX, CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "ABCD-12345678", 266, 164, 76, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "ABCD-12345678", 267, 241, 76, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "ABCD-12345678", 268, 319, 76, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "0001", 269, 164, 67, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "0002", 270, 240, 67, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "0003", 271, 315, 67, 72, 8, WC_STATIC, SS_TEXT | DT_CENTER | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", 256, 2, 11, 158, 52, WC_LISTBOX, WS_TABSTOP | WS_VISIBLE
+        CONTROL "", 260, 161, 3, 241, 60, WC_LISTBOX, LS_HORZSCROLL | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Text", 257, 159, -2, 2, 88, WC_STATIC, SS_FGNDRECT | WS_GROUP | WS_VISIBLE
+    END
+END
+

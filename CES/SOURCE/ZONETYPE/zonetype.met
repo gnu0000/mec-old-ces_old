@@ -1,0 +1,379 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/* zonetype.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                                    RECTS               USHORT     LONG                  LONG
+// Static Window ID   add  change                            xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------
+ZoneTypeCatS, ZoneTypeD,   ZoneTypeD,  2,   4,   60,  10,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+ZonesS,         ZoneD,       ZoneD,      1,   3,   65,  11,  COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+// USHORT              USHORT                USHORT                                            RECTS         USHORT
+// Parents Window ID   Type Child Window ID  uKind        add  change                          Coord
+//--------------------------------------------------------------------------------------------------------------
+ZoneTypeCatS,  ZoneTypeCatL,   ITIWC_LIST,  ZoneTypeD,   ZoneTypeD, 0,  0,  0, 0, COORD_REL
+
+ZonesS,          ZonesL1,          ITIWC_LIST,  ZoneD,       ZoneD,     0,  0, 17, 0, TL | CHR | X0ABS | Y0ABS | X1REL | Y1REL
+ZonesS,          ZonesL2,          ITIWC_LIST,  ZoneMapD, ZoneMapD, 0, 1, 16, 0, TR | CHR | X0ABS | Y0ABS | X1RNG | Y1REL
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT            LONG                                                                  LONG                 LONG                  USHORT USHORT USHORT
+// List Window ID    Window Options                                                        Background Color     Label Bkg Color       Label  ydata  Button Window ID
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ZonesL1,         ITI_LISTOPTIONSHV | LWS_VSPLIT  | LWS_HSPLIT  | LWS_LABEL  | LWS_SELECT | LWS_BORDER | LWS_QBUTTON, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND, 0,     0,  1
+ZonesL2,         LWS_VSCROLL | LWS_LABEL   | LWS_SELECT | LWS_BORDER | LWS_QBUTTON, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,              0,     0,  5
+ZoneTypeCatL,  ITI_LISTOPTIONSHV,                                                 ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,              0,     0, 10
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT           USHORT          RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME           PSZ
+// Window ID        Next Window ID  xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name       Format String
+//---------------------------------------------------------------------------------------------------------------------------------
+ZonesL1,        0,              1,   0, 9,   1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  ZoneID,        "String"
+ZonesL1,        0,              11,  0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Description,   "String"
+
+ZonesL2,        0,              1,   0, 10,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  MapID,         "String"
+
+ZoneTypeCatL, ZonesS,   1,   0, 16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  ZoneTypeID,    "String"
+ZoneTypeCatL, ZonesS,   18,  0, 255, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Description,   "String"
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT            USHORT         RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+// Window ID         Next Window ID xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+ZonesS,        0,             8,   0, 8,   1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,   "Maps for"
+ZonesS,        0,             0,   0, 8,   1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    " "
+
+ZonesL1,         0,             1,   0, 9,   1,   COORD_CHRRNG,                            ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Zone"
+ZonesL1,         0,             11,  0, 255, 1,   COORD_CHRRNG,                            ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+ZonesL2,         0,             1,   0, 8,   1,   COORD_CHRRNG,                            ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Map Name"
+
+ZoneTypeCatL,  ZonesS,  1,   0, 16,  1,   COORD_CHRRNG,                            ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Zone Type"
+ZoneTypeCatL,  ZonesS,  18,  0, 255, 1,   COORD_CHRRNG,                            ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT               char []
+//
+// Window ID            Query String
+//----------------------------------------------------------------------------------------------------------
+ZonesL1,            "SELECT ZoneID, Description, ZoneKey, ZoneTypeKey "
+ZonesL1,            "FROM Zone "
+ZonesL1,            "WHERE ZoneTypeKey = %ZoneTypeKey "
+ZonesL1,            "AND Deleted IS NULL "
+ZonesL1,            "ORDER BY ZoneID "
+
+ZonesL2,            "SELECT MapID "
+ZonesL2,            "FROM Map, ZoneMap, Zone "
+ZonesL2,            "WHERE Map.MapKey = ZoneMap.MapKey "
+ZonesL2,            "AND ZoneMap.ZoneTypeKey = Zone.ZoneTypeKey "
+ZonesL2,            "AND ZoneMap.ZoneKey = Zone.ZoneKey "
+ZonesL2,            "AND Zone.ZoneTypeKey = %ZoneTypeKey "
+ZonesL2,            "AND Zone.ZoneKey = %ZoneKey "
+ZonesL2,            "AND BaseDate = "UNDECLARED_BASE_DATE" "
+ZonesL2,            "ORDER BY MapID "
+
+ZonesS,           "SELECT ZoneTypeID, ZoneTypeKey "
+ZonesS,           "FROM ZoneType "
+ZonesS,           "WHERE ZoneTypeKey = %ZoneTypeKey "
+
+ZoneTypeCatL,     "SELECT ZoneTypeID, Description, ZoneTypeKey "
+ZoneTypeCatL,     "FROM ZoneType "
+ZoneTypeCatL,     "WHERE Deleted IS NULL "
+ZoneTypeCatL,     "ORDER BY ZoneTypeID "
+
+ZoneTypeD,       "SELECT ZoneTypeID, Description "
+ZoneTypeD,       "FROM ZoneType "
+ZoneTypeD,       "WHERE ZoneTypeKey = %ZoneTypeKey "
+
+ZoneD,           "SELECT ZoneID, Description, "
+ZoneD,           "ZoneKey, ZoneTypeKey "
+ZoneD,           "FROM Zone "
+ZoneD,           "WHERE ZoneTypeKey = %ZoneTypeKey "
+ZoneD,           "AND ZoneKey = %ZoneKey "
+
+MapCountyL,          " SELECT MapID, Map.Description, Map.MapKey, "
+MapCountyL,          " Zone.ZoneTypeKey, Zone.ZoneKey "
+MapCountyL,          " FROM Map, ZoneMap, Zone "
+MapCountyL,          " WHERE Map.MapKey = ZoneMap.MapKey "
+MapCountyL,          " AND ZoneMap.ZoneTypeKey = Zone.ZoneTypeKey "
+MapCountyL,          " AND ZoneMap.ZoneKey = Zone.ZoneKey "
+MapCountyL,          " AND Zone.ZoneTypeKey = %ZoneTypeKey "
+MapCountyL,          " AND Zone.ZoneKey = %ZoneKey "
+MapCountyL,          " AND BaseDate = "UNDECLARED_BASE_DATE" "
+MapCountyL,          " ORDER BY MapID "
+
+MapCat2L,             " SELECT MapID, Description, MapKey  "
+MapCat2L,             " From Map "
+MapCat2L,             " WHERE MapKey NOT IN"
+MapCat2L,             "     (SELECT MapKey"
+MapCat2L,             "      FROM  ZoneMap"
+MapCat2L,             "      WHERE ZoneTypeKey = %ZoneTypeKey)"
+MapCat2L,             " ORDER BY MapID "
+
+
+
+
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+ZonesS,                   "Zones for %ZoneTypeID"
+ZoneTypeCatS,           "Zone Type Catalog"
+
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id            Add Query ID        Change Query ID      Col Name           CtlID            Format
+//---------------------------------------------------------------------------------------------------------------------
+ZoneTypeD,    ZoneTypeD,   ZoneTypeD,    ZoneTypeID,    DID_ZONETYPEID,     "String", "String"
+ZoneTypeD,    ZoneTypeD,   ZoneTypeD,    Description,   DID_ZONETYPEDESCR,  "String", "String"
+
+ZoneD,        ZoneD,       ZoneD,        ZoneID,        DID_ZONEID,         "String", "String"
+ZoneD,        ZoneD,       ZoneD,        Description,   DID_ZONEDESCR,      "String", "String"
+
+ZoneMapD, MapCountyL,      MapCountyL,       MapID,         MapCountyL,      "String", "String"
+ZoneMapD, MapCat2L,         MapCat2L,          MapID,         MapCat2L,         "String", "String"
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ZoneTypeD,          "UPDATE ZoneType "
+ZoneTypeD,          "SET "
+ZoneTypeD,          "ZoneTypeID=@ZoneTypeID, "
+ZoneTypeD,          "Description=@Description "
+ZoneTypeD,          "WHERE ZoneTypeKey = %ZoneTypeKey "
+
+ZoneD,              "UPDATE Zone "
+ZoneD,              "SET "
+ZoneD,              "ZoneID=@ZoneID, "
+ZoneD,              "Description=@Description "
+ZoneD,              "WHERE ZoneTypeKey = %ZoneTypeKey "
+ZoneD,              "AND ZoneKey = %ZoneKey "
+
+//ZoneMapD,       "UPDATE ZoneMap "
+//ZoneMapD,       "SET "
+//ZoneMapD,       "MapKey = @"MapCat2L"MapKey "
+//ZoneMapD,       "WHERE ZoneTypeKey = %ZoneTypeKey "
+//ZoneMapD,       "AND ZoneKey = %ZoneKey "
+//ZoneMapD,       "AND MapKey = %MapKey "
+//
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ZonesS,         "SELECT ZoneTypeID, ZoneTypeKey "
+ZonesS,         "FROM ZoneType HOLDLOCK "
+ZonesS,         "WHERE ZoneTypeKey = %ZoneTypeKey "
+
+ZoneTypeD,     "SELECT ZoneTypeID, Description "
+ZoneTypeD,     "FROM ZoneType HOLDLOCK "
+ZoneTypeD,     "WHERE ZoneTypeKey = %ZoneTypeKey "
+
+ZoneD,         "SELECT ZoneID, Description "
+ZoneD,         "FROM Zone HOLDLOCK "
+ZoneD,         "WHERE ZoneTypeKey = %ZoneTypeKey "
+ZoneD,         "AND ZoneKey = %ZoneKey "
+
+ZoneMapD,  "SELECT MapKey "
+ZoneMapD,  "FROM ZoneMap HOLDLOCK "
+ZoneMapD,  "WHERE ZoneTypeKey = %ZoneTypeKey "
+ZoneMapD,  "AND ZoneKey = %ZoneKey "
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ZoneTypeD,    "INSERT INTO ZoneType "
+ZoneTypeD,     "(ZoneTypeKey,ZoneTypeID,Description) "
+ZoneTypeD,     "VALUES "
+ZoneTypeD,     "(@NewKey,@ZoneTypeID,@Description) "
+
+ZoneD,         "INSERT INTO Zone "
+ZoneD,         "(ZoneTypeKey, ZoneKey, ZoneID, Description) "
+ZoneD,         "VALUES "
+ZoneD,         "(%ZoneTypeKey, @NewKey, @ZoneID, @Description) "
+//
+//
+//ZoneMapD,  "INSERT INTO ZoneMap "
+//ZoneMapD,  "(ZoneTypeKey, ZoneKey, MapKey, BaseDate) "
+//ZoneMapD,  "VALUES "
+//ZoneMapD,  "(%ZoneTypeKey, %ZoneKey, @"MapCat2L"MapKey, "
+//ZoneMapD,  "@UndeclaredBaseDate) "
+//
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ZoneTypeCatL, "UPDATE ZoneType "
+ZoneTypeCatL, "SET Deleted = 1 " 
+ZoneTypeCatL, "WHERE ZoneTypeKey IN (%ZoneTypeKey{,%ZoneTypeKey}) "
+ZoneTypeCatL, "AND ZoneTypeKey != 1 " 
+ZoneTypeCatL, "UPDATE Zone "
+ZoneTypeCatL, "SET Deleted = 1 "
+ZoneTypeCatL, "WHERE ZoneTypeKey IN (%ZoneTypeKey{,%ZoneTypeKey}) "
+ZoneTypeCatL, "AND ZoneTypeKey != 1 " 
+ZoneTypeCatL, "AND ZoneKey != 1 " 
+
+ZonesL1,         "UPDATE Zone "
+ZonesL1,         "SET Deleted = 1 "
+ZonesL1,         "WHERE ZoneKey IN (%ZoneKey{,%ZoneKey}) "
+ZonesL1,         "AND ZoneTypeKey = %ZoneTypeKey "
+ZonesL1,         "AND ZoneTypeKey != 1 " 
+ZonesL1,         "AND ZoneKey != 1 " 
+
+
+MapCountyL,       "DELETE FROM ZoneMap "
+MapCountyL,       "WHERE MapKey IN (%MapKey{,%MapKey}) "
+MapCountyL,       "AND ZoneTypeKey = %ZoneTypeKey "
+MapCountyL,       "AND ZoneKey = %ZoneKey "
+MapCountyL,       "AND BaseDate = "UNDECLARED_BASE_DATE" "
+

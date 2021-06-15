@@ -1,0 +1,405 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * labor.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT                                      RECTS               USHORT     LONG                  LONG
+//
+// Static Window ID  add                 change              xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//-------------------------------------------------------------------------------------------------------------------------
+LaborCatS,    LaborD,   LaborD,           2,   2,   60,  13, COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+LaborerS,      0,                  0,                    4,   4,   57,  16, COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// Parents WinID  Type Child WinID  uKind       add            change         <-   ^ -> v  Coord
+//---------------------------------------------------------------------------------------------------------
+LaborCatS, LaborCatL,   ITIWC_LIST, LaborD, LaborD,  0,  0, 0, 0, COORD_REL
+LaborerS,   LaborerL,     ITIWC_LIST, LabRateD,LabRateD, 0, 24, 0, 0, COORD_REL
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                     LONG                   LONG                        LONG                     USHORT USHORT USHORT
+//
+// List Window ID             Window Options         Background Color            Label Bkg Color           Label ydata  Button Window ID
+//---------------------------------------------------------------------------------------------------------------------------------------
+LaborCatL,               ITI_LISTOPTIONSV,      ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,        0,  0,    0
+LaborerL,                 ITI_LISTOPTIONSHV,     ITI_LDATABACKGROUND,        ITI_LLABELBACKGROUND,        0,  0,    0
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT            USHORT            RECTS (DLG|UL|RNG)  USHORT      LONG               LONG             NAME                     PSZ
+//
+// Window ID         Next Window ID    xpos ypos xsiz ysiz CoordType   Foreground Color   Txt Flags        Col Name                 Format String
+//------------------------------------------------------------------------------------------------------------------------------------------
+LaborCatL,      LaborerS,    1,   0,    8,  1,  COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  LaborerID,               "String"
+LaborCatL,      LaborerS,   10,   0,   18,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  Description, "String"
+LaborCatL,      LaborerS,    1,   0,   16,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  ZoneTypeID,  "String"
+
+LaborerS,      0,                11,   0,   16,  1,  COORD_CHRRNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS,  ZoneTypeID,              "*"
+LaborerS,      0,                11,   1,   1,   2,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,  ITI_SDATAMULTILINEFLAGS,  Description, "String"
+
+LaborerL,        0,                 1,   0,   8,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATAFLAGS,  ZoneID,                    "String"
+LaborerL,        0,                 9,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS,  DavisBaconRate,          "Number,$,.."
+LaborerL,        0,                21,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS,  DavisBaconOvertimeRate,  "Number,$,.."
+LaborerL,        0,                32,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS,  NonDavisBaconRate,       "Number,$,.."
+LaborerL,        0,                44,   0,  10,   1, COORD_CHRRNG, ITI_LDATACOLOR,  ITI_LDATARTFLAGS,  NonDavisBaconOvertimeRate, "Number,$,.."
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT        USHORT            RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID     Next Window ID    xposypos  xsiz ysiz CoordType  Foreground Color   Txt Flags          Label String
+//----------------------------------------------------------------------------------------------------------------------------------
+LaborCatL,  LaborerS,  1,   0,    8,  1,  COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Laborer"
+LaborCatL,  LaborerS, 10,   0,   18,  1,  TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Description"
+LaborCatL,  LaborerS,  1,   0,   16,  1,  TR | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,   "Zone Type"
+
+LaborerS,  0,               1,   0,   9,   1,  COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Zone Type:"
+LaborerS,  0,               1,   1,   9,   1,  COORD_CHRRNG, ITI_SLABELCOLOR,  ITI_SLABELRTFLAGS, "Description:"
+
+LaborerL,    0,               1,   0,   8,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Zone"
+LaborerL,    0,               9,   0,  22,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELCTRFLAGS,"Davis Bacon"
+LaborerL,    0,              32,   0,  22,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELCTRFLAGS,"Non-Davis Bacon"
+LaborerL,    0,               9,   1,  10,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Hourly Rate"
+LaborerL,    0,              21,   1,  10,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Overtime Rate"
+LaborerL,    0,              32,   1,  10,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Hourly Rate"
+LaborerL,    0,              44,   1,  10,   1,  COORD_CHRRNG, ITI_LLABELCOLOR,  ITI_LLABELRTFLAGS, "Overtime Rate"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+//
+// Window ID          Query String
+//--------------------------------------------------------------------------------------------------------
+LaborCatL,        " SELECT L.LaborerID, L.Description, ZT.ZoneTypeID,"
+LaborCatL,        " L.ZoneTypeKey, L.LaborerKey"
+LaborCatL,        " FROM Labor L, ZoneType ZT"
+LaborCatL,        " WHERE L.ZoneTypeKey = ZT.ZoneTypeKey"
+LaborCatL,        " AND L.Deleted IS NULL"
+LaborCatL,        " ORDER BY L.LaborerID"
+
+LaborerS,         " SELECT ZT.ZoneTypeID, L.Description,"
+LaborerS,         " L.ZoneTypeKey, L.LaborerKey, L.LaborerID"
+LaborerS,         " FROM ZoneType ZT, Labor L"
+LaborerS,         " WHERE L.ZoneTypeKey = ZT.ZoneTypeKey"
+LaborerS,         " AND L.LaborerKey = %LaborerKey"
+
+LaborerL,         " SELECT Z.ZoneID, LWAB.DavisBaconRate,"
+LaborerL,         " LWAB.DavisBaconOvertimeRate, LWAB.NonDavisBaconRate,"
+LaborerL,         " LWAB.NonDavisBaconOvertimeRate,"
+LaborerL,         " LWAB.LaborerKey, LWAB.ZoneKey"
+LaborerL,         " FROM LaborerWageAndBenefits LWAB, Zone Z, Labor L"
+LaborerL,         " WHERE LWAB.LaborerKey = L.LaborerKey"
+LaborerL,         " AND LWAB.ZoneKey = Z.ZoneKey"
+LaborerL,         " AND L.LaborerKey = %LaborerKey"
+LaborerL,         " AND L.ZoneTypeKey = Z.ZoneTypeKey"
+LaborerL,         " AND L.ZoneTypeKey = %Labor.ZoneTypeKey"
+LaborerL,         " AND LWAB.BaseDate = @UndeclaredBaseDate"
+LaborerL,         " AND LWAB.Deleted IS NULL"
+LaborerL,         " ORDER BY Z.ZoneID"
+
+LaborD,           " SELECT L.LaborerID, L.Description, L.LaborerKey, "
+LaborD,           " L.ZoneTypeKey"
+LaborD,           " FROM Labor L"
+LaborD,           " WHERE L.LaborerKey = %LaborerKey"
+
+LaborZTD,         " SELECT ZT.ZoneTypeID, ZT.ZoneTypeKey"
+LaborZTD,         " FROM ZoneType ZT"
+LaborZTD,         " WHERE ZT.Deleted IS NULL"
+LaborZTD,         " OR    ZT.ZoneTypeKey = %ZoneTypeKey" 
+LaborZTD,         " ORDER BY ZT.ZoneTypeID"
+
+LabRateD,         " SELECT LWAB.DavisBaconRate, LWAB.DavisBaconOvertimeRate,"
+LabRateD,         " LWAB.NonDavisBaconRate, LWAB.NonDavisBaconOvertimeRate"
+LabRateD,         " FROM LaborerWageAndBenefits LWAB"
+LabRateD,         " WHERE LWAB.LaborerKey = %LaborerKey"
+LabRateD,         " AND LWAB.ZoneKey = %ZoneKey"
+LabRateD,         " AND LWAB.BaseDate = @UndeclaredBaseDate"
+
+
+LabZonesC,        " SELECT Z.ZoneID, Z.ZoneKey"
+LabZonesC,        " FROM Zone Z"
+LabZonesC,        " WHERE "
+LabZonesC,        " Z.ZoneTypeKey = %ZoneTypeKey "
+LabZonesC,        " AND Z.ZoneKey = %ZoneKey"
+//          Allowed to Change only the rates, not the Zone, else error occurs.
+//          We don't care if Zone was deleted, this job did and still uses it. 
+//LabZonesC,        " AND Z.Deleted IS NULL"
+//LabZonesC,        " AND Z.ZoneKey IN"
+//LabZonesC,        " (SELECT LWAB.ZoneKey FROM LaborerWageAndBenefits LWAB"
+//LabZonesC,        "  WHERE LWAB.LaborerKey = %LaborerKey)"
+//LabZonesC,        " OR Z.ZoneKey = %ZoneKey"
+//LabZonesC,        " AND Z.ZoneTypeKey = %ZoneTypeKey"
+LabZonesC,        " ORDER BY Z.ZoneID"
+
+LabZonesA,        " SELECT Z.ZoneID, Z.ZoneKey"
+LabZonesA,        " FROM Zone Z"
+LabZonesA,        " WHERE "
+LabZonesA,        " Z.ZoneTypeKey = %ZoneTypeKey "
+LabZonesA,        " AND Z.Deleted IS NULL"
+LabZonesA,        " AND Z.ZoneKey NOT IN"    
+//LabZonesA,        " (SELECT LWAB.ZoneKey FROM LaborerWageAndBenefits LWAB"
+//LabZonesA,        "  WHERE LWAB.LaborerKey = %LaborerKey"
+//LabZonesA,         " AND LWAB.BaseDate = @UndeclaredBaseDate )"
+LabZonesA,        " (SELECT LWAB.ZoneKey "
+LabZonesA,         " FROM LaborerWageAndBenefits LWAB, Zone ZN, Labor L"
+LabZonesA,         " WHERE LWAB.LaborerKey = L.LaborerKey"
+LabZonesA,         " AND LWAB.ZoneKey = ZN.ZoneKey"
+LabZonesA,         " AND L.LaborerKey = %LaborerKey"
+LabZonesA,         " AND L.ZoneTypeKey = ZN.ZoneTypeKey"
+LabZonesA,         " AND L.ZoneTypeKey = %Labor.ZoneTypeKey"
+//LabZonesA,         " AND LWAB.BaseDate = @UndeclaredBaseDate"
+LabZonesA,         " AND (LWAB.Deleted IS NULL OR LWAB.Deleted = 0)) "
+LabZonesA,        " ORDER BY Z.ZoneID"
+
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT             char []
+//
+// Window ID          Window Title
+//------------------------------------------------------------
+LaborCatS,     "Labor Catalog"
+LaborerS,       "Laborer %LaborerID"
+
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id  Add Query ID  Change Query ID    Col Name                CtlID                 Format
+//---------------------------------------------------------------------------------------------------------------------
+LaborD,    LaborD,       LaborD,            LaborerID,              DID_LABORID,         "String",      "String"
+LaborD,    LaborD,       LaborD,            Description,            DID_LABORDESCR,      "String",      "String"
+LaborD,    LaborZTD,     LaborZTD,          ZoneTypeID,             DID_LABORZONETYPE,   "String",      "Number"
+
+
+LabRateD,  LabRateD,     LabRateD,          DavisBaconRate,         DID_DBHOURLYRATE,      "Number,$,..", "Number,$,.."
+LabRateD,  LabRateD,     LabRateD,          DavisBaconOvertimeRate, DID_DBOVERTIMERATE,    "Number,$,..", "Number,$,.."
+LabRateD,  LabRateD,     LabRateD,          NonDavisBaconRate,      DID_NDBHOURLYRATE,     "Number,$,..", "Number,$,.."
+LabRateD,  LabRateD,     LabRateD,          NonDavisBaconOvertimeRate, DID_NDBOVERTIMERATE, "Number,$,..", "Number,$,.."
+LabRateD,  LabZonesA,    LabZonesC,         ZoneID,                 DID_LABZONEID,         "String",      "Number"
+
+
+
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+LaborD,        "UPDATE Labor "
+LaborD,        "SET "
+LaborD,        "LaborerID=@LaborerID, "
+LaborD,        "Description=@Description, "
+LaborD,        "ZoneTypeKey=@"DID_LABORZONETYPE"ZoneTypeKey "
+LaborD,        "WHERE LaborerKey = %LaborerKey "
+
+
+LabRateD,       "UPDATE LaborerWageAndBenefits "
+LabRateD,       "SET "
+LabRateD,       "ZoneKey = @"DID_LABZONEID"ZoneKey, "
+LabRateD,       "DavisBaconRate = @"DID_DBHOURLYRATE"DavisBaconRate, "
+LabRateD,       "DavisBaconOvertimeRate = @"DID_DBOVERTIMERATE"DavisBaconOvertimeRate, "
+LabRateD,       "NonDavisBaconRate = @"DID_NDBHOURLYRATE"NonDavisBaconRate, "
+LabRateD,       "NonDavisBaconOvertimeRate = @"DID_NDBOVERTIMERATE"NonDavisBaconOvertimeRate "
+LabRateD,       "WHERE LaborerKey = %LaborerKey "
+LabRateD,       "AND ZoneKey = %ZoneKey "
+LabRateD,       "AND BaseDate = @UndeclaredBaseDate "
+// sets default values
+LabRateD,       "update LaborerWageAndBenefits "
+LabRateD,       "  SET DavisBaconOvertimeRate = DavisBaconRate "
+LabRateD,       "WHERE DavisBaconOvertimeRate = 0.0 "
+LabRateD,       "update LaborerWageAndBenefits "
+LabRateD,       "  SET NonDavisBaconRate = DavisBaconRate "
+LabRateD,       "WHERE NonDavisBaconRate = 0.0 "
+LabRateD,       "update LaborerWageAndBenefits "
+LabRateD,       "  SET NonDavisBaconOvertimeRate = NonDavisBaconRate "
+LabRateD,       "WHERE NonDavisBaconOvertimeRate = 0.0 "
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+LaborD,        "SELECT LaborerID, Description  "
+LaborD,        "FROM Labor HOLDLOCK "
+LaborD,        "WHERE LaborerKey = %LaborerKey "
+
+
+LabRateD,       "SELECT ZoneKey, DavisBaconRate, DavisBaconOvertimeRate, "
+LabRateD,       "NonDavisBaconRate, NonDavisBaconOvertimeRate "
+LabRateD,       "FROM LaborerWageAndBenefits HOLDLOCK "
+LabRateD,       "WHERE LaborerKey = %LaborerKey "
+LabRateD,       "AND ZoneKey = %ZoneKey "
+LabRateD,       "AND BaseDate = @UndeclaredBaseDate "
+
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+LaborD,        "INSERT INTO Labor "
+LaborD,        "(LaborerKey,LaborerID,Description,ZoneTypeKey) "
+LaborD,        "VALUES "
+LaborD,        "(@NewKey,@LaborerID,@Description,@"DID_LABORZONETYPE"ZoneTypeKey) "
+
+
+LabRateD,       "INSERT   INTO LaborerWageAndBenefits "
+LabRateD,       "(LaborerKey, ZoneKey, BaseDate, DavisBaconRate, "
+LabRateD,       "DavisBaconOvertimeRate, NonDavisBaconRate, NonDavisBaconOvertimeRate )"
+LabRateD,       "VALUES "
+LabRateD,       "(%LaborerKey, @"DID_LABZONEID"ZoneKey, @UndeclaredBaseDate, "
+LabRateD,       "@DavisBaconRate, @DavisBaconOvertimeRate, "
+LabRateD,       "@NonDavisBaconRate, @NonDavisBaconOvertimeRate) "
+
+
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.                
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+//LaborCatL,    "DELETE FROM Labor "
+//LaborCatL,    "WHERE LaborKey=%LaborKey "
+//LaborCatL,    "DELETE FROM LaborerWageAndBenefits "
+//LaborCatL,    "WHERE LaborerKey = %LaborerKey "
+
+LaborCatL,      "UPDATE Labor "
+LaborCatL,      "SET Deleted = 1 "
+LaborCatL,      "WHERE LaborerKey IN (%LaborerKey{,%LaborerKey}) "
+
+LaborerL,        "UPDATE LaborerWageAndBenefits "
+LaborerL,        "SET Deleted = 1 "
+LaborerL,        "WHERE LaborerKey = %LaborerKey "
+LaborerL,        "AND ZoneKey != 1 "
+LaborerL,        "AND ZoneKey IN (%ZoneKey{,%ZoneKey}) "
+LaborerL,        "AND BaseDate = @UndeclaredBaseDate "
+

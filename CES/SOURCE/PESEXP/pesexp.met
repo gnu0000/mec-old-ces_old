@@ -1,0 +1,83 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\iti.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "pesexp.h"
+
+:query ExpQuery.bin
+
+PESEXP_GETPROJECTS,  "SELECT JP.ProjectControlNumber "
+PESEXP_GETPROJECTS,  "FROM JobProject JP "
+PESEXP_GETPROJECTS,  "WHERE JP.JobKey = %s "
+PESEXP_GETPROJECTS,  "ORDER BY JP.ProjectControlNumber "
+
+PESEXP_PROJECT,      "SELECT P.ProjectControlNumber, P.SpecYear - 1900, "
+PESEXP_PROJECT,      "CV1.CodeValueID, CV2.CodeValueID, P.Location, "
+PESEXP_PROJECT,      "SUBSTRING (P.Description, 1, 60), "
+PESEXP_PROJECT,      "SUBSTRING (P.Description, 61, 60) "
+PESEXP_PROJECT,      "FROM Project P, CodeValue CV1, CodeValue CV2 "
+PESEXP_PROJECT,      "WHERE CV1.CodeValueKey = P.WorkType "
+PESEXP_PROJECT,      "AND   CV2.CodeValueKey = P.District "
+PESEXP_PROJECT,      "AND   P.ProjectControlNumber='%s' "
+
+PESEXP_CATEGORY,     "SELECT PC.Category "
+PESEXP_CATEGORY,     "FROM ProjectCategory PC "
+PESEXP_CATEGORY,     "WHERE PC.ProjectControlNumber = '%s' "
+PESEXP_CATEGORY,     "ORDER BY PC.Category "
+
+PESEXP_PROJECT_ITEM, "SELECT PI.SequenceNumber, SI.StandardItemNumber, "
+PESEXP_PROJECT_ITEM, "PI.Quantity, JI.UnitPrice "
+PESEXP_PROJECT_ITEM, ", SUBSTRING(PI.SupplementalDescription,1,40) "
+PESEXP_PROJECT_ITEM, ", SUBSTRING(PI.SupplementalDescription,41,40) "
+PESEXP_PROJECT_ITEM, ", SUBSTRING(JI.SupplementalDescription,1,40) "
+PESEXP_PROJECT_ITEM, ", SUBSTRING(JI.SupplementalDescription,41,40) "
+PESEXP_PROJECT_ITEM, "FROM ProjectItem PI, StandardItem SI, JobItem JI, "
+PESEXP_PROJECT_ITEM, "JobItemProjectItem JIPI "
+PESEXP_PROJECT_ITEM, "WHERE PI.ProjectControlNumber = '%s' "
+PESEXP_PROJECT_ITEM, "AND PI.Category = '%s' "
+PESEXP_PROJECT_ITEM, "AND PI.ProjectControlNumber = JIPI.ProjectControlNumber "
+PESEXP_PROJECT_ITEM, "AND PI.Category = JIPI.Category "
+PESEXP_PROJECT_ITEM, "AND PI.SequenceNumber = JIPI.SequenceNumber "
+PESEXP_PROJECT_ITEM, "AND JIPI.JobItemKey = JI.JobItemKey "
+PESEXP_PROJECT_ITEM, "AND JI.StandardItemKey = SI.StandardItemKey "
+PESEXP_PROJECT_ITEM, "ORDER BY PI.SequenceNumber "
+
+
+:format ExpFmt.bin
+
+PESEXP_PROJECT,      "String"
+PESEXP_PROJECT,      "String"
+PESEXP_PROJECT,      "String"
+PESEXP_PROJECT,      "String"
+/* 4-16-93 mdh: reversed lon and lat -- we had it backwards */
+PESEXP_PROJECT,      "Position,<Long><DDDMMSS> <Lat><DDMMSS>"
+PESEXP_PROJECT,      "String"
+PESEXP_PROJECT,      "String"
+
+PESEXP_CATEGORY,     "String"
+
+PESEXP_PROJECT_ITEM, "String"
+PESEXP_PROJECT_ITEM, "String"
+PESEXP_PROJECT_ITEM, "Number,..."
+PESEXP_PROJECT_ITEM, "Number,....."
+PESEXP_PROJECT_ITEM, "String"
+PESEXP_PROJECT_ITEM, "String"
+PESEXP_PROJECT_ITEM, "String"
+PESEXP_PROJECT_ITEM, "String"
+
+

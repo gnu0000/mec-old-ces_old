@@ -1,0 +1,78 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rEquip.h"                                       
+                                                      
+:query rEquipQ.bin                                        
+
+ID_QUERY_DESC, "select EquipmentID, Equipment.Description, ZoneTypeID "
+ID_QUERY_DESC, "from Equipment, ZoneType "
+ID_QUERY_DESC, "where Equipment.Deleted is NULL"
+ID_QUERY_DESC, " and ZoneType.Deleted is NULL"
+ID_QUERY_DESC, " and Equipment.ZoneTypeKey = ZoneType.ZoneTypeKey"
+ID_QUERY_DESC, " and EquipmentKey = "
+   
+
+ID_QUERY_LISTING, "select DISTINCT ZoneID, Rate, OvertimeRate "
+ID_QUERY_LISTING, "from EquipmentRate, Zone, Equipment "
+ID_QUERY_LISTING, "where Equipment.Deleted is NULL "
+ID_QUERY_LISTING, " and Zone.Deleted is NULL "
+ID_QUERY_LISTING, " and EquipmentRate.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_LISTING, " and EquipmentRate.ZoneKey = Zone.ZoneKey "
+ID_QUERY_LISTING, " and Zone.ZoneTypeKey = Equipment.ZoneTypeKey "
+ID_QUERY_LISTING, " and Equipment.EquipmentKey = "
+
+ID_QUERY_LISTING_CONJ, " and Zone.ZoneTypeKey =  "
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "7"
+
+// Column titles                                      
+// ppsz_Idx, TtlCol, TtlColWth, DtaCol, DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,  "0,  0,  0,  8,     EQ_ID text"
+RPT_TTL_2,  "9,  3,  9, 71, -   EQ_DESC text"  
+RPT_TTL_3,  "5, 50, 55, 16,Rates are assigned geographically using zone type "
+                         
+RPT_TTL_4, "23,  8,  23,  8,Zone "  
+RPT_TTL_5, "34, 11,  34, 11,Hourly Rate"  
+RPT_TTL_6, "47, 13,  47, 13,Overtime Rate"  
+
+RPT_TTL_7, " 0,  8,   8,  8,(cont.) "  
+                  
+                                                                 
+:FORMAT rEquipF.bin                                                  
+
+ID_QUERY_DESC,    "String", "String",     "String" 
+ID_QUERY_LISTING, "String", "Number,$..", "Number,$.."
+
+:query rEquipDQ.bin                                                  
+                                                                 
+rEquip_RptDlgBox,       "SELECT EquipmentKey "                             
+rEquip_RptDlgBox,       "FROM Equipment "                                  
+rEquip_RptDlgBox,       "WHERE EquipmentKey = %EquipmentKey "                   
+                                                                 
+:Dialog rEquipDD.bin rEquipDF.bin                                        
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt
+//--------------------------------------------------------------------------------------
+rEquip_RptDlgBox, rEquip_RptDlgBox, rEquip_RptDlgBox, EquipmentKey, DID_KEY, "Number", "Number"
+

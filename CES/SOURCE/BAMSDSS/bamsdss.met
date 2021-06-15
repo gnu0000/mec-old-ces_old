@@ -1,0 +1,793 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * BAMSDSS.met
+ * This file contains metadata for the BAMS/DES windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics     (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// USHORT                                                                RECTS               USHORT     LONG                  LONG
+// Static Window ID   Add,  Change,  xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//ProposalS,              0,       0,    2,   1,  136,  52,  COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+ProposalS,        0,       ProposalD,    2,   1,  400,  200,  COORD_RNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+BidderS,                0,       0,    2,   1,  136,  46,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+ProjectS,               0,       0,    2,   1,  126,  36,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+ProposalMajItemS,       0,       0,    2,   1,  136,  24,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+CategoryS,              0,       0,    1,   4,  122,  22,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+ProjectItemS,           0,       0,    1,   4,  136,  25,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+ProposalItemS,          0,       0,    1,   4,  142,  46,  COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT                       USHORT                         USHORT                                                RECTS               USHORT
+//
+// Parents ID    Type Child Window ID    uKind   Add, Change    <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ProposalS,        ProposalList1,   ITIWC_LIST,     0,    0,      1,136,   49,  1, TL | DLG | X0ABS | Y0ABS | X1PCT | Y1REL
+ProposalS,        ProposalList2,   ITIWC_LIST,     0,    0,     51,136,   1,   1, TL | DLG | X0PCT | Y0ABS | X1REL | Y1REL
+
+BidderS,          BidderL,         ITIWC_LIST,     0,    0,      0, 63,   0,   0,    COORD_REL
+
+ProjectS,         ProjectL,        ITIWC_LIST,     0,    0,      0, 80,   0,   0,    COORD_REL
+
+ProposalMajItemS, ProposalMajItemL,ITIWC_LIST,     0,    0,      0,  0,   0,   0,    COORD_REL
+
+ProjectItemS,     ProjectItemL,    ITIWC_LIST,     0,    0,      0, 30,   0,   0,    COORD_REL
+ProjectItemS,     ProjectItemC,   ITIWC_COMBO,     0,    0,     52,  1,  36,   8,    COORD_BLKRNG
+
+ProposalItemS,    ProposalItemL,   ITIWC_LIST,     0,    0,      0, 40,   0,   0,    COORD_REL
+ProposalItemS,    ProposalItemC1, ITIWC_COMBO,     0,    0,     45,  1,  10,   6,    COORD_CHRRNG
+ProposalItemS,    ProposalItemC2, ITIWC_COMBO,     0,    0,     32,  3,  10,   6,    COORD_CHRRNG
+ProposalItemS,    ProposalItemC3, ITIWC_COMBO,     0,    0,     45,  3,  10,   6,    COORD_CHRRNG
+ProposalItemS,    ProposalItemC4, ITIWC_COMBO,     0,    0,     58,  3,  10,   6,    COORD_CHRRNG
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT         LONG                             LONG                  LONG                  USHORT USHORT   USHORT
+// List Window ID Window Options                   Background Color      Label Bkg Color       Label ydata    Button Window ID
+//-----------------------------------------------------------------------------------------------------------------------------------------
+OpenProposalDL,   ITI_LISTOPTIONHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+OpenProjectDL,    ITI_LISTOPTIONHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+ProposalList1,    ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+ProposalList2,    ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+BidderL,          ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+ProjectL,         ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+ProposalMajItemL, ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+ProjectItemL,     ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+ProposalItemL,    ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                  USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                                USHORT  PSZ
+//
+// Window ID  Next Window ID          xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags                                          uIndex           Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+OpenProposalDL,   0,        1,  0,  16, 1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, ProposalID,      "String"
+OpenProposalDL,   0,        19, 0,  255,1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, Description,     "String"
+
+OpenProjectDL,    0,        1,  0,  16, 1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, ProjectControlNumber, "String"
+OpenProjectDL,    0,        19, 0,  255,1, COORD_CHRRNG, ITI_LDLGCOLOR, ITI_LDATAFLAGS, Description,          "String"
+
+ProposalS,        0,        13, 0,  30, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       ProjectNumber,                 "String"
+ProposalS,        0,        11, 1,  10, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       Description,                   "String"
+ProposalS,        0,        9,  2,  40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       Location,                      "Position,<long><deg>ø <min>'' <sec>' Longitude, <lat><deg>ø <min>'' <sec>' Latitude"
+ProposalS,        0,        17, 3,  50, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       Location Description,          "String"
+ProposalS,        0,        19, 4,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       CountyID,                      "String"
+ProposalS,        0,        25, 4,  40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,       CountyName,                    "String"
+ProposalS,        0,        19, 5,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    7,                             "String"
+ProposalS,        0,        25, 5,  40, 1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, 8,    "String"
+ProposalS,        0,        19, 6,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    9,                             "String"
+ProposalS,        0,        25, 6,  40, 1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, 10,   "String"
+ProposalS,        0,        19, 7,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   11,                             "String"
+ProposalS,        0,        25, 7,  40, 1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS, 12,   "String"
+ProposalS,        0,        19, 8,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    SpecYear,                      "Year,yyyy"
+ProposalS,        0,        51, 8,  40, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    ImportDate,                    "DateTime,mmm d, yyyy"
+ProposalS,        0,        19, 9,  20, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    LettingDate,                   "DateTime,mmm d, yyyy"
+ProposalS,        0,        19, 10, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   16,                             "String"
+ProposalS,        0,        19, 11, 15, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   17,                             "String"
+ProposalS,        0,        48, 11, 16, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,  LowBidTotal,                   "Number,$,.."
+ProposalS,        0,        19, 12, 15, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,   19,                             "String"
+ProposalS,        0,        48, 12, 16, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,  AwardedBidTotal,               "Number,$,.."
+ProposalS,        0,        19, 13, 2,  1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,  NumberOfBids,                  "Number"
+ProposalS,        0,        48, 13, 16, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,  EngineersEstimate,             "Number,$,.."
+ProposalS,        0,        19, 14, 40, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    23,                             "String"
+ProposalS,        0,        17, 15, 8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,     PercentComplete,               "Number,%,.."
+ProposalS,        0,        19, 16, 20, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,    DateComplete,                  "DateTime,mmm d, yyyy"
+
+ProposalS,        0,        48, 14, 8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,     ProposalLength,                "Number,,...."
+ProposalS,        0,        48, 15, 8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,     AveragePavementWidth,          "Number,,..."
+ProposalS,        0,        48, 16, 8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,     AveragePavementDepth,          "Number,,..."
+
+
+ProposalList1,    BidderS,  1,  0,  49, 1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   VendorID,              "String"
+ProposalList1,    BidderS,  51, 0,  1,  1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   BidTotal,              "Number,$,.."
+
+ProposalList2,    ProjectS, 1,  0,  49, 1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   ProjectControlNumber,  "String"
+ProposalList2,    ProjectS, 51, 0,  1,  1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   AwardedAmount,         "Number,$,.."
+
+BidderS,          0,        7,  0,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,          ShortName,          "String"
+BidderS,          0,        18, 2,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,          Description,        "String"
+BidderS,          0,        57, 5,  8,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,            4,                  "Number,%."
+BidderS,          0,        9,  6,  15, 1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,            BidTotal,           "Number,$,.."
+BidderS,          0,        57, 6,  8,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,            5,                  "Number,%,."
+BidderS,          0,        57, 7,  8,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,            6,                  "Number,%,."
+BidderS,          0,        1,  4,  40, 1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SDATAFLAGS,           12,                  "Flag,This proposal was awarded to this bidder.,This proposal was not awarded to this bidder."
+
+BidderL,          0,        1,  0,  11, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            StandardItemNumber, "String"
+BidderL,          0,        4,  1,  45, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            ShortDescription,   "String"
+BidderL,          0,        13, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,          Quantity,           "Number,,..."
+BidderL,          0,        26, 0,  14, 1, COORD_CHRRNG, ITI_LLINKCOLOR,    ITI_LDATARTFLAGS,          UnitPrice,          "Number,$,...."
+BidderL,          0,        40, 0,  1,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_LDATACTRFLAGS,         7,                  "String"
+BidderL,          0,        41, 0,  4,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            CodeValueID,        "String"
+BidderL,          0,        50, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,          5,                  "Number,$,.."
+
+ProjectS,         0,        11, 0,  20, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              ProposalID,          "String"
+ProjectS,         0,        11, 1,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,           Description,         "String"
+ProjectS,         0,        11, 3,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              3,                   "String"
+ProjectS,         0,        16, 3,  35, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,  ITI_SDATAFLAGS, 4,   "String"
+ProjectS,         0,        11, 4,  40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Location,            "Position,<long><deg>ø <min>'' <sec>' Longitude, <lat><deg>ø <min>'' <sec>' Latitude"
+ProjectS,         0,        11, 5,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              SpecYear,            "Year,yyyy"
+ProjectS,         0,        43, 5,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              9,                   "String"
+ProjectS,         0,        11, 6,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,           7,                   "String"
+ProjectS,         0,        16, 6,  35, 1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS, 8,    "String"
+ProjectS,         0,        14, 7,  15, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,         AwardedAmount,       "Number,$,.."
+ProjectS,         0,        43, 7,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Length,              "Number,,...."
+ProjectS,         0,        14, 8,  15, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,         LowBidAmount,        "Number,$,.."
+ProjectS,         0,        43, 8,  9,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Width,               "Number,...."
+ProjectS,         0,        14, 9,  15, 1, COORD_CHRRNG, ITI_SLINKCOLOR,    ITI_SDATARTFLAGS,         EstimatedAmount,     "Number,$,.."
+
+ProjectL,         CategoryS,2,  0,  8,  1, COORD_CHRRNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,           CategoryNumber,   "String"
+ProjectL,         CategoryS,20, 0,  120,1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Description,  "String"
+
+ProposalMajItemL, 0,        1,  0,  11, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            MajorItemID,                "String"
+ProposalMajItemL, 0,        4,  1,  50, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            Description,                "String"
+ProposalMajItemL, 0,        13, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,          Quantity,                   "Number,,..."
+ProposalMajItemL, 0,        26, 0,  14, 1, COORD_CHRRNG, ITI_LLINKCOLOR,    ITI_LDATARTFLAGS,          WeightedAverageUnitPrice,   "Number,$,...."
+ProposalMajItemL, 0,        40, 0,  1,  1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_LDATACTRFLAGS,         7,                          "String"
+ProposalMajItemL, 0,        41, 0,  4,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,            CodeValueID,                "String"
+ProposalMajItemL, 0,        50, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,          ExtendedAmount,             "Number,$,.."
+
+CategoryS,        0,        9,  0,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                 HistoricalProject.Description,         "String"
+CategoryS,        0,        9,  2,  1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                 HistoricalProjectCategory.Description, "String"
+CategoryS,        0,        15, 4,  10, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Length,                      "Number,,...."
+CategoryS,        0,        47, 4,  9,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Width,                       "Number,...."
+CategoryS,        0,        15, 5,  4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              5,                           "String"
+CategoryS,        0,        22, 5,  40, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              6,                           "String"
+CategoryS,        0,        15, 6,  20, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              StructureID,                 "String"
+CategoryS,        0,        15, 7,  11, 1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Length,                      "Number,,...."
+CategoryS,        0,        47, 7,  8,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,              Width,                       "Number,...."
+
+ProjectItemL,     0,        26, 0,  14, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             1,                     "Number,$,...."
+ProjectItemL,     0,        50, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             2,                     "Number,$,.."
+ProjectItemL,     0,         0, 0,   0, 0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             3,                     "Number,$,...."
+ProjectItemL,     0,         0, 0,   0, 0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             4,                     "Number,$,.."
+ProjectItemL,     0,         0, 0,   0, 0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             5,                     "Number,$,...."
+ProjectItemL,     0,         0, 0,   0, 0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             6,                     "Number,$,.."
+ProjectItemL,     0,        1,  0,  11, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               StandardItemNumber,    "String"
+ProjectItemL,     0,        4,  1,  50, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               ShortDescription,      "String"
+ProjectItemL,     0,        13, 0,  15, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             Quantity,              "Number,,..."
+ProjectItemL,     0,        40, 0,  1,  1, COORD_CHRRNG, ITI_SLABELCOLOR,ITI_LDATACTRFLAGS,            11,                    "String"
+ProjectItemL,     0,        41, 0,  4,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               CodeValueID,           "String"
+
+ProposalItemL,    0,       29,  0,  13, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             1,                    "Number,,..."
+ProposalItemL,    0,       42,  0,  13, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             2,                    "Number,,..."
+ProposalItemL,    0,       55,  0,  13, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             3,                    "Number,,..."
+ProposalItemL,    0,        1,  0,  11, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               StandardItemNumber,   "String"
+ProposalItemL,    0,        4,  1,  50, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               ShortDescription,     "String"
+ProposalItemL,    0,       13,  0,  12, 1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             Quantity,             "Number,,..."
+ProposalItemL,    0,       26,  0,  3,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,               11,                   "String"
+
+ProposalItemL,    0,       0,   0,  0,  0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             4,                    "Number,$,.."
+ProposalItemL,    0,       0,   0,  0,  0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             5,                    "Number,$,.."
+ProposalItemL,    0,       0,   0,  0,  0, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATARTFLAGS,             6,                    "Number,$,.."
+
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID       Next Window xposypos  xsiz ysiz CoordType  Foreground Color  Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+OpenProposalDL,         0,        1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Proposal"
+OpenProposalDL,         0,       19,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+OpenProjectDL,          0,        1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Project"
+OpenProjectDL,          0,       19,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "Description"
+
+
+ProposalS,              0,        1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,      "Project Number:"
+ProposalS,              0,        1,   1,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,      "Description:"
+ProposalS,              0,        1,   2,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,      "Location:"
+ProposalS,              0,        1,   3,  19,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,      "Location Description:"
+ProposalS,              0,       12,   4,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "County:"
+ProposalS,              0,        9,   5,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "District:"
+ProposalS,              0,        8,   6,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Work Type:"
+ProposalS,              0,        8,   7,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Road Type:"
+ProposalS,              0,        8,   8,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Spec Year:"
+ProposalS,              0,       38,   8,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Import Date:"
+ProposalS,              0,        5,   9,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Letting Date:"
+ProposalS,              0,        1,  10,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Rejection Reason:"
+ProposalS,              0,        7,  11,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Low Bidder:"
+ProposalS,              0,       37,  11,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Low Bid Total:"
+ProposalS,              0,        3,  12,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Awarded Bidder:"
+ProposalS,              0,       32,  12,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Awarded Bid Total:"
+ProposalS,              0,        3,  13,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Number of Bids:"
+ProposalS,             0,       30,  13,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Engineer's Estimate:"
+ProposalS,              0,       11,  14,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Status:"
+ProposalS,             0,        1,  15,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Percent Complete:"
+ProposalS,              0,        4,  16,  14,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Date Complete:"
+
+ProposalS,              0,       30,  14,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Proposal Length:"
+ProposalS,              0,       30,  15,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Avg Pvt Width:"
+ProposalS,              0,       30,  16,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Avg Pvt Depth:"
+
+
+ProposalList1,          0,        1,   0,  49,   1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Bidder"
+ProposalList1,          0,       51,   0,   1,   1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Bid Amount"
+
+
+ProposalList2,          0,        1,   0,  49,   1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Project"
+ProposalList2,          0,       51,   0,   1,   1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Awarded Amount"
+
+
+BidderS,                0,        1,   0,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Vendor:"
+BidderS,                0,        1,   2,  18,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Proposal Description:"
+//BidderS,                0,        1,   4,  40,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "This proposal was not awarded to this bidder."
+BidderS,                0,       26,   5,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Bid index relative to low bid:"
+BidderS,                0,        1,   6,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,    "Bid Total:"
+BidderS,                0,       26,   6,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Bid index relative to awarded bid:"
+BidderS,                0,       26,   7,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,  "Bid index relative to estimate:"
+
+BidderL,                0,        1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Item Number/"
+BidderL,                0,        4,   1,  50,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+BidderL,                0,       13,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Quantity"
+BidderL,                0,       26,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Price "
+BidderL,                0,       40,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS, "/"
+BidderL,                0,       41,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+BidderL,                0,       50,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+
+
+ProjectS,               0,        3,   0,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Proposal:"
+ProjectS,               0,        1,   1,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Description:"
+ProjectS,               0,        1,   3,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "District:"
+ProjectS,               0,        1,   4,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Location:"
+ProjectS,               0,        0,   5,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Spec Year:"
+ProjectS,               0,       30,   5,  12,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Urban/Rural:"
+ProjectS,               0,        0,   6,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Work Type:"
+ProjectS,               0,        0,   7,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Awarded Bid Total:"
+ProjectS,               0,       35,   7,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Length:"
+ProjectS,               0,       52,   7,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Miles"
+ProjectS,               0,        0,   8,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Low Bid Total:"
+ProjectS,               0,       36,   8,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Width:"
+ProjectS,               0,       49,   8,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Feet"
+ProjectS,               0,        0,   9,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Estimate Total:"
+
+ProjectL,               0,        0,   0,   8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELRTFLAGS,    "Category"
+ProjectL,               0,       20,   0,  45,   1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,    "Description"
+
+
+ProposalMajItemL,       0,        1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Major Item/"
+ProposalMajItemL,       0,        4,   1,  50,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+ProposalMajItemL,       0,       13,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Quantity"
+ProposalMajItemL,       0,       26,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Average Price "
+ProposalMajItemL,       0,       40,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS, "/"
+ProposalMajItemL,       0,       41,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+ProposalMajItemL,       0,       50,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+
+CategoryS,              0,        2,   0,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Project:"
+CategoryS,              0,        1,   2,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Category:"
+CategoryS,              0,        3,   4,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Length:"
+CategoryS,              0,       41,   4,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Width:"
+CategoryS,              0,       56,   4,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Feet"
+CategoryS,              0,        3,   5,  11,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Structure Type:"
+CategoryS,              0,        4,   6,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Structure:"
+CategoryS,              0,        1,   7,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Structure Length:"
+CategoryS,              0,       23,   7,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Feet"
+CategoryS,              0,       30,   7,  16,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Structure Width:"
+CategoryS,              0,       56,   7,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Feet"
+
+ProjectItemS,           0,       90,   1,   1,   2, TL | BLK | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,      ""
+ProjectItemS,           0,       20,   1,  30,   2, COORD_BLKRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Currently Viewing"
+
+ProjectItemL,           0,        1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Item Number /"
+ProjectItemL,           0,        4,   1,  50,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+ProjectItemL,           0,       16,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Quantity"
+ProjectItemL,           0,       26,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Price "
+ProjectItemL,           0,       40,   0,   1,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELCTRFLAGS, "/"
+ProjectItemL,           0,       41,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+ProjectItemL,           0,       52,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+
+ProposalItemS,          0,       31,   1,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "Currently Viewing"
+ProposalItemS,          0,       54,   1,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,    "for"
+
+
+ProposalItemL,          0,        1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Item Number /"
+ProposalItemL,          0,        4,   1,  50,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+ProposalItemL,          0,       13,   0,  12,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Quantity"
+ProposalItemL,          0,       26,   0,   3,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+ProposalItemL,          0,       29,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+ProposalItemL,          0,       42,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+ProposalItemL,          0,       55,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID               Query String
+//---------------------------------------------------------------------------------------------------------------
+
+OpenProposalDL,   "SELECT ProposalID, Description, ProposalKey "
+OpenProposalDL,   "FROM HistoricalProposal "
+OpenProposalDL,   "WHERE SpecYear = %CurSpecYear "
+OpenProposalDL,   "ORDER BY ProposalID "
+                  
+OpenProjectDL,    "SELECT ProjectControlNumber, Description, ProjectKey "
+OpenProjectDL,    "FROM HistoricalProject "
+OpenProjectDL,   "WHERE SpecYear = %CurSpecYear "
+OpenProjectDL,    "ORDER BY ProjectControlNumber "
+
+
+ProposalS,        "SELECT ProjectNumber, Description, "
+ProposalS,        "Location, LocationDescription, "
+ProposalS,        "CountyID, CountyName, a.CodeValueID, a.Translation, "
+ProposalS,        "b.CodeValueID, b.Translation, c.CodeValueID, c.Translation, "
+ProposalS,        "SpecYear, "
+ProposalS,        "ImportDate, LettingDate, d.CodeValueID, "
+ProposalS,        "f.VendorID, LowBidTotal, g.VendorID, "
+ProposalS,        "AwardedBidTotal, NumberOfBids, EngineersEstimate, "
+ProposalS,        "e.CodeValueID, PercentComplete, DateComplete, ProposalKey, "
+ProposalS,        "ProposalID, ProposalKey "
+ProposalS,        ", ProposalLength, AveragePavementWidth, AveragePavementDepth "
+ProposalS,        "FROM HistoricalProposal, CodeValue a, CodeValue b, "
+ProposalS,        "CodeValue c, CodeValue d, CodeValue e, Vendor f, Vendor g "
+ProposalS,        "WHERE District = a.CodeValueKey "
+ProposalS,        "AND WorkType = b.CodeValueKey "
+ProposalS,        "AND RoadType = c.CodeValueKey "
+ProposalS,        "AND Status = e.CodeValueKey "
+ProposalS,        "AND Reason = d.CodeValueKey "
+ProposalS,        "AND LowBidderKey = f.VendorKey "
+ProposalS,        "AND AwardedBidderKey = g.VendorKey "
+ProposalS,        "AND ProposalKey = %ProposalKey "
+
+
+ProposalList1,    "SELECT VendorID, BidTotal, "
+ProposalList1,    "HistoricalBidder.VendorKey, ProposalKey "
+ProposalList1,    "FROM HistoricalBidder, Vendor "
+ProposalList1,    "WHERE HistoricalBidder.VendorKey = Vendor.VendorKey "
+ProposalList1,    "AND ProposalKey = %ProposalKey "
+
+
+ProposalList2,    "SELECT ProjectControlNumber, AwardedAmount, ProjectKey "
+ProposalList2,    "FROM HistoricalProject, HistoricalProposal "
+ProposalList2,    "WHERE HistoricalProject.ProposalKey = HistoricalProposal.ProposalKey "
+ProposalList2,    "AND HistoricalProposal.ProposalKey = %ProposalKey "
+
+
+BidderS,          " SELECT a.ShortName, Description, a.VendorID,"
+BidderS,          " BidIxLow= BidTotal/LowBidTotal,"
+BidderS,          " BidIxAwBid = BidTotal/AwardedBidTotal,"
+BidderS,          " BidIxEst = BidTotal/EngineersEstimate,"
+BidderS,          " BidTotal, ProposalID, HB.ProposalKey, a.VendorKey,"
+BidderS,          " HP.AwardedBidderKey, HP.AwardedBidderKey - %VendorKey"
+BidderS,          " FROM Vendor a, HistoricalProposal HP, HistoricalBidder HB"
+BidderS,          " WHERE HB.ProposalKey = HP.ProposalKey"
+BidderS,          " AND HB.VendorKey = a.VendorKey"
+BidderS,          " AND HB.ProposalKey = %ProposalKey"
+BidderS,          " AND HB.VendorKey = %VendorKey"
+
+
+BidderL,          " SELECT StandardItemNumber, Quantity, UnitPrice, CodeValueID, "
+BidderL,          " Extension = Quantity * UnitPrice, ShortDescription, '/' "
+BidderL,          " FROM StandardItem, HistoricalProposalItem, "
+BidderL,          " HistoricalItemBid, CodeValue "
+BidderL,          " WHERE Unit = CodeValueKey "
+BidderL,          " AND HistoricalItemBid.ProposalKey = HistoricalProposalItem.ProposalKey "
+BidderL,          " AND HistoricalItemBid.ProposalItemKey = HistoricalProposalItem.ProposalItemKey "
+BidderL,          " AND HistoricalProposalItem.ItemKey = StandardItem.StandardItemKey "
+BidderL,          " AND HistoricalItemBid.ProposalKey = %ProposalKey "
+BidderL,          " AND HistoricalItemBid.VendorKey = %VendorKey "
+BidderL,          " ORDER BY 1 "
+
+ProjectS,         "SELECT ProposalID, HistoricalProposal.Description, "
+ProjectS,         "a.CodeValueID, a.Translation, HistoricalProject.Location, "
+ProjectS,         "HistoricalProject.SpecYear, b.CodeValueID, "
+ProjectS,         "b.Translation, c.CodeValueID, AwardedAmount, Length, "
+ProjectS,         "LowBidAmount, Width, EstimatedAmount, ProjectControlNumber, "
+ProjectS,         "ProjectKey "
+ProjectS,         "FROM HistoricalProject, HistoricalProposal, "
+ProjectS,         "CodeValue a, CodeValue b, CodeValue c "
+ProjectS,         "WHERE HistoricalProject.District = a.CodeValueKey "
+ProjectS,         "AND HistoricalProject.WorkType = b.CodeValueKey "
+ProjectS,         "AND HistoricalProject.UrbanRuralClass = c.CodeValueKey "
+ProjectS,         "AND HistoricalProject.ProposalKey = HistoricalProposal.ProposalKey "
+ProjectS,         "AND HistoricalProject.ProjectKey = %ProjectKey "
+
+ProjectL,         "SELECT CategoryNumber, Description, ProjectKey "
+ProjectL,         "FROM HistoricalProjectCategory "
+ProjectL,         "WHERE HistoricalProjectCategory.ProjectKey = %ProjectKey "
+
+ProposalMajItemS, "SELECT ProposalKey, ProposalID "
+ProposalMajItemS, "FROM HistoricalProposal "
+ProposalMajItemS, "WHERE ProposalKey = %ProposalKey "
+
+
+ProposalMajItemL, "SELECT MajorItemID, Quantity, "
+ProposalMajItemL, "WeightedAverageUnitPrice, CodeValueID, "
+ProposalMajItemL, "ExtendedAmount, MajorItem.Description, '/', ProposalID "
+ProposalMajItemL, "FROM HistoricalProposalMajorItem HPMI, MajorItem MI, CodeValue, "
+ProposalMajItemL, "HistoricalProposal HP "
+ProposalMajItemL, "WHERE HPMI.MajorItemKey = MI.MajorItemKey "
+ProposalMajItemL, "AND MI.CommonUnit = CodeValueKey "
+ProposalMajItemL, "AND HPMI.ProposalKey = HP.ProposalKey "
+ProposalMajItemL, "AND HPMI.ProposalKey = %ProposalKey "
+ProposalMajItemL, " ORDER BY MajorItemID "
+
+CategoryS,        "SELECT HistoricalProject.Description, "
+CategoryS,        "HistoricalProjectCategory.Description, "
+CategoryS,        "HistoricalProjectCategory.Length, "
+CategoryS,        "HistoricalProjectCategory.Width, "
+CategoryS,        "CodeValueID, Translation, StructureID, "
+CategoryS,        "StructureLength, StructureWidth, "
+CategoryS,        "HistoricalProjectCategory.ProjectKey, "
+CategoryS,        "HistoricalProjectCategory.CategoryNumber, "
+CategoryS,        "ProjectControlNumber, ProposalKey "
+CategoryS,        "FROM CodeValue, HistoricalProjectCategory, "
+CategoryS,        "HistoricalProject "
+CategoryS,        "WHERE HistoricalProjectCategory.StructureType = CodeValueKey "
+CategoryS,        "AND HistoricalProjectCategory.ProjectKey = HistoricalProject.ProjectKey "
+CategoryS,        "AND HistoricalProjectCategory.ProjectKey = %ProjectKey "
+CategoryS,        "AND HistoricalProjectCategory.CategoryNumber = '%CategoryNumber' "
+
+
+//ProjectItemS,     "SELECT VendorID, VendorKey, ProposalKey "
+//ProjectItemS,     "FROM Vendor, HistoricalProposal "
+//ProjectItemS,     "WHERE HistoricalProposal.AwardedBidderKey = Vendor.VendorKey "
+//ProjectItemS,     "AND ProposalKey = %ProposalKey "
+
+ProjectItemS,     "SELECT HPj.ProjectControlNumber, HPC.CategoryNumber, "
+ProjectItemS,     "V1.VendorID, V2.VendorID, 'Engineer' "
+ProjectItemS,     "FROM HistoricalProjectCategory HPC, "
+ProjectItemS,     "HistoricalProject HPj, HistoricalProposal HP, "
+ProjectItemS,     " Vendor V1, Vendor V2 "
+ProjectItemS,     "WHERE HPC.ProjectKey   = HPj.ProjectKey "
+ProjectItemS,     "AND HPC.ProjectKey     = %ProjectKey "
+ProjectItemS,     "AND HPC.CategoryNumber = '%CategoryNumber' "
+ProjectItemS,     "AND HP.ProposalKey     = HPj.ProposalKey "
+ProjectItemS,     "AND HP.AwardedBidderKey= V1.VendorKey "
+ProjectItemS,     "AND HP.LowBidderKey    = V2.VendorKey "
+
+ProjectItemL,     "SELECT "
+ProjectItemL,     "HIB1.UnitPrice, HPjI.Quantity * HIB1.UnitPrice, "
+ProjectItemL,     "HIB2.UnitPrice, HPjI.Quantity * HIB2.UnitPrice, "
+ProjectItemL,     "HIB3.UnitPrice, HPjI.Quantity * HIB3.UnitPrice, "
+ProjectItemL,     "HPjI.Quantity, SI.StandardItemNumber, "
+ProjectItemL,     "CV.CodeValueID, SI.ShortDescription, '/' "
+ProjectItemL,     "FROM StandardItem SI, "
+ProjectItemL,     "HistoricalProjectItem HPjI, "
+ProjectItemL,     "CodeValue CV, "
+ProjectItemL,     "HistoricalProposalItem HPI, "
+ProjectItemL,     "HistoricalProposal HP, "
+ProjectItemL,     "HistoricalProject HPj, "
+ProjectItemL,     "HistoricalItemBid HIB1,  "
+ProjectItemL,     "HistoricalItemBid HIB2,  "
+ProjectItemL,     "HistoricalItemBid HIB3  "
+ProjectItemL,     "WHERE HPjI.ItemKey       = SI.StandardItemKey "
+ProjectItemL,     "AND SI.Unit              = CV.CodeValueKey "
+ProjectItemL,     "AND HPjI.ProposalItemKey = HPI.ProposalItemKey "
+ProjectItemL,     "AND HPjI.ProjectKey      = %ProjectKey "
+ProjectItemL,     "AND HPjI.CategoryNumber  = '%CategoryNumber' "
+ProjectItemL,     "AND HPj.ProjectKey       = %ProjectKey "
+ProjectItemL,     "AND HPj.ProposalKey      = HP.ProposalKey "
+ProjectItemL,     "AND HIB1.ProposalKey     = HP.ProposalKey "
+ProjectItemL,     "AND HIB1.ProposalItemKey = HPI.ProposalItemKey "
+ProjectItemL,     "AND HIB1.VendorKey       = HP.AwardedBidderKey "
+ProjectItemL,     "AND HIB2.ProposalKey     = HP.ProposalKey "
+ProjectItemL,     "AND HIB2.ProposalItemKey = HPI.ProposalItemKey "
+ProjectItemL,     "AND HIB2.VendorKey       = HP.LowBidderKey "
+ProjectItemL,     "AND HIB3.ProposalKey     = HP.ProposalKey "
+ProjectItemL,     "AND HIB3.ProposalItemKey = HPI.ProposalItemKey "
+ProjectItemL,     "AND HIB3.VendorKey       = 1 "
+ProjectItemL,     "ORDER BY SI.StandardItemNumber "
+
+ProposalItemS,    "SELECT HP.ProposalKey, HP.ProposalID "
+ProposalItemS,    "FROM HistoricalProposal HP "
+ProposalItemS,    "WHERE HP.ProposalKey = %ProposalKey "
+
+ProposalItemL,    " SELECT "
+ProposalItemL,    " HIB1.UnitPrice, "                  // estimate
+ProposalItemL,    " HIB2.UnitPrice, "                  // low bidder
+ProposalItemL,    " HIB3.UnitPrice, "                  // awarded
+ProposalItemL,    " HIB1.UnitPrice * HPI.Quantity, "   // estimate
+ProposalItemL,    " HIB2.UnitPrice * HPI.Quantity, "   // low bidder
+ProposalItemL,    " HIB3.UnitPrice * HPI.Quantity, "   // awarded
+ProposalItemL,    " HP.ProposalKey, "
+ProposalItemL,    " SI.StandardItemNumber, "
+ProposalItemL,    " SI.ShortDescription, "
+ProposalItemL,    " HPI.Quantity, "
+ProposalItemL,    " CV.CodeValueID "
+ProposalItemL,    " FROM HistoricalProposal HP, "
+ProposalItemL,    " StandardItem SI, "
+ProposalItemL,    " CodeValue CV, "
+ProposalItemL,    " HistoricalProposalItem HPI, "
+ProposalItemL,    " HistoricalItemBid HIB1, "          // estimate
+ProposalItemL,    " HistoricalItemBid HIB2, "          // low bidder
+ProposalItemL,    " HistoricalItemBid HIB3 "           // awarded
+ProposalItemL,    " WHERE HP.ProposalKey     = %ProposalKey "
+ProposalItemL,    " AND HP.ProposalKey       = HPI.ProposalKey "
+ProposalItemL,    " AND SI.StandardItemKey   = HPI.ItemKey "
+ProposalItemL,    " AND SI.Unit              = CV.CodeValueKey "
+ProposalItemL,    " AND HIB1.ProposalItemKey = HPI.ProposalItemKey "
+ProposalItemL,    " AND HIB2.ProposalItemKey = HPI.ProposalItemKey "
+ProposalItemL,    " AND HIB3.ProposalItemKey = HPI.ProposalItemKey "
+ProposalItemL,    " AND HIB1.ProposalKey     = HP.ProposalKey "
+ProposalItemL,    " AND HIB2.ProposalKey     = HP.ProposalKey "
+ProposalItemL,    " AND HIB3.ProposalKey     = HP.ProposalKey "
+ProposalItemL,    " AND HIB1.VendorKey       = 1 "
+ProposalItemL,    " AND HIB2.VendorKey       = HP.LowBidderKey "
+ProposalItemL,    " AND HIB3.VendorKey       = HP.AwardedBidderKey "
+ProposalItemL,    " ORDER BY SI.StandardItemNumber "
+
+
+ProposalD,        "SELECT ProposalID, WorkType, RoadType, District "
+ProposalD,        ", ProposalLength, AveragePavementWidth, AveragePavementDepth "  
+ProposalD,        "FROM HistoricalProposal, CodeValue a, CodeValue b, CodeValue c "
+ProposalD,        "WHERE ProposalKey = %ProposalKey "
+ProposalD,        "AND District = a.CodeValueKey "
+ProposalD,        "AND WorkType = b.CodeValueKey "
+ProposalD,        "AND RoadType = c.CodeValueKey "
+
+
+DistrictCombo,    " SELECT CodeValueID, CodeValueKey"
+DistrictCombo,    " FROM CodeValue CV, CodeTable CT"
+DistrictCombo,    " WHERE CV.CodeTableKey = CT.CodeTableKey"
+DistrictCombo,    " AND CodeTableID = 'DISTRIC'"
+DistrictCombo,    " AND (CV.UnitType = %CurUnitType "
+DistrictCombo,         " OR CV.UnitType = NULL) "
+DistrictCombo,    " AND (CV.Deleted is null"
+DistrictCombo,    " OR CodeValueKey = %District)"
+DistrictCombo,    " ORDER BY CodeValueID DESC "
+
+WrkTypeCombo,         " SELECT CodeValueID, CodeValueKey"
+WrkTypeCombo,         " FROM CodeValue CV, CodeTable CT"
+WrkTypeCombo,         " WHERE CV.CodeTableKey = CT.CodeTableKey"
+WrkTypeCombo,         " AND CodeTableID = 'WRKTYP'"
+WrkTypeCombo,         " AND (CV.UnitType = %CurUnitType "
+WrkTypeCombo,              " OR CV.UnitType = NULL) "
+WrkTypeCombo,         " AND (CV.Deleted is NULL"
+WrkTypeCombo,         " OR CodeValueKey = %WorkType)"
+WrkTypeCombo,         " ORDER BY CodeValueID DESC "
+
+RoadTypeC,           " /* bamsdss.met.RoadTypeC */ "
+RoadTypeC,           " SELECT CodeValueID, CodeValueKey"
+RoadTypeC,           " FROM CodeValue CV, CodeTable CT"
+RoadTypeC,           " WHERE CT.CodeTableKey = CV.CodeTableKey"
+RoadTypeC,           " AND CodeTableID = 'HWYTYPE'"
+RoadTypeC,           " AND "
+// RoadTypeC,           " ("
+RoadTypeC,           " CV.UnitType = %CurUnitType "
+// RoadTypeC,                " OR CV.UnitType = NULL) "
+RoadTypeC,           " AND (CV.Deleted is null"
+RoadTypeC,                " OR CodeValueKey = %RoadType)"
+RoadTypeC,           " ORDER BY CodeValueID"
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+//
+// USHORT                     char []
+//
+// Window ID                  Window Title
+//--------------------------------------------------------------------
+
+
+ProposalS,        "Proposal %ProposalID"
+
+BidderS,          "Bidder %VendorID for Proposal %ProposalID"
+
+ProjectS,         "Project %ProjectControlNumber"
+
+ProposalMajItemS, "Major Items for Proposal %ProposalID"
+
+CategoryS,        "Category %CategoryNumber for Project %ProjectControlNumber"
+
+ProjectItemS,     "Items for Project %ProjectControlNumber for Category %CategoryNumber"
+
+ProposalItemS,    "Items for Proposal %ProposalID"
+
+
+
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID               Add Query ID               Change Query ID            Column name             Control ID        Format    Input Fmt
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+OpenProposalD,     ITIWND_LIST,               ITIWND_LIST,               JobKey,                 OpenProposalDL,  "Number",          "Number"
+
+OpenProjectD,      ITIWND_LIST,               ITIWND_LIST,               JobKey,                 OpenProjectDL,   "Number",          "Number"
+
+ProposalD,              ProposalD,           ProposalD,             ProposalID,                DID_PROPOSALID,   "String",          "String"
+ProposalD,          WrkTypeCombo,          WrkTypeCombo,            CodeValueID,                 DID_WORKTYPE,   "String",          "Number"
+ProposalD,          RoadTypeC,             RoadTypeC,               CodeValueID,                 DID_ROADTYPE,   "String",          "Number"
+ProposalD,          DistrictCombo,         DistrictCombo,           CodeValueID,                 DID_DISTRICT,   "String",          "Number"
+ProposalD,              ProposalD,           ProposalD,             ProposalLength,                DID_LENGTH,   "Number,....",     "Number,...."
+ProposalD,              ProposalD,           ProposalD,             AveragePavementWidth,   DID_PAVEMENTWIDTH,   "Number,...",      "Number,..."
+ProposalD,              ProposalD,           ProposalD,             AveragePavementDepth,   DID_PAVEMENTDEPTH,   "Number,...",      "Number,..."
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ProposalD,        "UPDATE HistoricalProposal  "
+//ProposalD,        "SET ProposalID = @ProposalID, "
+ProposalD,        " SET District = @"DID_DISTRICT"CodeValueKey, "
+ProposalD,        " RoadType = @"DID_ROADTYPE"CodeValueKey, "
+ProposalD,        " WorkType = @"DID_WORKTYPE"CodeValueKey "
+ProposalD,        ", ProposalLength = @ProposalLength "
+ProposalD,        ", AveragePavementWidth = @AveragePavementWidth "
+ProposalD,        ", AveragePavementDepth = @AveragePavementDepth "
+ProposalD,        " WHERE ProposalKey = %ProposalKey "
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+ProposalD,        "SELECT ProposalID, WorkType, RoadType, District "
+ProposalD,        ", ProposalLength, AveragePavementWidth, AveragePavementDepth "
+ProposalD,        "FROM HistoricalProposal HOLDLOCK "
+ProposalD,        "WHERE ProposalKey = %ProposalKey "
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+

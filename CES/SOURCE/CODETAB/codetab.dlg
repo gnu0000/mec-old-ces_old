@@ -1,0 +1,112 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGINCLUDE 1 "dialog.h"
+
+DLGTEMPLATE CodeTableD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Code Table", CodeTableD, 15, 28, 304, 66, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR | FCF_NOBYTEALIGN
+    BEGIN
+        CONTROL "Code Table ~Name", 1200, 7, 52, 80, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_NAME, 7, 40, 89, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Max Code Len", 1202, 127, 53, 80, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MAXCODELEN, 127, 40, 61, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Code Table ~Description", 1201, 8, 24, 120, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIPTION, 7, 12, 231, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_AUTOSCROLL | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 209, 48, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 258, 48, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 208, 30, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 255, 30, 44, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+ 
+// DLGTEMPLATE CodeValueD LOADONCALL MOVEABLE DISCARDABLE 
+// BEGIN
+//     DIALOG "Code Value", CodeValueD, 24, 96, 330, 59, FS_NOBYTEALIGN | FS_DLGBORDER | 
+//                 FS_BORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+//                 FCF_SYSMENU | FCF_TITLEBAR
+//     BEGIN
+//         CONTROL "Code ~Value", 1203, 6, 42, 56, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", DID_CODEVAL, 6, 28, 73, 8, WC_ENTRYFIELD, ES_LEFT | 
+//                 ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~Translation", 1204, 96, 42, 51, 8, WC_STATIC, SS_TEXT | 
+//                 DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//         CONTROL "", DID_XLATE, 96, 28, 229, 8, WC_ENTRYFIELD, ES_LEFT | 
+//                 ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+// 
+//         CONTROL "~OK", 1, 73, 6, 30, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+//                 WS_TABSTOP | WS_VISIBLE
+//         CONTROL "~Cancel", 2, 110, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 WS_TABSTOP | WS_VISIBLE
+//         CONTROL "~Help", 3, 155, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 BS_HELP | WS_TABSTOP | WS_VISIBLE
+//         CONTROL "Add ~More", 4, 199, 6, 42, 13, WC_BUTTON, BS_PUSHBUTTON | 
+//                 WS_TABSTOP | WS_VISIBLE
+//     END
+// END
+
+
+DLGTEMPLATE CodeValueD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Code Value", CodeValueD, 24, 96, 330, 79, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                FS_BORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Code ~Value", 1203, 6, 62, 56, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",     DID_CODEVAL, 6, 48, 73, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Translation", 1204, 96, 62, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "",        DID_XLATE, 96, 48, 229, 8, WC_ENTRYFIELD, ES_LEFT | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Metric Unit", DID_METRIC_UNIT,  6, 30, 65, 10, WC_BUTTON,
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "English Unit", DID_ENGLISH_UNIT,  6, 20, 65, 10, WC_BUTTON,
+                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+//        CONTROL "Neither/Both", DID_NEITHER_UNIT,  6, 10, 65, 10, WC_BUTTON,
+//                BS_AUTORADIOBUTTON | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK",       DID_OK      , 96,  10, 30, 12,  WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE | BS_DEFAULT
+        CONTROL "~Cancel",   DID_CANCEL  , 133, 10, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help",     DID_HELP    , 178, 10, 38, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE | BS_HELP 
+        CONTROL "Add ~More", DID_ADDMORE , 222, 10, 42, 13, WC_BUTTON, BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+

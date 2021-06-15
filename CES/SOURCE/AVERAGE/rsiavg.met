@@ -1,0 +1,155 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rSIAvg.h"                                       
+
+:query rSIAvgQ.bin                                        
+
+
+//SELECT StandardItemKey
+//FROM PEMETHHistWeightedAvg
+//
+//
+//SELECT StandardItemNumber, ShortDescription, ImportDate, AreaTypeID,
+//FifthPercentile, TwentyFifthPercentile, FiftiethPercentile, 
+//SeventyFifthPercentile, NinetyFifthPercentile
+//FROM StandardItem, PEMETHHistWeightedAvg, AreaType
+//WHERE StandardItem.StandardItemKey = PEMETHHistWeightedAvg.StandardItemKey and
+//PEMETHHistWeightedAvg.AreaTypeKey = AreaType.AreaTypeKey and
+//StandardItem.StandardItemKey = 419
+//
+//
+//
+// To obtain QuantityLevels, WorkTypes, Areas AND AvgPrices for the StandardItem 
+//
+//SELECT QuantityLevel, CodeValueID, AreaID, WeightedAverageUnitPrice
+//FROM WeightedAverageUnitPrice, Area, CodeValue
+//WHERE WeightedAverageUnitPrice.AreaKey = Area.AreaKey and
+//WeightedAverageUnitPrice.WorkType = CodeValue.CodeValueKey and
+//StandardItemKey = 419
+
+
+
+ID_QUERY_NUMBER, "SELECT StandardItemNumber "
+ID_QUERY_NUMBER, "FROM StandardItem "
+ID_QUERY_NUMBER, "WHERE StandardItemKey = "
+
+
+
+
+ID_QUERY_LISTING, "SELECT DISTINCT StandardItemNumber, ShortDescription, "
+ID_QUERY_LISTING, "PEMETHAverage.ImportDate, AreaTypeID, "
+ID_QUERY_LISTING, " FifthPercentile, TwentyFifthPercentile, "
+ID_QUERY_LISTING, "FiftiethPercentile, SeventyFifthPercentile, "
+ID_QUERY_LISTING, "NinetyFifthPercentile "
+ID_QUERY_LISTING, "FROM StandardItem, StandardItemPEMETHAverage SIPA, "
+ID_QUERY_LISTING, "  PEMETHAverage PA, AreaType "
+ID_QUERY_LISTING, " WHERE "
+ID_QUERY_LISTING,     " PA.StandardItemKey = SIPA.StandardItemKey "
+ID_QUERY_LISTING, " AND PA.ImportDate = SIPA.ImportDate "
+ID_QUERY_LISTING, " AND PA.AreaTypeKey = AreaType.AreaTypeKey "
+ID_QUERY_LISTING, " AND SIPA.StandardItemKey = StandardItem.StandardItemKey "
+ID_QUERY_LISTING, " AND SIPA.BaseDate LIKE "
+
+ID_QUERY_LISTING_CONJ, " AND StandardItemPEMETHAverage.StandardItemKey = "
+
+ID_QUERY_LISTING_ORDER, " ORDER BY StandardItem.StandardItemNumber "
+
+
+
+
+ID_QUERY_PRICES, "SELECT DISTINCT StandardItemNumber, QuantityLevel, CodeValueID, AreaID, WeightedAverageUnitPrice "
+ID_QUERY_PRICES, "FROM StandardItem, WeightedAverageUnitPrice WAUP, "
+ID_QUERY_PRICES, " PEMETHAverage PA, Area, CodeValue, StandardItemPEMETHAverage SIPA "
+ID_QUERY_PRICES, " WHERE WAUP.AreaKey = Area.AreaKey "
+ID_QUERY_PRICES,  " AND WAUP.WorkType = CodeValue.CodeValueKey "
+ID_QUERY_PRICES, " AND PA.StandardItemKey = WAUP.StandardItemKey "
+ID_QUERY_PRICES, " AND PA.ImportDate = WAUP.ImportDate "
+ID_QUERY_PRICES, " AND SIPA.StandardItemKey = PA.StandardItemKey "
+ID_QUERY_PRICES, " AND SIPA.ImportDate      = PA.ImportDate "
+ID_QUERY_PRICES, " AND SIPA.StandardItemKey = StandardItem.StandardItemKey "
+ID_QUERY_PRICES, " AND StandardItem.StandardItemKey = "
+
+ID_QUERY_PRICES_BASEDATE, " AND StandardItemPEMETHAverage.BaseDate LIKE "
+
+ID_QUERY_PRICES_ORDER, " ORDER BY QuantityLevel, CodeValueID, AreaID "
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "16"
+
+// Column titles                                      
+//ppsz_Idx "TtlCol, TtlColWth, DtaCol, DtaColWth,TtlText"
+//ppsz_Idx"Col,Wth,Col,Wth,TtlText"
+//-------------------------------------------------------
+RPT_TTL_1,  "0,  4,  5, 13,Item "
+RPT_TTL_2, "18,  3, 21, 40, - " 
+RPT_TTL_3,  "4, 43, 48, 12,PEMETH Averages for this item were imported "
+RPT_TTL_4, "20, 17, 37, 17,and are based on "
+
+RPT_TTL_5, "11,  9, 21, 15,Very Low:  "
+RPT_TTL_6, "16,  4, 21, 15,Low:       "
+RPT_TTL_7, "15,  5, 21, 15,High:      "
+RPT_TTL_8, "10, 10, 21, 15,Very High: "
+
+RPT_TTL_9, "37,  9, 46, 15,<= qty < "
+RPT_TTL_10,"47,  6,  0,  0,areas."
+RPT_TTL_11," 4, 16,  0,  0,Quantity Ranges: "
+
+RPT_TTL_12,"10, 14, 13,  9,Quantity Level"
+RPT_TTL_13,"26,  9, 28,  4,Work Type"
+RPT_TTL_14,"37,  8, 37,  8,  Area  "
+RPT_TTL_15,"48, 16, 48, 16,      Avg Price "
+
+RPT_TTL_16, "18, 50, 0,  0, - No PEMETH Average data for this item." 
+
+
+
+
+:FORMAT rSIAvgF.bin                                                  
+
+#define   PCTL    "Number,,..."
+
+ID_QUERY_NUMBER,   "String"
+
+ID_QUERY_LISTING,  "String", "String", "DateTime,mmm dd, yyyy", "String"
+ID_QUERY_LISTING,  PCTL, PCTL, PCTL, PCTL, PCTL
+
+ID_QUERY_PRICES,   "String", "QuantityLevel,f", "String", "String", "Number,$,...."
+
+#undef    PCTL
+
+
+
+:query rSIAvgDQ.bin                                                  
+
+rSIAvg_RptDlgBox,       "SELECT StandardItemKey "                             
+rSIAvg_RptDlgBox,       "FROM StandardItem "                                  
+rSIAvg_RptDlgBox,       "WHERE StandardItemKey = %StandardItemKey "                   
+
+
+:Dialog rSIAvgDD.bin rSIAvgDF.bin                                        
+//                                                               
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rSIAvg_RptDlgBox, rSIAvg_RptDlgBox, rSIAvg_RptDlgBox, StandardItemKey, DID_KEY, "Number", "Number"            
+

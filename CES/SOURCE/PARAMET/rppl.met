@@ -1,0 +1,124 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"    
+#include "..\include\winid.h"     
+#include "..\include\metadecl.h"  
+#include "..\include\itirptdg.h"  
+#include "dialog.h"               
+#include "rPPL.h"                   
+
+
+
+
+// /* Parametric Profile Listing (5-40) */
+// 
+// 
+// /* to obtain info about all of the parametric profiles */
+// 
+// SELECT ProfileID, ParametricProfile.Description,
+// MajorItemID, MajorItem.Description, PercentofValue
+// FROM MajorItem, ParametricProfile, SignificantMajorItem
+// WHERE SignificantMajorItem.ProfileKey = ParametricProfile.ProfileKey 
+// AND SignificantMajorItem.MajorItemKey = MajorItem.MajorItemKey 
+// 
+// 
+// /* to obtain info about SELECT parametric profiles */
+// 
+// SELECT ProfileID, ParametricProfile.Description,
+// MajorItemID, MajorItem.Description, PercentofValue
+// FROM MajorItem, ParametricProfile, SignificantMajorItem
+// WHERE SignificantMajorItem.ProfileKey = ParametricProfile.ProfileKey
+// AND SignificantMajorItem.MajorItemKey = MajorItem.MajorItemKey 
+// AND ParametricProfile.ProfileKey = 2000000
+// 
+// 
+// 
+// /* To calculate the Total of Pct Value */
+// 
+// SELECT sum(PercentofValue)
+// FROM SignificantMajorItem
+// WHERE ProfileKey = %ProfileKey
+
+
+
+:query rPPLQ.bin                    
+
+
+
+ID_QUERY_KEYS, "SELECT ProfileKey, ProfileID "
+ID_QUERY_KEYS, "FROM   ParametricProfile "
+
+
+ID_QUERY_LISTING, "select ProfileID, Description "    
+ID_QUERY_LISTING, " from ParametricProfile "                   
+ID_QUERY_LISTING, " where ProfileKey = "              
+
+
+ID_QUERY_MJR_ITEMS, "SELECT MajorItemID, MajorItem.Description, PercentofValue "
+ID_QUERY_MJR_ITEMS, "FROM MajorItem, ParametricProfile, SignificantMajorItem "
+ID_QUERY_MJR_ITEMS, "WHERE SignificantMajorItem.ProfileKey = ParametricProfile.ProfileKey "
+ID_QUERY_MJR_ITEMS, "AND SignificantMajorItem.MajorItemKey = MajorItem.MajorItemKey "
+ID_QUERY_MJR_ITEMS, "AND ParametricProfile.ProfileKey = "
+
+
+ID_QUERY_TTL, "SELECT sum(PercentofValue) "
+ID_QUERY_TTL, "FROM SignificantMajorItem "
+ID_QUERY_TTL, "WHERE ProfileKey = "
+
+
+
+// Column titles                                      
+// ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//----------------------------------------------------------
+RPT_TTL_1,  "0,  9, 10, 16,Profile: "
+
+RPT_TTL_2, "12, 22, 12,  4,Significant Major Item "
+RPT_TTL_3, "12, 46, 18, 40, (desc)"
+
+RPT_TTL_4, "60,  9, 60,  9,Pct Value"
+
+RPT_TTL_5, "54,  6, 60,  9,Total: "
+
+
+// Number of column titles    
+ID_RPT_TTL,    "5" 
+
+
+
+:FORMAT rPPLF.bin                                
+
+ID_QUERY_KEYS,      "Number", "String" 
+
+ID_QUERY_LISTING,   "String", "String"    
+
+ID_QUERY_MJR_ITEMS, "String", "String", "Number,%."
+
+ID_QUERY_TTL,       "Number,%."
+
+:query rPPLDQ.bin                                
+
+rPPL_RptDlgBox,       "SELECT ProfileKey "           
+rPPL_RptDlgBox,       "FROM ParametricProfile "                
+rPPL_RptDlgBox,       "WHERE ProfileKey = %ProfileKey " 
+
+
+:Dialog rPPLDD.bin rPPLDF.bin                      
+//                                             
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt
+//--------------------------------------------------------------------------------------
+rPPL_RptDlgBox, rPPL_RptDlgBox, rPPL_RptDlgBox, ProfileKey, DID_KEY, "Number", "Number" 
+

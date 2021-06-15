@@ -1,0 +1,862 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"    
+#include "..\include\winid.h"     
+#include "..\include\metadecl.h"  
+#include "..\include\itirptdg.h"  
+#include "dialog.h"               
+#include "rSICbe.h"                   
+
+
+//   /* REPORT STANDARD ITEM LISTING:  Cost Based Estimate */
+//   /* (9-81)                                             */
+//   
+//   
+//   /* First Part  -  */
+//   /* NOTE:  The CostBasedEstimate which has the Active field marked as TRUE */
+//   /* is the preferred CostBasedEstimate for this StandardItem               */
+//   
+//   
+//   SELECT StandardItem.StandardItemNumber, ShortDescription,
+//   CostBasedEstimateKey, CostBasedEstimateID, Active,
+//   (SELECT Count(*) FROM CostBasedEstimate WHERE StandardItemKey = %StandardItemKey)
+//   FROM StandardItem, CostBasedEstimate
+//   WHERE StandardItem.StandardItemKey = CostBasedEstimate.StandardItemKey
+//   AND  StandardItem.StandardItemKey = %StandardItemKey
+//   
+//   
+//   
+//   
+//   /* if you prefer to retrieve one, unrepeated Count, use this query */
+//   /* and remove subquery from above query                           */
+//   
+//   SELECT Count(*)
+//   FROM CostBasedEstimate
+//   WHERE StandardItemKey = %StandardItemKey
+//   
+//   
+//   
+//   
+//   
+//   /* Second Part */
+//   
+//   /* This query retrieves all of the Tasks for a particular CostBasedEstimate */
+//   /* It assumes the  CostSheetKey is not relevant for this part, but will be  */
+//   /* needed to obtain info for the third part                                 */
+//   /* The Price and Extension, and total must be calculated */
+//   
+//   
+//   SELECT TaskKey, TaskID, CostSheetKey, QuantityPerItemUnit, CodeValueID, 
+//   Description
+//   FROM Task, CodeValue
+//   WHERE Task.Unit = CodeValueKey
+//   AND CostBasedEstimateKey = %CostBasedEstimateKey
+//   
+//   
+//   
+//   
+//   /* Third part  */
+//   /* This query retrieves info about a particular Task, using a given */
+//   /* CostSheetKey, and a given CostBasedEstimate                      */
+//   /* Disregard Overtimehours/day  in the report */
+//   
+//   
+//   SELECT TaskID, CostSheetID, CostSheet.Description, 
+//   CrewPerforms = ProductionRate * ProductionAdjustment,
+//   DefaultHoursPerDay, ProductionGranularity
+//   FROM Task, CostSheet
+//   WHERE Task.CostSheetKey = CostSheet.CostSheetKey
+//   AND TaskKey = %TaskKey
+//   AND CostBasedEstimateKey = %CostBasedEstimateKey
+//   AND Task.CostSheetKey = %CostSheetKey
+//   
+//   
+//   
+//   
+//   /* Fourth Part - CostSheet  CostBreakdown */
+//   
+//   /* This query retieves Overhead percentages and mark up percentage */
+//   /* and is used to calculate Total and Unit Price                   */
+//   /* Unit Cost for Material,Equipment and Labor are calculated in    */
+//   /* subsequent sections of this report                              */
+//   
+//   
+//   SELECT MaterialsOverheadPct, EquipmentOverheadPct, LaborOverheadPct,
+//   MarkUpPct
+//   FROM CostSheet
+//   WHERE CostSheetKey = %1000002
+//   
+//   
+//   
+//   
+//   
+//   /* Fifth part  - Materials Used */
+//   
+//   /* This query lists all of the MaterialsUsed for a particular CostSheet           */
+//   /* This query uses 1 for ZoneKey and Undeclared BaseDate when retrieving prices   */
+//   /* The Material Unit Cost must be calculated (sum of the extensions)              */
+//   
+//   SELECT MaterialID, Quantity, UnitPrice, CodeValueID, 
+//   Extension = Quantity * UnitPrice, Description
+//   FROM MaterialUsed, Material, MaterialPrice, CodeValue
+//   WHERE Material.Unit = CodeValueKey
+//   AND Material.MaterialKey = MaterialPrice.MaterialKey
+//   AND MaterialUsed.MaterialKey = Material.MaterialKey
+//   AND MaterialUsed.CostSheetKey = %CostSheetKey
+//   AND MaterialPrice.ZoneKey = 1
+//   AND MaterialPrice.BaseDate = @UndeclaredBaseDate
+//   
+//   
+//   
+//   /* Next part - Crew Used */
+//   
+//   /* To determine all of the Crews Used for this particular CostSheetKey */
+//   
+//   
+//   SELECT CostSheetCrewKey, CostSheetCrewID, Description
+//   FROM CrewUsed
+//   WHERE CostSheetKey = 1000002 
+//   
+//   
+//   /* To obtain all of the crew equipment used for a particular CREW USED */
+//   /* and a particular COST SHEET                                         */
+//   /* Equipment rates use Undeclared BaseDate and ZoneKey = 1             */
+//   
+//   
+//   SELECT Quantity, EquipmentID, Rate, Equipment.Description, DefaultHoursPerDay,
+//   Extension = (Rate * DefaultHoursPerDay)
+//   FROM Equipment, CrewEquipmentUsed, EquipmentRate, CrewUsed, CostSheet
+//   WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey
+//   AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey
+//   AND CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey
+//   AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey
+//   AND Equipment.EquipmentKey = EquipmentRate.EquipmentKey
+//   AND EquipmentRate.ZoneKey = 1
+//   AND EquipmentRate.BaseDate = @UndeclaredBaseDate
+//   AND CrewUsed.CostSheetKey = %1000002
+//   AND CrewUsed.CostSheetCrewKey = %CostSheetCrewKey
+//   
+//   
+//   /* To obtain all of the crew labor used for a particular CREW USED     */
+//   /* and a particular COST SHEET                                         */
+//   /* UndeclaredBaseDate, ZoneKey = 1 and DavisBaconWages are used to     */
+//   /* determine the wage and benefits                                     */
+//   
+//   
+//   
+//   SELECT Quantity, LaborerID, DavisBaconRate, Labor.Description, DefaultHoursPerDay,
+//   Extension = (DavisBaconRate * DefaultHoursPerDay)
+//   FROM Labor, CrewLaborUsed, LaborerWageAndBenefits, CrewUsed, CostSheet
+//   WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey
+//   AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey
+//   AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey
+//   AND CrewLaborUsed.LaborerKey = Labor.LaborerKey
+//   AND Labor.LaborerKey = LaborerWageAndBenefits.LaborerKey
+//   AND LaborerWageAndBenefits.ZoneKey = 1
+//   AND LaborerWageAndBenefits.BaseDate = @UndeclaredBaseDate
+//   AND CrewUsed.CostSheetKey = %CostSheetKey
+//   AND CrewUsed.CostSheetCrewKey = %CostSheetCrewKey
+
+
+
+
+:query rSICbeQ.bin                    
+
+ID_QUERY_STDITM_INFO, "SELECT SI.StandardItemNumber, ShortDescription "    
+ID_QUERY_STDITM_INFO, "FROM StandardItem SI " 
+ID_QUERY_STDITM_INFO, "WHERE StandardItemKey = "              
+
+
+ID_QUERY_CBESTS_CNT,  "SELECT Count(*) "
+ID_QUERY_CBESTS_CNT,  "FROM CostBasedEstimate "
+ID_QUERY_CBESTS_CNT,  "WHERE StandardItemKey = "
+
+
+
+ID_QUERY_CBE_INFO, "SELECT CostBasedEstimateKey, CostBasedEstimateID, "
+ID_QUERY_CBE_INFO,        "Active, CBE.Description "
+ID_QUERY_CBE_INFO, "FROM StandardItem SI, CostBasedEstimate CBE "
+ID_QUERY_CBE_INFO, "WHERE SI.StandardItemKey "
+ID_QUERY_CBE_INFO,       "= CBE.StandardItemKey "
+ID_QUERY_CBE_INFO, "AND SI.StandardItemKey = "
+
+
+
+
+
+ 
+
+////  /* To deterimine the jobitems that are associated with a CostBasedEstimation */
+////  /* and belong to a particular job breakdown, and a particular Job            */
+//
+//ID_QUERY_JIK, "SELECT JobItemKey, StandardItemNumber "
+//ID_QUERY_JIK, "FROM JobItem, ItemEstimationMethod, StandardItem "
+//ID_QUERY_JIK, "WHERE JobItem.ItemEstimationMethodKey = ItemEstimationMethod.ItemEstimationMethodKey "
+//ID_QUERY_JIK, "AND JobItem.StandardItemKey = StandardItem.StandardItemKey "
+//ID_QUERY_JIK, "AND ItemEstimationMethodID = 'CBEst' "
+//ID_QUERY_JIK, "AND JobKey = "
+//
+//ID_CONJ_JIK,  " AND JobBreakdownKey = "
+//
+//
+//
+//
+////  /* To retrieve all of the CostBasedEstimateKeys to which a particular Item */
+////  /* is associated                                                           */
+//
+//ID_QUERY_JICBEK, "SELECT JobItemCostBasedEstimateKey, CostBasedEstimateID "
+//ID_QUERY_JICBEK, "FROM JobCostBasedEstimate "
+//ID_QUERY_JICBEK, "WHERE JobKey = "
+//
+//ID_CONJ_JICBEK,  " AND JobItemKey =  "
+//
+//
+//
+//
+//
+//
+//
+////  JobBrkDwnItem Section
+////   To retrieve item info used for a particular Job and JobBreakdown                    
+////   this jobitem is one that has a CostBasedEstimate associated with it                 
+////   as selected from the query above.
+////   Rounding Precision will be needed for calculations in the second part
+////   of the report.
+//
+//
+//ID_QRY_JOB_BRKDWN_ITEM, "SELECT JobBreakdownID, StandardItemNumber, ShortDescription, "
+//ID_QRY_JOB_BRKDWN_ITEM, "CostBasedEstimateID, JobCostBasedEstimate.Description, RoundingPrecision "
+//ID_QRY_JOB_BRKDWN_ITEM, "FROM JobBreakdown, JobItem, StandardItem, JobCostBasedEstimate "
+//ID_QRY_JOB_BRKDWN_ITEM, "WHERE JobItem.StandardItemKey = StandardItem.StandardItemKey "
+//ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = JobCostBasedEstimate.JobKey "
+//ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobItemKey = JobCostBasedEstimate.JobItemKey "
+//ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = JobBreakdown.JobKey "
+//ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobBreakdownKey = JobBreakdown.JobBreakdownKey "
+//ID_QRY_JOB_BRKDWN_ITEM, "AND JobItem.JobKey = "
+//
+//ID_CONJ_JOB_BRKDWN_ITEM_JBDK,  " AND JobItem.JobBreakdownKey = "
+//
+//ID_CONJ_JOB_BRKDWN_ITEM_JIK,   " AND JobItem.JobItemKey = "
+//
+//ID_CONJ_JOB_BRKDWN_ITEM_JICBEK," AND JobItemCostBasedEstimateKey = "
+
+
+
+
+//  /* Second part of report */
+//  /* To retrieve the tasks, etc. for a particular Item, for a particular */
+//  /* CostBased Estimate */ 
+
+     /* Note: The 2nd QuantityPerItemUnit is unformatted for use in calcs. */ 
+ID_QRY_ITEM_CBE_TASK, "SELECT CostSheetKey, TaskKey, QuantityPerItemUnit, CodeValueID, "
+ID_QRY_ITEM_CBE_TASK, "Description, TaskID, QuantityPerItemUnit "
+ID_QRY_ITEM_CBE_TASK, "FROM Task, CodeValue "
+ID_QRY_ITEM_CBE_TASK, "WHERE Task.Unit = CodeValueKey "
+ID_QRY_ITEM_CBE_TASK, "AND CostBasedEstimateKey = "
+  //                                       /*    ^concat the current CBEKey */
+
+//ID_QRY_ITEM_CBE_TASK, "SELECT JobCostSheetKey, TaskID, QuantityPerItemUnit * Quantity, "
+//ID_QRY_ITEM_CBE_TASK, "JobCostSheet.UnitPrice, CodeValueID, TaskDescription, "
+//ID_QRY_ITEM_CBE_TASK, "QuantityPerItemUnit * Quantity * JobCostSheet.UnitPrice "
+//
+//
+//ID_QRY_ITEM_CBE_TASK_TTL, "SELECT sum(QuantityPerItemUnit * Quantity * JobCostSheet.UnitPrice), "
+//ID_QRY_ITEM_CBE_TASK_TTL, "sum(QuantityPerItemUnit * Quantity), "
+//ID_QRY_ITEM_CBE_TASK_TTL, "( sum(QuantityPerItemUnit * Quantity * JobCostSheet.UnitPrice) "
+//ID_QRY_ITEM_CBE_TASK_TTL,  "/ sum(QuantityPerItemUnit * Quantity) ) "
+//
+//
+//ID_QRY_ITEM_CBE_TASK_FW, "FROM JobCostSheet, JobItem, CodeValue "
+//ID_QRY_ITEM_CBE_TASK_FW, "WHERE Unit = CodeValueKey "
+//ID_QRY_ITEM_CBE_TASK_FW, "AND JobCostSheet.JobItemKey = JobItem.JobItemKey "
+//ID_QRY_ITEM_CBE_TASK_FW, "AND JobCostSheet.JobKey = JobItem.JobKey "
+//ID_QRY_ITEM_CBE_TASK_FW, "AND JobCostSheet.JobKey = "
+//
+//ID_CONJ_JOB_TASK_ITEM_JIK, " AND JobCostSheet.JobItemKey = "
+//
+//ID_CONJ_JOB_TASK_ITEM_JICBEK, " AND JobCostSheet.JobItemCostBasedEstimateKey = "
+
+
+
+
+// TaskProductivity section:
+//   /* Third part  */
+//   /* This query retrieves info about a particular Task, using a given */
+//   /* CostSheetKey, and a given CostBasedEstimate                      */
+//   /* Disregard Overtimehours/day  in the report */
+//   
+//   
+ID_QRY_ITEM_TASK_PROD, "SELECT TaskID, CostSheetID, CostSheet.Description, "
+ID_QRY_ITEM_TASK_PROD, "CONVERT(float,ProductionRate) * (1.0+ CONVERT(float,ProductionAdjustment)), "
+ID_QRY_ITEM_TASK_PROD, "DefaultHoursPerDay, ProductionGranularity "
+ID_QRY_ITEM_TASK_PROD, "FROM Task, CostSheet "
+ID_QRY_ITEM_TASK_PROD, "WHERE Task.CostSheetKey = CostSheet.CostSheetKey "
+ID_QRY_ITEM_TASK_PROD, "AND CostBasedEstimateKey = "
+
+ID_CONJ_ITEM_TASK_PROD_CSK, " AND Task.CostSheetKey = "
+ID_CONJ_ITEM_TASK_PROD_TK,  " AND TaskKey = "
+
+
+
+
+
+
+//   /* Fourth Part - CostSheet  CostBreakdown */
+//   
+//   /* This query retieves Overhead percentages and mark up percentage */
+//   /* and is used to calculate Total and Unit Price                   */
+//   /* Unit Cost for Material,Equipment and Labor are calculated in    */
+//   /* subsequent sections of this report                              */
+
+ID_QRY_OVRHD_MEL, "SELECT MaterialsOverheadPct, EquipmentOverheadPct, "
+ID_QRY_OVRHD_MEL,       " LaborOverheadPct, MarkUpPct, "
+ID_QRY_OVRHD_MEL,       " MaterialsOverheadPct, EquipmentOverheadPct,
+ID_QRY_OVRHD_MEL,       " LaborOverheadPct, MarkUpPct "
+ID_QRY_OVRHD_MEL, "FROM CostSheet "
+ID_QRY_OVRHD_MEL, "WHERE CostSheetKey = "
+//   
+
+
+  
+//  /* The Total for the three components, Material, Equipment, Labor is calculated */
+//  /* by the following:                                                       */
+
+
+            /* Material line:  UnitCost, OverheadAmt,  TotalCost(Extension) */
+ID_QRY_CST_MAT_TTL, "SELECT sum(Quantity * UnitPrice), "
+ID_QRY_CST_MAT_TTL,  "sum(Quantity * UnitPrice) * "
+//                                                ^concat szMatOvrhdRaw
+ID_SLC_CST_MAT_TTL, ", sum(Quantity * UnitPrice) + sum(Quantity * UnitPrice) *  "
+//                                                         concat szMatOvrhdRaw^
+//_SLC_CST_MAT_TTL, ", sum(Quantity * UnitPrice) + sum(Quantity * UnitPrice) *  "
+//                                                         concat szMatOvrhdRaw^
+
+ID_QRY_CST_MAT_TTL_FW, " FROM MaterialUsed, Material, MaterialPrice "
+ID_QRY_CST_MAT_TTL_FW, "WHERE Material.MaterialKey = MaterialPrice.MaterialKey "
+ID_QRY_CST_MAT_TTL_FW, "AND MaterialUsed.MaterialKey = Material.MaterialKey "
+ID_QRY_CST_MAT_TTL_FW, "AND MaterialPrice.ZoneKey = 1 "
+ID_QRY_CST_MAT_TTL_FW, "AND MaterialPrice.BaseDate =  '" UNDECLARED_BASE_DATE "' "
+ID_QRY_CST_MAT_TTL_FW, "AND MaterialUsed.CostSheetKey = "
+
+
+
+
+
+ID_QRY_CST_EQP_TTL, "SELECT sum(CONVERT(float,Rate) * CONVERT(float,DefaultHoursPerDay)), "
+ID_QRY_CST_EQP_TTL, " sum(CONVERT(float,Rate) * CONVERT(float,DefaultHoursPerDay)) * "
+
+ID_SLC_CST_EQP_TTL, ", sum(CONVERT(float,Rate) * CONVERT(float,DefaultHoursPerDay)) "
+ID_SLC_CST_EQP_TTL, "+ sum(CONVERT(float,Rate) * CONVERT(float,DefaultHoursPerDay)) * "
+
+//_SLC_CST_EQP_TTL, ", sum(Rate * DefaultHoursPerDay) + sum(Rate * DefaultHoursPerDay) * "
+
+
+ID_QRY_CST_EQP_TTL_FW, " FROM Equipment, CrewEquipmentUsed, EquipmentRate, CrewUsed, CostSheet "
+ID_QRY_CST_EQP_TTL_FW, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QRY_CST_EQP_TTL_FW, "AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey "
+ID_QRY_CST_EQP_TTL_FW, "AND CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey "
+ID_QRY_CST_EQP_TTL_FW, "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QRY_CST_EQP_TTL_FW, "AND Equipment.EquipmentKey = EquipmentRate.EquipmentKey "
+ID_QRY_CST_EQP_TTL_FW, "AND EquipmentRate.ZoneKey = 1 "
+ID_QRY_CST_EQP_TTL_FW, "AND EquipmentRate.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QRY_CST_EQP_TTL_FW, "AND CrewUsed.CostSheetKey = "
+            
+
+
+ID_QRY_CST_LBR_TTL, "SELECT sum(DavisBaconRate * DefaultHoursPerDay), "
+ID_QRY_CST_LBR_TTL, " sum(DavisBaconRate * DefaultHoursPerDay) * "
+
+ID_SLC_CST_LBR_TTL, ", sum(DavisBaconRate * DefaultHoursPerDay) + sum(DavisBaconRate * DefaultHoursPerDay) * "
+
+//_SLC_CST_LBR_TTL, ", sum(DavisBaconRate * DefaultHoursPerDay) + sum(DavisBaconRate * DefaultHoursPerDay) * "
+
+ID_QRY_CST_LBR_TTL_FW, " FROM Labor, CrewLaborUsed, LaborerWageAndBenefits, CrewUsed, CostSheet "
+ID_QRY_CST_LBR_TTL_FW, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QRY_CST_LBR_TTL_FW, "AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+ID_QRY_CST_LBR_TTL_FW, "AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+ID_QRY_CST_LBR_TTL_FW, "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QRY_CST_LBR_TTL_FW, "AND Labor.LaborerKey = LaborerWageAndBenefits.LaborerKey "
+ID_QRY_CST_LBR_TTL_FW, "AND LaborerWageAndBenefits.ZoneKey = 1 "
+ID_QRY_CST_LBR_TTL_FW, "AND LaborerWageAndBenefits.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QRY_CST_LBR_TTL_FW, "AND CrewUsed.CostSheetKey = "
+
+
+
+
+//////////////////////
+//
+//ID_QRY_CST_MEL, "SELECT MaterialsUnitCost, (MaterialsUnitCost * MaterialsOverheadPct), "
+//ID_QRY_CST_MEL, "MaterialsOverheadPct, "
+//ID_QRY_CST_MEL, "MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct), " 
+//
+//ID_QRY_CST_MEL, "EquipmentDailyCost, (EquipmentDailyCost * EquipmentOverheadPct), 
+//ID_QRY_CST_MEL, "EquipmentOverheadPct, "
+//ID_QRY_CST_MEL, "EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct), "
+//
+//ID_QRY_CST_MEL, "LaborDailyCost, (LaborDailyCost * LaborOverheadPct), "
+//ID_QRY_CST_MEL, "LaborOverheadPct, "
+//ID_QRY_CST_MEL, "LaborDailyCost + (LaborDailyCost * LaborOverheadPct) "
+//ID_QRY_CST_MEL, "FROM JobCostSheet "
+//ID_QRY_CST_MEL, "WHERE JobKey = "
+//
+//ID_CONJ_CST_MEL, " AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+//  
+//
+//
+//ID_QRY_CST_TTL, "SELECT (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)) "
+//ID_QRY_CST_TTL, "+ (EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct)) "
+//ID_QRY_CST_TTL, "+ (LaborDailyCost + (LaborDailyCost * LaborOverheadPct)) "
+//ID_QRY_CST_TTL, "FROM JobCostSheet "
+//ID_QRY_CST_TTL, "WHERE JobKey = "
+//ID_CONJ_CST_TTL, " AND JobCostSheetKey = %JobCostSheetKey
+//
+//
+//
+//  /* To obtain the MarkUp percent and the MarkUp Amount */
+// 
+//ID_QRY_CST_MARKUP, "SELECT MarkUpPct, (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct) "
+//ID_QRY_CST_MARKUP, "+ EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct) "
+//ID_QRY_CST_MARKUP, "+ LaborDailyCost + (LaborDailyCost * LaborOverheadPct)) * MarkUpPct "
+//ID_QRY_CST_MARKUP, "FROM JobCostSheet "
+//ID_QRY_CST_MARKUP, "WHERE JobKey = "
+//
+//  AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+//
+//
+//
+//  /* Unit Price must be calculated.  */
+//  /* Unit Price = TotalCost + MarkUpAmt */
+//
+//ID_QRY_CST_UNITPRICE, "SELECT (MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct)) "
+//ID_QRY_CST_UNITPRICE, "+ (EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct)) "
+//ID_QRY_CST_UNITPRICE, "+ (LaborDailyCost + (LaborDailyCost * LaborOverheadPct)) "
+//ID_QRY_CST_UNITPRICE, "+ ((MaterialsUnitCost + (MaterialsUnitCost * MaterialsOverheadPct) "
+//ID_QRY_CST_UNITPRICE,  "+ EquipmentDailyCost + (EquipmentDailyCost * EquipmentOverheadPct) "
+//ID_QRY_CST_UNITPRICE,  "+ LaborDailyCost + (LaborDailyCost * LaborOverheadPct)) * MarkUpPct) "
+//ID_QRY_CST_UNITPRICE, "FROM JobCostSheet "
+//ID_QRY_CST_UNITPRICE, "WHERE JobKey = "
+//
+//  AND JobCostSheetKey = %JobCostSheetKey
+//    use ID_CONJ_JOB_TASK_PROD_JCSK  
+
+
+
+
+
+
+
+
+
+//   /* Fifth part  - Materials Used */
+//   
+//   /* This query lists all of the MaterialsUsed for a particular CostSheet           */
+//   /* This query uses 1 for ZoneKey and Undeclared BaseDate when retrieving prices   */
+//   /* The Material Unit Cost must be calculated (sum of the extensions)              */
+//   
+ID_QUERY_MAT, "SELECT MaterialID, Quantity, UnitPrice, CodeValueID, "
+ID_QUERY_MAT, "Quantity * UnitPrice, Description "
+ID_QUERY_MAT, "FROM MaterialUsed, Material, MaterialPrice, CodeValue "
+ID_QUERY_MAT, "WHERE Material.Unit = CodeValueKey "
+ID_QUERY_MAT, "AND Material.MaterialKey = MaterialPrice.MaterialKey "
+ID_QUERY_MAT, "AND MaterialUsed.MaterialKey = Material.MaterialKey "
+ID_QUERY_MAT, "AND MaterialPrice.ZoneKey = 1 "
+ID_QUERY_MAT, "AND MaterialPrice.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_MAT, "AND MaterialUsed.CostSheetKey = "
+//   
+
+
+            
+ID_QUERY_MAT_SUM, "SELECT sum(Quantity * UnitPrice) "
+ID_QUERY_MAT_SUM, "FROM MaterialUsed, Material, MaterialPrice, CodeValue "
+ID_QUERY_MAT_SUM, "WHERE Material.Unit = CodeValueKey "
+ID_QUERY_MAT_SUM, "AND Material.MaterialKey = MaterialPrice.MaterialKey "
+ID_QUERY_MAT_SUM, "AND MaterialUsed.MaterialKey = Material.MaterialKey "
+ID_QUERY_MAT_SUM, "AND MaterialPrice.ZoneKey = 1 "
+ID_QUERY_MAT_SUM, "AND MaterialPrice.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_MAT_SUM, "AND MaterialUsed.CostSheetKey = "
+
+
+
+//  /* To obtain all of the JobCrew Keys used for this Job and this Cost Sheet */
+//  
+ID_QUERY_CREW, "SELECT CostSheetCrewID, CostSheetCrewKey, Description "
+ID_QUERY_CREW, "FROM CrewUsed "
+ID_QUERY_CREW, "WHERE CostSheetKey = "
+
+
+ID_QUERY_CREWKEY, "SELECT CostSheetCrewKey "
+ID_QUERY_CREWKEY, "FROM CrewUsed "
+ID_QUERY_CREWKEY, "WHERE CostSheetKey = "
+
+
+
+
+//  /* To retrieve the equipment used for this Crew Used */
+//  
+ID_QUERY_CREW_EQP, "SELECT EquipmentID, Quantity, Rate, Equipment.Description, "
+ID_QUERY_CREW_EQP, "DefaultHoursPerDay, (Rate * DefaultHoursPerDay * Quantity) "
+ID_QUERY_CREW_EQP, "FROM Equipment, CrewEquipmentUsed, EquipmentRate, CrewUsed, CostSheet "
+ID_QUERY_CREW_EQP, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_EQP, "AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey "
+ID_QUERY_CREW_EQP, "AND CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey "
+ID_QUERY_CREW_EQP, "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP, "AND Equipment.EquipmentKey = EquipmentRate.EquipmentKey "
+ID_QUERY_CREW_EQP, "AND EquipmentRate.ZoneKey = 1 "
+ID_QUERY_CREW_EQP, "AND EquipmentRate.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_EQP, "AND CrewUsed.CostSheetKey = "
+
+
+ID_CONJ_CREW_EQP_CREWKEY, " AND CrewUsed.CostSheetCrewKey = "
+
+
+
+
+
+//  /* To retrieve all of the laborers used for this Crew Used */
+//  
+ID_QUERY_CREW_LBR, "SELECT LaborerID, Quantity, DavisBaconRate, Labor.Description, "
+ID_QUERY_CREW_LBR, "DefaultHoursPerDay, (Quantity * DavisBaconRate * DefaultHoursPerDay) "
+ID_QUERY_CREW_LBR, "FROM Labor, CrewLaborUsed, LaborerWageAndBenefits, CrewUsed, CostSheet "
+ID_QUERY_CREW_LBR, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_LBR, "AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+ID_QUERY_CREW_LBR, "AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+ID_QUERY_CREW_LBR, "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR, "AND Labor.LaborerKey = LaborerWageAndBenefits.LaborerKey "
+ID_QUERY_CREW_LBR, "AND LaborerWageAndBenefits.ZoneKey = 1 "
+ID_QUERY_CREW_LBR, "AND LaborerWageAndBenefits.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_LBR, "AND CrewUsed.CostSheetKey = "
+
+ID_CONJ_CREW_LBR_CREWKEY,  " AND CrewUsed.CostSheetCrewKey = "
+
+
+
+
+//  
+
+
+ID_QUERY_CREW_EQP_TTL, "SELECT "
+ID_QUERY_CREW_EQP_TTL, "sum(Rate * DefaultHoursPerDay * Quantity), "
+ID_QUERY_CREW_EQP_TTL, "sum(Rate * DefaultHoursPerDay * Quantity) "
+ID_QUERY_CREW_EQP_TTL, "FROM Equipment, CrewEquipmentUsed, EquipmentRate, CrewUsed, CostSheet "
+ID_QUERY_CREW_EQP_TTL, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_EQP_TTL, "AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey "
+ID_QUERY_CREW_EQP_TTL, "AND CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey "
+ID_QUERY_CREW_EQP_TTL, "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP_TTL, "AND Equipment.EquipmentKey = EquipmentRate.EquipmentKey "
+ID_QUERY_CREW_EQP_TTL, "AND EquipmentRate.ZoneKey = 1 "
+ID_QUERY_CREW_EQP_TTL, "AND EquipmentRate.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_EQP_TTL, "AND CrewUsed.CostSheetKey = "
+
+ID_CONJ_CREW_EQP_TTL,  " AND CrewEquipmentUsed.CostSheetCrewKey IN "
+
+
+ID_QUERY_CREW_LBR_TTL, "SELECT "
+ID_QUERY_CREW_LBR_TTL, "sum(Quantity * DavisBaconRate * DefaultHoursPerDay), "
+ID_QUERY_CREW_LBR_TTL, "sum(Quantity * DavisBaconRate * DefaultHoursPerDay) "
+ID_QUERY_CREW_LBR_TTL, "FROM Labor, CrewLaborUsed, LaborerWageAndBenefits, CrewUsed, CostSheet "
+ID_QUERY_CREW_LBR_TTL, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_LBR_TTL, "AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+ID_QUERY_CREW_LBR_TTL, "AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+ID_QUERY_CREW_LBR_TTL, "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR_TTL, "AND Labor.LaborerKey = LaborerWageAndBenefits.LaborerKey "
+ID_QUERY_CREW_LBR_TTL, "AND LaborerWageAndBenefits.ZoneKey = 1 "
+ID_QUERY_CREW_LBR_TTL, "AND LaborerWageAndBenefits.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_LBR_TTL, "AND CrewUsed.CostSheetKey = "
+
+ID_CONJ_CREW_LBR_TTL,  " AND CrewLaborUsed.CostSheetCrewKey IN "
+
+
+
+
+
+
+
+
+
+ID_QUERY_CREW_EQP_PROD, "SELECT CS.ProductionRate * ProductionAdjustment, "
+ID_QUERY_CREW_EQP_PROD, "sum(ER.Rate * DefaultHoursPerDay * CEU.Quantity) "
+ID_QUERY_CREW_EQP_PROD,  "/(CS.ProductionRate * ProductionAdjustment), "
+ID_QUERY_CREW_EQP_PROD,  "sum(Rate * DefaultHoursPerDay * Quantity) + "
+ID_QUERY_CREW_EQP_PROD,  "(sum(Rate * DefaultHoursPerDay * Quantity)"
+ID_QUERY_CREW_EQP_PROD,       "/(CS.ProductionRate * ProductionAdjustment)) "
+ID_QUERY_CREW_EQP_PROD, "FROM Equipment, CrewEquipmentUsed CEU, EquipmentRate ER, "
+ID_QUERY_CREW_EQP_PROD,      "CrewUsed, CostSheet CS, Task "
+ID_QUERY_CREW_EQP_PROD, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_EQP_PROD, "AND CrewUsed.CostSheetCrewKey = CrewEquipmentUsed.CostSheetCrewKey "
+ID_QUERY_CREW_EQP_PROD, "AND CrewUsed.CostSheetKey = CrewEquipmentUsed.CostSheetKey "
+ID_QUERY_CREW_EQP_PROD, "AND CostSheet.CostSheetKey = Task.CostSheetKey "
+ID_QUERY_CREW_EQP_PROD, "AND CrewEquipmentUsed.EquipmentKey = Equipment.EquipmentKey "
+ID_QUERY_CREW_EQP_PROD, "AND Equipment.EquipmentKey = EquipmentRate.EquipmentKey "
+ID_QUERY_CREW_EQP_PROD, "AND EquipmentRate.ZoneKey = 1 "
+ID_QUERY_CREW_EQP_PROD, "AND EquipmentRate.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_EQP_PROD, "AND CrewUsed.CostSheetKey = "
+
+ID_CONJ_CREW_EQP_PROD,  " AND Task.TaskKey = "
+
+//ID_CONJ_CREW_EQP_TTL,  " AND CrewEquipmentUsed.CostSheetCrewKey IN "
+
+
+
+
+
+                               
+
+ID_QUERY_CREW_LBR_PROD, "SELECT CS.ProductionRate * ProductionAdjustment, "
+ID_QUERY_CREW_LBR_PROD, "sum(DavisBaconRate * DefaultHoursPerDay * Quantity) "
+ID_QUERY_CREW_LBR_PROD,  "/(CS.ProductionRate * ProductionAdjustment), "
+ID_QUERY_CREW_LBR_PROD,  "sum(DavisBaconRate * DefaultHoursPerDay * Quantity) + "
+ID_QUERY_CREW_LBR_PROD,  "(sum(DavisBaconRate * DefaultHoursPerDay * Quantity)"
+ID_QUERY_CREW_LBR_PROD,       "/(CS.ProductionRate * ProductionAdjustment)) "
+ID_QUERY_CREW_LBR_PROD, "FROM Labor, CrewLaborUsed, LaborerWageAndBenefits, CrewUsed, "
+ID_QUERY_CREW_LBR_PROD,      "CostSheet CS, Task "
+ID_QUERY_CREW_LBR_PROD, "WHERE CrewUsed.CostSheetKey = CostSheet.CostSheetKey "
+ID_QUERY_CREW_LBR_PROD, "AND CrewUsed.CostSheetCrewKey = CrewLaborUsed.CostSheetCrewKey "
+ID_QUERY_CREW_LBR_PROD, "AND CrewUsed.CostSheetKey = CrewLaborUsed.CostSheetKey "
+ID_QUERY_CREW_LBR_PROD, "AND CostSheet.CostSheetKey = Task.CostSheetKey "
+ID_QUERY_CREW_LBR_PROD, "AND CrewLaborUsed.LaborerKey = Labor.LaborerKey "
+ID_QUERY_CREW_LBR_PROD, "AND Labor.LaborerKey = LaborerWageAndBenefits.LaborerKey "
+ID_QUERY_CREW_LBR_PROD, "AND LaborerWageAndBenefits.ZoneKey = 1 "
+ID_QUERY_CREW_LBR_PROD, "AND LaborerWageAndBenefits.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_CREW_LBR_PROD, "AND CrewUsed.CostSheetKey = "
+
+ID_CONJ_CREW_LBR_PROD,  " AND Task.TaskKey = "
+
+//ID_CONJ_CREW_LBR_TTL,  " AND CrewLaborUsed.CostSheetCrewKey IN "
+
+
+
+
+// Column titles                                      
+//ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,  "0,  6,  5, 13,Item "
+RPT_TTL_2, "18,  3, 21, 50, - "  
+RPT_TTL_3,  "5, 14, 19,  3,This item has "  
+RPT_TTL_4, "20, 42, 19,  3, cost-based estimates associated with it: "  
+
+RPT_TTL_5, "15,  3, 18, 60, - "  
+
+
+RPT_TTL_6,  "0, 20,  0,  0,Cost-Based Estimate "  
+RPT_TTL_7,  "0, 10,  0,  0, for Item "  
+
+RPT_TTL_8,  "2,  5,  2, 16,Task/"  
+RPT_TTL_9, "26,  8, 18, 16,Quantity"  
+RPT_TTL_10,"35,  1, 35,  0,@"
+RPT_TTL_11,"48,  5, 37, 17,Price"
+RPT_TTL_12,"54,  1, 56,  4,/"
+RPT_TTL_13,"56,  4, 56,  4,Unit"
+RPT_TTL_14,"61,  1, 63, 15,= "
+RPT_TTL_15,"68,  9, 63, 15,Extension"
+RPT_TTL_16, "7, 11,  7, 53,Description "
+
+
+RPT_TTL_17, "1, 16, 63, 15,(Item Extension)"
+RPT_TTL_18,"56,  6, 63, 15,Total: "
+RPT_TTL_19, "1, 35, 63, 17,(/Item Quantity = Item Unit Price) "
+
+
+RPT_TTL_20, "0,  5,  5, 16,Task "
+RPT_TTL_21,"21, 31, 52,  8, is estimated using Cost Sheet "
+
+
+RPT_TTL_22, "4, 40, 44, 10,Productivity assumptions: Crew performs "
+RPT_TTL_23,"55, 11, 44, 10, units/day."
+
+RPT_TTL_24,"30, 11, 41,  5,Crew works "
+RPT_TTL_25,"46, 12, 40,  6, hours/day. "
+RPT_TTL_26,"54, 20, 54,  6, overtime hours/day."
+
+RPT_TTL_27,"30, 29, 59, 15,Crew works a whole number of "
+
+
+/* -- Task's CostSheet Cost BrkDwn */
+// defined SUBHEADER_INX   RPT_TTL_28
+
+RPT_TTL_28,    "0,     0,     0,     0, Cost Breakdown"
+RPT_TTL_29,    "3,     9,     3,     9,Component"
+RPT_TTL_30,   "21,     9,    14,    17,Unit Cost"
+RPT_TTL_31,   "34,    15,    33,    17,Overhead Amount"
+RPT_TTL_32,   "51,     7,    51,     6,(O.H.%)"
+RPT_TTL_33,   "67,    10,    61,    17,Total Cost"
+          
+RPT_TTL_34,    "0,     0,     0,     0, Materials Used"
+RPT_TTL_35,    "8,     5,     8,     4,Matl/"
+RPT_TTL_36,   "15,    13,    12,    16,Quantity/Unit"
+RPT_TTL_37,   "41,     5,    31,    16,Price"
+RPT_TTL_38,   "47,     6,    47,     6,/ Unit"
+RPT_TTL_39,   "62,     9,    56,    17,Extension"
+RPT_TTL_40,   "13,    12,    13,    40,Description"
+
+
+RPT_TTL_41,    "0,     0,     0,     0, Crew Used"
+RPT_TTL_42,    "0,     5,     0,    10,Crew/"
+RPT_TTL_43,   "11,    20,    11,    33,Crew Description/"
+
+RPT_TTL_44,    "0,     5,     0,     6,Count"
+RPT_TTL_45,    "7,     3,     7,     8,ID/"
+RPT_TTL_46,   "16,    11,    16,    11,Hourly Cost"
+RPT_TTL_47,   "32,    10,    32,     6,Daily Work"
+RPT_TTL_48,   "11,    11,    11,    33,Description"
+RPT_TTL_49,   "52,    10,    47,    15,Equipment"
+RPT_TTL_50,   "72,     5,    63,    15,Labor"
+
+RPT_TTL_51,   "36,    19,    56,    17,Material Unit Cost:"
+
+RPT_TTL_52,   "54,     6,    61,    17,Total:"
+RPT_TTL_53,   "43,    16,    61,    17, Mark-up "
+RPT_TTL_54,   "49,    11,    61,    17,Unit Price:"
+          
+RPT_TTL_55,   "36,    10,    25,    10,unit/day = "
+RPT_TTL_56,   "31,    15,    47,    17,Crew Unit Cost: "
+RPT_TTL_57,   "31,     0,    63,    17, (labor total) "
+
+
+
+RPT_TTL_58,   "3,     8,    50,     6,Material   OverheadPct (999.9%)"
+RPT_TTL_59,   "3,     9,    50,     6,Equipment  OverheadPct"
+RPT_TTL_60,   "3,     5,    50,     6,Labor      OverheadPct"
+RPT_TTL_61,  "52,     7,    45,     6,Mark-up"
+
+
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "61"
+
+
+
+
+
+
+
+:FORMAT rSICbeF.bin                                
+
+
+ID_QUERY_STDITM_INFO, "String",  "String"                      
+
+ID_QUERY_CBESTS_CNT,  "Number"
+
+ID_QUERY_CBE_INFO, "Number",                       "String"
+ID_QUERY_CBE_INFO, "Flag,           ,preferred: ", "String"
+
+
+
+
+//ID_QUERY_JBDK,     "Number",  "String"
+//
+//ID_QUERY_JIK,      "Number",  "String"
+//
+//ID_QUERY_JICBEK,   "Number",  "String"
+//
+//
+//ID_QRY_JOB_BRKDWN_ITEM, "String", "String", "String"
+//ID_QRY_JOB_BRKDWN_ITEM, "String", "String", "Precision"
+
+
+ID_QRY_ITEM_CBE_TASK, "Number",  "Number",  "Number,,...",  "String"  
+ID_QRY_ITEM_CBE_TASK, "String",  "String",  "Number,........"
+
+//ID_QRY_ITEM_CBE_TASK_TTL, "Number,$,..", "Number,,...", "Number,$,...."
+
+
+ID_QRY_ITEM_TASK_PROD, "String",      "String",     "String"
+ID_QRY_ITEM_TASK_PROD, "Number,,...."
+ID_QRY_ITEM_TASK_PROD, "Number,..",   "UnitOfTime"
+
+
+
+ID_QRY_OVRHD_MEL, "Number,%.",  "Number,%.",  "Number,%.",  "Number,%."
+ID_QRY_OVRHD_MEL, "Number,...", "Number,...", "Number,...", "Number,..."
+
+
+ID_QRY_CST_MAT_TTL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MAT_TTL, "Number,$,....", "Number,........"
+
+ID_QRY_CST_EQP_TTL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_EQP_TTL, "Number,$,....", "Number,........"
+
+ID_QRY_CST_LBR_TTL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_LBR_TTL, "Number,$,....", "Number,........"
+
+
+
+
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+ID_QRY_CST_MEL, "Number,$,....", "Number,$,...."
+ID_QRY_CST_MEL, "Number,%."
+ID_QRY_CST_MEL, "Number,$,...."
+
+
+ID_QRY_CST_TTL, "Number,$,...."
+
+ID_QRY_CST_MARKUP, "Number,%.",  "Number,$,...."
+
+ID_QRY_CST_UNITPRICE, "Number,$,...."
+
+
+ID_QUERY_MAT, "String",        "Number,,...", "Number,$,...",  "String"
+ID_QUERY_MAT, "Number,$,....", "String"
+
+ID_QUERY_MAT_SUM,  "Number,$,...."
+
+
+ID_QUERY_CREW, "String", "Number", "String"
+
+ID_QUERY_CREWKEY, "Number"
+
+ID_QUERY_CREW_EQP, "String",      "Number,..",   "Number,$,...",  "String"
+ID_QUERY_CREW_EQP, "Number,..",   "Number,$,.."
+
+
+ID_QUERY_CREW_LBR, "String",      "Number,..",   "Number,$,...",  "String"
+ID_QUERY_CREW_LBR, "Number,..",   "Number,$,.."
+
+
+ID_QUERY_CREW_EQP_TTL, "Number,$,..", "Number,...."
+
+ID_QUERY_CREW_LBR_TTL, "Number,$,..", "Number,...."
+
+
+ID_QUERY_CREW_EQP_PROD, "Number,,....", "Number,$,....", "Number,$,...."
+
+ID_QUERY_CREW_LBR_PROD, "Number,,....", "Number,$,....", "Number,$,...."
+
+
+
+:query rSICbeDQ.bin                                
+
+rSICbe_RptDlgBox,       "SELECT StandardItemKey "           
+rSICbe_RptDlgBox,       "FROM StandardItem "                
+rSICbe_RptDlgBox,       "WHERE StandardItemKey = %StandardItemKey " 
+
+
+:Dialog rSICbeDD.bin rSICbeDF.bin                      
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rSICbe_RptDlgBox, rSICbe_RptDlgBox, rSICbe_RptDlgBox, StandardItemKey, DID_KEY, "Number", "Number" 
+
+
+

@@ -1,0 +1,79 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "..\include\itirptdg.h"
+#include "dialog.h"
+
+#include "rmap.h" 
+
+
+
+:query rmapQ.bin
+//
+ID_QUERY_LISTING,     "select MapID, Description "
+ID_QUERY_LISTING,     "  from Map "
+ID_WHERE_CONJUNCTION, " where Deleted is NULL " 
+ID_WHERE_CONJUNCTION, "and MapKey = " 
+
+
+
+
+
+
+// Column titles
+//
+// Number of column titles    
+ID_RPT_TTL,    "2"
+
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText
+//----------------------------------------------------------
+RPT_TTL_1,    "0,      8,       0,       8,        Map"
+RPT_TTL_2,    "9,     20,       9,      71,        Description"
+
+
+
+
+
+
+
+
+
+:FORMAT rmapF.bin 
+//
+ID_QUERY_LISTING,        "String", "String"
+
+
+
+
+
+:query rmapDlgQ.bin
+//
+rMap_RptDlgBox,       "SELECT MapKey "
+rMap_RptDlgBox,       "FROM Map "
+rMap_RptDlgBox,       "WHERE MapKey = %MapKey "
+
+
+:Dialog rmapDlgD.bin rmapDlgF.bin
+//
+//
+// Dlg Id       add Query ID     Change Query ID     Col Name   CtlID      Disp Fmt  Input Fmt
+//----------------------------------------------------------------------------------------------
+rMap_RptDlgBox, rMap_RptDlgBox,  rMap_RptDlgBox,     MapKey,    DID_KEY,   "Number", "Number"
+

@@ -1,0 +1,70 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rConty.h"                                       
+
+//                                                    
+:query RCONTYQ.bin                                        
+//                                                    
+ID_QUERY_LISTING,     "select CountyID, Name "    
+ID_QUERY_LISTING,     "  from County "                   
+ID_WHERE_CONJUNCTION, " where Deleted is NULL "              
+ID_WHERE_CONJUNCTION, " and CountyKey = "              
+
+
+ID_QUERY_KEYS, "select CountyKey "
+ID_QUERY_KEYS, "from County "
+ID_QUERY_KEYS, "where Deleted is NULL "
+
+
+// Column titles                                      
+//                                                    
+// Number of column titles                            
+ID_RPT_TTL,    "2"                                    
+// ppsz_Idx  TtlCol  TtlColWth  DtaCol  DtaColWth  TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "25,     7,       26,      4,        County"           
+RPT_TTL_2,    "32,     6,       32,     33,        Name"  
+
+//                                                               
+//                                                               
+:FORMAT RCONTYF.bin                                                  
+//                                                               
+ID_QUERY_LISTING,        "String", "String"                      
+
+ID_QUERY_KEYS,           "Number"
+
+
+//                                                               
+:query RCONTYDQ.bin                                                  
+//                                                               
+RCONTY_RptDlgBox,       "SELECT CountyKey "                             
+RCONTY_RptDlgBox,       "FROM County "                                  
+RCONTY_RptDlgBox,       "WHERE CountyKey = %CountyKey "                   
+
+
+
+:Dialog RCONTYDD.bin RCONTYDF.bin                                        
+//                                                               
+// Dlg Id         Add Query ID      Change Query ID   Col Name   CtlID      Disp Fmt  Input Fmt 
+//----------------------------------------------------------------------- 
+RCONTY_RptDlgBox, RCONTY_RptDlgBox, RCONTY_RptDlgBox, CountyKey,    DID_KEY,   "Number", "Number"      
+

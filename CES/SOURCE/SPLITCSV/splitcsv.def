@@ -1,0 +1,13 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1994 by Info Tech, Inc.  All Rights Reserved.        |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+NAME           SPLITCSV  WINDOWCOMPAT NEWFILES
+DESCRIPTION    'Info Tech CSV Utility.  Copyright (C) 1994 Info Tech, Inc.'
+HEAPSIZE       16384                 
+STACKSIZE      12000                
+EXETYPE        OS2            
+

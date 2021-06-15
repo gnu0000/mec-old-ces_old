@@ -1,0 +1,54 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\iti.h"
+#include "..\include\itimenu.h"
+#include "lwsplit.h"
+
+POINTER PTR_HORZ   hsplit.ptr
+POINTER PTR_VERT   vsplit.ptr
+POINTER PTR_HV     hvsplit.ptr
+
+#include "swframe.h"
+
+MENU CHILD_SYSTEM_MENU PRELOAD
+   {
+   SUBMENU "", IDM_SYSMENU, MIS_BITMAP | MIS_SUBMENU
+      {
+      MENUITEM   "~Restore\tCtrl+F5",     SC_RESTORE,   MIS_SYSCOMMAND, MIA_DISABLED
+      MENUITEM   "~Move\tCtrl+F7",        SC_MOVE,      MIS_SYSCOMMAND
+      MENUITEM   "~Size\tCtrl+F8",        SC_SIZE,      MIS_SYSCOMMAND
+      MENUITEM   "Mi~nimize\tCtrl+F9",    SC_MINIMIZE,  MIS_SYSCOMMAND, MIA_DISABLED
+      MENUITEM   "Ma~ximize\tCtrl+F10",   SC_MAXIMIZE,  MIS_SYSCOMMAND
+      MENUITEM   "N~ormal Size\tCtrl+F11", IDM_NORMALSIZE
+      MENUITEM   SEPARATOR
+      MENUITEM   "~Close\tCtrl+F4",       SC_CLOSE,     MIS_SYSCOMMAND
+      }
+   }
+
+
+
+DLGTEMPLATE 100 PRELOAD MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", 100, 77, 78, 153, 40, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL SPTR_ICONINFORMATION, 1, 26, 13, 21, 16, WC_STATIC, SS_SYSICON | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Deleting Selected Data...", 256, 57, 11, 74, 18, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_WORDBREAK | WS_GROUP | WS_VISIBLE
+    END
+END
+

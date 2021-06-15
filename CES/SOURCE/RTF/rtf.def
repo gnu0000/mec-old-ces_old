@@ -1,0 +1,11 @@
+;+--------------------------------------------------------------------------+
+;|                                                                          |
+;|       Copyright (c) 1997 by Info Tech, Inc.  All Rights Reserved.        |
+;|                                                                          |
+;+--------------------------------------------------------------------------+
+
+
+NAME           RTF  WINDOWCOMPAT
+DESCRIPTION    'Info Tech RTF Utility.  Copyright (C) 1997 Info Tech, Inc.'
+STACKSIZE      12000
+

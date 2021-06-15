@@ -1,0 +1,325 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rStdIt.h"                                       
+
+
+///* StandardItemListing */
+//
+//
+//
+//                 /* to obtain initial standard item info */
+//
+//
+///* to obtain initial information about all of the standard items */
+//
+//select StandardItemNumber, ShortDescription, CodeValueID, 
+//RoundingPrecision, DefaultProductionRate, DefaultStartTime,
+//LongDescription
+//from StandardItem, CodeValue 
+//where Unit = CodeValueKey 
+//
+//
+//
+///* to obtain initial information about specific standard items */
+//
+//select StandardItemNumber, ShortDescription, CodeValueID, 
+//RoundingPrecision, DefaultProductionRate, DefaultStartTime,
+//LongDescription
+//from StandardItem, CodeValue 
+//where Unit = CodeValueKey and
+//StandardItemKey = 426
+//
+//
+//               /* to obtain predecessor info for a standard item */
+//
+//
+//select PredecessorItemKey, Link, Lag, SI2.ShortDescription
+//from StandardItem SI1, StandardItemDependency, StandardItem SI2
+//where SI1.StandardItemKey = StandardItemDependency.SuccessorItemKey
+//and StandardItemDependency.PredecessorItemKey = SI2.StandardItemKey
+//and SI1.StandardItemKey = 426
+//
+//
+//               /* to obtain successor info for a standard item */
+//
+//
+//select SuccessorItemKey, Link, Lag, SI2.ShortDesciption
+//from StandardItem SI1, StandardItemDependency, StandardItem SI2
+//where SI1.StandardItemKey = StandardItemDependency.PredecessorItemKey
+//and StandardItemDependency.SuccessorItemKey = SI2.StandardItemKey
+//and SI1.StandardItemKey = 426
+//
+//
+//               /* need queries for the yields...... info */
+//
+///*  queries for the yields...... info */
+//
+//select PercentofCost, MajorItemID, Description
+//from MajorItem, StandardItemMajorItem
+//where MajorItem.MajorItemKey = StandardItemMajorItem.MajorItemKey
+//and StandardItemMajorItem.StandardItemKey = 12537
+//
+//
+//
+//select sum(PercentofCost)
+//from  StandardItemMajorItem
+//where StandardItemKey = 12537
+//
+//
+//
+//select CodeValueID, QuantityConversionFactor, MajorItemID, Description
+//from CodeValue, MajorItem, StandardItemMajorItem
+//where CommonUnit = CodeValue.CodeValueKey
+//and StandardItemMajorItem.MajorItemKey = MajorItem.MajorItemKey 
+//and StandardItemKey = 12537
+//
+
+
+
+:query rStdItQ.bin 
+
+ID_QUERY_SPEC_YR,     "select distinct SpecYear "
+ID_QUERY_SPEC_YR,     "from StandardItem "
+ID_QUERY_SPEC_YR,     "where Deleted is NULL "
+ID_QUERY_SPEC_YR,     "order by SpecYear desc"
+
+
+ID_QUERY_ITEM_KEYS,   "select StandardItemKey "
+ID_QUERY_ITEM_KEYS,   "from StandardItem "
+ID_QUERY_ITEM_KEYS,   "where Deleted is NULL "
+ID_QUERY_ITEM_KEYS,   " and SpecYear = "
+
+ID_QUERY_DEF_ITEM_KEYS,   "select StandardItemKey "
+ID_QUERY_DEF_ITEM_KEYS,   "from StdItemDefaultPrices "
+ID_QUERY_DEF_ITEM_KEYS,   "where Deleted is NULL "
+
+
+
+ID_CONJ_G_STDITEMKEY,   " and StandardItemKey >= "
+ID_CONJ_L_STDITEMKEY,   " and StandardItemKey <= "
+
+
+
+ID_QUERY_LISTING,     "select SpecYear, StandardItemNumber, "
+ID_QUERY_LISTING,     " ShortDescription, CodeValueID, RoundingPrecision, "
+ID_QUERY_LISTING,     " DefaultProductionRate, DefaultStartTime, "
+ID_QUERY_LISTING,     " LongDescription, StandardItem.StandardItemKey "
+ID_QUERY_LISTING,     "from StandardItem, CodeValue "
+ID_QUERY_LISTING,     "where Unit = CodeValueKey "
+ID_QUERY_LISTING,     "and CodeValue.Deleted is NULL "
+ID_QUERY_LISTING,     "and StandardItem.Deleted is NULL "
+
+
+ID_QUERY_DEFLT,     "select distinct UnitPrice "
+ID_QUERY_DEFLT,     "from StandardItem, StdItemDefaultPrices "
+ID_QUERY_DEFLT,     "where StdItemDefaultPrices.StandardItemKey "
+ID_QUERY_DEFLT,           " = StandardItem.StandardItemKey "
+
+
+ID_QUERY_DEF_LISTING, "select SpecYear, SI.StandardItemNumber, "
+ID_QUERY_DEF_LISTING, " SIDP.Description, CodeValueID, RoundingPrecision, "
+ID_QUERY_DEF_LISTING, " DefaultProductionRate, DefaultStartTime, "
+ID_QUERY_DEF_LISTING, " LongDescription, SI.StandardItemKey "
+ID_QUERY_DEF_LISTING, "from StandardItem SI, CodeValue CV, "
+ID_QUERY_DEF_LISTING,     " StdItemDefaultPrices SIDP "
+ID_QUERY_DEF_LISTING, "where SI.Unit = CV.CodeValueKey "
+ID_QUERY_DEF_LISTING, "and SIDP.Deleted is NULL "
+ID_QUERY_DEF_LISTING, "and SI.StandardItemKey = SIDP.StandardItemKey "
+
+
+
+ID_CONJ_STDITEMKEY,   " and StandardItem.StandardItemKey = "
+
+ID_CONJ_SPECYEAR,     " and StandardItem.SpecYear = "
+
+
+
+ID_QUERY_PRED, "select SI2.SpecYear, SI2.StandardItemNumber, "
+ID_QUERY_PRED, " SI2.ShortDescription, Link, Lag, PredecessorItemKey "
+ID_QUERY_PRED, "from StandardItem SI1, StandardItemDependency, "
+ID_QUERY_PRED, " StandardItem SI2 "
+ID_QUERY_PRED, "where SI1.StandardItemKey "
+ID_QUERY_PRED,                 " = StandardItemDependency.SuccessorItemKey "
+ID_QUERY_PRED, "and StandardItemDependency.PredecessorItemKey "
+ID_QUERY_PRED,       " = SI2.StandardItemKey "
+ID_QUERY_PRED, "and SI1.Deleted is NULL "
+ID_QUERY_PRED, "and SI2.Deleted is NULL "
+ID_QUERY_PRED, "and SI1.StandardItemKey = "
+
+ID_ORDER_PRED, "order by SI2.StandardItemNumber "
+
+
+
+
+ID_QUERY_SUCC, "select SI2.SpecYear, SI2.StandardItemNumber, "
+ID_QUERY_SUCC, " SI2.ShortDescription, Link, Lag, SuccessorItemKey "
+ID_QUERY_SUCC, "from StandardItem SI1, StandardItemDependency, "
+ID_QUERY_SUCC, " StandardItem SI2 "
+ID_QUERY_SUCC, "where SI1.StandardItemKey "
+ID_QUERY_SUCC,                 " = StandardItemDependency.PredecessorItemKey "
+ID_QUERY_SUCC, "and StandardItemDependency.SuccessorItemKey "
+ID_QUERY_SUCC,       " = SI2.StandardItemKey "
+ID_QUERY_SUCC, "and SI1.Deleted is NULL "
+ID_QUERY_SUCC, "and SI2.Deleted is NULL "
+ID_QUERY_SUCC, "and SI1.StandardItemKey = "
+
+ID_ORDER_SUCC, "order by SI2.StandardItemNumber "
+
+
+
+ID_QUERY_PCT_MAJ, "select PercentofCost, MajorItemID, Description "
+ID_QUERY_PCT_MAJ, "from MajorItem, StandardItemMajorItem "
+ID_QUERY_PCT_MAJ, "where MajorItem.MajorItemKey "
+ID_QUERY_PCT_MAJ, "= StandardItemMajorItem.MajorItemKey "
+ID_QUERY_PCT_MAJ, "and StandardItemMajorItem.StandardItemKey = "
+
+
+ID_QUERY_SUM_PCT, "select sum(PercentofCost) "
+ID_QUERY_SUM_PCT, "from  StandardItemMajorItem "
+ID_QUERY_SUM_PCT, "where StandardItemKey = "
+
+
+ID_QUERY_MAJ_QCF, "select CodeValueID, QuantityConversionFactor,"
+ID_QUERY_MAJ_QCF, " MajorItemID, Description "
+ID_QUERY_MAJ_QCF, "from CodeValue, MajorItem, StandardItemMajorItem "
+ID_QUERY_MAJ_QCF, "where CommonUnit = CodeValue.CodeValueKey "
+ID_QUERY_MAJ_QCF, "and CodeValue.Deleted is NULL "
+ID_QUERY_MAJ_QCF, "and StandardItemMajorItem.MajorItemKey "
+ID_QUERY_MAJ_QCF, "= MajorItem.MajorItemKey "
+ID_QUERY_MAJ_QCF, "and StandardItemMajorItem.StandardItemKey = "
+
+
+
+ID_QRY_DEFLT_RPT, "SELECT Description + '                        #' + ReportID "
+ID_QRY_DEFLT_RPT, "FROM Report "
+ID_QRY_DEFLT_RPT, "WHERE substring(ReportID,1,4) = 'rDef' " 
+
+
+
+// Column titles                                      
+//                                                    
+// Number of column titles                            
+ID_RPT_TTL,    "26"
+
+
+//ppsz_Idx TtlCol TtlColWth DtaCol DtaColWth TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,    "0,      0,       0,         0,SpecYear"
+
+RPT_TTL_2,    "0,      5,       0,        13,Item "
+RPT_TTL_3,    "14,    20,      14,        41,Short Description/ "
+RPT_TTL_4,    "14,     5,      14,         8,Unit/ "
+RPT_TTL_5,    "30,     8,      31,        10,Round to"
+RPT_TTL_6,    "41,    11,      42,         9,Daily Prod."
+RPT_TTL_7,    "55,    14,      61,         3,Start at %Cmpl"
+RPT_TTL_8,    "14,    20,      14,        60,Long Description"
+
+RPT_TTL_9,    "9,     13,       9,        13,Predecessors/"
+RPT_TTL_10,   "23,    10,      23,        16,Link-Type"
+RPT_TTL_11,   "40,     3,      40,         3,Lag"
+RPT_TTL_12,   "45,    13,      45,        13,Successors/"
+RPT_TTL_13,   "59,    10,      59,        16,Link-Type"
+RPT_TTL_14,   "76,     3,      76,         3,Lag"
+
+RPT_TTL_15,   "0,      0,      13,        30,PredDesc"
+RPT_TTL_16,   "0,      0,      49,        30,SuccDesc"
+
+
+RPT_TTL_17,   "0,      0,      36,         6,PctCst"
+RPT_TTL_18,   "0,      0,      46,         4,MajID"
+RPT_TTL_19,   "0,      0,      53,        25,Desc"
+
+RPT_TTL_20,   "0,      0,      37,         9,QCF"
+RPT_TTL_21,   "0,      0,      47,         4,CVID"
+RPT_TTL_22,   "0,      0,      55,         4,MAJID"
+RPT_TTL_23,   "0,      0,      62,        15,IDDESC"
+
+RPT_TTL_24,   "43,    21,      43,        20,worth of major items"
+RPT_TTL_25,   "15,    20,      15,        20,of this item yields:"
+
+RPT_TTL_26,   "14,    22,      36,        16,Default Unit Price is "
+
+
+
+
+
+:FORMAT rStdItF.bin                                                  
+
+ID_QUERY_SPEC_YR,   "Number"
+
+ID_QUERY_ITEM_KEYS,     "Number"
+ID_QUERY_DEF_ITEM_KEYS, "Number"
+
+ID_QUERY_LISTING,   "Number",       "String",   "String", "String", "Precision" 
+ID_QUERY_LISTING,   "Number,,....", "Number,%", "String", "Number" 
+
+ID_QUERY_DEFLT,     "Number,$,...." 
+
+ID_QUERY_DEF_LISTING, "Number",       "String",   "String", "String", "Precision" 
+ID_QUERY_DEF_LISTING, "Number,,....", "Number,%", "String", "Number" 
+
+
+ID_QUERY_PRED,      "String", "String", "String", "Dependency,f", "String", "String"
+
+ID_QUERY_SUCC,      "String", "String", "String", "Dependency,f", "String", "String"
+
+ID_QUERY_PCT_MAJ,   "Number,$,..", "String", "String" 
+
+ID_QUERY_SUM_PCT,   "Number,$,.."
+
+ID_QUERY_MAJ_QCF,   "String", "Number,....", "String", "String"
+
+ID_QRY_DEFLT_RPT,   "String" 
+
+:query rStdItDQ.bin                                                  
+//                                                               
+rStdIt_RptDlgBox,       "SELECT StandardItemKey "                             
+rStdIt_RptDlgBox,       "FROM StandardItem "                                  
+rStdIt_RptDlgBox,       "WHERE StandardItemKey = %StandardItemKey "                   
+
+
+rStdIt_RptSpecYrCombo,  "select distinct SpecYear "
+rStdIt_RptSpecYrCombo,  "from StandardItem "
+rStdIt_RptSpecYrCombo,  "order by SpecYear desc "
+
+
+rStdIt_RptBaseDtCombo,  "select convert(char(12), BaseDate) "
+rStdIt_RptBaseDtCombo,  "from BaseDate "
+rStdIt_RptBaseDtCombo,  "order by BaseDate desc "
+
+
+rStdIt_RptCombo,  "SELECT Description + '                        #' + ReportID "
+rStdIt_RptCombo,  "FROM Report "
+rStdIt_RptCombo,  "WHERE substring(ReportID,1,2) = 'rS' "
+rStdIt_RptCombo,  "OR substring(ReportID,1,4) = 'rDef' "
+
+
+:Dialog rStdItDD.bin rStdItDF.bin                                        
+//                                                               
+// Dlg Id         Add Query ID           Change Query ID        Col Name        CtlID        Disp Fmt  Input Fmt
+//--------------------------------------------------------------------------------------------------------
+rStdIt_RptDlgBox, rStdIt_RptDlgBox,      rStdIt_RptDlgBox,      StandardItemKey,DID_KEY,     "Number", "Number" 
+rStdIt_RptDlgBox, rStdIt_RptSpecYrCombo, rStdIt_RptSpecYrCombo, SpecYear,       DID_DATEEDIT,"Year",   "Year"
+rStdIt_RptDlgBox, rStdIt_RptBaseDtCombo, rStdIt_RptBaseDtCombo, 1,              DID_BASEEDIT,"DateTime,mmm dd, yyyy", "DateTime,'mmm dd yyyy'"
+rStdIt_RptDlgBox, rStdIt_RptCombo,       rStdIt_RptCombo,       1,              DID_RPT_LIST,"String", "String"
+
+

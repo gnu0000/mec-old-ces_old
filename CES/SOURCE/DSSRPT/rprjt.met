@@ -1,0 +1,304 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rPrjt.h"                                       
+
+
+// /* If the proposal was not awarded, the Awarded Line will be suppressed */
+// /* i.e. HistoricalProposal.AwardedBidderKey = null                      */
+// /* If the proposal was awarded to the low bidder, the LowBidder Line is suppressed */
+// 
+// SELECT AwardedBidderKey, LowBidderKey
+// FROM HistoricalProposal
+// WHERE ProposalKey = %ProposalKey
+// 
+// 
+// /* Part two - Category section */ 
+// /* This query retrieves all of the categories for this project */
+// /* Note:  If StructureID is blank, do not print StructureLength, StructureWidth, */
+// /* and StructureType */
+// 
+// SELECT CategoryNumber, Description, Length, Width, StructureID, 
+// StructureLength, StructureWidth, StructureType
+// FROM HistoricalProjectCategory
+// WHERE ProjectKey = %ProjectKey
+// 
+// /* Part three - To retrieve the items associated with a specific CategoryNumber */
+// 
+// SELECT StandardItemNumber, Quantity, UnitPrice, CodeValueID, 
+// LongDescription
+// FROM StandardItem, CodeValue, HistoricalProjectItem
+// WHERE HistoricalProjectItem.ItemKey = StandardItem.StandardItemKey
+// AND HistoricalProjectItem.ProjectKey = 3500101
+// AND HistoricalProjectItem.CategoryNumber = 'CAT1'
+// 
+// 
+// /* To retrieve UnitPrices, Extensions for LowBidder, AwardedBidder and EngineersEstimate */
+// /* for a particular ProposalItemKey, in a particular Proposal */
+// 
+// SELECT LowBidderKey, a.UnitPrice, AwardedBidderKey, b.UnitPrice, EngineersEstimate,
+// Quantity, LowBidExtension = a.UnitPrice * Quantity,
+// AwardedBidExtension = b.UnitPrice * Quantity,
+// EstimatorsExtension = EngineersEstimate * Quantity,
+// a.LowCostAlternate, b.LowCostAlternate
+// FROM  HistoricalItemBid a,  HistoricalItemBid b, HistoricalProposal, HistoricalProposalItem
+// WHERE HistoricalProposalItem.ProposalKey = HistoricalProposal.ProposalKey
+// AND a.ProposalItemKey = HistoricalProposalItem.ProposalItemKey
+// AND b.ProposalItemKey = HistoricalProposalItem.ProposalItemKey
+// AND LowBidderKey = a.VendorKey
+// AND AwardedBidderKey = b.VendorKey
+// AND HistoricalProposalItem.ProposalItemKey = 9000000
+// AND HistoricalProposal.ProposalKey = 8000000
+// 
+// 
+// /* Must calculate Category-Total - the sum of Extensions for (Awd), (Low) and (Est) */
+//
+// /* NOTE:  Extensions for items not in the Low-Cost Alternate  */
+// /* (LowCostAlternateFlag is FALSE) are overstruck.            */
+
+
+
+
+
+:query rPrjtQ.bin                                        
+
+ID_QUERY_LISTING, "select ProjectControlNumber, ProjectNumber, "
+ID_QUERY_LISTING, " HistoricalProject.Description, ProposalID, "
+ID_QUERY_LISTING, " a.CodeValueID, a.Translation, "
+ID_QUERY_LISTING, " b.CodeValueID, b.Translation, "
+ID_QUERY_LISTING, " c.CodeValueID, c.Translation, "
+ID_QUERY_LISTING, " HistoricalProject.SpecYear, "
+ID_QUERY_LISTING, " HistoricalProject.Location, Length, "
+ID_QUERY_LISTING, " Width, AwardedAmount, LowBidAmount, EstimatedAmount, "
+ID_QUERY_LISTING, " HistoricalProposal.ProposalKey "
+ID_QUERY_LISTING, "from HistoricalProposal, HistoricalProject, "
+ID_QUERY_LISTING,     " CodeValue a, CodeValue b, CodeValue c "
+ID_QUERY_LISTING, "where HistoricalProject.ProposalKey "
+ID_QUERY_LISTING,    " = HistoricalProposal.ProposalKey "
+ID_QUERY_LISTING, " and HistoricalProject.WorkType = a.CodeValueKey "
+ID_QUERY_LISTING, " and HistoricalProject.UrbanRuralClass = b.CodeValueKey "
+ID_QUERY_LISTING, " and HistoricalProject.District = c.CodeValueKey " 
+ID_QUERY_LISTING, " and HistoricalProject.ProjectKey = "
+
+
+ID_QUERY_BIDKEYS, "select AwardedBidderKey, LowBidderKey, "
+ID_QUERY_BIDKEYS,       " HistoricalProject.ProposalKey "
+ID_QUERY_BIDKEYS, "from HistoricalProposal, HistoricalProject "
+ID_QUERY_BIDKEYS, "where HistoricalProject.ProposalKey "
+ID_QUERY_BIDKEYS,       " = HistoricalProposal.ProposalKey "
+ID_QUERY_BIDKEYS, " and HistoricalProject.ProjectKey = "
+
+
+ID_QUERY_CATKEYS, "select ProjectKey, CategoryNumber "
+ID_QUERY_CATKEYS, "from HistoricalProjectCategory "
+ID_QUERY_CATKEYS, "where ProjectKey = "
+
+
+ID_QUERY_CAT, "select CategoryNumber, Description, Length, Width, "
+ID_QUERY_CAT,  "StructureID, StructureLength, StructureWidth, "
+ID_QUERY_CAT,  "CodeValueID, Translation "
+ID_QUERY_CAT, "from HistoricalProjectCategory, CodeValue "
+ID_QUERY_CAT, "where StructureType = CodeValueKey "
+ID_QUERY_CAT,  "and ProjectKey = "
+
+ID_QUERY_CAT_CONJ,  " and CategoryNumber = "
+
+
+ID_QUERY_ITEMS, "select StandardItemNumber, Quantity, "
+ID_QUERY_ITEMS,  " LongDescription, ShortDescription, "
+ID_QUERY_ITEMS,  " ProposalItemKey, CodeValueID "
+//ID_QUERY_ITEMS,  ", ProjectKey, CategoryNumber, SequenceNumber " // Number String String
+ID_QUERY_ITEMS, "from StandardItem, HistoricalProjectItem, CodeValue "
+ID_QUERY_ITEMS, "where HistoricalProjectItem.ItemKey "
+ID_QUERY_ITEMS,         "= StandardItem.StandardItemKey "
+ID_QUERY_ITEMS,   "and StandardItem.Unit = CodeValue.CodeValueKey "
+ID_QUERY_ITEMS,   "and HistoricalProjectItem.ProjectKey = "
+
+ID_QUERY_ITEMS_CONJ,  " and HistoricalProjectItem.CategoryNumber = "
+
+ID_QUERY_ITEMS_ORDER, " order by HistoricalProjectItem.SequenceNumber "
+
+
+
+
+//select Quantity, 
+//       AwardedBidderKey, AWD.UnitPrice,
+//       LowBidderKey, LOW.UnitPrice,
+//       EngineersEstimate,
+//       AwardedBidExtension = AWD.UnitPrice * Quantity,
+//       LowBidExtension = LOW.UnitPrice * Quantity,
+//       EstimatorsExtension = EngineersEstimate * Quantity,
+//       LOW.LowCostAlternate, AWD.LowCostAlternate
+//from HistoricalItemBid AWD,
+//     HistoricalItemBid LOW,
+//     HistoricalProposal,
+//     HistoricalProposalItem
+//where HistoricalProposalItem.ProposalKey = HistoricalProposal.ProposalKey
+// and AWD.ProposalItemKey = HistoricalProposalItem.ProposalItemKey
+// and LOW.ProposalItemKey = HistoricalProposalItem.ProposalItemKey
+// and AwardedBidderKey = AWD.VendorKey
+// and LowBidderKey = LOW.VendorKey
+// and HistoricalProposal.ProposalKey =
+//
+// and HistoricalProposalItem.ItemKey = 
+ 
+
+
+
+
+ID_QUERY_AWD_SLCT, "select HIB.UnitPrice, HIB.LowCostAlternate, "
+ID_QUERY_AWD_SLCT,   " (HIB.UnitPrice * "
+
+ID_QUERY_AWD,      ") from HistoricalItemBid HIB, HistoricalProposal "
+ID_QUERY_AWD,      "where HIB.ProposalKey = HistoricalProposal.ProposalKey "
+ID_QUERY_AWD,      "and HIB.VendorKey = HistoricalProposal.AwardedBidderKey "
+ID_QUERY_AWD,      "and HIB.ProposalKey = "
+
+ID_QUERY_AWD_CONJ, " and HIB.ProposalItemKey = "
+
+
+
+
+ID_QUERY_LOW_SLCT, "select HIB.UnitPrice, HIB.LowCostAlternate, "
+ID_QUERY_LOW_SLCT,   " (HIB.UnitPrice * "
+
+ID_QUERY_LOW,      ") from HistoricalItemBid HIB, HistoricalProposal "
+ID_QUERY_LOW,      "where HIB.ProposalKey = HistoricalProposal.ProposalKey "
+ID_QUERY_LOW,      "and HIB.VendorKey = HistoricalProposal.LowBidderKey "
+ID_QUERY_LOW,      "and HIB.ProposalKey = "
+
+ID_QUERY_LOW_CONJ, " and HIB.ProposalItemKey = "
+
+
+
+
+ID_QUERY_EST_SLCT, "select HIB.UnitPrice, HIB.LowCostAlternate, "
+ID_QUERY_EST_SLCT,   " (HIB.UnitPrice * "
+
+ID_QUERY_EST,      ") from HistoricalItemBid HIB, HistoricalProposal "
+ID_QUERY_EST,      "where HIB.ProposalKey = HistoricalProposal.ProposalKey "
+ID_QUERY_EST,      "and HIB.VendorKey = 1 "
+ID_QUERY_EST,      "and HIB.ProposalKey = "
+
+ID_QUERY_EST_CONJ, " and HIB.ProposalItemKey = "
+// Note that a VendorKey of "1" is always the estimator engineer key.
+
+
+
+
+// Column titles                                      
+//ppszIdx,TtlCol, TtlColWth, DtaCol, DtaColWth,TtlText       
+//----------------------------------------------------------     
+RPT_TTL_1,   " 0,     4,          5,  13,PCN: "
+RPT_TTL_2,   "23,    16,         39,  30,Project Number: "
+RPT_TTL_3,   " 0,     0,          9,  60, desc"
+RPT_TTL_4,   " 5,    21,         27,  16,Assigned to Proposal: "
+
+RPT_TTL_5,   " 7,    10,         18,   8,Work Type: "
+RPT_TTL_6,   " 5,    12,         18,   8,Urban/Rural: "
+RPT_TTL_7,   " 8,     9,         18,   8,District: "
+RPT_TTL_8,   "26,     3,         29,  40, - "
+
+RPT_TTL_9,   " 8,     9,         18,   4,SpecYear: "
+RPT_TTL_10,  " 8,     9,         18,  55,Location: "
+RPT_TTL_11,  "10,     7,         18,  20,Length: "
+RPT_TTL_12,  "40,    14,         55,  14,Average Width: "
+
+RPT_TTL_13,  " 5,    16,          0,   0,Project Amounts: "
+RPT_TTL_14,  "38,    10,         22,  16,(Awarded)"
+RPT_TTL_15,  "38,    25,         22,  16,(Awarded to Low Bidder)"
+RPT_TTL_16,  "38,    10,         22,  16,(LowBid)"
+RPT_TTL_17,  "38,    12,         22,  16,(Estimated)"
+
+RPT_TTL_18,  " 0,     6,          0,   0, Miles "
+RPT_TTL_19,  " 0,     5,          0,   0, Feet "
+
+
+// Category section
+RPT_TTL_20,  " 0,     9,         10,   4,Category: "
+RPT_TTL_21,  "14,     3,         17,  60, - "
+
+RPT_TTL_22,  " 4,    13,         18,  20,Structure ID: "
+RPT_TTL_23,  " 9,    17,         27,  11,Structure Length: "
+RPT_TTL_24,  "10,    16,         27,   8,Structure Width: "
+RPT_TTL_25,  "11,    15,         27,   8,Structure Type: "
+RPT_TTL_26,  "35,     3,         38,  40, - "
+
+
+// Item list section
+RPT_TTL_27,  " 0,     5,          0,  13,Item/ "
+RPT_TTL_28,  "22,     8,         14,  16,Quantity "
+RPT_TTL_29,  "44,     5,         34,  16,Price "
+RPT_TTL_30,  "50,     6,         52,   4,/ Unit "
+RPT_TTL_31,  "65,     9,         59,  16,Extension "
+RPT_TTL_32,  " 7,    12,          7,  49,Description"
+
+RPT_TTL_33,  "31,     1,         34,  16,@"
+RPT_TTL_34,  "75,     5,         59,  16,(Awd)"
+RPT_TTL_35,  "75,     5,         59,  16,(Low)"
+RPT_TTL_36,  "75,     5,         59,  16,(Est)"
+
+RPT_TTL_37,  "43,    15,         59,  16,Category Total: "
+
+
+// Number of column titles                            
+ID_RPT_TTL,    "37"
+                  
+
+
+:FORMAT rPrjtF.bin                                                  
+
+ID_QUERY_LISTING, "String", "String", "String"
+ID_QUERY_LISTING, "String", "String", "String", "String", "String", "String"
+ID_QUERY_LISTING, "String", "Number", "Position,<long><deg> deg <min>' <sec>"" Longitude, <lat><deg> deg <min>' <sec>"" Latitude"
+ID_QUERY_LISTING, "Number,,....", "Number,,...."
+ID_QUERY_LISTING, "Number,$,..",  "Number,$,..", "Number,$,..", "Number"
+
+
+ID_QUERY_BIDKEYS, "Number", "Number", "Number"
+
+ID_QUERY_CATKEYS, "Number", "String"
+
+ID_QUERY_CAT, "String", "String", "Number,,....", "Number,,...."
+ID_QUERY_CAT, "String", "Number,,....", "Number,,....", "String", "String"
+
+
+ID_QUERY_ITEMS, "String", "Number,,....", "String", "String", "Number", "String"
+
+ID_QUERY_AWD, "Number,$,....", "String", "Number,.."
+ID_QUERY_LOW, "Number,$,....", "String", "Number,.."
+ID_QUERY_EST, "Number,$,....", "String", "Number,.."
+
+
+
+:query rPrjtDQ.bin                                                  
+
+rPrjt_RptDlgBox,       "SELECT ProjectKey "                             
+rPrjt_RptDlgBox,       "FROM HistoricalProject "                                  
+rPrjt_RptDlgBox,       "WHERE ProjectKey = %ProjectKey "                   
+
+
+:Dialog rPrjtDD.bin rPrjtDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rPrjt_RptDlgBox, rPrjt_RptDlgBox, rPrjt_RptDlgBox, ProjectKey, DID_KEY, "Number", "Number"            
+

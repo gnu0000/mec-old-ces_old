@@ -1,0 +1,132 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * itiperm.met
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "..\include\colid.h"
+#include "dialog.h"
+#include "itimenu.h"
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT          LONG                             LONG                  LONG                  USHORT USHORT   USHORT
+// List Window ID  Window Options                   Background Color      Label Bkg Color       Label ydata    Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+ShowUsersDL,       ITI_LISTOPTIONV | LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+SendMessageDL,     ITI_LISTOPTIONV | LWS_BORDER,    ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND, 0,   0,      0
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT     USHORT          RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                                USHORT  PSZ
+//
+// Window ID  Next Window ID  xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags                                          uIndex           Format String
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ShowUsersDL,  0,              1,   0,  10,  1,    TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, 1, "String"
+ShowUsersDL,  0,              11,  0,  16,  1,    TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, 2, "String"
+ShowUsersDL,  0,              30,  0,   1,  1,    TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS, 3, "String"
+
+SendMessageDL, 0,         1,  0,   16,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   UserID,              "String"
+SendMessageDL, 0,         17, 0,   1, 1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,   Name,                "String"
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID  Next Window xposypos  xsiz ysiz CoordType  Foreground Color  Txt Flags          Label String
+//-------------------------------------------------------------------------------------------------------------------------
+ShowUsersDL,  0,           1,   0,  10,    1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Host"
+ShowUsersDL,  0,           11,  0,  16,    1, TL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Program"
+ShowUsersDL,  0,           30,  0,   1,    1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR,  ITI_LLABELFLAGS,   "Database"
+
+SendMessageDL,0, 1,  0,   16,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User ID"
+SendMessageDL,0, 17, 0,   1, 1,     TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS, "User Name"
+
+
+:query query.bin
+ShowUsersDL,         " SELECT DISTINCT sp.hostname, sp.program_name, sdb.name"
+ShowUsersDL,         " FROM master..sysprocesses sp, master..sysdatabases sdb"
+ShowUsersDL,         " WHERE sp.hostprocess > '' "
+ShowUsersDL,         " AND sp.dbid = sdb.dbid"
+ShowUsersDL,         " GROUP BY sp.hostprocess, sdb.dbid"
+
+SendMessageDL,       " SELECT U.UserKey, U.UserID, U.Name"
+SendMessageDL,       " FROM User U"
+SendMessageDL,       " ORDER BY U.UserID"
+
+SendMessageD,        " SELECT UM.Message"
+SendMessageD,        " FROM UserMessage UM"
+SendMessageD,        " WHERE ToUserKey = -1"
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID               Add Query ID               Change Query ID            Column name             Control ID        Format    Input Fmt
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ShowUsersD,                ITIWND_LIST,               ITIWND_LIST,               0,                      ShowUsersDL,      "Number", "Number"
+
+SendMessageD,              ITIWND_LIST,               ITIWND_LIST,               UserKey,                SendMessageDL,    "Number", "Number"
+SendMessageD,              SendMessageD,              SendMessageD,              Message,                DID_MESSAGE,      "String", "String"
+
+:query lock.bin
+SendMessageD,        "SELECT ToUserKey "
+SendMessageD,        "FROM UserMessage "
+SendMessageD,        "WHERE ToUserKey = -1 "
+
+:query insert.bin
+SendMessageD,        "INSERT INTO UserMessage "
+SendMessageD,        "(MessageKey,ToUserKey, FromUserKey, Message, Time) "
+SendMessageD,        "VALUES "
+SendMessageD,        "(@NewKey,@"SendMessageDL"UserKey,@CurrentUserKey,"
+SendMessageD,        "@"DID_MESSAGE"Message,@CurrentDateTime) "
+
+:format rptfmt.bin
+VERSION_FORMAT,      "String", "DateTime,mmm dd, yyyy", "String"
+

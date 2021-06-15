@@ -1,0 +1,33 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\iti.h"
+#include "..\include\winid.h"
+#include "..\include\itimbase.h"
+#include "..\include\itirptdg.h"
+#include "..\include\dialog.h"
+#include "dialog.h"
+
+
+RESOURCE ITIRT_QUERY     ITIRID_RPT    rmapQ.bin 
+RESOURCE ITIRT_FORMAT    ITIRID_RPT    rmapF.bin 
+RESOURCE ITIRT_QUERY     ITIRID_WND    rmapDlgQ.bin
+RESOURCE ITIRT_DIALOG    ITIRID_WND    rmapDlgD.bin
+RESOURCE ITIRT_DLGFMAT   ITIRID_WND    rmapDlgF.bin
+
+
+RCINCLUDE  rmap.dlg
+

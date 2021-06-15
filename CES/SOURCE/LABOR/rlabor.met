@@ -1,0 +1,118 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rLabor.h"                                       
+
+   
+//   /* REPORT (9-78) LABOR LISTING */
+
+
+:query rLaborQ.bin                                        
+
+// Number of column titles                            
+ID_RPT_TTL,    "10"
+
+// Column titles                                      
+//ppsz_Idx,TtlCol,TtlColWth,DtaCol,DtaColWth,TtlText       
+//--------------------------------------------------
+RPT_TTL_1, "0,  0,  0,  8, (ID)"           
+RPT_TTL_2, "8,  3, 11, 65, -  (desc)"  
+
+RPT_TTL_3, "5, 51, 55, 17,Rates are assigned geographically using zone type "
+
+RPT_TTL_4,"20, 17,  0,  0,Davis-Bacon Wages"
+RPT_TTL_5,"46, 21,  0,  0,Non-Davis-Bacon Wages"
+
+RPT_TTL_6, "5,  4,  5,  8,Zone"
+
+RPT_TTL_7, "16, 11, 16, 12,Hourly Rate"
+RPT_TTL_8, "28, 13, 29, 12,Overtime Rate"
+
+RPT_TTL_9, "44, 11, 44, 12,Hourly Rate"
+RPT_TTL_10,"56, 13, 57, 12,Overtime Rate"
+ 
+
+
+
+//   /* To retrieve all of the Laborer Keys in the Labor Catalog */
+//   /* that have not been marked as being deleted               */
+
+ID_QUERY_ALL, "SELECT LaborerKey "
+ID_QUERY_ALL, "FROM Labor "
+ID_QUERY_ALL, "WHERE Deleted IS NULL "
+
+
+
+//   /* To retrieve LaborerID, Description and ZoneTypeID for a particular laborer, */
+//   /* using the keys above                                                        */
+
+ID_QUERY_LISTING, "SELECT LaborerID, Labor.Description, ZoneTypeID "
+ID_QUERY_LISTING, "FROM Labor, ZoneType "
+ID_QUERY_LISTING, "WHERE Labor.ZoneTypeKey = ZoneType.ZoneTypeKey "
+ID_QUERY_LISTING, "AND LaborerKey = "
+
+
+
+//   /* To retrieve the rates for a particular Laborer  */
+//   /* These are rates that have not been marked as deleted in the database    */
+//   /* Undeclared BaseDate is used here                                        */
+
+ID_QUERY_RATES, "SELECT DISTINCT ZoneID, DavisBaconRate, DavisBaconOvertimeRate, "
+ID_QUERY_RATES, "NonDavisBaconRate, NonDavisBaconOvertimeRate "
+ID_QUERY_RATES, "FROM LaborerWageAndBenefits, Zone, Labor "
+ID_QUERY_RATES, "WHERE LaborerWageAndBenefits.LaborerKey = Labor.LaborerKey "
+ID_QUERY_RATES, "AND LaborerWageAndBenefits.ZoneKey = Zone.ZoneKey "
+ID_QUERY_RATES, "AND Labor.ZoneTypeKey = Zone.ZoneTypeKey "
+ID_QUERY_RATES, "AND LaborerWageAndBenefits.BaseDate = '" UNDECLARED_BASE_DATE "' "
+ID_QUERY_RATES, "AND LaborerWageAndBenefits.Deleted IS NULL "
+ID_QUERY_RATES, "AND Labor.LaborerKey = "
+
+
+
+
+:FORMAT rLaborF.bin                       
+                           
+#define DOLLAR_FMT  "Number,$,.."
+
+
+ID_QUERY_ALL,      "Number"
+
+ID_QUERY_LISTING,  "String", "String",    "String"
+
+ID_QUERY_RATES,    "String",  DOLLAR_FMT, DOLLAR_FMT, DOLLAR_FMT, DOLLAR_FMT
+
+
+#undef DOLLAR_FMT
+
+
+:query rLaborDQ.bin                                                  
+
+rLabor_RptDlgBox,       "SELECT LaborerKey "
+rLabor_RptDlgBox,       "FROM Labor "
+rLabor_RptDlgBox,       "WHERE LaborerKey = %LaborerKey "
+
+
+:Dialog rLaborDD.bin rLaborDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rLabor_RptDlgBox, rLabor_RptDlgBox, rLabor_RptDlgBox, LaborerKey, DID_KEY, "Number", "Number"            
+

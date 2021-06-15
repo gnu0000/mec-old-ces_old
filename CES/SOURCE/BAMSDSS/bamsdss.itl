@@ -1,0 +1,163 @@
+:userdoc.
+:title.Help for BAMS/DSS
+:h1 res=1.Default
+This is the default help.
+:h1 res=100. Keys Help
+You may not use the keyboad in BAMS/DSS.  You must use only the mouse.
+:h1 res=101. Mouse Help
+Isn't the mouse great?
+:h1 res=102. Commands
+There are lots of commands.  Its hard to name them all....
+:h1 res=103. Procedures
+:ol.
+:li.Cash pay check
+:li.Give cash to Mark
+:li.Go to step 1
+:eol.
+:h1 res=104. Glossary
+:hp1.DS/Shell.ehp - God's gift to DOTs
+:h1 res=105.Using Help
+See the documentation
+:h1 res=1000. File Menu
+File Menu
+:h1 res=1001. Open Catalog Submenu
+Open Catalog Submenu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:h1 res=1014. close
+close
+:h1 res=1015. print menu
+print menu
+:h1 res=1016. print code table listing
+print code table listing
+:h1 res=1017. print user listing
+print user listing
+:h1 res=1018. printer setup
+printer setup
+:h1 res=1019. import
+import
+:h1 res=1020. export
+export
+:h1 res=1021. run menu
+run menu
+:h1 res=1022. run item browser
+run item browser
+:h1 res=1023. run proposal browser
+run proposal browser
+:h1 res=1024. run facility browser
+run facility browser
+:h1 res=1025. run sql browser
+run sql browser
+:h1 res=1026. run other
+run other
+:h1 res=1027. process status
+process status
+:h1 res=1028. exit
+exit
+
+:h1 res=1029. edit menu
+edit menu
+:h1 res=1030. add
+add
+:h1 res=1031. change
+change
+:h1 res=1032. delete
+delete
+:h1 res=1033. cut
+cut
+:h1 res=1034. copy
+copy
+:h1 res=1035. paste
+paste
+
+:h1 res=1036. view menu
+view menu
+:h1 res=1037. parent
+parent
+
+:h1 res=1038. utilities menu
+utilities menu
+:h1 res=1039. find
+find
+:h1 res=1040. sort
+sort
+:h1 res=1041. set preferences
+set preferences
+:h1 res=1042. change password
+change password
+:h1 res=1043. show users
+show users
+:h1 res=1044. send message
+send message
+:h1 res=1045. install
+install
+:h1 res=1046. deny logon
+deny logon
+:h1 res=1047. generate support request
+generate support request
+
+:h1 res=1048. window menu
+window menu
+:h1 res=1049. arrange cascaded
+arrange cascaded
+:h1 res=1050. arrange tiled
+arrange tiled
+
+
+:h1 res=1060. Debug Menu
+The debug menu supplies commands that are usefull when debugging.  
+:warning.
+Some of the commands will cause the program to crash, so be carefull.
+:ewarning.
+:note.
+These commands will not find there way into production DS/Shell or BAMS/DSS
+:h1 res=1061. Debug Break
+The debug break command will cause the debugger to be activated.
+:note.
+The debugger must be debugging the process when you execute this command,
+or the process will be terminated.
+:h1 res=1062. Die scum
+This causes the program to reference a bad pointer, which will kill the
+process.  The main use for this command is for disaster testing.
+
+:h1 res=1051. help menu
+help menu
+:h1 res=1052. index
+index
+:h1 res=1053. keyboard
+keyboard
+:h1 res=1054. mouse
+mouse
+:h1 res=1055. commands
+commands
+:h1 res=1056. procedures
+procedures
+:h1 res=1057. glossary
+glossary
+:h1 res=1058. using help
+using help
+:h1 res=1059. about
+about
+:euserdoc.

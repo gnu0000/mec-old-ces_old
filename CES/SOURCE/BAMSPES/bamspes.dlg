@@ -1,0 +1,266 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE IDD_ABOUT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_ABOUT, 22, 25, 167, 123, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 17, 102, 22, 16, WC_STATIC, SS_ICON | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Data Browser (BAMS/PES)", 257, 53, 111, 150, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 261, 67, 6, 38, 12, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "Portions ¸ %s Info Tech, Inc.", DID_COPY2, 5, 77, 158, 8, 
+                WC_STATIC, SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "Release %s%s", DID_VERSION, 54, 101, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "AASHTO", 256, 5, 61, 158, 6, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "444 North Capitol St, NW", 258, 5, 53, 158, 6, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Suite 225", 262, 5, 45, 155, 6, WC_STATIC, SS_TEXT | DT_CENTER | 
+                DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "Washington, D.C.  20001", 265, 5, 37, 157, 8, WC_STATIC, 
+                SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "All rights reserved", 259, 5, 21, 158, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+        CONTROL "¸ %s AASHTO", DID_COPY1, 4, 87, 156, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_INITIAL PRELOAD MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "", IDD_INITIAL, 73, 88, 192, 52, FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | 
+                WS_CLIPSIBLINGS | WS_SAVEBITS
+    BEGIN
+        CONTROL 1, 1, 7, 29, 21, 16, WC_STATIC, SS_ICON | WS_GROUP | WS_VISIBLE
+        CONTROL "Data Browser (BAMS/PES)", 257, 35, 38, 150, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "Release %s %s", DID_VERSION, 35, 28, 150, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "Portions ¸ %s  Info Tech, Inc.", DID_COPY2, 4, 4, 186, 8, 
+                WC_STATIC, SS_TEXT | DT_CENTER | DT_VCENTER | WS_GROUP | 
+                WS_VISIBLE
+        CONTROL "¸ %s AASHTO", DID_COPY1, 4, 15, 188, 8, WC_STATIC, SS_TEXT | 
+                DT_CENTER | DT_VCENTER | WS_GROUP | WS_VISIBLE
+    END
+END
+
+DLGTEMPLATE IDD_FIND LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Find", IDD_FIND, 89, 112, 214, 63, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Field:", 256, 7, 50, 40, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 257, 7, -3, 150, 51, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Value:", 258, 9, 20, 40, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 259, 9, 8, 146, 8, WC_ENTRYFIELD, ES_LEFT | ES_AUTOSCROLL | 
+                ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", 1, 171, 41, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 171, 24, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 171, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+DLGTEMPLATE IDD_SORT LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Sort", IDD_SORT, 89, 112, 214, 63, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Field:", 256, 7, 50, 40, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", 257, 7, -3, 150, 51, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~OK", 1, 171, 41, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 171, 24, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 171, 6, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Descending", 258, 15, 14, 105, 10, WC_BUTTON, BS_AUTOCHECKBOX | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE OpenProposalD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Open Proposal", OpenProposalD, 27, 48, 308, 115, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "", OpenProposalDL, 11, 6, 290, 76, "LISTWINDOW", 8 | WS_TABSTOP | 
+                WS_VISIBLE
+        CONTROL "~Open Proposal:", 1100, 11, 83, 65, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 1, 143, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 190, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 235, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE OpenJobProjectD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Open Job", OpenJobProjectD, 27, 48, 308, 115, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "", OpenJobProjectDL, 11, 6, 290, 76, "LISTWINDOW", 8 | WS_TABSTOP | 
+                WS_VISIBLE
+        CONTROL "~Open Job:", 1100, 11, 83, 65, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "~OK", 1, 143, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 190, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 235, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE ProjectsD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Projects", ProjectsD, 17, 70, 336, 104, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+
+
+        CONTROL "~Project Control Number", DID_PCN+DID_STOFFSET, 7, 95, 102, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PCN, 9, 83, 94, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 7, 72, 48, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 7, 54, 320, 16, WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Work Type", DID_WORKTYPE+DID_STOFFSET, 92, 44, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_WORKTYPE, 65, 9, 108, 33, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~District", DID_DISTRICT+DID_STOFFSET, 225, 44, 33, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DISTRICT, 188, 9, 108, 32, WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Location", DID_LOCATION+DID_STOFFSET, 7, 20, 40, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LOCATION, 9, 8, 218, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 139, 84, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Cancel", 2, 185, 84, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Help", 3, 232, 84, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Add ~More", 4, 279, 84, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+    END
+END
+
+
+
+
+DLGTEMPLATE ProjectCategoryD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Project Category", ProjectCategoryD, 21, 54, 166, 51, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "Category ~ID", DID_CATEGORY+DID_STOFFSET, 6, 38, 50, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CATEGORY, 9, 26, 44, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 75, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Cancel", 2, 119, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Help", 3, 75, 16, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Add ~More", 4, 119, 16, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE ProjectItemD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+  DIALOG "Project Item Quantities", ProjectItemD, 65, 86, 288, 149, 
+         FS_NOBYTEALIGN | FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS |                 WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR
+  BEGIN                                                  
+    CONTROL "",                     ProjectItemC,           153,  94,   82,   40,  WC_COMBOBOX,   CBS_DROPDOWNLIST | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     ProjectItemDL,          10,   50,   143,  85,  "LISTWINDOW",  WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "",                     DID_LISTEDIT + 0,       155,  112,  76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     DID_LISTEDIT + 1,       155,  100,  76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     DID_LISTEDIT + 2,       155,  88,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     DID_LISTEDIT + 3,       155,  76,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     DID_LISTEDIT + 4,       155,  64,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "",                     DID_LISTEDIT + 5,       155,  52,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Project Items Total:", DID_PIT + DID_STOFFSET, 66,   32,   83,   8,   WC_STATIC,     SS_TEXT | DT_RIGHT | DT_TOP | WS_GROUP | WS_VISIBLE
+    CONTROL "",                     DID_PIT,                155,  32,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Job Item Total:",      DID_JIT + DID_STOFFSET, 67,   18,   83,   8,   WC_STATIC,     SS_TEXT | DT_RIGHT | DT_TOP | WS_GROUP | WS_VISIBLE
+    CONTROL "",                     DID_JIT,                155,  18,   76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Difference:",          DID_DIF + DID_STOFFSET, 66,   4,    83,   8,   WC_STATIC,     SS_TEXT | DT_RIGHT | DT_TOP | WS_GROUP | WS_VISIBLE
+    CONTROL "",                     DID_DIF,                155,  4,    76,   8,   WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Distribute",           DID_DISTRIBUTE,         233,  2,    51,   13,  WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE                
+
+    CONTROL "OK",                   DID_OK,                 242,  97,   38,   13,  WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    CONTROL "Cancel",               DID_CANCEL,             242,  79,   38,   13,  WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    CONTROL "Help",                 DID_HELP,               243,  60,   38,   13,  WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+  END
+END
+
+

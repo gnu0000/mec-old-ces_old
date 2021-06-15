@@ -1,0 +1,93 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+#
+# Itiwin.Pre
+# Copyright (C) 1990 Info Tech, Inc.
+#
+# Premake File for ITIWIN.DLL
+#
+# To work, this file expects the following 
+# libraries to be already created:
+#   ITIDBASE.LIB
+#   ITIMBASE.LIB
+#   ITIERROR.LIB
+#   ITIBASE.LIB
+#   ITICRT.LIB
+#   ITIGLOB.LIB
+#   ITIMENU.LIB
+#   ITILOCK.LIB
+
+!INCLUDE "..\makeopts"
+
+
+TARGET=itiwin
+TARGETDIR=..\itiwin^\
+
+
+all: $(EXEDIR)$(TARGET).dll $(LIBDIR)$(TARGET).lib
+
+:FileList SourceList = 
+   { 
+   lwmain,     lwmouse,    lwkey,
+   lwselect,   lwclient,
+   lwsplit,    lwutil,     lwsize,
+   defwndpr,   initdll,    winupdat,
+   dlgdef,     swframe,    swmain,
+   windef,     winutil,    winerr
+   }
+
+:FileList LibList =
+   {
+   ItiCRT,     ItiBase,    ItiDBase,   
+   ItiError,   Itimenu,    ItiMBase,
+   itiglob,    ItiUtil,    ColId,
+   itilock,    itifmt,     itiperm
+   }
+
+
+:FileList Resources = 
+   {
+   hsplit.ptr, vsplit.ptr, hvsplit.ptr, itiwin.rc
+   }
+
+
+:CMDLIST SourceCommand = {"$(CC) $(CDLLFLAGS) $(CDEBUG) $(TARGETDIR)$*.c"}
+
+:Expand SourceList,SourceCommand,,obj,,c,INCLUDES
+
+
+   
+$(TARGET).res: {I: itiwin.rc} {F: Resources,,}
+   rc -r $(DEBUG) $*.rc
+
+
+$(LIBDIR)$(TARGET).lib: $(TARGET).def
+   implib -nologo $*.lib $(@B).def
+
+
+$(EXEDIR)$(TARGET).dll : {F: SourceList,,obj} $(TARGET).res {F: LibList,$(LIBDIR),LIB} $(TARGET).def
+   $(LINK) @<<$(TARGET).lnk
+           $(LFLAGS) $(LDEBUG)/NOI/NOD/M crtdll_i $(LIBDIR)itidllc +
+           {F: SourceList,,}
+           $(EXEDIR)$*.dll
+           $(@B).map
+           {F: LibList,$(LIBDIR),LIB} os2.lib
+           $(@B).def
+<<NOKEEP
+   rc $(@B).res $*.dll
+   mapsym /l $(@B).map
+   copy *.sym $(EXEDIR)
+

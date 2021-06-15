@@ -1,0 +1,136 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * Help.rc
+ * Mark Hampton
+ * Copyright (C) 1990 Info Tech, Inc.
+ *
+ */
+
+
+/* define the help sub table for the menus */
+
+HELPSUBTABLE HST_MENUS
+   {
+   HELPSUBITEM IDM_FILE_MENU,                   HP_FILE_MENU
+   HELPSUBITEM IDM_EDIT_MENU,                   HP_EDIT_MENU
+   HELPSUBITEM IDM_VIEW_MENU,                   HP_VIEW_MENU
+   HELPSUBITEM IDM_UTILITIES_MENU,              HP_UTILITIES_MENU
+   HELPSUBITEM IDM_WINDOW_MENU,                 HP_WINDOW_MENU
+   HELPSUBITEM IDM_HELPMENU,                    HP_HELP_MENU
+
+   /* help items for the open menu */
+   HELPSUBITEM IDM_OPEN_CATALOG_MENU,           HP_OPEN_CATALOG_MENU
+
+//   /* help items for the open catalog submenu */
+//   HELPSUBITEM IDM_OPEN_APPLICATION_CATALOG,    HP_OPEN_APPLICATION_CATALOG
+//   HELPSUBITEM IDM_OPEN_AREA_CATALOG,           HP_OPEN_AREA_CATALOG
+//   HELPSUBITEM IDM_OPEN_CODE_TABLE_CATALOG,     HP_OPEN_CODE_TABLE_CATALOG
+//   HELPSUBITEM IDM_OPEN_COST_SHEET_CATALOG,     HP_OPEN_COST_SHEET_CATALOG
+//   HELPSUBITEM IDM_OPEN_EQUIPMENT_CATALOG,      HP_OPEN_EQUIPMENT_CATALOG
+//   HELPSUBITEM IDM_OPEN_LABOR_CATALOG,          HP_OPEN_LABOR_CATALOG
+//   HELPSUBITEM IDM_OPEN_MAP_CATALOG,            HP_OPEN_MAP_CATALOG
+//   HELPSUBITEM IDM_OPEN_MATERIAL_CATALOG,       HP_OPEN_MATERIAL_CATALOG
+//   HELPSUBITEM IDM_OPEN_STANDARD_ITEM_CATALOG,  HP_OPEN_STANDARD_ITEM_CATALOG
+//   HELPSUBITEM IDM_OPEN_USER_CATALOG,           HP_OPEN_USER_CATALOG
+//   HELPSUBITEM IDM_OPEN_VENDOR_CATALOG,         HP_OPEN_VENDOR_CATALOG
+//   HELPSUBITEM IDM_OPEN_ZONE_TYPE_CATALOG,      HP_OPEN_ZONE_TYPE_CATALOG
+
+   HELPSUBITEM IDM_CLOSE,                       HP_CLOSE
+   HELPSUBITEM IDM_PRINT_MENU,                  HP_PRINT_MENU
+//   HELPSUBITEM IDM_PRINT_CODE_TABLE_LISTING,    HP_PRINT_CODE_TABLE_LISTING
+//   HELPSUBITEM IDM_PRINT_USER_LISTING,          HP_PRINT_USER_LISTING
+   HELPSUBITEM IDM_PRINTER_SETUP,               HP_PRINTER_SETUP
+   HELPSUBITEM IDM_IMPORT,                      HP_IMPORT
+   HELPSUBITEM IDM_EXPORT,                      HP_EXPORT
+   HELPSUBITEM IDM_RUN_MENU,                    HP_RUN_MENU
+
+   /* help items for the run submenu */
+   HELPSUBITEM IDM_RUN_ITEM_BROWSER,            HP_RUN_ITEM_BROWSER
+   HELPSUBITEM IDM_RUN_PROPOSAL_BROWSER,        HP_RUN_PROPOSAL_BROWSER
+   HELPSUBITEM IDM_RUN_FACILITY_BROWSER,        HP_RUN_FACILITY_BROWSER
+   HELPSUBITEM IDM_RUN_SQL_BROWSER,             HP_RUN_SQL_BROWSER
+   HELPSUBITEM IDM_RUN_OTHER,                   HP_RUN_OTHER
+
+   HELPSUBITEM IDM_PROCESS_STATUS,              HP_PROCESS_STATUS
+   HELPSUBITEM IDM_EXIT,                        HP_EXIT
+
+   /* help items for the edit menu */
+   HELPSUBITEM IDM_ADD,                         HP_ADD
+   HELPSUBITEM IDM_CHANGE,                      HP_CHANGE
+   HELPSUBITEM IDM_DELETE,                      HP_DELETE
+   HELPSUBITEM IDM_CUT,                         HP_CUT
+   HELPSUBITEM IDM_COPY,                        HP_COPY
+   HELPSUBITEM IDM_PASTE,                       HP_PASTE
+
+   /* help items for the view menu */
+   HELPSUBITEM IDM_PARENT,                      HP_PARENT
+
+   /* help items for the utilities menu */
+   HELPSUBITEM IDM_FIND,                        HP_FIND
+   HELPSUBITEM IDM_SORT,                        HP_SORT
+   HELPSUBITEM IDM_SET_PREFERENCES,             HP_SET_PREFERENCES
+   HELPSUBITEM IDM_CHANGE_PASSWORD,             HP_CHANGE_PASSWORD
+   HELPSUBITEM IDM_SHOW_USERS,                  HP_SHOW_USERS
+   HELPSUBITEM IDM_SEND_MESSAGE,                HP_SEND_MESSAGE
+   HELPSUBITEM IDM_INSTALL,                     HP_INSTALL
+   HELPSUBITEM IDM_DENY_LOGON,                  HP_DENY_LOGON
+   HELPSUBITEM IDM_GENERATE_SUPPORT_REQUEST,    HP_GENERATE_SUPPORT_REQUEST
+
+   /* help items for the window menu */
+   HELPSUBITEM IDM_ARRANGE_CASCADED,            HP_ARRANGE_CASCADED
+   HELPSUBITEM IDM_ARRANGE_TILED,               HP_ARRANGE_TILED
+
+#ifdef DEBUG
+   /* help items for the debug menu */
+   HELPSUBITEM IDM_DEBUG_MENU,                  HP_DEBUG_MENU
+   HELPSUBITEM IDM_DEBUG_BREAK,                 HP_DEBUG_BREAK
+   HELPSUBITEM IDM_DIE_SCUM,                    HP_DIE_SCUM
+#endif
+
+   /* help items for the help menu */
+   HELPSUBITEM IDM_INDEX,                       HP_INDEX
+   HELPSUBITEM IDM_KEYBOARD,                    HP_KEYBOARD
+   HELPSUBITEM IDM_MOUSE,                       HP_MOUSE
+   HELPSUBITEM IDM_COMMANDS,                    HP_COMMANDS
+   HELPSUBITEM IDM_PROCEDURES,                  HP_PROCEDURES
+   HELPSUBITEM IDM_GLOSSARY,                    HP_GLOSSARY
+   HELPSUBITEM IDM_GENERALHELP,                  HP_USING_HELP
+   HELPSUBITEM IDM_ABOUT,                       HP_ABOUT
+   }
+
+
+
+/* HELPSUBTABLE HST_HELP
+   {
+   HELPSUBITEM 0, HP_KEYBOARD_HELP
+   HELPSUBITEM 0, HP_MOUSE_HELP
+   HELPSUBITEM 0, HP_COMMANDS_HELP
+   HELPSUBITEM 0, HP_PROCEDURES_HELP
+   HELPSUBITEM 0, HP_GLOSSARY_HELP
+   HELPSUBITEM 0, HP_USING_HELP_HELP
+   } */
+
+
+/* define the help table */
+
+HELPTABLE HT_HELPTABLE
+   {
+   HELPITEM ID_RESOURCE, HST_MENUS, HELP_DEFAULT_HELP
+/*   HELPITEM ID_RESOURCE, HST_HELP,  HELP_DEFAULT_HELP */
+   }
+

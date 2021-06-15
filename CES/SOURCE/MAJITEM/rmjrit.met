@@ -1,0 +1,321 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+#include "..\include\itiwin.h"                        
+#include "..\include\winid.h"                         
+#include "..\include\metadecl.h"                      
+#include "..\include\itirptdg.h"                      
+#include "dialog.h"                                   
+#include "rMjrIt.h"                                       
+
+
+
+
+
+//select MajorItemID, Description, CommonUnit, Translation
+//from MajorItem, CodeValue
+//where MajorItem.CommonUnit = CodeValue.CodeValueKey and
+//MajorItemKey = 1
+//
+//
+//
+//select StandardItemNumber, ShortDescription, Unit, QuantityConversionFactor,
+//CommonUnit, PercentofCost
+//from MajorItem, StandardItemMajorItem, StandardItem
+//where MajorItem.MajorItemKey = StandardItemMajorItem.MajorItemKey
+//and StandardItemMajorItem.StandardItemKey = StandardItem.StandardItemKey
+//and MajorItem.MajorItemKey = 1
+
+
+
+// /* Major Item Listing:  Price Estimation (5-36) */
+//
+// select * from MajorItemPriceRegression
+// where MajorItemKey = 1000000
+// AND BaseDate = (select MAX(BaseDate)
+//                 from MajorItemPriceRegression
+//                 where MajorItemKey = 1000000)
+// 
+//
+// SELECT MedianQuantity, CodeValueID, MedianQuantityUnitPrice,
+// QuantityAdjustment
+// FROM MajorItem, MajorItemPriceRegression, CodeValue
+// WHERE MajorItem.CommonUnit = CodeValue.CodeValueKey 
+// AND MajorItemPriceRegression.MajorItemKey = MajorItem.MajorItemKey 
+// AND MajorItemPriceRegression.MajorItemKey = %MajorItemKey
+// AND MajorItemPriceRegression.BaseDate = '%BaseDate'
+//
+// /* To retrieve all of the QualitativeVariables for this MajorItem */
+//
+// SELECT QualitativeVariable
+// FROM MajorItemPriceVariable
+// WHERE MajorItemPriceVariable.MajorItemKey = 1000000
+// AND MajorItemPriceVariable.BaseDate = '1-23-91'
+//
+// /* To retrieve the QualitativeValue and PriceAdjustment for each */
+// /* QualitativeVariable for a particular MajorItem                */
+//
+//
+// SELECT QualitativeValue, PriceAdjustment 
+// FROM MajorItemPriceAdjustment
+// WHERE MajorItemKey = 1000000
+// AND BaseDate = '1-23-91'
+// AND QualitativeVariable = 2
+
+
+
+
+
+
+// /* MajorItemListing:  QuantityEstimation (5-38) */
+//
+// /* ????????  */
+// /* RoadwayBaseCoefficient AND StructureBaseCoefficient is not a valid */
+// /* field in the MajorItemQuantityRegression table                     */
+// /* ask about these two fields                                         */
+// 
+// /* first part */
+//
+// SELECT BaseCoefficient, DepthAdjustment, WidthAdjustment,
+// CrossSectionAdjustment, StructureBaseAdjustment, StructureLengthAdjustment,
+// StructureWidthAdjustment, StructureAreaAdjustment 
+// FROM MajorItemQuantityRegression
+// WHERE MajorItemKey = 1000000
+// AND BaseDate = '1-23-91'
+// 
+// /* To retrieve all of the QualitativeVariables for this MajorItem */
+// 
+// SELECT QualitativeVariable
+// FROM MajorItemQuantityVariable
+// WHERE MajorItemKey = 1000000
+// AND BaseDate = '1-23-91'
+// 
+//
+// /* To retrieve the VariableValue and Quantity Adjustments for each */
+// /* QualitativeVariable for a particular MajorItem                  */
+//
+//
+// SELECT VariableValue, QuantityAdjustment
+// FROM MajorItemQuantityAdjustment
+// WHERE MajorItemKey = 1000000
+// AND BaseDate = '1-23-91'
+// AND QualitativeVariable = 2
+
+
+
+
+
+:query rMjrItQ.bin                                        
+
+ID_QUERY_DESC, "select MajorItemID, Description, CodeValueID, Translation "
+ID_QUERY_DESC, ", MI.SpecYear, MI.UnitType "
+ID_QUERY_DESC, "from MajorItem MI, CodeValue "
+ID_QUERY_DESC, "where MI.Deleted is NULL "
+ID_QUERY_DESC, " and MI.CommonUnit = CodeValue.CodeValueKey " 
+ID_QUERY_DESC, " and MajorItemKey = "
+
+
+                //  MODIFY QUERY TO GET UNIT'S ID TEXT, NOT ITS ID NUMBER
+
+ID_QUERY_LISTING, "select StandardItemNumber, S.ShortDescription, A.CodeValueID, "
+ID_QUERY_LISTING, "SM.QuantityConversionFactor, B.CodeValueID, "
+ID_QUERY_LISTING, " PercentofCost "
+ID_QUERY_LISTING, "from MajorItem M, StandardItemMajorItem SM, StandardItem S, "
+ID_QUERY_LISTING, "CodeValue A, CodeValue B "
+ID_QUERY_LISTING, "where "
+ID_QUERY_LISTING, "S.Unit = A.CodeValueKey " 
+ID_QUERY_LISTING, "and M.CommonUnit = B.CodeValueKey " 
+ID_QUERY_LISTING, "and M.MajorItemKey = SM.MajorItemKey "
+ID_QUERY_LISTING, "and SM.StandardItemKey "
+ID_QUERY_LISTING,     " = S.StandardItemKey "
+ID_QUERY_LISTING, "and M.MajorItemKey = "
+
+//                        Get most recent base date.                
+ID_QRY_BASEDATE, "SELECT max(BaseDate) "
+ID_QRY_BASEDATE, "FROM MajorItemPriceRegression "
+ID_QRY_BASEDATE, "WHERE MajorItemKey = "
+
+
+
+
+
+ID_QRY_PRICE_REGRS, "SELECT MedianQuantity, CodeValueID, MedianQuantityUnitPrice, "
+ID_QRY_PRICE_REGRS, "QuantityAdjustment "
+ID_QRY_PRICE_REGRS, "FROM MajorItem, MajorItemPriceRegression, CodeValue "
+ID_QRY_PRICE_REGRS, "WHERE MajorItem.CommonUnit = CodeValue.CodeValueKey "
+ID_QRY_PRICE_REGRS, "AND MajorItemPriceRegression.MajorItemKey = MajorItem.MajorItemKey "
+ID_QRY_PRICE_REGRS, "AND MajorItemPriceRegression.MajorItemKey = "
+
+ID_CNJ_PRICE_REGRS, " AND MajorItemPriceRegression.BaseDate = "
+
+
+
+
+
+
+ID_QRY_QTY_REGRS, "SELECT BaseCoefficient, DepthAdjustment, WidthAdjustment, "
+ID_QRY_QTY_REGRS, "CrossSectionAdjustment, StructureBaseAdjustment, "
+ID_QRY_QTY_REGRS, "StructureLengthAdjustment, "
+ID_QRY_QTY_REGRS, "StructureWidthAdjustment, StructureAreaAdjustment "
+ID_QRY_QTY_REGRS, "FROM MajorItemQuantityRegression "
+ID_QRY_QTY_REGRS, "WHERE MajorItemKey = "
+
+ID_CNJ_QTY_REGRS, " AND BaseDate = "
+
+
+
+
+
+// /* To retrieve all of the QualitativeVariables for this MajorItem */
+
+ID_QRY_QVAR, "SELECT QualitativeVariable "
+ID_QRY_QVAR, " FROM MajorItemQuantityVariable "
+ID_QRY_QVAR, " WHERE MajorItemKey = "
+
+ID_CNJ_QVAR, " AND BaseDate = "
+
+
+
+// /* To retrieve the QualitativeValue and PriceAdjustment for each */
+// /* QualitativeVariable for a particular MajorItem                */
+
+ID_QRY_QV_ADJ, "SELECT QualitativeValue, PriceAdjustment "
+ID_QRY_QV_ADJ, "FROM MajorItemPriceAdjustment "
+ID_QRY_QV_ADJ, "WHERE MajorItemKey = "
+
+ID_CNJ_QV_ADJ_BASEDATE, " AND BaseDate = "
+ID_CNJ_QV_ADJ,              " AND QualitativeVariable = "
+
+
+
+// /* To retrieve the VariableValue and Quantity Adjustments for each */
+// /* QualitativeVariable for a particular MajorItem                  */
+
+ID_QRY_QEST_ADJ, "SELECT VariableValue, QuantityAdjustment "
+ID_QRY_QEST_ADJ, "FROM MajorItemQuantityAdjustment "
+ID_QRY_QEST_ADJ, "WHERE MajorItemKey = "
+
+//ID_CNJ_QV_ADJ_BASEDATE, " AND BaseDate = "
+//ID_CNJ_QV_ADJ,              " AND QualitativeVariable = "
+
+
+
+// Column titles                                      
+// ppsz_Idx TtlCol TtlColWth  DtaCol  DtaColWth,TtlText
+//--------------------------------------------------------     
+RPT_TTL_1,   "0,   12,  12,   4,Major Item: "
+RPT_TTL_2,   "16,   3,  19,  58, - "  
+RPT_TTL_3,   "19,  12,  31,   4,Measured in "  
+RPT_TTL_4,   "35,   3,  38,  41, - "  
+
+
+RPT_TTL_5,   " 3,  15,  19,  13,Standard Items:"  
+RPT_TTL_6,   "32,   3,  35,  40, - "  
+
+RPT_TTL_7,   "26,   2,  28,   4,1"  
+RPT_TTL_8,   "32,   3,  35,   9, = "  
+RPT_TTL_9,   "50,  15,  45,   4, of major item"  
+RPT_TTL_10,  "27,  11,  38,   4,$1.00 =   $"  
+RPT_TTL_11,  "43,  15,   0,   0,of major item"
+
+RPT_TTL_12,  "0,    8,   8,   5,(cont.) "           
+
+RPT_TTL_13,  "0,   18,   0,   0,Price Estimation: "
+RPT_TTL_14,  "20,  19,  39,  15,Median quantity is "
+RPT_TTL_15,  "12,  30,  42,  17,Median quantity unit price is "
+RPT_TTL_16,  "10,  50,  60,  16,Doubling the quantity decreases the unit price by "
+
+RPT_TTL_17,  "4,   16,  20,  20,Adjustments for "
+
+RPT_TTL_18,  "19,  17,  36,  11,: increase price "
+RPT_TTL_19,  "19,  17,  36,  11,: decrease price "
+RPT_TTL_20,  "11,   0,  11,   8,  "
+
+
+RPT_TTL_21, "0,   21,   0,   0,Quantity Estimation: "
+RPT_TTL_22, "5,   64,   0,   0,Quantity = roadway-quantity + structure-quantity + adjustments "
+
+RPT_TTL_23, "14,  28,   0,   0,= length * quantity-per-mile "
+RPT_TTL_24, "14,  23,   0,   0,  + structure-quantity "
+RPT_TTL_25, "14,  16,   0,   0,  + adjustments "
+
+RPT_TTL_26, "36,   3,  25,  11, + "
+RPT_TTL_27, "36,  20,  25,  11, * Pavement-Depth + "
+RPT_TTL_28, "36,  20,  25,  11, * Pavement-Width + "
+RPT_TTL_29, "36,  36,  25,  11, * Pavement-Depth * Pavement-Width) "
+
+
+RPT_TTL_30, "29,   3,  18,  11, + "
+RPT_TTL_31, "29,  22,  18,  11, * Structure-Length + "
+RPT_TTL_32, "29,  22,  18,  11, * Structure-Width  + "
+RPT_TTL_33, "29,  40,  18,  11, * Structure-Length * Structure-Width) "
+
+
+RPT_TTL_34,  "19,  20,  39,  11,: increase quantity "
+RPT_TTL_35,  "19,  20,  39,  11,: decrease quantity "
+
+RPT_TTL_36,   "2,   10,  12,   4,SpecYear: "
+RPT_TTL_37,   "1,   11,  12,   8,Unit Type: "
+
+// Number of column titles                            
+ID_RPT_TTL,    "37"
+
+
+:FORMAT rMjrItF.bin                                                  
+
+ID_QUERY_DESC,    "String", "String",   "String", "String",   "String", "String"
+
+ID_QUERY_LISTING, "String", "String",   "String", "Number,...."
+ID_QUERY_LISTING, "String", "Number,.." 
+
+
+ID_QRY_BASEDATE, "DateTime,'dd-mmm-yyyy hh:nn:ss'"
+
+
+ID_QRY_PRICE_REGRS, "Number,,...", "String,~,.~", "Number,$,...."
+ID_QRY_PRICE_REGRS, "Number,%.."
+
+
+ID_QRY_QTY_REGRS, "Number,,....", "Number,,....", "Number,,...."
+ID_QRY_QTY_REGRS, "Number,,....", "Number,,...."
+ID_QRY_QTY_REGRS, "Number,,...."
+ID_QRY_QTY_REGRS, "Number,,....", "Number,,...."
+
+
+ID_QRY_QVAR,      "String"
+
+ID_QRY_QV_ADJ,    "String",  "Number,%,.."
+
+ID_QRY_QEST_ADJ,  "String",  "Number,%,.."
+
+
+
+:query rMjrItDQ.bin                                                  
+
+rMjrIt_RptDlgBox,       "SELECT MajorItemKey "                             
+rMjrIt_RptDlgBox,       "FROM MajorItem "                                  
+rMjrIt_RptDlgBox,       "WHERE Deleted is NULL "                   
+rMjrIt_RptDlgBox,       "AND MajorItemKey = %MajorItemKey "                   
+
+
+
+:Dialog rMjrItDD.bin rMjrItDF.bin                                        
+
+// Dlg Id        add Query ID     change Query ID  Col Name CtlID    Disp Fmt  Input Fmt  
+//-------------------------------------------------------------------------------------- 
+rMjrIt_RptDlgBox, rMjrIt_RptDlgBox, rMjrIt_RptDlgBox, MajorItemKey, DID_KEY, "Number", "Number" 
+
+

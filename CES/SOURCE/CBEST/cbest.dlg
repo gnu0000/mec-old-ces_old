@@ -1,0 +1,760 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE CostBasedEstimateD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Cost Based Estimate", CostBasedEstimateD, 49, 57, 255, 90, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Cost Based Estimate ID", DID_CBESTID+DID_STOFFSET, 5, 79, 104, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CBESTID, 7, 68, 39, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Active", DID_ACTIVE, 187, 68, 50, 10, WC_BUTTON, BS_AUTOCHECKBOX | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 5, 54, 53, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 7, 28, 240, 24, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 30, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 81, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 129, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 180, 7, 49, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE JobCostBasedEstD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Cost Based Estimate", JobCostBasedEstD, 49, 57, 255, 90, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Cost Based Estimate ID", DID_CBESTID+DID_STOFFSET, 5, 79, 104, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CBESTID, 7, 68, 39, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Active", DID_ACTIVE, 187, 68, 50, 10, WC_BUTTON, BS_AUTOCHECKBOX | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 5, 54, 53, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 7, 28, 240, 24, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 30, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 81, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 129, 7, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 180, 7, 49, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+
+DLGTEMPLATE TasksForStdItemD  LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Tasks For Standard Item", TasksForStdItemD, 7, 43, 342, 186, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Task ID", DID_TASKID+DID_STOFFSET, 5, 175, 38, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKID, 7, 162, 70, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~Production Adj", DID_PRODUCADJ+DID_STOFFSET, 88, 174, 64, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODUCADJ, 92, 162, 54, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Material ~Qty Adj", DID_MATQTYADJ+DID_STOFFSET, 165, 175, 72, 8,  WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATQTYADJ, 173, 162, 54, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit", DID_UNIT_NJ+DID_STOFFSET, 255, 175, 20, 8,  WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNIT_NJ, 243, 126, 64, 45, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "Quantity Per ~Item Unit", DID_QTYPERITEMUNIT+DID_STOFFSET, 140, 146, 95, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QTYPERITEMUNIT, 144, 134, 88, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+
+        CONTROL "Cost Sheet Catalog", 265, 13, 127, 90, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", TaskCostShtEditDL, 12, 51, 274, 75, "LISTWINDOW", WS_GROUP | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Task ~Description", DID_TASKDESCRIP+DID_STOFFSET, 15, 40, 76, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKDESCRIP, 12, 8, 324, 29, WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 297, 102, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 296, 87, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 297, 72, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 295, 56, 44, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE CostShtForTaskD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Task Cost Sheet", CostShtForTaskD, 28, 73, 245, 112, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+
+        CONTROL "Production ~Rate", DID_PRODRATE+DID_STOFFSET, 8, 99, 72, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODRATE, 12, 87, 91, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Production ~Granularity", DID_PRODGRAN+DID_STOFFSET, 7, 73, 98, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODGRAN, 13, 41, 84, 30,
+                WC_COMBOBOX, CBS_DROPDOWN | WS_TABSTOP | WS_VISIBLE
+//                WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Default ~Hours Per Day", DID_HRSPERDAY+DID_STOFFSET, 119, 74, 103, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_HRSPERDAY, 126, 61, 84, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Materials ~Overhead Pct", DID_MATOVRHDPCT+DID_STOFFSET, 5, 46, 102, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATOVRHDPCT, 17, 35, 74, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Equipment Overhead Pct", DID_EQUIPOVRHDPCT+DID_STOFFSET,  119, 47, 109, 9, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_EQUIPOVRHDPCT, 129, 35, 81, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Labor Overhead Pct", DID_LABOROVRHDPCT+DID_STOFFSET, 11, 20, 88, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABOROVRHDPCT, 14, 9, 74, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Contractor ~Markup Pct", DID_CONTRACPCT+DID_STOFFSET, 123, 21, 102, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CONTRACPCT, 135, 9, 74, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 118, 86, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 161, 86, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 205, 86, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE ChJobTaskListD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Task List", ChJobTaskListD, 15, 51, 294, 100, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Task ID", DID_TASKID+DID_STOFFSET, 6, 89, 38, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKID, 6, 75, 97, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Quantity Per Item Unit", DID_QTYPERITEMUNIT+DID_STOFFSET, 113, 89, 98, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QTYPERITEMUNIT, 121, 75, 78, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit", DID_UNIT+DID_STOFFSET, 242, 89, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNIT, 221, 55, 64, 32, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_TASKDESCRIP+DID_STOFFSET, 6, 59, 55, 9, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKDESCRIP, 6, 28, 278, 30, WC_MLE, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 76, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 127, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 178, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE AddJobTaskListD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Task List", AddJobTaskListD, 23, -7, 358, 182, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Task ID", DID_TASKID+DID_STOFFSET, 7, 168, 38, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKID, 9, 156, 97, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Quantity Per Item Unit", DID_QTYPERITEMUNIT+DID_STOFFSET, 133, 168, 98, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QTYPERITEMUNIT, 138, 156, 85, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Unit", DID_UNIT+DID_STOFFSET, 279, 168, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNIT, 262, 134, 64, 32, WC_COMBOBOX, CBS_DROPDOWN | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Task Description", DID_TASKDESCRIP+DID_STOFFSET, 7, 144, 77, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKDESCRIP, 7, 126, 335, 16, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Cost ~Sheet ID", DID_COSTSHTID+DID_STOFFSET, 7, 115, 63, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COSTSHTID, 9, 103, 56, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 83, 115, 52, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 83, 98, 260, 16, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Cost Sheet Catalog", 270, 7, 86, 90, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", TaskCostShtEditDL, 7, 7, 295, 78, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 311, 67, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 311, 51, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 311, 36, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 310, 21, 44, 12, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE JobCostSheetD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Cost Sheet", JobCostSheetD, 6, 45, 370, 163, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Task ID", DID_TASKID+DID_STOFFSET, 5, 153, 34, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKID, 5, 138, 101, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "T~ask Description", DID_TASKDESCRIP+DID_STOFFSET, 115, 153, 78, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_TASKDESCRIP, 116, 132, 246, 19, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Cost Sheet ~ID", DID_COSTSHTID+DID_STOFFSET, 5, 123, 66, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COSTSHTID, 5, 110, 75, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 115, 123, 65, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 116, 102, 248, 19, WC_MLE, MLS_BORDER | MLS_VSCROLL | MLS_WORDWRAP |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Production ~Rate", DID_PRODRATE+DID_STOFFSET, 5, 90, 72, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODRATE, 5, 78, 93, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "D~uration", DID_DURATION+DID_STOFFSET, 135, 90, 46, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DURATION, 122, 78, 63, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Production ~Granularity", DID_PRODGRAN+DID_STOFFSET, 210, 90, 98, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_PRODGRAN, 228, 59, 61, 30,
+                WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+//                WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Labor Overhead Pct", DID_LABOROVRHDPCT+DID_STOFFSET , 6, 65, 93, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_LABOROVRHDPCT, 17, 53, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Equip Overhead Pct", DID_EQUIPOVRHDPCT+DID_STOFFSET, 110, 65, 87, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_EQUIPOVRHDPCT, 124, 53, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Hours ~Per Day", DID_HRSPERDAY+DID_STOFFSET, 230, 65, 67, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_HRSPERDAY, 235, 53, 43, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "O~vertime Hrs Per Day", DID_OVRTIMEHRS+DID_STOFFSET, 4, 41, 95, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_OVRTIMEHRS, 17, 30, 60, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Mar~kUp Pct", DID_MARKUPPCT+DID_STOFFSET, 129, 41, 58, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MARKUPPCT, 124, 30, 63, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "U~nit", DID_UNIT+DID_STOFFSET, 245, 43, 20, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_UNIT, 218, 1, 78, 41,
+                WC_COMBOBOX, CBS_DROPDOWN | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Materia~ls Overhead Pct", DID_MATOVRHDPCT+DID_STOFFSET, 2, 16, 101, 8, WC_STATIC, 
+                SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_MATOVRHDPCT, 19, 4, 61, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Qty Per Item Unit", DID_QTYPERITEMUNIT+DID_STOFFSET, 121, 16, 75, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QTYPERITEMUNIT, 124, 4, 63, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+
+        CONTROL "~OK", 1, 319, 73, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 319, 54, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 319, 37, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+DLGTEMPLATE MatForCostShtD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Materials For Cost Sheet", MatForCostShtD, 22, 54, 308, 100, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 7, 90, 36, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 9, 78, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Material Catalog", 258, 7, 64, 76, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", MatForCostShtDL, 7, 4, 293, 57, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 114, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 159, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 205, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 250, 75, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+DLGTEMPLATE CrewForCostShtD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew For Cost Sheet", CrewForCostShtD, 21, 50, 350, 132, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Cost Sheet Crew ~ID", DID_COSTSHTCREWID+DID_STOFFSET, 5, 121, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_COSTSHTCREWID, 6, 109, 77, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 104, 121, 61, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 95, 103, 246, 17, WC_MLE, MLS_BORDER | MLS_VSCROLL | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Crew Catalog", 261, 14, 89, 61, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", CrewCatForCostShtD, 11, 29, 326, 58, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 72, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 119, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 165, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 210, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+
+DLGTEMPLATE CrewCShtLbEqD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew", CrewCShtLbEqD, 11, 28, 416, 141, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Description", DID_CREWDESCR+DID_STOFFSET, 10, 129, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CREWDESCR, 10, 110, 387, 19, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewCShtLaborL, 5, 22, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD1, 168, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE1, 168, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE1, 168, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewCShtEquipL, 212, 21, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD2, 372, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE2, 372, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE2, 372, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 33, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 79, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 125, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewCShtLaborD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew Labor", CrewCShtLaborD, 18, 48, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Labor Catalog", 259, 81, 69, 63, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", LaborCatL, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewCShtEquipD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew Equipment", CrewCShtEquipD, 27, 26, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Equipment Catalog", 259, 65, 68, 88, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", EquipCatL, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE JobMaterialsD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Materials For Job Cost Sheet", JobMaterialsD, 22, 54, 308, 100, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+//    DIALOG "Materials For Job Cost Sheet", JobMaterialsD, 22, 54, 308, 128, FS_NOBYTEALIGN | 
+//                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+//                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+//        CONTROL "~Unit Price", DID_UNITPRICE+DID_STOFFSET, 7, 112, 36, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+//                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+//        CONTROL "", DID_UNITPRICE, 9, 100, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+//                WS_TABSTOP | WS_VISIBLE
+//
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 7, 90, 36, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 9, 78, 80, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Material Catalog", 258, 7, 64, 76, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", MatForCostShtDL, 7, 4, 293, 57, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 114, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 159, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 205, 75, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 250, 75, 45, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+
+
+
+DLGTEMPLATE CrewForJobD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew For Job", CrewForJobD, 21, 50, 350, 132, FS_NOBYTEALIGN | 
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, 
+                FCF_SYSMENU | FCF_TITLEBAR
+    BEGIN
+        CONTROL "Job Crew ~ID", DID_JOBCREWID+DID_STOFFSET, 5, 121, 84, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_JOBCREWID, 6, 109, 77, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~Description", DID_DESCRIP+DID_STOFFSET, 104, 121, 61, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_DESCRIP, 95, 103, 246, 17, WC_MLE, MLS_BORDER | MLS_VSCROLL | 
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Crew Catalog", 261, 14, 89, 61, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", CrewCatForCostShtD, 11, 29, 326, 58, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 72, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 119, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 165, 9, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 210, 9, 46, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+DLGTEMPLATE CrewJobLbEqD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Crew", CrewJobLbEqD, 11, 28, 416, 141, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Description", DID_CREWDESCR+DID_STOFFSET, 10, 129, 51, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_CREWDESCR, 10, 110, 387, 19, WC_MLE, MLS_BORDER | MLS_WORDWRAP | 
+                MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewJobLaborL, 5, 22, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD1, 168, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE1, 168, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE1, 168, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "", CrewJobEquipL, 212, 21, 157, 80, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~Add", DID_ADD2, 372, 63, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Change", DID_CHANGE2, 372, 47, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Delete", DID_DELETE2, 372, 32, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "~OK", 1, 33, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 79, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 125, 4, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewJobLaborD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Crew Labor", CrewJobLaborD, 18, 48, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Labor Catalog", 259, 81, 69, 63, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", LaborCatL, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+DLGTEMPLATE CrewJobEquipD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+    DIALOG "Job Crew Equipment", CrewJobEquipD, 27, 26, 227, 114, FS_NOBYTEALIGN | FS_DLGBORDER | 
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_SYSMENU | 
+                FCF_TITLEBAR
+    BEGIN
+        CONTROL "~Quantity", DID_QUANTITY+DID_STOFFSET, 17, 96, 35, 8, WC_STATIC, SS_TEXT | DT_LEFT | 
+                DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+        CONTROL "", DID_QUANTITY, 19, 84, 46, 8, WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | 
+                WS_TABSTOP | WS_VISIBLE
+
+        CONTROL "Equipment Catalog", 259, 65, 68, 88, 8, WC_STATIC, SS_TEXT | 
+                DT_LEFT | DT_TOP | WS_GROUP | WS_VISIBLE
+        CONTROL "", EquipCatL, 7, 4, 212, 63, "LISTWINDOW", WS_GROUP | 
+                WS_VISIBLE
+
+        CONTROL "~OK", 1, 133, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | BS_DEFAULT | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Cancel", 2, 132, 79, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+        CONTROL "~Help", 3, 177, 94, 38, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                BS_HELP | WS_TABSTOP | WS_VISIBLE
+        CONTROL "Add ~More", 4, 175, 79, 43, 13, WC_BUTTON, BS_PUSHBUTTON | 
+                WS_TABSTOP | WS_VISIBLE
+    END
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

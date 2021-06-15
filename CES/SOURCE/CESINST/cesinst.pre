@@ -1,0 +1,81 @@
+#+--------------------------------------------------------------------------+
+#|                                                                          |
+#|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.        |
+#|                                                                          |
+#|       This program module is part of DS/Shell (PC), Info Tech's          |
+#|       database interfaces for OS/2, a proprietary product of             |
+#|       Info Tech, Inc., no part of which may be reproduced or             |
+#|       transmitted in any form or by any means, electronic,               |
+#|       mechanical, or otherwise, including photocopying and recording     |
+#|       or in connection with any information storage or retrieval         |
+#|       system, without permission in writing from Info Tech, Inc.         |
+#|                                                                          |
+#+--------------------------------------------------------------------------+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ PreMake file for CES cesinst program.
+~
+~ this was copied from EBS
+~
+~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ =================== NON OPTIMIZED =======================
+~ :CmdList CmdLine = {"cl /W3 /c /AL /Od /Zi /nologo $*.c"}
+~ link {F: SourceFiles,,obj}/CO,,NUL,os2 llibcep/NOD/NOE/nologo,$*.def
+~
+~ ===================== OPTIMIZED =========================
+~ :CmdList CmdLine = {"cl /W3 /c /AL /Oxaz /Grs /nologo $*.c"}
+~ link {F: SourceFiles,,obj}/E/F/PACKC/PACKD,,NUL,os2 llibcep/NOD/NOE/nologo,$*.def
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+!include "..\makeopts"
+
+TARGET=cesinst
+TARGETDIR=..\cesinst^\
+
+all : $(EXEDIR)cesinst.exe $(EXEDIR)servinst.exe
+
+
+:FileList AllFiles =
+   {
+   cesinst,    servinst,
+   KBD,        SCR,        
+   Util,       doconfig,
+   getinfo,    error,
+   harderr,    exec,
+   dbqry,      database,
+   arg2
+   }
+
+:FileList CesInstFiles =
+   {
+   cesinst,    
+   KBD,        SCR,        
+   Util,       doconfig,
+   getinfo,    error,
+   arg2
+   }
+
+:FileList ServInstFiles =
+   {
+   servinst,
+   KBD,        SCR,        
+   Util,       doconfig,
+   getinfo,    error,
+   harderr,    exec,
+   dbqry,      database,
+   arg2
+   }
+
+
+:Expand AllFiles,{"cl -c -W3 -Od -ALw -G2sc -Zp -FPi -nologo $(CDEBUG) $(TARGETDIR)$*.c"},,obj,,c,INCLUDES 
+
+$(EXEDIR)cesinst.exe : {F: CesInstFiles,,obj} cesinst.def cesinst.pre
+  link {F: CesInstFiles,,obj}/CO,$*,NUL,os2 llibcep/NOD/NOE/nologo,CesInst.def
+
+$(EXEDIR)ServInst.exe : {F: ServInstFiles,,obj} cesinst.def cesinst.pre
+  link {F: ServInstFiles,,obj}/CO,$*,NUL,os2 pdblib llibcep/NOD/NOE/nologo,ServInst.def
+
+
+

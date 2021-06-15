@@ -1,0 +1,65 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+DLGTEMPLATE MajorItemCatD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+  DIALOG "Major Item", MajorItemCatD, 53, 95, 334, 91, FS_NOBYTEALIGN | FS_DLGBORDER | 
+              WS_VISIBLE | WS_SAVEBITS, FCF_SYSMENU | FCF_TITLEBAR
+  BEGIN
+    CONTROL "~Major Item ID", DID_ID+DID_STOFFSET,    9,      76,      64,       8,      WC_STATIC,      SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",               DID_ID,                 10,     64,      51,       8,      WC_ENTRYFIELD,  ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "~Description",   DID_DESCR+DID_STOFFSET, 9,      51,      54,       8,      WC_STATIC,      SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",               DID_DESCR,              9,      20,      318,      29,     WC_MLE,         MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+    CONTROL "Common ~Unit",   DID_UNIT+DID_STOFFSET,  90,     76,      66,       8,      WC_STATIC,      SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",               DID_UNIT,               90,     7,       55,       67,     WC_COMBOBOX,    CBS_DROPDOWN | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Spec ~Year",  DID_SPECYEAR+DID_STOFFSET, 170,    76,      46,        8,      WC_STATIC,      SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",            DID_SPECYEAR,              170,     7,      46,        67,     WC_COMBOBOX,    CBS_DROPDOWN | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Qty Conv. Factor", DID_CONV+DID_STOFFSET, 250,    76,  80,   8,    WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",                 DID_CONV,              250,    64,  80,   8,    WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+//    CONTROL "Metric",         DID_UNITSYS,            250,    64,      70,        10,     WC_BUTTON,      BS_AUTOCHECKBOX | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "~OK",            DID_OK,                 110,     3,       38,       13,     WC_BUTTON,      BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+    CONTROL "~Cancel",        DID_CANCEL,             166,     3,       38,       13,     WC_BUTTON,      BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    CONTROL "Add ~More",      DID_ADDMORE,            222,     3,       38,       13,     WC_BUTTON,      BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+//    CONTROL "~Help",          DID_HELP,               278,     3,       38,       13,     WC_BUTTON,      BS_PUSHBUTTON | BS_HELP | WS_TABSTOP | WS_VISIBLE
+  END
+END
+
+
+
+DLGTEMPLATE MajorItemD LOADONCALL MOVEABLE DISCARDABLE 
+BEGIN
+  DIALOG "StandardItem/MajorItem", MajorItemD, 12, 50, 355, 127, FS_NOBYTEALIGN | 
+              FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS,                 FCF_SYSMENU | FCF_TITLEBAR
+  BEGIN
+    CONTROL "~Quantity Conversion Factor", DID_CONV+DID_STOFFSET,  10,    115,  123,  8,    WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",                            DID_CONV,               12,    103,  59,   8,    WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+    CONTROL "~Percent of Cost",            DID_PCT+DID_STOFFSET,   237,   115,  72,   8,    WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",                            DID_PCT,                239,   103,  39,   8,    WC_ENTRYFIELD, ES_LEFT | ES_MARGIN | WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "Standard Item Catalog",       100,                    6,     84,   102,  8,    WC_STATIC,     SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_GROUP | WS_VISIBLE
+    CONTROL "",                            StandardItemCatL, 5,     22,   342,  61,   "LISTWINDOW",  WS_GROUP |    WS_TABSTOP | WS_VISIBLE
+
+    CONTROL "~OK",                         DID_OK,                 91,    5,    38,   13,   WC_BUTTON,     BS_PUSHBUTTON | BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+    CONTROL "~Cancel",                     DID_CANCEL,             137,   5,    38,   13,   WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    CONTROL "Add ~More",                   DID_ADDMORE,            233,   5,    42,   13,   WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+    CONTROL "~Help",                       DID_HELP,               185,   5,    38,   13,   WC_BUTTON,     BS_PUSHBUTTON | WS_TABSTOP | WS_VISIBLE
+  END
+END
+

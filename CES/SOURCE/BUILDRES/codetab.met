@@ -1,0 +1,270 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by Info Tech, Inc.  All Rights Reserved.         |
+|                                                                           |
+|       This program module is part of DS/Shell (PC), Info Tech's           |
+|       database interfaces for OS/2, a proprietary product of              |
+|       Info Tech, Inc., no part of which may be reproduced or              |
+|       transmitted in any form or by any means, electronic,                |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from Info Tech, Inc.          |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+/*
+ * codetabl.met
+ * This file contains metadata for the catalog windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ *  custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+
+
+
+
+:static  static.bin 
+//
+//   generates data for 
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// USHORT            RECTS               USHORT                    LONG                  LONG                 
+//                                                                                              
+// Static Window ID  add                  change                  xpos ypos xsiz ysiz CoordType  Window Options        Background Color     
+//-------------------------------------------------------------------------------------------------------------------------
+CodeTableS,   CodeTableD,  CodeTableD,     7,  5,  60,  12, COORD_CHRRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+CodeValueS,   CodeValueD,  CodeTableD,     10, 8,  120, 27, COORD_BLKRNG, ITI_STATICOPTIONS,    ITI_STATICBACKGROUND
+
+
+
+
+
+:CHILD child.bin 
+//
+//   generates data for 
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled. 
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT            USHORT               USHORT                                              RECTS       USHORT   
+// Parents Window ID Type Child Window ID uKind       add                 change              Coord    
+//------------------------------------------------------------------------------------------------------------------------------------
+CodeTableS,   CodeTableL, ITIWC_LIST, CodeTableD, CodeTableD, 0, 0, 0, 0, COORD_CHRREL
+CodeValueS,   CodeValueL,     ITIWC_LIST, CodeValueD, CodeValueD, 0, 5, 0, 0, COORD_BLKREL
+
+
+
+
+:list list.bin 
+//
+//   generates data for 
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT            LONG               LONG                 LONG                     USHORT USHORT  USHORT
+// List Window ID    Window Options     Background Color     Label Bkg Color           Label ydata   Button Window ID
+//-------------------------------------------------------------------------------------------------------------------
+CodeTableL, ITI_LISTOPTIONSHV, ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,      0,   0,      0
+CodeValueL,     ITI_LISTOPTIONSV,  ITI_LDATABACKGROUND, ITI_LLABELBACKGROUND,      0,   0,      0
+
+
+
+
+:DATA data.bin format.bin 
+//
+//   generates data for 
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+// uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT            USHORT             RECTS (DLG|UL|RNG)  USHORT     LONG               LONG             NAME               PSZ
+//                                                                     
+// Window ID         Next Window ID     xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags        Col Name           Format String
+//------------------------------------------------------------------------------------------------------------------------------------------
+CodeTableL, CodeValueS, 1,   0,   8,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     CodeTableID,       "String"
+CodeTableL, CodeValueS, 9,   0,   11,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATACTRFLAGS,  MaximumCodeLength, "Number,,"
+CodeTableL, CodeValueS, 21,  0,   40,  1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,     Description,       "String"
+
+CodeValueS,   CodeTableS, 11,  0,   8,   1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  CodeTableID,       "String"
+CodeValueS,   CodeTableS, 20,  0,   1,   1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  Description,       "String"
+CodeValueS,   CodeTableS, 15,  1,   4,   1,   COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,  MaximumCodeLength, "Number"
+
+CodeValueL,     0,                 1,   0,   8,   1,   COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  CodeValueID,       "String"
+CodeValueL,     0,                 11,  0,   1,   1,   TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,  Translation,       "String"
+
+
+
+
+:label label.bin labeltxt.bin 
+//
+//   generates data for 
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT            USHORT             RECTS           USHORT     LONG                LONG               char []
+// Window ID         Next Window ID                                Foreground Color   Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------
+CodeTableL, CodeValueS,  1,   0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Code Table"
+CodeTableL, CodeValueS,  9,   0, 11,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Max Code Len."
+CodeTableL, CodeValueS,  21,  0, 40,  1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Description"
+
+CodeValueS,   CodeTableS,  1,   0, 10,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Code Table:"
+CodeValueS,   CodeTableS,  19,  0, 1,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELCTRFLAGS,   "-"
+CodeValueS,   CodeTableS,  1,   1, 14,  1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELFLAGS,   "Max Code Length:"
+
+CodeValueL,     0,                  1,   0, 8,   1, COORD_CHRRNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Code Value"
+CodeValueL,     0,                  11,  0, 1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_LLABELCOLOR, ITI_LLABELFLAGS,   "Translation"
+
+
+
+
+:query query.bin 
+//
+//   generates data for 
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//--------------------------------------------------------------------------------------------------------
+CodeTableL,  "SELECT CodeTableID, MaximumCodeLength, Description, "
+CodeTableL,  "CodeTableKey "
+CodeTableL,  "FROM CodeTable "
+CodeTableL,  "ORDER BY CodeTableID "
+
+CodeValueS,    "/* buildres CodeValueS */ "
+CodeValueS,    "SELECT CodeTableID, Description, MaximumCodeLength, "
+CodeValueS,    "CodeTableKey "
+CodeValueS,    "FROM CodeTable "
+CodeValueS,    "WHERE CodeTableKey = %CodeTableKey "
+
+CodeValueL,      "SELECT CodeValueID, Translation, CodeValueKey, "
+CodeValueL,      "CodeTableKey "
+CodeValueL,      "FROM CodeValue "
+CodeValueL,      "WHERE CodeTableKey = %CodeTableKey "
+CodeValueL,      "ORDER BY CodeValueID "
+
+CodeValueD,    "/* buildres CodeValueD */ "
+CodeValueD,   "SELECT CodeValueID, Translation "
+CodeValueD,   "FROM CodeValue "
+CodeValueD,   "WHERE CodeTableKey = %CodeTableKey "
+CodeValueD,   "AND   CodeValueKey = %CodeValueKey "
+
+
+
+:title title.bin 
+//
+//   generates data for 
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+// USHORT           char []
+// Window ID        Window Title
+//----------------------------------------------------------
+CodeTableS,  "Code Table Catalog"
+CodeValueS,  "Code Value for %CodeTableID"
+
+
+:Dialog Dialog.bin DlgFmat.bin
+//
+//
+// Dlg Id           Query ID           Col Name           CtlID            Disp Fmt  Input Fmt
+//--------------------------------------------------------------------------------------------
+CodeTableD, CodeValueS, CodeTableID,       DID_NAME,        "String", "String"
+CodeTableD, CodeValueS, Description,       DID_DESCRIPTION, "String", "String"
+CodeTableD, CodeValueS, MaximumCodeLength, DID_MAXCODELEN,  "String", "String"
+
+CodeValueD, CodeValueD, CodeValueID,      DID_CODEVAL,     "String", "String"
+CodeValueD, CodeValueD, Translation,      DID_XLATE,       "String", "String"
+
+
+:query update.bin 
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeValueS,    "/* buildres CodeValueS */ "
+CodeValueS,    "UPDATE CodeTable "
+CodeValueS,    "SET CodeTableID = '@CodeTableID', "
+CodeValueS,    "Description = '@Description', "
+CodeValueS,    "MaximumCodeLength = @MaximumCodeLength "
+CodeValueS,    "WHERE CodeTableKey = %CodeTableKey "
+
+CodeValueD,    "/* buildres CodeValueD */ "
+CodeValueD,   "UPDATE CodeValue "
+CodeValueD,   "SET CodeValueID = '@CodeValueID', "
+CodeValueD,   "Translation = '@Translation', "
+CodeValueD,   "WHERE CodeTableKey = %CodeTableKey "
+CodeValueD,   "AND CodeValueKey = %CodeValueKey "
+
+
+:query lock.bin 
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeValueS,    "SELECT CodeTableID, Description, MaximumCodeLength "
+CodeValueS,    "FROM CodeTable HOLDLOCK "
+CodeValueS,    "WHERE CodeTableKey = %CodeTableKey "
+
+CodeValueD,   "SELECT CodeValueID, Translation "
+CodeValueD,   "FROM CodeValue HOLDLOCK "
+CodeValueD,   "WHERE CodeTableKey = %CodeTableKey "
+CodeValueD,   "AND CodeValueKey = %CodeValueKey "
+
+
+:query insert.bin 
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT             char []
+// Window ID          Query String
+//-------------------------------------------------------------------------
+CodeValueS,    "INSERT INTO CodeTable "
+CodeValueS,    "(CodeTableKey,CodeTableID, Description, MaximumCodeLength) "
+CodeValueS,    "VALUES "
+CodeValueS,    "(@NewKey,'@CodeTableID','@Description',@MaximumCodeLength) "
+
+CodeValueD,   "INSERT INTO CodeValue "
+CodeValueD,   "(CodeValueKey, CodeTableKey, CodeValueID, Translation) "
+CodeValueD,   "VALUES "
+CodeValueD,   "(@NewKey,%CodeTableKey,'@CodeValueID','@Translation') "
+
+

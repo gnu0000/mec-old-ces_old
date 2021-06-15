@@ -1,0 +1,1609 @@
+/*--------------------------------------------------------------------------+
+|                                                                           |
+|       Copyright (c) 1992 by AASHTO.  All Rights Reserved.                 |
+|                                                                           |
+|       This program module is part of BAMS/CES, a module of BAMS,          |
+|       The American Association of State Highway and Transportation        |
+|       Officials' (AASHTO) Information System for Managing Transportation  |
+|       Programs, a proprietary product of AASHTO, no part of which may be  |
+|       reproduced or transmitted in any form or by any means, electronic,  |
+|       mechanical, or otherwise, including photocopying and recording      |
+|       or in connection with any information storage or retrieval          |
+|       system, without permission in writing from AASHTO.                  |
+|                                                                           |
++--------------------------------------------------------------------------*/
+
+
+
+/* Paramet.met
+ * This file contains metadata for the Parametric Estimation windows.
+ * This file is used by buildres to build .bin metadata files.
+ * These .bin files are used by the resource compiler to build
+ * custom resources.
+ */
+
+
+#include "..\include\itiwin.h"
+#include "..\include\winid.h"
+#include "..\include\metadecl.h"
+#include "dialog.h"
+#include "..\include\paracalc.h"
+#include "paramet.h"
+
+#define ITIWC_COMBO 0xffff0002L
+
+
+
+
+
+:static  static.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics     (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// USHORT                                            RECTS                          USHORT     LONG                  LONG
+// Static Window ID        Add,                      Change,                        xpos ypos xsiz ysiz CoordType  Window Options        Background Color
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+JobBreakdownProfileS,       JobBreakdownProfileE,       JobBreakdownProfileE,         2,   1,   80,  14, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobBreakdownMajorItemS,     JobBreakdownMajorItemE,   JobBreakdownMajorItemE,       4,   4,  136,  24, COORD_BLKRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+//JobMajItemPriceRegrS,       0,                          0,                            2,   4,   65,  22, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobMajItemPriceRegrS,       0,                          0,                            2,   4,   65,  12, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+//JobMajItemQuantityRegrS,  0,                          0,                            2,   4,   65,  22, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+JobMajItemQuantityRegrS,    0,                          0,                            2,   4,   78,  11, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+//MajItemPriceRegrS,          0,                          0,                            2,   4,   65,  20, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+MajItemPriceRegrS,          0,                          0,                           14,   18,   55,  9, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+//MajItemQuantityRegrS,       0,                          0,                            2,   4,   65,  24, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+MajItemQuantityRegrS,       0,                          0,                           8,  9,   40,  9, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+ParametricProfileCatS, ParametricProfileD,   ParametricProfileD,                      2,   4,   60,  10, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+SignifMajItemS,        SignifMajItemD,       SignifMajItemD,                          2,   4,   63,  15, COORD_CHRRNG, ITI_STATICOPTIONS, ITI_STATICBACKGROUND
+
+
+
+:CHILD child.bin
+//
+//   generates data for
+//   ItiMbGetChildInfo (HWND hwnd, USHORT uId, PCHD *ppCHD)
+//
+//
+//  Coordinate type tells how the position rectangle should
+//    be handled.
+//    FALSE -- DLG coordinates, Top Left origin,
+//               Xpos,Ypos,Xsize,YSize
+//    TRUE  -- Margin Sizes (listwindows size with parent)
+//               LeftMargin,TopMargin,RightMargin,BottomMargin
+//
+//
+// USHORT                       USHORT                         USHORT                                                    RECTS               USHORT
+//
+// Parents Window ID       Type Child Window ID     uKind       Add,                          Change                        <-   ^    ->   v    Coord
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+JobBreakdownMajorItemS,     JobBreakdownMajorItemL,   ITIWC_LIST, JobBreakdownMajorItemE,  JobBreakdownMajorItemE,         0,   0,   0,   0,  COORD_REL
+JobMajItemPriceRegrS,       JobMajItemPriceRegrL,     ITIWC_LIST, 0,                           0,                         15,  13,  41,   2,  TL | CHR | X0ABS | Y0ABS | X1RNG | Y1REL
+JobMajItemQuantityRegrS,    JobMajItemQuantityRegrL,  ITIWC_LIST, 0,                           0,                         10,  14,  41,   2,  TL | CHR | X0ABS | Y0ABS | X1RNG | Y1REL
+MajItemPriceRegrS,          MajItemPriceRegrL1,       ITIWC_LIST, 0,                           0,                          4,  10,  40,   1,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+MajItemPriceRegrS,          MajItemPriceRegrL2,       ITIWC_LIST, 0,                           0,                         52,  10,   5,   1,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+MajItemQuantityRegrS,       MajItemQuantityRegrL1,    ITIWC_LIST, 0,                           0,                          4,  13,  40,   1,  TL | CHR | X0ABS | Y0ABS | X1PCT | Y1REL
+MajItemQuantityRegrS,       MajItemQuantityRegrL2,    ITIWC_LIST, 0,                           0,                         52,  13,   5,   1,  TL | CHR | X0PCT | Y0ABS | X1REL | Y1REL
+ParametricProfileCatS,      ParametricProfileCatL,    ITIWC_LIST, ParametricProfileD, ParametricProfileD,                  0,   0,   0,   0,  COORD_REL
+SignifMajItemS,             SignifMajItemL,           ITIWC_LIST, SignifMajItemD,     SignifMajItemD,                      0,   0,   0,   2,  COORD_CHRREL
+
+
+
+
+
+
+:list list.bin
+//
+//   generates data for
+//   ItiMbQueryStaticMetrics (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//   ItiMbQueryListMetrics   (HWND hwnd, USHORT uId, PWNDMET pWndMet)//
+//
+//
+// yClient
+// These are specified to override the default line
+// sizing in list windows
+// leave 0 to use default spacing
+//
+// USHORT                  LONG                             LONG                  LONG                  USHORT USHORT   USHORT
+// List Window ID          Window Options                   Background Color      Label Bkg Color       Label ydata    Button Window ID
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+JobBreakdownMajorItemL,    ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+JobMajItemPriceRegrL,      ITI_LISTOPTIONV   | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+JobMajItemQuantityRegrL,   ITI_LISTOPTIONV   | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+MajItemPriceRegrL1,        ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+MajItemPriceRegrL2,        ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+MajItemQuantityRegrL1,     ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+MajItemQuantityRegrL2,     ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+ParametricProfileCatL,  ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+SignifMajItemL,         ITI_LISTOPTIONSV  | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+MajItemEditDL,        ITI_LISTOPTIONSHV | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+ParametricProfileL,        ITI_LISTOPTIONV   | LWS_BORDER,  ITI_LDATABACKGROUND,  ITI_LLABELBACKGROUND,       0,   0,      0
+
+
+
+
+:DATA data.bin format.bin
+//
+//   generates data for
+//   ItiMbGetDataInfo  (HWND hwnd, USHORT uId, PEDT *ppEDT)
+//
+//
+//
+ // uIndex Tells which column to use in the query. 1st col is 0
+//
+// USHORT                  USHORT              RECTS (DLG|UL|RNG)  USHORT     LONG               LONG                                                USHORT  PSZ
+//
+// Window ID               Next Window ID      xpos ypos xsiz ysiz CoordType  Foreground Color   Txt Flags                                  uIndex                  Format String
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+JobBreakdownProfileS, JobBreakdownMajorItemS,11,  0,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,                          Description,                "String"
+JobBreakdownProfileS, JobBreakdownMajorItemS,11,  2,    1,  1, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,                          8,                          "Number,$,.."
+JobBreakdownProfileS, JobBreakdownMajorItemS,11,  3,    1,  1, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,                          9,                          "Number,%.."
+JobBreakdownProfileS, JobBreakdownMajorItemS,11,  4,    1,  1, COORD_CHRRELX, ITI_SDATACOLOR,   ITI_SDATAMLFLAGS,                          PreliminaryEstimateCost,    "Number,$,.."
+
+JobBreakdownMajorItemL,        0,             1,  0,    4,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                           MajorItemID,                "String"
+JobBreakdownMajorItemL,        0,             4,  1,   36,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                           Description,                "String"
+JobBreakdownMajorItemL,        0,             5,  0,   14,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,                         Quantity,                   "Number,,..."
+JobBreakdownMajorItemL,        0,            21,  0,    4,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                           CodeValueID,                "String"
+JobBreakdownMajorItemL,        0,            25,  0,   14,  1, COORD_CHRRNG,  ITI_LLINKCOLOR,    ITI_LDATARTFLAGS,                         UnitPrice,                  "Number,$,...."
+JobBreakdownMajorItemL,        0,            39,  0,   15,  1, COORD_CHRRNG,  ITI_LLINKCOLOR,    ITI_LDATACTRFLAGS,                        ExtendedAmount,             "Number,$,.."
+JobBreakdownMajorItemL,        0,            54,  0,    5,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,                         PercentofValue,             "Number,%."
+JobBreakdownMajorItemL,        0,            60,  0,    5,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,                         7,                          "Number,%."
+
+//JobBreakdownMajorItemE,        0,             1,  0,    4,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                           MajorItemID,                "String"
+//JobBreakdownMajorItemE,        0,             5,  0,   14,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,                         Quantity,                   "Number,,..."
+//JobBreakdownMajorItemE,        0,            25,  0,   14,  1, COORD_CHRRNG,  ITI_LLINKCOLOR,    ITI_LDATARTFLAGS,                         UnitPrice,                  "Number,$,...."
+////JobBreakdownMajorItemE,        0,            39,  0,   15,  1, COORD_CHRRNG,  ITI_LLINKCOLOR,    ITI_LDATACTRFLAGS,                        ExtendedAmount,             "Number,$,.."
+
+
+JobMajItemPriceRegrS,          0,            15,  0,    4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   JobBreakdownID,  "String"
+JobMajItemPriceRegrS,          0,            15,  1,    4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   Description,     "String"
+JobMajItemPriceRegrS,          0,            19,  2,    4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   3,               "String"
+JobMajItemPriceRegrS,          0,            15,  4,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           MedianQuantity,  "Number,..."
+JobMajItemPriceRegrS,          0,            30,  4,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           CodeValueID,     "String"
+JobMajItemPriceRegrS,          0,            15,  5,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           Quantity,        "Number,..."
+JobMajItemPriceRegrS,          0,            30,  5,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           CodeValueID,     "String"
+JobMajItemPriceRegrS,          0,            18,  6,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           7,               "Number,..."
+JobMajItemPriceRegrS,          0,            14,  8,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                MedianQuantityUnitPrice,    "Number,$,..."
+JobMajItemPriceRegrS,          0,            30,  8,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           CodeValueID,     "String"
+
+// JobMajItemPriceRegrS,          0,            14,  9,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           9,               "Number,$,..."
+JobMajItemPriceRegrS,          0,            14,  9,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           11,               "Number,$,...."
+
+JobMajItemPriceRegrS,          0,            30,  9,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           CodeValueID,     "String"
+// //JobMajItemPriceRegrS,          0,            35, 10,   11,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           MedianQuantity,  "Number,%,.."
+//JobMajItemPriceRegrS,          0,            35, 10,   11,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           10,  "Number,...."
+//JobMajItemPriceRegrS,          0,            44, 10,   11,  1, COORD_CHRRNG,  ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           7,              "Number,...."
+//JobMajItemPriceRegrS,          0,            14, 12,   15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                               9,               "Number,$,.." 
+
+//JobMajItemPriceRegrS,          0,            30, 12,    4,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              CodeValueID,      "String"
+//JobMajItemPriceRegrS,          0,            30,  1,    4,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  CodeValueID,      "String"
+//JobMajItemPriceRegrS,          0,            15,  1,   16,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  11,               "Number,$,...."
+
+
+JobMajItemPriceRegrL,          0,             1,  0,   16,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                          QualitativeVariable,         "Number"
+JobMajItemPriceRegrL,          0,            18,  0,    5,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATAFLAGS,                          QualitativeValue,            "String"
+JobMajItemPriceRegrL,          0,            25,  0,   13,  1, COORD_CHRRNG,  ITI_LDATACOLOR,    ITI_LDATARTFLAGS,                        PriceAdjustment,             "Number,%,.."
+
+MajItemPriceRegrS,             0,            11,  0,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                           Description,                 "String"
+MajItemPriceRegrS,             0,            16,  2,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             MedianQuantity,              "Number,..."
+MajItemPriceRegrS,             0,            31,  2,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             CodeValueID,                 "String"
+MajItemPriceRegrS,             0,            16,  3,   15,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             MedianQuantityUnitPrice,     "Number,$,..."
+MajItemPriceRegrS,             0,            33,  3,    4,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             CodeValueID,                 "String"
+MajItemPriceRegrS,             0,            35,  4,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             QuantityAdjustment,          "Number,%.."
+
+
+MajItemPriceRegrL1,            0,             1,  0,   40,  1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,  QualitativeVariable,         "Number"
+MajItemPriceRegrL1,            0,            42,  0,   20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           MajorItemKey,                "Number"
+
+MajItemPriceRegrL2,            0,             1,  0,   40,  1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   QualitativeValue,  "String"
+MajItemPriceRegrL2,            0,            42,  0,    1,  1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   PriceAdjustment,   "Number,%,.."
+
+MajItemQuantityRegrS,          0,            11,  0,    1,  2, COORD_CHRRELX, ITI_SDATACOLOR, ITI_SDATAMLFLAGS,                           Description,                 "String"
+MajItemQuantityRegrS,          0,            21,  2,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             BaseCoefficient,             "Number,,....."
+MajItemQuantityRegrS,          0,            21,  3,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             DepthAdjustment,             "Number,,....."
+MajItemQuantityRegrS,       0,            31,  2,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             WidthAdjustment,             "Number,,...."
+MajItemQuantityRegrS,       0,            31,  3,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             CrossSectionAdjustment,      "Number,,...."
+MajItemQuantityRegrS,       0,            41,  2,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureBaseAdjustment,     "Number,,...."
+MajItemQuantityRegrS,       0,            41,  3,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureLengthAdjustment,   "Number,,...."
+//MajItemQuantityRegrS,         0,            21,  2,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             BaseCoefficient,             "Number,,...."
+//MajItemQuantityRegrS,         0,            21,  3,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             DepthAdjustment,             "Number,,...."
+// MajItemQuantityRegrS,        0,            21,  4,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             WidthAdjustment,             "Number,,...."
+// MajItemQuantityRegrS,        0,            21,  5,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             CrossSectionAdjustment,      "Number,,...."
+// MajItemQuantityRegrS,        0,            12,  6,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureBaseAdjustment,     "Number,,...."
+// MajItemQuantityRegrS,        0,            12,  7,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureLengthAdjustment,   "Number,,...."
+// MajItemQuantityRegrS,        0,            12,  8,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureWidthAdjustment,    "Number,,...."
+// MajItemQuantityRegrS,        0,            12,  9,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             StructureAreaAdjustment,     "Number,,...."
+                              
+MajItemQuantityRegrL1,         0,             1,  0,   40,  1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,  ITI_LDATACOLOR, ITI_LDATAFLAGS, QualitativeVariable,         "Number"
+MajItemQuantityRegrL1,         0,            42,  0,   20,  1, COORD_CHRRNG, ITI_SDATACOLOR,    ITI_SDATAFLAGS,                           MajorItemKey,                "Number"
+
+MajItemQuantityRegrL2,            0,             1,  0,   40,  1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   VariableValue,       "String"
+MajItemQuantityRegrL2,            0,            42,  0,    1,  1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   QuantityAdjustment,  "Number,%,.."
+
+
+JobMajItemQuantityRegrS, 0, 15, 0,  4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  JobBreakdownID,  "String"
+JobMajItemQuantityRegrS, 0, 15, 1,  4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  JB.Description,  "String"
+JobMajItemQuantityRegrS, 0, 15, 2,  4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  3,               "String"
+JobMajItemQuantityRegrS, 0, 26, 4, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  StructureBaseAdjustment, "Number,,...."
+JobMajItemQuantityRegrS, 0, 35, 4, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  StructureWidthAdjustment, "Number,,...."
+JobMajItemQuantityRegrS, 0, 26, 5, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  WidthAdjustment, "Number,,...."
+JobMajItemQuantityRegrS, 0, 35, 5, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  CrossSectionAdjustment, "Number,,...."
+JobMajItemQuantityRegrS, 0, 26, 6, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  BaseCoefficient, "Number,,...."
+JobMajItemQuantityRegrS, 0, 35, 6, 10,  1, COORD_CHRRNG,                             ITI_SDATACOLOR, ITI_SDATAFLAGS,  DepthAdjustment, "Number,,...."
+
+JobMajItemQuantityRegrS, 0, 10, 4, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  6,               "Number,,...."
+JobMajItemQuantityRegrS, 0, 10, 5, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  7,               "Number,,...."
+JobMajItemQuantityRegrS, 0, 10, 6, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  8,               "Number,,...."
+JobMajItemQuantityRegrS, 0, 60, 4, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   9,              "Number,,..."
+JobMajItemQuantityRegrS, 0, 52, 4, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  ConversionFactorLength,  "Number,,..."
+JobMajItemQuantityRegrS, 0, 60, 5, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  10,              "Number,,..."
+JobMajItemQuantityRegrS, 0, 52, 5, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  ConversionFactorArea,    "Number,,..."
+JobMajItemQuantityRegrS, 0, 52, 6, 10,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  ConversionFactorVolume,  "Number,,..."
+JobMajItemQuantityRegrS, 0, 60, 6, 15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  11,              "Number,,..."
+//JobMajItemQuantityRegrS, 0, 10, 1, 15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   9,              "Number,,..."
+//JobMajItemQuantityRegrS, 0, 10, 1, 15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  10,              "Number,,..."
+//JobMajItemQuantityRegrS, 0, 10, 1, 15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  11,              "Number,,..."
+
+//JobMajItemQuantityRegrS, 0, 27, 1, 15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  CodeValueID,     "String"
+JobMajItemQuantityRegrS, 0, 15, 3,  4,  1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  CodeValueID,     "String"
+
+// JobMajItemQuantityRegrS,      0, 10,  4,   15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                        Length,                "Number,,...."
+//JobMajItemQuantityRegrS,       0, 10,  4,   15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                        6,                     "Number,,...."
+//JobMajItemQuantityRegrS,       0, 10,  4,   15,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                        7,                     "Number,,...."
+//JobMajItemQuantityRegrS, 0, 20,  6,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             WidthAdjustment,       "Number,,...."
+//JobMajItemQuantityRegrS, 0, 20,  7,   10,  1, COORD_CHRRNG,  ITI_SDATACOLOR, ITI_SDATAFLAGS,                             CrossSectionAdjustment,"Number,,...."
+//JobMajItemQuantityRegrS, 0, 10,  1,   15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  Quantity,              "Number,,..."
+//JobMajItemQuantityRegrS, 0, 10,  1,   15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,   9,                    "Number,,..."
+//JobMajItemQuantityRegrS, 0, 10,  1,   15,  1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,  10,                    "Number,,..."
+//JobMajItemQuantityRegrS,       0,            30,  5,    3,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              PavementDepth,               "Number"
+//JobMajItemQuantityRegrS,       0,            30,  6,    5,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              PavementWidth,               "Number,,"
+//JobMajItemQuantityRegrS,       0,            30,  7,    3,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              PavementDepth,               "Number"
+//JobMajItemQuantityRegrS,       0,            36,  7,    5,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              PavementWidth,               "Number,,"
+//JobMajItemQuantityRegrS,       0,            24, 9,    7,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StructureLength,             "Number,,"
+//JobMajItemQuantityRegrS,       0,            24, 10,    5,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StructureWidth,              "Number,,"
+//JobMajItemQuantityRegrS,       0,            24, 11,    7,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StructureLength,             "Number,,"
+//JobMajItemQuantityRegrS,       0,            33, 11,    5,  1, COORD_CHRRNG, ITI_SDATACOLOR, ITI_SDATAFLAGS,                              StructureWidth,              "Number,,"
+
+
+JobMajItemQuantityRegrL,       0,             1,  0,   16,  1, COORD_CHRRNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   QualitativeVariable, "Number"
+JobMajItemQuantityRegrL,       0,            18,  0,    5,  1, COORD_CHRRNG,    ITI_LDATACOLOR,    ITI_LDATAFLAGS,   VariableValue,       "String"
+JobMajItemQuantityRegrL,       0,            25,  0,   13,  1, COORD_CHRRNG,    ITI_LDATACOLOR,    ITI_LDATARTFLAGS, QuantityAdjustment,  "Number,%,.."
+
+ParametricProfileCatL, SignifMajItemS,   1,  0,   16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   ProfileID,           "String"
+ParametricProfileCatL, SignifMajItemS,  16,  0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Description,         "String"
+
+SignifMajItemL,             0,             1,  0,   11,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,      MajorItemID,         "String"
+SignifMajItemL,             0,            12,  0,   38,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,      Description,         "String"
+SignifMajItemL,             0,            52,  0,    7,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATARTFLAGS,    PercentofValue,      "Number,%.."
+
+MajItemEditDL,            0,             1,  0,    5,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,         MajoritemID,         "String"
+MajItemEditDL,            0,            11,  0,   35,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,         Description,         "String"
+MajItemEditDL,            0,            47,  0,    8,  1, COORD_CHRRNG, ITI_LDATACOLOR, ITI_LDATAFLAGS,         CodeValueID,         "String"
+
+ParametricProfileL,            0,             1,  0,   16,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   ProfileID,           "String"
+ParametricProfileL,            0,            16,  0,  255,  1, COORD_CHRRNG, ITI_LDATACOLOR,    ITI_LDATAFLAGS,   Description,         "String"
+
+
+
+
+
+:label label.bin labeltxt.bin
+//
+//   generates data for
+//   ItiMbGetLabelInfo (HWND hwnd, USHORT uId, PEDT *ppEDT)//
+//
+//
+// uQuery is not used
+// uIndex tells which string to use
+// strings are in labeltxt.txt
+//
+// USHORT                    USHORT                  RECTS (DLG|UL|RNG)  USHORT     LONG                LONG               char []
+//
+// Window ID                 Next Window   xpos ypos  xsiz ysiz CoordType  Foreground Color  Txt Flags          Label String
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+JobBreakdownProfileS,JobBreakdownMajorItemS, 1,   0,  9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,   "Description:"
+JobBreakdownProfileS,JobBreakdownMajorItemS, 1,   2,  9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,   "Base Cost:"
+JobBreakdownProfileS,JobBreakdownMajorItemS, 1,   3,  9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,   "% of total:"
+JobBreakdownProfileS,JobBreakdownMajorItemS, 1,   4,  9,   1, COORD_CHRRNG, ITI_SLABELCOLOR, ITI_SLABELRTFLAGS,   "Total Cost:"
+
+JobBreakdownMajorItemL,      0,            1,   0,  11,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Major Item /"
+JobBreakdownMajorItemL,      0,            4,   1,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+JobBreakdownMajorItemL,      0,           12,   0,   7,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Quantity"
+JobBreakdownMajorItemL,      0,           21,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+JobBreakdownMajorItemL,      0,           25,   0,  14,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Price "
+JobBreakdownMajorItemL,      0,           39,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELRTFLAGS,  "Extension"
+JobBreakdownMajorItemL,      0,           54,   0,  30,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Job Breakdown"
+JobBreakdownMajorItemL,      0,           54,   1,   5,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Typical"
+JobBreakdownMajorItemL,      0,           60,   1,   5,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Current"
+
+ParametricProfileCatL,    0,            1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Profile"
+ParametricProfileCatL,    0,           16,   0, 255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+
+SignifMajItemS,         0,           53,   1,   6,   1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SDATACOLOR,    ITI_SDATARTFLAGS,   "0.00"
+SignifMajItemS,         0,           48,   1,   6,   1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Total: "
+
+SignifMajItemL,           0,            1,   0,   9,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Major Item"
+SignifMajItemL,           0,           12,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+SignifMajItemL,           0,           52,   0,   9,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "% of Cost"
+
+JobMajItemPriceRegrS,        0,   1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "JobBreakdown:"
+JobMajItemPriceRegrS,        0,   1,   1,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Description:"
+JobMajItemPriceRegrS,        0,   1,   2,  23,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Major Item Description:"
+JobMajItemPriceRegrS,        0,   1,   4,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Base Quantity = "
+JobMajItemPriceRegrS,        0,   5,   5,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Quantity = "
+JobMajItemPriceRegrS,        0,  14,   6,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "[2^ "
+JobMajItemPriceRegrS,        0,  27,   6,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "* Base Quantity]"
+JobMajItemPriceRegrS,        0,   1,   8,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Base Unit Price = "
+JobMajItemPriceRegrS,        0,  28,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "/"
+JobMajItemPriceRegrS,        0,   1,   9,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Adj. Unit Price = "
+JobMajItemPriceRegrS,        0,  28,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "/"
+
+//JobMajItemPriceRegrS,        0,  15,  10,  26,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "[Base unit price increased "
+//JobMajItemPriceRegrS,        0,  40,  10,   2,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "%"
+//JobMajItemPriceRegrS,        0,  52,  10,   5,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "times]"
+
+//JobMajItemPriceRegrS,        0,   4,  12,  10,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Unit Price = "
+//JobMajItemPriceRegrS,        0,  28,  12,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "/"
+//JobMajItemPriceRegrS,        0,  36,  12,  25,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "+ Qualitative Adjustments"
+//JobMajItemPriceRegrS,        0,  13,   1,   1,   1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "= "
+//JobMajItemPriceRegrS,        0,  28,   1,   2,   1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "/"
+
+
+JobMajItemPriceRegrL,        0,   1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Qualitative Variable"
+JobMajItemPriceRegrL,        0,  18,   0,   5,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Value"
+JobMajItemPriceRegrL,        0,  27,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Adjustment"
+
+MajItemPriceRegrS,           0,   1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Description:"
+MajItemPriceRegrS,           0,   1,   2,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Median Quantity = "
+MajItemPriceRegrS,           0,   1,   3,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,  "Base Unit Price = "
+MajItemPriceRegrS,           0,  14,   3,  33,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "/"
+MajItemPriceRegrS,           0,  15,   4,  26,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "[Base unit price decreases "
+MajItemPriceRegrS,           0,  45,   4,   6,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "every"
+MajItemPriceRegrS,           0,  15,   5,  29,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "time the quantity is doubled]"
+MajItemPriceRegrS,           0,  15,   6,  25,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "+ Qualitative Adjustments"
+MajItemPriceRegrS,           0,  33,   9,  21,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Qualitative Adjustments for "
+MajItemPriceRegrS,           0,  56,   9,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "   "
+
+MajItemPriceRegrL1,          0,   1,   0,   1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Qualitative Variable"
+
+MajItemPriceRegrL2,          0,   1,   0,  40,   1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Value"
+MajItemPriceRegrL2,          0,  42,   0,   1,   1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Adjustment"
+
+MajItemQuantityRegrS,        0,   1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Description:"
+MajItemQuantityRegrS,        0,  12,   2,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Length * "
+MajItemQuantityRegrS,        0,  12,   2,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "  Area * "
+MajItemQuantityRegrS,        0,  12,   2,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Volume * "
+MajItemQuantityRegrS,        0,   1,   2,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Quantity = "
+MajItemQuantityRegrS,        0,  19,   3,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  30,   3,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "*  Pavement Depth"
+// MajItemQuantityRegrS,        0,  19,   4,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  30,   4,  15,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "*  Pavement Width"
+// MajItemQuantityRegrS,        0,  19,   5,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  30,   5,  30,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "*  Pavement Depth * Pavement Width]"
+// MajItemQuantityRegrS,        0,   8,   6,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "+ ["
+// MajItemQuantityRegrS,        0,  10,   7,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  21,   7,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+
+// MajItemQuantityRegrS,        0,  23,   7,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Length"
+// MajItemQuantityRegrS,        0,  10,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  21,   8,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+// 
+// MajItemQuantityRegrS,        0,  23,   8,  17,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Width"
+// MajItemQuantityRegrS,        0,  10,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+// MajItemQuantityRegrS,        0,  21,   9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+// MajItemQuantityRegrS,        0,  23,   9,  25,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Length * Structure Width]"
+
+MajItemQuantityRegrS,        0,   8,  10,  25,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "+ Qualitative Adjustments"
+MajItemQuantityRegrS,        0,  34,  12,  23,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Qualitative Adjustments for "
+MajItemQuantityRegrS,        0,  55,  12,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "   "
+
+MajItemQuantityRegrL1,       0,   1,   0,   1,   1, TL | CHR | X0ABS | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Qualitative Variable"
+
+MajItemQuantityRegrL2,       0,   1,   0,  40,   1, TL | CHR | X0ABS | Y0ABS | X1PCT | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Value"
+MajItemQuantityRegrL2,       0,  42,   0,   1,   1, TL | CHR | X0PCT | Y0ABS | X1REL | Y1RNG,   ITI_LLABELCOLOR,  ITI_LLABELFLAGS,        "Adjustment"
+
+JobMajItemQuantityRegrS,     0,   1,   0,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Job Breakdown:"
+JobMajItemQuantityRegrS,     0,   1,   1,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Description:"
+JobMajItemQuantityRegrS,     0,   1,   2,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "Major Item:"
+JobMajItemQuantityRegrS,     0,   0,   4,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "(L) Qty = ("
+JobMajItemQuantityRegrS,     0,   0,   5,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "(A) Qty = ("
+JobMajItemQuantityRegrS,     0,   0,   6,   9,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   "(V) Qty = ("
+JobMajItemQuantityRegrS,     0,  23,   4,   2,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   " * "
+JobMajItemQuantityRegrS,     0,  32,   4,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " + "
+JobMajItemQuantityRegrS,     0,  48,   4,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  ") * "
+JobMajItemQuantityRegrS,     0,  58,   4,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " = "
+JobMajItemQuantityRegrS,     0,  23,   5,   2,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   " * "
+JobMajItemQuantityRegrS,     0,  32,   5,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " + "
+JobMajItemQuantityRegrS,     0,  48,   5,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  ") * "
+JobMajItemQuantityRegrS,     0,  58,   5,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " = "
+JobMajItemQuantityRegrS,     0,  23,   6,   2,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELRTFLAGS,   " * "
+JobMajItemQuantityRegrS,     0,  32,   6,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " + "
+JobMajItemQuantityRegrS,     0,  48,   6,   4,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  ") * "
+JobMajItemQuantityRegrS,     0,  58,   6,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS,  " = "
+//JobMajItemQuantityRegrS,     0,  10,  12,  25,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,                                "+ Qualitative Adjustments"
+//JobMajItemQuantityRegrS,     0,   0,   1,   9,   1, BL | CHR | X0ABS | Y0ABS | X1RNG | Y1RNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "Quantity ="
+
+//JobMajItemQuantityRegrS,     0,  28,   4,   7,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Length"
+//JobMajItemQuantityRegrS,     0,  28,   5,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  41,   5,  14,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Pavement Depth"
+//JobMajItemQuantityRegrS,     0,  18,   6,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+//JobMajItemQuantityRegrS,     0,  28,   6,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  41,   6,  14,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Pavement Width"
+//JobMajItemQuantityRegrS,     0,  18,   7,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+//JobMajItemQuantityRegrS,     0,  28,   7,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  34,   7,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  41,   7,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Pavement Depth & Width"
+//JobMajItemQuantityRegrS,     0,  10,  8,   3,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "+ ["
+//JobMajItemQuantityRegrS,     0,  12,  9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+//JobMajItemQuantityRegrS,     0,  21,  9,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  44,  9,  14,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Length"
+//JobMajItemQuantityRegrS,     0,  12,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+//JobMajItemQuantityRegrS,     0,  21,  10,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  44,  10,  13,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Width"
+//JobMajItemQuantityRegrS,     0,  12,  11,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "+"
+//JobMajItemQuantityRegrS,     0,  21,  11,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  29,  11,   1,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELCTRFLAGS, "*"
+//JobMajItemQuantityRegrS,     0,  44,  11,  20,   1, COORD_CHRRNG, ITI_SLABELCOLOR,   ITI_SLABELFLAGS,    "Structure Length & Width"
+
+
+JobMajItemQuantityRegrL,     0,   1,   0,  16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Qualitative Variable"
+JobMajItemQuantityRegrL,     0,  18,   0,   5,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Value"
+JobMajItemQuantityRegrL,     0,  27,   0,  10,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Adjustment"
+
+MajItemEditDL,          0,            1,   0,   9,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Major Item"
+MajItemEditDL,          0,           11,   0,  13,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+MajItemEditDL,          0,           47,   0,   4,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Unit"
+
+ParametricProfileL,          0,            1,  0,   16,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Profile ID"
+ParametricProfileL,          0,           16,  0,  255,   1, COORD_CHRRNG, ITI_LLABELCOLOR,   ITI_LLABELFLAGS,    "Description"
+
+
+
+
+
+
+:query query.bin
+//
+//   generates data for
+//   ItiMbGetQueryText (HWND hwnd, USHORT uId, PSZ  **pppsz)//
+//
+//
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                     char []
+//
+// Window ID               Query String
+//---------------------------------------------------------------------------------------------------------------
+//JobBreakdownProfileS,         "SELECT JBP.ProfileKey, PP.ProfileID, "
+//JobBreakdownProfileS,         "PP.Description, JB.JobBreakdownKey, "
+//JobBreakdownProfileS,         "JB.JobBreakdownID, JB.JobKey,"
+//JobBreakdownProfileS,         "SUM (SMI.PercentofValue), "
+//JobBreakdownProfileS,         "SUM (JBMI.ExtendedAmount), "
+//JobBreakdownProfileS,         "JB.PreliminaryEstimateCost "
+//JobBreakdownProfileS,         "FROM JobBreakdown JB, "
+//JobBreakdownProfileS,         "SignificantMajorItem SMI, "
+//JobBreakdownProfileS,         "JobBreakdownProfile JBP,"
+//JobBreakdownProfileS,         "ParametricProfile PP, "
+//JobBreakdownProfileS,         "JobBreakdownMajorItem JBMI "
+//JobBreakdownProfileS,         "WHERE JB.JobKey           = %JobKey "
+//JobBreakdownProfileS,         "AND   JB.JobBreakdownKey  = %JobBreakdownKey "
+//JobBreakdownProfileS,         "AND   JBP.JobKey          = %JobKey "
+//JobBreakdownProfileS,         "AND   JBP.JobBreakdownKey = %JobBreakdownKey "
+//JobBreakdownProfileS,         "AND   JBP.ProfileKey      = PP.ProfileKey "
+//JobBreakdownProfileS,         "AND   SMI.ProfileKey      = JBP.ProfileKey "
+//JobBreakdownProfileS,         "AND  JBMI.JobKey          = %JobKey "
+//JobBreakdownProfileS,         "AND  JBMI.JobBreakdownKey = %JobBreakdownKey "
+
+JobBreakdownProfileS,         "/* paramet.met.JobBreakdownProfileS */ "
+JobBreakdownProfileS,         "SELECT DISTINCT PP.ProfileID, "
+JobBreakdownProfileS,         "PP.Description, "
+JobBreakdownProfileS,         "JB.JobBreakdownID, "
+JobBreakdownProfileS,         "JB.PreliminaryEstimateCost, "
+JobBreakdownProfileS,         " JB.JobKey, JB.JobBreakdownKey, JBP.ProfileKey, "
+JobBreakdownProfileS,         "SUM (JBMI.ExtendedAmount), "
+//JobBreakdownProfileS,         "SUM (SMI.PercentofValue) "
+JobBreakdownProfileS,      " SUM ( (JBMI.ExtendedAmount/JB.PreliminaryEstimateCost) ) "
+JobBreakdownProfileS,         "FROM JobBreakdown JB, "
+JobBreakdownProfileS,         "SignificantMajorItem SMI, "
+JobBreakdownProfileS,         "JobBreakdownProfile JBP,"
+JobBreakdownProfileS,         "ParametricProfile PP, "
+JobBreakdownProfileS,         "JobBreakdownMajorItem JBMI "
+JobBreakdownProfileS,         "WHERE JB.JobKey = %JobKey "
+JobBreakdownProfileS,          "AND JB.JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownProfileS,                  "AND JBP.JobKey = %JobKey "
+JobBreakdownProfileS,         "AND JBP.JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownProfileS,              "AND JBP.ProfileKey = PP.ProfileKey "
+JobBreakdownProfileS,              "AND SMI.ProfileKey = JBP.ProfileKey "
+JobBreakdownProfileS,           "AND JBMI.MajorItemKey = SMI.MajorItemKey "
+JobBreakdownProfileS,                 "AND JBMI.JobKey = %JobKey "
+JobBreakdownProfileS,        "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownProfileS,         "GROUP BY JBP.ProfileKey, PP.ProfileKey, "
+JobBreakdownProfileS,         "JB.JobBreakdownKey, JB.JobKey, "
+JobBreakdownProfileS,         "JBMI.JobBreakdownKey, JBMI.JobKey "
+JobBreakdownProfileS,         "/* = End of JBPS = */ "
+
+JobBreakdownMajorItemL,       "/* JobBreakdownMajorItemL */ "
+JobBreakdownMajorItemL,       "SELECT MI.MajorItemID, JBMI.Quantity, "
+JobBreakdownMajorItemL,       "CV.CodeValueID, JBMI.UnitPrice, "
+JobBreakdownMajorItemL,       "JBMI.ExtendedAmount, SMI.PercentofValue, "
+JobBreakdownMajorItemL,       "Current = JBMI.ExtendedAmount/JB.PreliminaryEstimateCost, "
+JobBreakdownMajorItemL,       "MI.Description, JBMI.JobKey, "
+JobBreakdownMajorItemL,       "JBMI.JobBreakdownKey, SMI.ProfileKey, "
+JobBreakdownMajorItemL,       "JBMI.MajorItemKey "
+JobBreakdownMajorItemL,       "FROM SignificantMajorItem SMI, MajorItem MI, "
+JobBreakdownMajorItemL,       "CodeValue CV, JobBreakdownMajorItem JBMI, "
+JobBreakdownMajorItemL,       "JobBreakdown JB "
+JobBreakdownMajorItemL,       "WHERE MI.CommonUnit = CV.CodeValueKey "
+JobBreakdownMajorItemL,       "AND JBMI.JobKey = JB.JobKey "
+JobBreakdownMajorItemL,       "AND JBMI.JobBreakdownKey = JB.JobBreakdownKey "
+JobBreakdownMajorItemL,       "AND JBMI.MajorItemKey = MI.MajorItemKey "
+JobBreakdownMajorItemL,       "AND SMI.MajorItemKey = MI.MajorItemKey "
+JobBreakdownMajorItemL,       "AND SMI.MajorItemKey > 5 "
+JobBreakdownMajorItemL,       "AND SMI.ProfileKey = %ProfileKey "
+JobBreakdownMajorItemL,       "AND JBMI.JobKey = %JobKey "
+JobBreakdownMajorItemL,       "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemL,       " ORDER BY MajorItemID "
+
+JobBreakdownMajorItemE,        "/* JobBreakdownMajorItemE */ "
+JobBreakdownMajorItemE,        "SELECT MajorItemID, Quantity, UnitPrice "
+JobBreakdownMajorItemE,        ", UseLength, UseArea, UseVolume "
+JobBreakdownMajorItemE,        ", ConversionFactorLength, ConversionFactorArea, ConversionFactorVolume "
+JobBreakdownMajorItemE,        "FROM JobBreakdownMajorItem JBMI, MajorItem MI "
+JobBreakdownMajorItemE,        "WHERE JBMI.MajorItemKey = MI.MajorItemKey "
+JobBreakdownMajorItemE,        "AND JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemE,        "AND JBMI.MajorItemKey = %MajorItemKey "
+
+
+ParametricProfileCatL,     "/* ParametricProfileCatL */ "
+ParametricProfileCatL,     "SELECT ProfileKey, ProfileID, Description "
+ParametricProfileCatL,     "FROM ParametricProfile "
+ParametricProfileCatL,     "ORDER BY ProfileID "
+
+ParametricProfileD,     "/* ParametricProfileD */ "
+ParametricProfileD,     "SELECT ProfileKey, ProfileID, Description "
+ParametricProfileD,     "FROM ParametricProfile "
+ParametricProfileD,     "WHERE ProfileKey = %ProfileKey "
+
+JobBreakdownMajorItemS,       "/* JobBreakdownMajorItemS */ "
+JobBreakdownMajorItemS,       "SELECT JobBreakdownID, JobBreakdownKey, "
+JobBreakdownMajorItemS,       "JobBreakdown.JobKey, JobID "
+JobBreakdownMajorItemS,       "FROM Job, JobBreakdown "
+JobBreakdownMajorItemS,       "WHERE JobBreakdown.JobKey = Job.JobKey "
+JobBreakdownMajorItemS,       "AND JobBreakdown.JobKey = %JobKey "
+JobBreakdownMajorItemS,       "AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey "
+
+//JobBreakdownProfileList,      "SELECT MajorItemID, Quantity, CodeValueID, UnitPrice, ExtendedAmount,
+//JobBreakdownProfileList,      "PercentofValue, Current = ExtendedAmount/PreliminaryEstimateCost, "
+//JobBreakdownProfileList,      "MajorItem.Description "
+//JobBreakdownProfileList,      "FROM SignificantMajorItem, MajorItem, CodeValue, "
+//JobBreakdownProfileList,      "JobBreakdownMajorItem, JobBreakdown "
+//JobBreakdownProfileList,      "WHERE MajorItem.CommonUnit = CodeValueKey "
+//JobBreakdownProfileList,      "AND JobBreakdownMajorItem. JobKey = JobBreakdown.JobKey "
+//JobBreakdownProfileList,      "AND  JobBreakdownMajorItem. JobBreakdownKey = JobBreakdown.JobBreakdownKey "
+//JobBreakdownProfileList,      "AND JobBreakdownMajorItem.MajorItemKey = MajorItem.MajorItemKey "
+//JobBreakdownProfileList,      "AND SignificantMajorItem.MajorItemKey = MajorItem.MajorItemKey "
+//JobBreakdownProfileList,      "AND SignificantMajorItem.ProfileKey = %ProfileKey "
+//JobBreakdownProfileList,      "AND JobBreakdownMajorItem.JobKey = %JobKey "
+//JobBreakdownProfileList,      "AND JobBreakdownMajorItem.JobBreakdownKey = JobBreakdownKey "
+//
+//JobBreakdownMajorItemL,      "SELECT MajorItemID, Quantity, CodeValueID, "
+//JobBreakdownMajorItemL,      "Description,  UnitPrice, ExtendedAmount, "
+//JobBreakdownMajorItemL,      "JobBreakdownMajorItem.MajorItemKey, "
+//JobBreakdownMajorItemL,      "JobBreakdownMajorItem.JobKey, "
+//JobBreakdownMajorItemL,      "JobBreakdownMajorItem.JobBreakdownKey "
+//JobBreakdownMajorItemL,      "FROM MajorItem, CodeValue, JobBreakdownMajorItem "
+//JobBreakdownMajorItemL,      "WHERE MajorItem.CommonUnit = CodeValueKey "
+//JobBreakdownMajorItemL,      "AND JobBreakdownMajorItem.MajorItemKey = MajorItem.MajorItemKey "
+//JobBreakdownMajorItemL,      "AND JobBreakdownMajorItem.JobKey = %JobKey "
+//JobBreakdownMajorItemL,      "AND JobBreakdownMajorItem.JobBreakdownKey = %JobBreakdownKey "
+
+SignifMajItemS,          "/* SignifMajItemS */ "
+SignifMajItemS,          "SELECT ProfileKey, ProfileID "
+SignifMajItemS,          "FROM ParametricProfile "
+SignifMajItemS,          "WHERE ProfileKey = %ProfileKey "
+
+SignifMajItemL,            "/* SignifMajItemL */ "
+SignifMajItemL,            "SELECT MajorItemID, Description, PercentofValue, MajorItem.MajorItemKey "
+SignifMajItemL,            "FROM MajorItem MI, SignificantMajorItem SMI "
+SignifMajItemL,            "WHERE SMI.MajorItemKey = MI.MajorItemKey "
+SignifMajItemL,            "AND SMI.MajorItemKey > 5 "
+SignifMajItemL,            "AND SMI.ProfileKey = %ProfileKey "
+SignifMajItemL,            " ORDER BY MajorItemID "
+
+
+//JobMajItemPriceRegrS,  "/* JobMajItemPriceRegrS */ "
+//JobMajItemPriceRegrS,  "SELECT JobBreakdownID, JB.Description, MI.Description, "
+//JobMajItemPriceRegrS,  "MedianQuantity, CodeValueID, JBMI.Quantity, "
+//JobMajItemPriceRegrS,  "LOG(JBMI.Quantity/MedianQuantity)/LOG(2), "
+//JobMajItemPriceRegrS,  "MedianQuantityUnitPrice, "
+//JobMajItemPriceRegrS,  "$1.0 * JBMI.UnitPrice, "
+//JobMajItemPriceRegrS,  "$1.0 * ( (POWER( (JBMI.UnitPrice/MedianQuantityUnitPrice) , (1/(LOG(JBMI.Quantity/MedianQuantity)/LOG(2))) ) ) -1.0), "
+//
+//JobMajItemPriceRegrS, "(($1.0 * JBMI.UnitPrice) + ( JBMI.UnitPrice * (SELECT SUM(PriceAdjustment) "  
+//JobMajItemPriceRegrS,         "FROM MajorItemPriceAdjustment A, Job "
+//JobMajItemPriceRegrS,         "WHERE Job.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+//JobMajItemPriceRegrS,         "AND A.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+//JobMajItemPriceRegrS,         "AND Job.JobKey = %JobKey "
+//JobMajItemPriceRegrS,         "AND A.MajorItemKey = %MajorItemKey ))) "
+
+// JobMajItemPriceRegrS,  "/* JMIPRS */ "
+// JobMajItemPriceRegrS,  "DECLARE @mipadj float "
+// JobMajItemPriceRegrS, "SELECT @mipadj = SUM(PriceAdjustment) "  
+// JobMajItemPriceRegrS,         "FROM MajorItemPriceAdjustment A, Job "
+// JobMajItemPriceRegrS,         "WHERE Job.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+// JobMajItemPriceRegrS,         "AND A.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+// JobMajItemPriceRegrS,         "AND Job.JobKey = %JobKey "
+// JobMajItemPriceRegrS,         "AND A.MajorItemKey = %MajorItemKey  "
+// JobMajItemPriceRegrS,  " if @mipadj = null  select @mipadj = 0.0 "
+JobMajItemPriceRegrS,  "/* JobMajItemPriceRegrS */ "
+JobMajItemPriceRegrS,  "SELECT DISTINCT JobBreakdownID, JB.Description, MI.Description, "
+JobMajItemPriceRegrS,  "MedianQuantity, CodeValueID, JBMI.Quantity, "
+JobMajItemPriceRegrS,  "LOG(JBMI.Quantity/MedianQuantity)/LOG(2), "
+JobMajItemPriceRegrS,  "MedianQuantityUnitPrice, "
+// JobMajItemPriceRegrS, "($1.0 * JBMI.UnitPrice) - ( JBMI.UnitPrice * @mipadj ) "  
+JobMajItemPriceRegrS, "(($1.0 * JBMI.UnitPrice) - ( JBMI.UnitPrice * ( 0.0 + (SELECT SUM(PriceAdjustment) "  
+JobMajItemPriceRegrS,         "FROM MajorItemPriceAdjustment A, Job "
+JobMajItemPriceRegrS,         "WHERE Job.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+JobMajItemPriceRegrS,         "AND A.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+JobMajItemPriceRegrS,         "AND Job.JobKey = %JobKey "
+JobMajItemPriceRegrS,         "AND A.MajorItemKey = %MajorItemKey ))) ) "
+JobMajItemPriceRegrS,  ", $1.0 * ( (POWER( (JBMI.UnitPrice/MedianQuantityUnitPrice), (1/( LOG(JBMI.Quantity/MedianQuantity)/LOG(2) ) ) ) ) -1.0), "
+JobMajItemPriceRegrS, "$1.0 * JBMI.UnitPrice "
+
+JobMajItemPriceRegrS,  ",JBMI.JobKey, JBMI.MajorItemKey, "
+JobMajItemPriceRegrS,  "JobID, MajorItemID "
+JobMajItemPriceRegrS,  "FROM Job J, JobBreakdown JB, JobBreakdownMajorItem JBMI, MajorItem MI, "
+JobMajItemPriceRegrS,  "MajorItemPriceRegression MIPR, CodeValue CV "
+JobMajItemPriceRegrS,  "WHERE JBMI.JobKey = JB.JobKey "
+JobMajItemPriceRegrS,  "AND JBMI.JobBreakdownKey = JB.JobBreakdownKey "
+JobMajItemPriceRegrS,  "AND JB.JobKey = Job.JobKey "
+JobMajItemPriceRegrS,  "AND JBMI.MajorItemKey = MI.MajorItemKey "
+JobMajItemPriceRegrS,  "AND MI.MajorItemKey = MIPR.MajorItemKey "
+
+JobMajItemPriceRegrS,  "AND ((MIPR.BaseDate = J.BaseDate) "
+JobMajItemPriceRegrS,    " OR (MIPR.BaseDate = (select MAX(BaseDate) from MajorItemPriceRegression where MajorItemKey = %MajorItemKey )) ) "
+
+JobMajItemPriceRegrS,  "AND MI.CommonUnit = CodeValueKey "
+JobMajItemPriceRegrS,  "AND JBMI.JobKey = %JobKey "
+JobMajItemPriceRegrS,  "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+JobMajItemPriceRegrS,  "AND JBMI.MajorItemKey = %MajorItemKey "
+
+JobMajItemPriceRegrL,         "/* JobMajItemPriceRegrL */ "
+JobMajItemPriceRegrL,         "SELECT QualitativeVariable, QualitativeValue, PriceAdjustment "
+JobMajItemPriceRegrL,         " FROM MajorItemPriceAdjustment MIPA, Job J"
+JobMajItemPriceRegrL,         " WHERE J.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+JobMajItemPriceRegrL,         " AND MIPA.BaseDate >= (select MAX(BaseDate) from MajorItemPriceAdjustment where MajorItemKey = %MajorItemKey ) "
+JobMajItemPriceRegrL,         " AND J.JobKey = %JobKey "
+JobMajItemPriceRegrL,         " AND MIPA.MajorItemKey = %MajorItemKey "
+JobMajItemPriceRegrL,         " AND MIPA.QualitativeVariable > 0 "
+
+MajItemPriceRegrS,  "/* MajItemPriceRegrS */ "
+MajItemPriceRegrS,  "SELECT Description, MedianQuantity, CodeValueID, "
+MajItemPriceRegrS,  "MedianQuantityUnitPrice, QuantityAdjustment, "
+MajItemPriceRegrS,  "MajorItemID "
+MajItemPriceRegrS,  "FROM MajorItem MI, CodeValue, MajorItemPriceRegression MIPR "
+MajItemPriceRegrS,  "WHERE CommonUnit = CodeValueKey "
+MajItemPriceRegrS,  "AND MIPR.MajorItemKey = MI.MajorItemKey "
+// MajItemPriceRegrS,  "AND MIPR.BaseDate = @UndeclaredBaseDate "
+MajItemPriceRegrS,  "AND MIPR.BaseDate = (select MAX(BaseDate) from MajorItemPriceRegression where MajorItemKey = %MajorItemKey ) "
+MajItemPriceRegrS,  "AND   MI.MajorItemKey = %MajorItemKey "
+
+MajItemPriceRegrL1,           "/* MajItemPriceRegrL1 */ "
+MajItemPriceRegrL1,           "SELECT QualitativeVariable, MajorItemKey "
+MajItemPriceRegrL1,           "FROM MajorItemPriceVariable "
+MajItemPriceRegrL1,           "WHERE MajorItemKey = %MajorItemKey "
+MajItemPriceRegrL1,           "AND BaseDate = @UndeclaredBaseDate "
+// MajItemPriceRegrL1,  "AND BaseDate = (select MAX(BaseDate) from MajorItemPriceRegression where MajorItemKey = %MajorItemKey ) "
+MajItemPriceRegrL1,           " AND QualitativeVariable > 0 "
+
+MajItemPriceRegrL2,           "/* MajItemPriceRegrL2 */ "
+MajItemPriceRegrL2,           "SELECT QualitativeValue, PriceAdjustment "
+MajItemPriceRegrL2,           "FROM MajorItemPriceAdjustment "
+MajItemPriceRegrL2,           "WHERE MajorItemKey = %MajorItemKey "
+MajItemPriceRegrL2,           "AND BaseDate = @UndeclaredBaseDate "
+// MajItemPriceRegrL2,  "AND BaseDate = (select MAX(BaseDate) from MajorItemPriceRegression where MajorItemKey = %MajorItemKey ) "
+MajItemPriceRegrL2,           "AND QualitativeVariable = %QualitativeVariable  "
+
+
+MajItemQuantityRegrS,     "/* MajItemQuantityRegrS */ "
+MajItemQuantityRegrS,     "SELECT MajorItemID, Description, BaseCoefficient, DepthAdjustment, "
+MajItemQuantityRegrS,     "WidthAdjustment, CrossSectionAdjustment, StructureBaseAdjustment, "
+MajItemQuantityRegrS,     "StructureLengthAdjustment, StructureWidthAdjustment, "
+MajItemQuantityRegrS,     "StructureAreaAdjustment "
+MajItemQuantityRegrS,     ", MI.MajorItemKey "
+//MajItemQuantityRegrS, ", QualitativeVariable, VariableValue, QuantityAdjustment "
+MajItemQuantityRegrS,     "FROM MajorItem MI, MajorItemQuantityRegression MIQR "
+//MajItemQuantityRegrS, ",MajorItemQuantityAdjustment MIQA "
+MajItemQuantityRegrS,     "WHERE MIQR.MajorItemKey = MI.MajorItemKey "
+//MajItemQuantityRegrS,     "AND MIQR.BaseDate = @UnDeclaredBaseDate "
+MajItemQuantityRegrS,     "AND MIQR.BaseDate = (select MAX(BaseDate) from MajorItemQuantityRegression ) "
+MajItemQuantityRegrS,     "AND MI.MajorItemKey = %MajorItemKey "
+//MajItemQuantityRegrS, "AND MIQA.MajorItemKey = MI.MajorItemKey "
+//MajItemQuantityRegrS, "AND MIQA.BaseDate = @UnDeclaredBaseDate "
+
+
+MajItemQuantityRegrL1,        "/* MajItemQuantityRegrL1 */ "
+MajItemQuantityRegrL1,        "SELECT QualitativeVariable, MajorItemKey "
+MajItemQuantityRegrL1,        "FROM MajorItemQuantityVariable "
+MajItemQuantityRegrL1,        "WHERE MajorItemKey = %MajorItemKey "
+MajItemQuantityRegrL1,        "AND BaseDate = @UndeclaredBaseDate "
+MajItemQuantityRegrL1,        " AND QualitativeVariable > 0 "
+
+MajItemQuantityRegrL2,        "/* MajItemQuantityRegrL2 */ "
+MajItemQuantityRegrL2,        "SELECT VariableValue, QuantityAdjustment "  
+MajItemQuantityRegrL2,        "FROM MajorItemQuantityAdjustment "
+MajItemQuantityRegrL2,        "WHERE MajorItemKey = %MajorItemKey "
+MajItemQuantityRegrL2,        "AND BaseDate = @UndeclaredBaseDate "
+MajItemQuantityRegrL2,        "AND QualitativeVariable = %QualitativeVariable "
+
+
+JobMajItemQuantityRegrS, "/* JobMajItemQuantityReg */ "
+JobMajItemQuantityRegrS, "SELECT JobBreakdownID, JB.Description, MI.Description "
+JobMajItemQuantityRegrS, ",BaseCoefficient, DepthAdjustment "
+
+JobMajItemQuantityRegrS, ", ( Length * (1760.0+(J.UnitType * (-760.0))) )  "                                                                                                      //Qty Length
+JobMajItemQuantityRegrS, ", ((Length * (1760.0+(J.UnitType * (-760.0)))  )* (PavementWidth / (3.0+(J.UnitType * (-2.0)))) ) "                                                      //Qty Area
+JobMajItemQuantityRegrS, ", ((Length * (1760.0+(J.UnitType * (-760.0))) ) * (PavementWidth / (3.0+(J.UnitType * (-2.0))) ) * (PavementDepth/ (36.0+(J.UnitType * (964.0))) )) " //Qty Volume
+JobMajItemQuantityRegrS, ",( ( Length * (1760.0+(J.UnitType * (-760.0))) ) * StructureBaseAdjustment + StructureWidthAdjustment)*(JBMI.ConversionFactorLength) "                                                                                      //Qty Length
+JobMajItemQuantityRegrS, ",( ((Length * (1760.0+(J.UnitType * (-760.0)))  )* (PavementWidth / (3.0+(J.UnitType * (-2.0)))) ) * WidthAdjustment + CrossSectionAdjustment)*(JBMI.ConversionFactorArea) "                                              //Qty Area
+JobMajItemQuantityRegrS, ",(((Length*(1760.0+(J.UnitType*(-760.0))))*(PavementWidth/(3.0+(J.UnitType*(-2.0))))* (PavementDepth/(36.0+(J.UnitType*(964.0)))))*BaseCoefficient+DepthAdjustment)*(JBMI.ConversionFactorVolume)" //Qty Volume
+
+JobMajItemQuantityRegrS,      ", CodeValueID, JobID, MajorItemID "
+
+JobMajItemQuantityRegrS,      ",WidthAdjustment, CrossSectionAdjustment "
+JobMajItemQuantityRegrS,      ",StructureBaseAdjustment, StructureWidthAdjustment "
+JobMajItemQuantityRegrS,      ",JBMI.ConversionFactorVolume "
+JobMajItemQuantityRegrS,      ",JBMI.ConversionFactorArea "
+JobMajItemQuantityRegrS,      ",JBMI.ConversionFactorLength "
+//JobMajItemQuantityRegrS,      "PavementWidth)+(CrossSectionAdjustment*PavementDepth*PavementWidth) ) "
+//JobMajItemQuantityRegrS,      ", PavementDepth, WidthAdjustment, PavementWidth, CrossSectionAdjustment, "
+//JobMajItemQuantityRegrS,      "StructureLength, StructureWidthAdjustment, "
+//JobMajItemQuantityRegrS,      "StructureWidth, Quantity, CodeValueID, Quantity, "
+//JobMajItemQuantityRegrS,      "JobID, MajorItemID "
+
+JobMajItemQuantityRegrS,      "FROM JobBreakdown JB, MajorItem MI, JobBreakdownMajorItem JBMI, "
+JobMajItemQuantityRegrS,      "MajorItemQuantityRegression MIQR, CodeValue, Job J "
+JobMajItemQuantityRegrS,      "WHERE JBMI.JobKey = JB.JobKey "
+JobMajItemQuantityRegrS,      "AND JBMI.JobBreakdownKey = JB.JobBreakdownKey "
+JobMajItemQuantityRegrS,      "AND JB.JobKey = Job.JobKey "
+JobMajItemQuantityRegrS,      "AND JBMI.MajorItemKey = MI.MajorItemKey "
+JobMajItemQuantityRegrS,      "AND MajorItem.CommonUnit = CodeValueKey "
+JobMajItemQuantityRegrS,      "AND MIQR.MajorItemKey = MI.MajorItemKey "
+JobMajItemQuantityRegrS,      "AND MIQR.BaseDate = Job.BaseDate "
+JobMajItemQuantityRegrS,      "AND JBMI.JobKey = %JobKey "
+JobMajItemQuantityRegrS,      "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+JobMajItemQuantityRegrS,      "AND JBMI.MajorItemKey = %MajorItemKey "
+
+JobMajItemQuantityRegrL,      "/* JobMajItemQuantityReg */ "
+JobMajItemQuantityRegrL,      "SELECT QualitativeVariable, VariableValue, QuantityAdjustment "
+JobMajItemQuantityRegrL,      "FROM MajorItemQuantityAdjustment MIQA, Job "
+JobMajItemQuantityRegrL,      "WHERE Job.BaseDate = MajorItemQuantityAdjustment.BaseDate "
+JobMajItemQuantityRegrL,      "AND Job.JobKey = %JobKey "
+JobMajItemQuantityRegrL,      "AND MIQA.MajorItemKey = %MajorItemKey "
+JobMajItemQuantityRegrL,      " AND MIQA.QualitativeVariable > 0 "
+
+SignifMajItemD,         "/* SignifMajItemD */ "
+SignifMajItemD,         " SELECT MajorItemID, PercentofValue, "
+SignifMajItemD,         " MajorItem.MajorItemKey "
+SignifMajItemD,         " FROM MajorItem MI, SignificantMajorItem S"
+SignifMajItemD,         " WHERE MI.MajorItemKey = S.MajorItemKey "
+SignifMajItemD,         " AND MI.MajorItemKey = %MajorItemKey "
+SignifMajItemD,         " and MI.UnitType = @CURUNITSYS "
+SignifMajItemD,         " AND S.ProfileKey = %ProfileKey "
+
+
+MajItemEditDL,           "/* MajItemEditDL */ "
+MajItemEditDL,           "SELECT MajorItemKey, MajorItemID, Description, CodeValueID "
+MajItemEditDL,           "FROM MajorItem MI, CodeValue CV "
+MajItemEditDL,           "WHERE MajorItem.CommonUnit = CodeValueKey "
+MajItemEditDL,           "AND MajorItem.Deleted IS NULL "
+MajItemEditDL,           " AND MI.UnitType = @CURUNITSYS "
+MajItemEditDL,           "ORDER BY MajorItemID "
+
+JobBreakdownProfileE,         "/* = JobBreakdownProfileE = */ "
+JobBreakdownProfileE,         "SELECT PP.ProfileID, JBP.ProfileKey, "
+JobBreakdownProfileE,         "JBP.JobKey, JBP.JobBreakdownKey "
+JobBreakdownProfileE,         "FROM JobBreakdownProfile JBP, "
+JobBreakdownProfileE,         "ParametricProfile PP "
+JobBreakdownProfileE,         "WHERE JBP.JobKey = %JobKey "
+JobBreakdownProfileE,         "AND JBP.JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownProfileE,         "AND JBP.ProfileKey = PP.ProfileKey "
+
+ParametricProfileL,           "/* ParametricProfileL */ "
+ParametricProfileL,           "SELECT ProfileKey, ProfileID, Description "
+ParametricProfileL,           "FROM ParametricProfile "
+ParametricProfileL,           "ORDER BY ProfileID "
+
+
+
+
+:title title.bin
+//
+//   generates data for
+//   ItiMbGetTitleText (HWND hwnd, USHORT uId, PSZ  *ppsz)//
+//
+//
+// USHORT                    char []
+//
+// Window ID                Window Title
+//-------------------------------------------------------------------------------
+
+JobBreakdownProfileS,        "Profile %ProfileID for Job Breakdown %JobBreakdownID"
+ParametricProfileCatS,       "Parametric Profile Catalog"
+JobBreakdownMajorItemS,      "Major Items for Job Breakdown %JobBreakdownID, Job %JobID"
+SignifMajItemS,              "Significant Major Items for Profile %ProfileID"
+JobMajItemPriceRegrS,        "Price Regression for Job %JobID MajorItem %MajorItemID"
+MajItemPriceRegrS,           "Price Regression for Major Item %MajorItemID"
+MajItemQuantityRegrS,        "Quantity Regression for Major Item %MajorItemID"
+JobMajItemQuantityRegrS,     "Quantity Regression for Job %JobID MajorItem %MajorItemID"
+
+
+
+
+:dialog dialog.bin dlgfmat.bin
+//
+//
+// Dialog ID            Add Query ID            Change Query ID         Column name       Control ID          Format           Input Fmt
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ParametricProfileD,     ParametricProfileD,     ParametricProfileD,     ProfileID,        DID_PROFILEID,      "String",        "String"
+ParametricProfileD,     ParametricProfileD,     ParametricProfileD,     Description,      DID_DESCRIPTION,    "String",        "String"
+
+SignifMajItemD,         SignifMajItemD,         SignifMajItemD,         MajorItemID,      DID_MAJORITEM,      "String",        "String"
+SignifMajItemD,         SignifMajItemD,         SignifMajItemD,         PercentofValue,   DID_PCTOFVALUE,     "Number,%....",     "Number,...."
+SignifMajItemD,         ITIWND_LIST,            ITIWND_LIST,            MajorItemKey,     MajItemEditDL,      "Number",        "Number"
+
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, MajorItemID,      DID_MAJORITEM,      "String",        "String"
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, Quantity,         DID_QUANTITY,       "Number,,...",   "Number,,...."
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, UnitPrice,        DID_UNITPRICE,      "Number,$,....", "Number,$,...."
+JobBreakdownMajorItemE, ITIWND_LIST,            ITIWND_LIST,            MajorItemKey,     MajItemEditDL,      "Number",        "Number"
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, ConversionFactorLength, DID_LEN_CONV,  "Number,....",   "Number,...."
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, ConversionFactorArea,   DID_AREA_CONV, "Number,....",   "Number,...."
+JobBreakdownMajorItemE, JobBreakdownMajorItemE, JobBreakdownMajorItemE, ConversionFactorVolume, DID_VOL_CONV,  "Number,....",   "Number,...."
+
+JobBreakdownProfileE,   JobBreakdownProfileE,   JobBreakdownProfileE,   ProfileID,        DID_PROFILEID,      "String",        "String"
+JobBreakdownProfileE,   ITIWND_LIST,            ITIWND_LIST,            ProfileKey,       ParametricProfileL, "Number",        "Number"
+
+
+
+:query update.bin
+//
+// This is the metadata for the update SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+ParametricProfileD,      "/* ParametricProfileD */ "
+ParametricProfileD,      "UPDATE ParametricProfile "
+ParametricProfileD,      "SET "
+ParametricProfileD,      "ProfileID = @ProfileID, "
+ParametricProfileD,      "Description = @Description "
+ParametricProfileD,      "WHERE ProfileKey = %ProfileKey "
+
+SignifMajItemD,          "/* SignifMajItemD */ "
+SignifMajItemD,          "UPDATE SignificantMajorItem "
+SignifMajItemD,          "SET "
+SignifMajItemD,          "PercentofValue = @PercentofValue "
+SignifMajItemD,          "WHERE ProfileKey = %ProfileKey "
+SignifMajItemD,          "AND MajorItemKey = %MajorItemKey "
+
+JobBreakdownMajorItemE,        "/* JobBreakdownMajorItemE */ "
+JobBreakdownMajorItemE,        "UPDATE JobBreakdownMajorItem "
+JobBreakdownMajorItemE,        "SET "
+JobBreakdownMajorItemE,        "Quantity = @Quantity "
+JobBreakdownMajorItemE,        ", QuantityLock = 1 "
+JobBreakdownMajorItemE,        ", UnitPrice = @UnitPrice "
+JobBreakdownMajorItemE,        ", UnitPriceLock = 1 "
+//JobBreakdownMajorItemE,        ", ConversionFactorLength = @ConversionFactorLength "
+//JobBreakdownMajorItemE,        ", ConversionFactorArea = @ConversionFactorArea "
+//JobBreakdownMajorItemE,        ", ConversionFactorVolume = @ ConversionFactorVolume "
+//JobBreakdownMajorItemE,        ", UseLength = @UseLength "
+//JobBreakdownMajorItemE,        ", UseArea = @UseArea "
+//JobBreakdownMajorItemE,        ", UseVolume = @ UseVolume "
+JobBreakdownMajorItemE,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemE,        "AND MajorItemKey = %MajorItemKey "
+//
+JobBreakdownMajorItemE,        " UPDATE JobBreakdownMajorItem "
+JobBreakdownMajorItemE,        "SET "
+JobBreakdownMajorItemE,        "Quantity = Quantity * ((ConversionFactorArea * UseArea) "
+JobBreakdownMajorItemE,        " +(ConversionFactorVolume * UseVolume)+(ConversionFactorLength * UseLength))"
+JobBreakdownMajorItemE,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemE,        "AND MajorItemKey = %MajorItemKey "
+//
+JobBreakdownMajorItemE,        " UPDATE JobBreakdownMajorItem "
+JobBreakdownMajorItemE,        "SET "
+JobBreakdownMajorItemE,        "ExtendedAmount = Quantity * UnitPrice "
+JobBreakdownMajorItemE,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemE,        "AND MajorItemKey = %MajorItemKey "
+//
+JobBreakdownMajorItemE,        " UPDATE JobBreakdown "
+JobBreakdownMajorItemE,        "SET "
+JobBreakdownMajorItemE,        "PreliminaryEstimateCost = "
+JobBreakdownMajorItemE,          "(SELECT "
+JobBreakdownMajorItemE,          "SUM(JobBreakdownMajorItem.ExtendedAmount) "
+JobBreakdownMajorItemE,          "/ SUM(SignificantMajorItem.PercentofValue) "
+//JobBreakdownMajorItemE,      " / SUM ( (JBMI.ExtendedAmount/JB.PreliminaryEstimateCost) ) "
+JobBreakdownMajorItemE,          "FROM SignificantMajorItem SMI, MajorItem MI, "
+JobBreakdownMajorItemE,          "JobBreakdownMajorItem JBMI, "
+JobBreakdownMajorItemE,          "JobBreakdown JB "
+JobBreakdownMajorItemE,          "WHERE "
+JobBreakdownMajorItemE,          "JBMI.JobKey = JB.JobKey "
+JobBreakdownMajorItemE,          "AND JBMI.JobBreakdownKey = JB.JobBreakdownKey "
+JobBreakdownMajorItemE,          "AND JBMI.MajorItemKey = MI.MajorItemKey "
+JobBreakdownMajorItemE,          "AND SMI.MajorItemKey = MI.MajorItemKey "
+JobBreakdownMajorItemE,          "AND SMI.ProfileKey = %ProfileKey "
+JobBreakdownMajorItemE,          "AND JBMI.JobKey = %JobKey "
+JobBreakdownMajorItemE,          "AND JBMI.JobBreakdownKey = %JobBreakdownKey) "
+JobBreakdownMajorItemE,        " , BreakdownEstimationMethod = "
+JobBreakdownMajorItemE,        " 1000000 "
+JobBreakdownMajorItemE,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+//  
+JobBreakdownMajorItemE,   "/* REVISED MetaData */ " 
+JobBreakdownMajorItemE,   "IF (NULL != (SELECT SUM(PreliminaryEstimateCost) "
+JobBreakdownMajorItemE,              " FROM JobBreakdown"
+JobBreakdownMajorItemE,              " WHERE JobKey = %JobKey"
+JobBreakdownMajorItemE,              " AND DetailedEstimate = 0 )) "
+JobBreakdownMajorItemE,   " BEGIN"
+JobBreakdownMajorItemE,       " UPDATE Job "
+JobBreakdownMajorItemE,       " SET EstimatedCost = "
+JobBreakdownMajorItemE,             " (SELECT SUM(PreliminaryEstimateCost) "
+JobBreakdownMajorItemE,             " FROM JobBreakdown"
+JobBreakdownMajorItemE,             " WHERE JobKey = %JobKey"
+JobBreakdownMajorItemE,             " AND DetailedEstimate = 0 ) "
+JobBreakdownMajorItemE,       " WHERE JobKey = %JobKey "
+//
+JobBreakdownMajorItemE,       "IF (NULL != (SELECT SUM(DetailedEstimateCost) "
+JobBreakdownMajorItemE,                   " FROM JobBreakdown"
+JobBreakdownMajorItemE,                   " WHERE JobKey = %JobKey"
+JobBreakdownMajorItemE,                   " AND DetailedEstimate = 1 )) "
+JobBreakdownMajorItemE,       "BEGIN "
+JobBreakdownMajorItemE,       " UPDATE Job "
+JobBreakdownMajorItemE,       " SET EstimatedCost = EstimatedCost + "
+JobBreakdownMajorItemE,             " (SELECT SUM(DetailedEstimateCost) "
+JobBreakdownMajorItemE,             "  FROM JobBreakdown"
+JobBreakdownMajorItemE,             "  WHERE JobKey = %JobKey"
+JobBreakdownMajorItemE,             "  AND DetailedEstimate = 1 ) "
+JobBreakdownMajorItemE,       " WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,       "END "
+//
+JobBreakdownMajorItemE,       " UPDATE Job "
+JobBreakdownMajorItemE,       " SET EstimateTotal = "
+JobBreakdownMajorItemE,         " (EstimatedCost * (1.00 "
+JobBreakdownMajorItemE,         " + ConstructionEngineeringPct "
+JobBreakdownMajorItemE,         " + ContingencyPercent) ) "
+JobBreakdownMajorItemE,       " WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,   " END "
+
+
+
+JobBreakdownProfileE,          "/* JobBreakdownProfileE */ "
+JobBreakdownProfileE,          "UPDATE JobBreakdownProfile "
+JobBreakdownProfileE,          "SET "
+JobBreakdownProfileE,          "ProfileKey = @"ParametricProfileL"ProfileKey "
+JobBreakdownProfileE,          "WHERE JobKey = %JobKey "
+JobBreakdownProfileE,          "AND JobBreakdownKey = %JobBreakdownKey "
+
+
+
+
+:query lock.bin
+//
+// This is the metadata for the SQL that locks a row just before the
+// database is updated.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+ParametricProfileD,       "/* ParametricProfileD */ "
+ParametricProfileD,      "SELECT ProfileID, "
+ParametricProfileD,      "Description "
+ParametricProfileD,      "FROM ParametricProfile HOLDLOCK "
+ParametricProfileD,      "WHERE ProfileKey = %ProfileKey "
+
+SignifMajItemD,       "/* SignifMajItemD */ "
+SignifMajItemD,          "SELECT PercentofValue "
+SignifMajItemD,          "FROM SignificantMajorItem HOLDLOCK "
+SignifMajItemD,          "WHERE ProfileKey = %ProfileKey "
+SignifMajItemD,          "AND MajorItemKey = %MajorItemKey "
+
+JobBreakdownMajorItemE,       "/* JobBreakdownMajorItemE */ "
+JobBreakdownMajorItemE,        "SELECT Quantity, UnitPrice "
+JobBreakdownMajorItemE,        "FROM JobBreakdownMajorItem HOLDLOCK "
+JobBreakdownMajorItemE,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemE,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemE,        "AND MajorItemKey = %MajorItemKey "
+
+JobBreakdownProfileE,       "/* JobBreakdownProfileE */ "
+JobBreakdownProfileE,          "SELECT ProfileKey "
+JobBreakdownProfileE,          "FROM JobBreakdownProfile HOLDLOCK "
+JobBreakdownProfileE,          "WHERE JobKey = %JobKey "
+JobBreakdownProfileE,          "AND JobBreakdownKey = %JobBreakdownKey "
+
+JobBreakdownProfileS,       "/* JobBreakdownProfileS */ "
+JobBreakdownProfileS,          "SELECT ProfileKey "
+JobBreakdownProfileS,          "FROM JobBreakdownProfile HOLDLOCK "
+JobBreakdownProfileS,          "WHERE JobKey = %JobKey "
+JobBreakdownProfileS,          "AND JobBreakdownKey = %JobBreakdownKey "
+
+
+
+
+:query insert.bin
+//
+// This is the metadata for the insert SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+ParametricProfileD,      "/* ParametricProfileD */ "
+ParametricProfileD,      "INSERT INTO ParametricProfile "
+ParametricProfileD,      "(ProfileKey, ProfileID, Description) "
+ParametricProfileD,      "VALUES "
+ParametricProfileD,      "(@NewKey, @ProfileID, @Description) "
+
+
+SignifMajItemD,          "/* SignifMajItemD */ "
+SignifMajItemD,          "INSERT INTO SignificantMajorItem "
+SignifMajItemD,          "(ProfileKey, MajorItemKey, PercentofValue, "
+SignifMajItemD,          "PercentofValueLock) "
+SignifMajItemD,          "VALUES "
+SignifMajItemD,          "(%ProfileKey, @MajorItemKey, @PercentofValue, "
+SignifMajItemD,          "0) "
+
+JobBreakdownMajorItemE,        "/* JobBreakdownMajorItemE */ "
+JobBreakdownMajorItemE,        "INSERT INTO JobBreakdownMajorItem "
+JobBreakdownMajorItemE,        "(JobKey, JobBreakdownKey, MajorItemKey, "
+JobBreakdownMajorItemE,        "Quantity, QuantityLock, UnitPrice, "
+JobBreakdownMajorItemE,        "UnitPriceLock, ExtendedAmount "
+JobBreakdownMajorItemE,        ", ConversionFactorLength "
+JobBreakdownMajorItemE,        ", ConversionFactorArea "
+JobBreakdownMajorItemE,        ", ConversionFactorVolume "
+JobBreakdownMajorItemE,        ", UseLength "
+JobBreakdownMajorItemE,        ", UseArea "
+JobBreakdownMajorItemE,        ", UseVolume "
+JobBreakdownMajorItemE,        ") VALUES "
+JobBreakdownMajorItemE,        "(%JobKey, %JobBreakdownKey, @MajorItemKey, "
+JobBreakdownMajorItemE,        "@Quantity, 0, @UnitPrice, 0, 0 "
+JobBreakdownMajorItemE,        ", 1.0, 1.0, 1.0, 0, 0, 1) " 
+// JobBreakdownMajorItemE,     "INSERT INTO SignificantMajorItem "
+// JobBreakdownMajorItemE,     "(ProfileKey, MajorItemKey, PercentofValue, "
+// JobBreakdownMajorItemE,     "PercentofValueLock) "
+// JobBreakdownMajorItemE,     "VALUES "
+// JobBreakdownMajorItemE,     "(%ProfileKey, @MajorItemKey, 0, "
+// JobBreakdownMajorItemE,     "0) "
+
+
+
+
+:query delete.bin
+//
+// This is the metadata for the delete SQL.
+//
+// Multiple strings for the same window ID
+// are concatenated together at this time
+//
+// USHORT                      char []
+// Window ID                   Query String
+//-------------------------------------------------------------------------
+
+ParametricProfileCatL, "/* ParametricProfileCatL */ "
+ParametricProfileCatL, "DELETE ParametricProfile "
+ParametricProfileCatL, "WHERE ProfileKey IN (%ProfileKey{,%ProfileKey}) "
+ParametricProfileCatL, " AND ProfileKey != 1 "
+ParametricProfileCatL, " AND ProfileKey NOT IN (select distinct ProfileKey from JobBreakdownProfile) "
+
+SignifMajItemL,             "/* SignifMajItemL */ "
+SignifMajItemL,             "DELETE SignificantMajorItem "
+SignifMajItemL,             "WHERE ProfileKey = %ProfileKey "
+SignifMajItemL,             "AND MajorItemKey IN (%MajorItemKey{,%MajorItemKey}) "
+SignifMajItemL,             "AND MajorItemKey > 1000000 "
+
+JobBreakdownMajorItemL,        "/* JobBreakdownMajorItemL */ "
+JobBreakdownMajorItemL,        "DELETE JobBreakdownMajorItem "
+JobBreakdownMajorItemL,        "WHERE JobKey = %JobKey "
+JobBreakdownMajorItemL,        "AND JobBreakdownKey = %JobBreakdownKey "
+JobBreakdownMajorItemL,        "AND MajorItemKey IN (%MajorItemKey{,%MajorItemKey}) "
+JobBreakdownMajorItemL,        "AND MajorItemKey > 1000000 "
+
+:format kludge.bin
+SignifMajItemS,             "Number,%.."
+GET_QTYS,               "Number,,..",   "Number,...."
+GET_BASE_PRICE,         "Number,..."
+
+
+:query CalcQry.bin
+
+GET_PROFILE_KEY,           "/* GET_PROFILE_KEY */ "
+GET_PROFILE_KEY,           "SELECT ProfileKey "
+GET_PROFILE_KEY,           "FROM JobBreakdownProfile "
+GET_PROFILE_KEY,           "WHERE JobKey = %JobKey "
+GET_PROFILE_KEY,           "AND   JobBreakdownKey = %JobBreakdownKey "
+
+DELETE_JBMI,               "/* DELETE_JBMI */ "
+DELETE_JBMI,               "DELETE FROM JobBreakdownMajorItem "
+DELETE_JBMI,               "WHERE JobKey = %JobKey "
+DELETE_JBMI,               "AND   JobBreakdownKey = %JobBreakdownKey "
+
+MAKE_JBMI,                 "/* MAKE_JBMI */ "
+MAKE_JBMI,                 "INSERT INTO JobBreakdownMajorItem "
+MAKE_JBMI,                 "(JobKey,JobBreakdownKey,MajorItemKey,"
+MAKE_JBMI,                 "Quantity,QuantityLock,UnitPrice,"
+MAKE_JBMI,                 "UnitPriceLock,ExtendedAmount "
+MAKE_JBMI,                 ",UseLength, UseArea, UseVolume "
+MAKE_JBMI,                 ",ConversionFactorLength, ConversionFactorArea, ConversionFactorVolume "
+MAKE_JBMI,                 ") SELECT "
+MAKE_JBMI,                 "%JobKey,%JobBreakdownKey,MajorItemKey,"
+MAKE_JBMI,                 "0,0,0,0,0 "
+MAKE_JBMI,                 ",0,0,1, 1.0,1.0,1.0 "
+MAKE_JBMI,                 "FROM SignificantMajorItem "
+MAKE_JBMI,                 "WHERE ProfileKey=%ProfileKey "
+
+
+GETQTY_MIKEY,       "/* GETQTY_MIKEY */ "
+GETQTY_MIKEY,               "SELECT DISTINCT JBMI.MajorItemKey,MI.CommonUnit "
+GETQTY_MIKEY,               "FROM MajorItemQuantityRegression MIQR,"
+GETQTY_MIKEY,               "JobBreakdownMajorItem JBMI, "
+GETQTY_MIKEY,               "JobBreakdown JB, MajorItem MI "
+GETQTY_MIKEY,               "WHERE JBMI.JobKey = %JobKey "
+GETQTY_MIKEY,               "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+GETQTY_MIKEY,               "AND JB.JobKey = %JobKey "
+GETQTY_MIKEY,               "AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETQTY_MIKEY,               "AND MIQR.MajorItemKey = JBMI.MajorItemKey "
+GETQTY_MIKEY,               "AND MI.MajorItemKey = JBMI.MajorItemKey "
+GETQTY_MIKEY,               "AND MIQR.BaseDate = '%BaseDate' "
+
+
+CHK_VOL, "/* CHK_VOL */ SELECT '"USE_VOL"' FROM CodeValue "
+CHK_VOL, " WHERE CodeValueID IN "
+CHK_VOL, " ('CY','CF','KG','LB','M3','OZ','T','TM','TON','M3km') "
+CHK_VOL, " AND CodeValueKey = "
+
+CHK_AREA, "/* CHK_AREA */ SELECT '"USE_AREA"' FROM CodeValue "
+CHK_AREA, " WHERE CodeValueID IN ('ACRE','HA','M2','SF','SY') "
+CHK_AREA, " AND CodeValueKey = "
+
+
+USE_VOL,       "/* USE_VOL */ "
+USE_VOL,               "SELECT MI.QuantityConversionFactor * "
+USE_VOL,               " (JB.Length * (1760.0+(J.UnitType * (-760.0))) "
+USE_VOL,               " * (JB.PavementDepth / (36.0+(J.UnitType * (964.0)))) "
+USE_VOL,               " * JB.PavementWidth /(3.0+(J.UnitType * (-2.0))) )"
+USE_VOL,               "FROM "
+// USE_VOL,               " MajorItemQuantityRegression MIQR,"
+USE_VOL,               "JobBreakdownMajorItem JBMI, "
+USE_VOL,               "JobBreakdown JB, MajorItem MI, Job J "
+USE_VOL,               "WHERE JBMI.JobKey = %JobKey "
+USE_VOL,               "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+USE_VOL,               "AND JB.JobKey = %JobKey "
+USE_VOL,               "AND JB.JobBreakdownKey = %JobBreakdownKey "
+USE_VOL,               "AND J.JobKey = JB.JobKey "
+USE_VOL,               "AND MI.MajorItemKey = JBMI.MajorItemKey "
+// USE_VOL,               "AND MIQR.MajorItemKey = JBMI.MajorItemKey "
+// USE_VOL,               "AND MIQR.MajorItemKey = %MajorItemKey "
+// USE_VOL,               "AND MIQR.BaseDate = '%BaseDate' "
+
+
+USE_AREA,       "/* USE_AREA */ "
+USE_AREA,               "SELECT MI.QuantityConversionFactor * "
+USE_AREA,               " (JB.Length * (1760.0+(J.UnitType * (-760.0))) "
+USE_AREA,               " * JB.PavementWidth /(3.0+(J.UnitType * (-2.0))) )"
+// USE_AREA,               "FROM MajorItemQuantityRegression MIQR,"
+USE_AREA,               "FROM "
+USE_AREA,               "JobBreakdownMajorItem JBMI, "
+USE_AREA,               "JobBreakdown JB, MajorItem MI, Job J "
+USE_AREA,               "WHERE JBMI.JobKey = %JobKey "
+USE_AREA,               "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+USE_AREA,               "AND JB.JobKey = %JobKey "
+USE_AREA,               "AND JB.JobBreakdownKey = %JobBreakdownKey "
+USE_AREA,               "AND J.JobKey = JB.JobKey "
+USE_AREA,               "AND MI.MajorItemKey = JBMI.MajorItemKey "
+// USE_AREA,               "AND MIQR.MajorItemKey = JBMI.MajorItemKey "
+// USE_AREA,               "AND MIQR.MajorItemKey = %MajorItemKey "
+// USE_AREA,               "AND MIQR.BaseDate = '%BaseDate' "
+
+        
+
+USE_LENGTH,       "/* USE_LENGTH */ "
+USE_LENGTH,               "SELECT MI.QuantityConversionFactor * "
+USE_LENGTH,               " JB.Length * (1760.0+(J.UnitType * (-760.0))) "
+// USE_LENGTH,               "FROM MajorItemQuantityRegression MIQR,"
+USE_LENGTH,               "FROM "
+USE_LENGTH,               "JobBreakdownMajorItem JBMI, "
+USE_LENGTH,               "JobBreakdown JB, MajorItem MI, Job J "
+USE_LENGTH,               "WHERE JBMI.JobKey = %JobKey "
+USE_LENGTH,               "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+USE_LENGTH,               "AND J.JobKey = JB.JobKey "
+USE_LENGTH,               "AND JB.JobKey = %JobKey "
+USE_LENGTH,               "AND JB.JobBreakdownKey = %JobBreakdownKey "
+USE_LENGTH,               "AND MI.MajorItemKey = JBMI.MajorItemKey "
+// USE_LENGTH,               "AND MIQR.MajorItemKey = JBMI.MajorItemKey "
+// USE_LENGTH,               "AND MIQR.MajorItemKey = %MajorItemKey "
+// USE_LENGTH,               "AND MIQR.BaseDate = '%BaseDate' "
+
+
+
+GETQUANTITY,       "/* GETQUANTITY */ "
+GETQUANTITY,               "SELECT JBMI.MajorItemKey, "
+GETQUANTITY,               "JB.Length * "
+GETQUANTITY,               "(MIQR.BaseCoefficient + "
+GETQUANTITY,               " MIQR.DepthAdjustment * JB.PavementDepth + "
+GETQUANTITY,               " MIQR.WidthAdjustment * JB.PavementWidth + "
+GETQUANTITY,               " MIQR.CrossSectionAdjustment * "
+GETQUANTITY,               "  (JB.PavementDepth * JB.PavementWidth)) + "
+GETQUANTITY,               "(MIQR.StructureBaseAdjustment + "
+GETQUANTITY,               "MIQR.StructureLengthAdjustment * JB.StructureLength +"
+GETQUANTITY,               "MIQR.StructureWidthAdjustment * JB.StructureWidth + "
+GETQUANTITY,               "MIQR.StructureAreaAdjustment * "
+GETQUANTITY,               "  (JB.StructureLength * JB.StructureWidth)) "
+GETQUANTITY,               "FROM MajorItemQuantityRegression MIQR,"
+GETQUANTITY,               "JobBreakdownMajorItem JBMI, "
+GETQUANTITY,               "JobBreakdown JB "
+GETQUANTITY,               "WHERE JBMI.JobKey = %JobKey "
+GETQUANTITY,               "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+GETQUANTITY,               "AND JB.JobKey = %JobKey "
+GETQUANTITY,               "AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETQUANTITY,               "AND MIQR.MajorItemKey = JBMI.MajorItemKey "
+GETQUANTITY,               "AND MIQR.BaseDate = '%BaseDate' "
+
+UPDATEQUANTITY,       "/* UPDATEQUANTITY */ "
+UPDATEQUANTITY,            "UPDATE JobBreakdownMajorItem "
+UPDATEQUANTITY,            "SET Quantity = %Quantity "
+UPDATEQUANTITY,            "WHERE JobKey = %JobKey "
+UPDATEQUANTITY,            "AND JobBreakdownKey = %JobBreakdownKey "
+UPDATEQUANTITY,            "AND MajorItemKey = %MajorItemKey "
+
+GETPRICE,             "/* GETPRICE */ "
+GETPRICE,                  "SELECT JBMI.MajorItemKey, "
+GETPRICE,                  "JBMI.Quantity / MIPR.MedianQuantity, "
+GETPRICE,                  "MIPR.QuantityAdjustment "
+GETPRICE,                  "FROM MajorItemPriceRegression MIPR, "
+GETPRICE,                  "JobBreakdownMajorItem JBMI "
+GETPRICE,                  "WHERE JBMI.JobKey = %JobKey "
+GETPRICE,                  "AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+GETPRICE,                  "AND MIPR.MajorItemKey = JBMI.MajorItemKey "
+GETPRICE,                  "AND MIPR.BaseDate = '%BaseDate' "
+
+UPDATEPRICE,          "/* UPDATEPRICE */ "
+UPDATEPRICE,               "UPDATE JobBreakdownMajorItem "
+UPDATEPRICE,               "SET UnitPrice = %Price + "
+UPDATEPRICE,               "(SELECT MIPR.MedianQuantityUnitPrice "
+UPDATEPRICE,               " FROM MajorItemPriceRegression MIPR"
+UPDATEPRICE,               " WHERE MIPR.MajorItemKey = %MajorItemKey "
+UPDATEPRICE,               "  AND  MIPR.BaseDate = '%BaseDate')"
+UPDATEPRICE,               "WHERE JobKey = %JobKey "
+UPDATEPRICE,               "AND JobBreakdownKey = %JobBreakdownKey "
+UPDATEPRICE,               "AND MajorItemKey = %MajorItemKey "
+
+
+/* quantity adjustment queries */
+
+GETWORKTYPEQADJUST,   "/* GETWORKTYPEQADJUST */ "
+GETWORKTYPEQADJUST,        " SELECT MIQA.QuantityAdjustment "
+GETWORKTYPEQADJUST,        " FROM MajorItemQuantityAdjustment MIQA, "
+GETWORKTYPEQADJUST,        " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETWORKTYPEQADJUST,        " WHERE MIQA.MajorItemKey = %MajorItemKey "
+GETWORKTYPEQADJUST,        " AND MIQA.BaseDate = '%BaseDate' "
+GETWORKTYPEQADJUST,        " AND MIQA.QualitativeVariable = 10 "
+GETWORKTYPEQADJUST,        " AND JB.JobKey = %JobKey "
+GETWORKTYPEQADJUST,        " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETWORKTYPEQADJUST,        " AND JB.WorkType = CV.CodeValueKey "
+GETWORKTYPEQADJUST,        " AND MIQA.VariableValue = CV.CodeValueID "
+GETWORKTYPEQADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETWORKTYPEQADJUST,        " AND CT.CodeTableID = 'WRKTYP' "
+
+GETDISTRICTQADJUST,   "/* GETDISTRICTQADJUST */ "
+GETDISTRICTQADJUST,        " SELECT MIQA.QuantityAdjustment "
+GETDISTRICTQADJUST,        " FROM MajorItemQuantityAdjustment MIQA, "
+GETDISTRICTQADJUST,        " CodeValue CV, CodeTable CT, Job J "
+GETDISTRICTQADJUST,        " WHERE MIQA.MajorItemKey = %MajorItemKey "
+GETDISTRICTQADJUST,        " AND MIQA.BaseDate = '%BaseDate' "
+// GETDISTRICTQADJUST,        " AND MIQA.QualitativeVariable = 11 "
+GETDISTRICTQADJUST,        " AND J.JobKey = %JobKey "
+GETDISTRICTQADJUST,        " AND J.District = CV.CodeValueKey "
+GETDISTRICTQADJUST,        " AND MIQA.VariableValue = CV.CodeValueID"
+GETDISTRICTQADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETDISTRICTQADJUST,        " AND CT.CodeTableID = 'DISTRIC' "
+
+GETROADTYPEQADJUST,   "/* GETROADTYPEQADJUST */ "
+GETROADTYPEQADJUST,        " SELECT MIQA.QuantityAdjustment "
+GETROADTYPEQADJUST,        " FROM MajorItemQuantityAdjustment MIQA, "
+GETROADTYPEQADJUST,        " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETROADTYPEQADJUST,        " WHERE MIQA.MajorItemKey = %MajorItemKey "
+GETROADTYPEQADJUST,        " AND MIQA.BaseDate = '%BaseDate' "
+// GETROADTYPEQADJUST,        " AND MIQA.QualitativeVariable = 12 "
+GETROADTYPEQADJUST,        " AND JB.JobKey = %JobKey "
+GETROADTYPEQADJUST,        " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETROADTYPEQADJUST,        " AND JB.RoadType = CV.CodeValueKey "
+GETROADTYPEQADJUST,        " AND MIQA.VariableValue = CV.CodeValueID"
+GETROADTYPEQADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETROADTYPEQADJUST,        " AND CT.CodeTableID = 'HWYTYPE' "
+// All refs to RoadSys for parametric estimation should be HwyType APR 95
+// GETROADTYPEQADJUST,        " AND CT.CodeTableID = 'ROADSYS' "
+
+GETSTRUCTURETYPEQADJUST,  "/* GETSTRUCTURETYPEQADJUST */ "
+GETSTRUCTURETYPEQADJUST,   " SELECT MIQA.QuantityAdjustment "
+GETSTRUCTURETYPEQADJUST,   " FROM MajorItemQuantityAdjustment MIQA, "
+GETSTRUCTURETYPEQADJUST,   " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETSTRUCTURETYPEQADJUST,   " WHERE MIQA.MajorItemKey = %MajorItemKey "
+GETSTRUCTURETYPEQADJUST,   " AND MIQA.BaseDate = '%BaseDate' "
+// GETSTRUCTURETYPEQADJUST,   " AND MIQA.QualitativeVariable = 13 "
+GETSTRUCTURETYPEQADJUST,   " AND JB.JobKey = %JobKey "
+GETSTRUCTURETYPEQADJUST,   " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETSTRUCTURETYPEQADJUST,   " AND JB.StructureType = CV.CodeValueKey "
+GETSTRUCTURETYPEQADJUST,   " AND MIQA.VariableValue = CV.CodeValueID"
+GETSTRUCTURETYPEQADJUST,   " AND CT.CodeTableKey = CV.CodeTableKey "
+GETSTRUCTURETYPEQADJUST,   " AND CT.CodeTableID = 'BRDGTYP' "
+
+
+/* price adjustment queries */
+
+GETWORKTYPEPADJUST,           "/* GETWORKTYPEPADJUST */ "
+GETWORKTYPEPADJUST,        " SELECT MIPA.PriceAdjustment "
+GETWORKTYPEPADJUST,        " FROM MajorItemPriceAdjustment MIPA, "
+GETWORKTYPEPADJUST,        " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETWORKTYPEPADJUST,        " WHERE MIPA.MajorItemKey = %MajorItemKey "
+GETWORKTYPEPADJUST,        " AND MIPA.BaseDate = '%BaseDate' "
+// GETWORKTYPEPADJUST,        " AND MIPA.QualitativeVariable = 10 "
+GETWORKTYPEPADJUST,        " AND JB.JobKey = %JobKey "
+GETWORKTYPEPADJUST,        " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETWORKTYPEPADJUST,        " AND JB.WorkType = CV.CodeValueKey "
+GETWORKTYPEPADJUST,        " AND MIPA.QualitativeValue = CV.CodeValueID"
+GETWORKTYPEPADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETWORKTYPEPADJUST,        " AND CT.CodeTableID = 'WRKTYP' "
+
+GETDISTRICTPADJUST,           "/* GETDISTRICTPADJUST */ "
+GETDISTRICTPADJUST,        " SELECT MIPA.PriceAdjustment "
+GETDISTRICTPADJUST,        " FROM MajorItemPriceAdjustment MIPA, "
+GETDISTRICTPADJUST,        " CodeValue CV, CodeTable CT, Job J "
+GETDISTRICTPADJUST,        " WHERE MIPA.MajorItemKey = %MajorItemKey "
+GETDISTRICTPADJUST,        " AND MIPA.BaseDate = '%BaseDate' "
+// GETDISTRICTPADJUST,        " AND MIPA.QualitativeVariable = 11 "
+GETDISTRICTPADJUST,        " AND J.JobKey = %JobKey "
+GETDISTRICTPADJUST,        " AND J.District = CV.CodeValueKey "
+GETDISTRICTPADJUST,        " AND MIPA.QualitativeValue = CV.CodeValueID"
+GETDISTRICTPADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETDISTRICTPADJUST,        " AND CT.CodeTableID = 'DISTRIC' "
+
+GETROADTYPEPADJUST,            "/* GETROADTYPEPADJUST */ "
+GETROADTYPEPADJUST,        " SELECT MIPA.PriceAdjustment "
+GETROADTYPEPADJUST,        " FROM MajorItemPriceAdjustment MIPA, "
+GETROADTYPEPADJUST,        " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETROADTYPEPADJUST,        " WHERE MIPA.MajorItemKey = %MajorItemKey "
+GETROADTYPEPADJUST,        " AND MIPA.BaseDate = '%BaseDate' "
+// GETROADTYPEPADJUST,        " AND MIPA.QualitativeVariable = 12 "
+GETROADTYPEPADJUST,        " AND JB.JobKey = %JobKey "
+GETROADTYPEPADJUST,        " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETROADTYPEPADJUST,        " AND JB.RoadType = CV.CodeValueKey "
+GETROADTYPEPADJUST,        " AND MIPA.QualitativeValue = CV.CodeValueID"
+GETROADTYPEPADJUST,        " AND CT.CodeTableKey = CV.CodeTableKey "
+GETROADTYPEPADJUST,        " AND CT.CodeTableID = 'HWYTYPE' "
+// All refs to RoadSys for parametric estimation should be HwyType APR 95
+// GETROADTYPEPADJUST,        " AND CT.CodeTableID = 'ROADSYS' "
+
+GETSTRUCTURETYPEPADJUST,       "/* GETSTRUCTURETYPEPADJUST */ "
+GETSTRUCTURETYPEPADJUST,   " SELECT MIPA.PriceAdjustment "
+GETSTRUCTURETYPEPADJUST,   " FROM MajorItemPriceAdjustment MIPA, "
+GETSTRUCTURETYPEPADJUST,   " CodeValue CV, CodeTable CT, JobBreakdown JB "
+GETSTRUCTURETYPEPADJUST,   " WHERE MIPA.MajorItemKey = %MajorItemKey "
+GETSTRUCTURETYPEPADJUST,   " AND MIPA.BaseDate = '%BaseDate' "
+// GETSTRUCTURETYPEPADJUST,   " AND MIPA.QualitativeVariable = 13 "
+GETSTRUCTURETYPEPADJUST,   " AND JB.JobKey = %JobKey "
+GETSTRUCTURETYPEPADJUST,   " AND JB.JobBreakdownKey = %JobBreakdownKey "
+GETSTRUCTURETYPEPADJUST,   " AND JB.StructureType = CV.CodeValueKey "
+GETSTRUCTURETYPEPADJUST,   " AND MIPA.QualitativeValue = CV.CodeValueID"
+GETSTRUCTURETYPEPADJUST,   " AND CT.CodeTableKey = CV.CodeTableKey "
+GETSTRUCTURETYPEPADJUST,   " AND CT.CodeTableID = 'BRDGTYP' "
+
+CALC_JBMI_EXT,       "/* CALC_JBMI_EXT */ "
+CALC_JBMI_EXT,             " UPDATE JobBreakdownMajorItem "
+CALC_JBMI_EXT,             " SET ExtendedAmount = UnitPrice * Quantity "
+CALC_JBMI_EXT,             " WHERE JobKey = %JobKey "
+CALC_JBMI_EXT,             " AND JobBreakdownKey = %JobBreakdownKey "
+
+UPDATE_JB,       "/* UPDATE_JB */ "
+UPDATE_JB,                 " UPDATE JobBreakdown "
+UPDATE_JB,                 " SET PreliminaryEstimateCost = "
+UPDATE_JB,                 " (SELECT SUM (ExtendedAmount)/"
+UPDATE_JB,                 "  SUM (SMI.PercentofValue)"
+UPDATE_JB,                 "  FROM SignificantMajorItem SMI, "
+UPDATE_JB,                 "  JobBreakdownMajorItem JBMI, "
+UPDATE_JB,                 "  JobBreakdownProfile JBP "
+UPDATE_JB,                 "  WHERE JBMI.JobKey = %JobKey "
+UPDATE_JB,                 "  AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JB,                 "  AND JBMI.MajorItemKey = SMI.MajorItemKey"
+UPDATE_JB,                 "  AND JBP.JobKey = %JobKey "
+UPDATE_JB,                 "  AND JBP.JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JB,                 "  AND JBP.ProfileKey = SMI.ProfileKey) "
+UPDATE_JB,                 " WHERE JobBreakdown.JobKey = %JobKey "
+UPDATE_JB,                 " AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey "
+
+UPDATE_JB1,       "/* UPDATE_JB1 */ "
+UPDATE_JB1,                " SELECT SUM (ExtendedAmount)/"
+UPDATE_JB1,                "  SUM (SMI.PercentofValue)"
+UPDATE_JB1,                "   FROM SignificantMajorItem SMI, "
+UPDATE_JB1,                "   JobBreakdownMajorItem JBMI, "
+UPDATE_JB1,                "   JobBreakdownProfile JBP "
+UPDATE_JB1,                "   WHERE JBMI.JobKey = %JobKey "
+UPDATE_JB1,                "   AND JBMI.JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JB1,                "   AND JBMI.MajorItemKey = SMI.MajorItemKey"
+UPDATE_JB1,                "   AND JBP.JobKey = %JobKey "
+UPDATE_JB1,                "   AND JBP.JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JB1,                "   AND JBP.ProfileKey = SMI.ProfileKey "
+
+UPDATE_JB2,       "/* UPDATE_JB2 */ "
+UPDATE_JB2,                " UPDATE JobBreakdown "
+UPDATE_JB2,                " SET PreliminaryEstimateCost = %Temp "
+UPDATE_JB2,                " WHERE JobBreakdown.JobKey = %JobKey "
+UPDATE_JB2,                " AND JobBreakdown.JobBreakdownKey = %JobBreakdownKey "
+
+///////
+UPDATE_JMIQTYREGS, " UPDATE JobBreakdownMajorItem  SET Quantity="
+//        JUN 96               ( Slope   * VAL             ) + Intercept
+UPDATE_JMIQTYREGS,   " (select (((BaseCoefficient * %VorAorL ) + DepthAdjustment) * ( %Vol * %ConvFacVolume )) "
+UPDATE_JMIQTYREGS,          "+ (((WidthAdjustment * %VorAorL ) + CrossSectionAdjustment) * ( %Area * %ConvFacArea )) "
+UPDATE_JMIQTYREGS,  "+ (((StructureBaseAdjustment * %VorAorL ) + StructureWidthAdjustment) * ( %Len * %ConvFacLength )) "
+UPDATE_JMIQTYREGS, "FROM JobBreakdown uJB, MajorItem uMI, JobBreakdownMajorItem uJBMI, "
+UPDATE_JMIQTYREGS, "MajorItemQuantityRegression uMIQR,CodeValue uCV,Job uJ "
+UPDATE_JMIQTYREGS, "WHERE uJBMI.JobKey = uJB.JobKey "
+UPDATE_JMIQTYREGS, "AND uJBMI.JobBreakdownKey = uJB.JobBreakdownKey "
+UPDATE_JMIQTYREGS, "AND uJB.JobKey = uJ.JobKey "
+UPDATE_JMIQTYREGS, "AND uJBMI.MajorItemKey = uMI.MajorItemKey "
+UPDATE_JMIQTYREGS, "AND uMI.CommonUnit = uCV.CodeValueKey "
+UPDATE_JMIQTYREGS, "AND uMIQR.MajorItemKey = uMI.MajorItemKey "
+UPDATE_JMIQTYREGS, "AND uMIQR.BaseDate = uJ.BaseDate "
+UPDATE_JMIQTYREGS, "AND uJBMI.JobKey = %JobKey "
+UPDATE_JMIQTYREGS, "AND uJBMI.JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JMIQTYREGS, "AND uJBMI.MajorItemKey = %MajorItemKey ) "
+UPDATE_JMIQTYREGS,  ", UseVolume = %Vol "
+UPDATE_JMIQTYREGS,  ", UseArea = %Area "
+UPDATE_JMIQTYREGS,  ", UseLength = %Len "
+UPDATE_JMIQTYREGS, "WHERE JobKey = %JobKey "
+UPDATE_JMIQTYREGS, "AND JobBreakdownKey = %JobBreakdownKey "
+UPDATE_JMIQTYREGS, "AND MajorItemKey = %MajorItemKey "
+
+QUERY_JMIQTYREGS,   " select (((BaseCoefficient * %VorAorL ) + DepthAdjustment) * ( %Vol * %ConvFacVolume )) "
+QUERY_JMIQTYREGS,          "+ (((WidthAdjustment * %VorAorL ) + CrossSectionAdjustment) * ( %Area * %ConvFacArea )) "
+QUERY_JMIQTYREGS,  "+ (((StructureBaseAdjustment * %VorAorL ) + StructureWidthAdjustment) * ( %Len * %ConvFacLength )) "
+QUERY_JMIQTYREGS, "FROM JobBreakdown uJB, MajorItem uMI, JobBreakdownMajorItem uJBMI, "
+QUERY_JMIQTYREGS, "MajorItemQuantityRegression uMIQR,CodeValue uCV,Job uJ "
+QUERY_JMIQTYREGS, "WHERE uJBMI.JobKey = uJB.JobKey "
+QUERY_JMIQTYREGS, "AND uJBMI.JobBreakdownKey = uJB.JobBreakdownKey "
+QUERY_JMIQTYREGS, "AND uJB.JobKey = uJ.JobKey "
+QUERY_JMIQTYREGS, "AND uJBMI.MajorItemKey = uMI.MajorItemKey "
+QUERY_JMIQTYREGS, "AND uMI.CommonUnit = uCV.CodeValueKey "
+QUERY_JMIQTYREGS, "AND uMIQR.MajorItemKey = uMI.MajorItemKey "
+QUERY_JMIQTYREGS, "AND uMIQR.BaseDate = uJ.BaseDate "
+QUERY_JMIQTYREGS, "AND uJBMI.JobKey = %JobKey "
+QUERY_JMIQTYREGS, "AND uJBMI.JobBreakdownKey = %JobBreakdownKey "
+QUERY_JMIQTYREGS, "AND uJBMI.MajorItemKey = %MajorItemKey "
+
+
+
+
+
+
+UPDATE_J,   "/* UPDATE_J */ " 
+UPDATE_J,   "IF (NULL != (SELECT SUM(PreliminaryEstimateCost) "
+UPDATE_J,              " FROM JobBreakdown"
+UPDATE_J,              " WHERE JobKey = %JobKey"
+UPDATE_J,              " AND DetailedEstimate = 0 )) "
+UPDATE_J,   " BEGIN"
+UPDATE_J,       " UPDATE Job "
+UPDATE_J,       " SET EstimatedCost = "
+UPDATE_J,             " (SELECT SUM(PreliminaryEstimateCost) "
+UPDATE_J,             " FROM JobBreakdown"
+UPDATE_J,             " WHERE JobKey = %JobKey"
+UPDATE_J,             " AND DetailedEstimate = 0 ) "
+UPDATE_J,       " WHERE JobKey = %JobKey "
+//
+UPDATE_J,       "IF (NULL != (SELECT SUM(DetailedEstimateCost) "
+UPDATE_J,                   " FROM JobBreakdown"
+UPDATE_J,                   " WHERE JobKey = %JobKey"
+UPDATE_J,                   " AND DetailedEstimate = 1 )) "
+UPDATE_J,       "BEGIN "
+UPDATE_J,       " UPDATE Job "
+UPDATE_J,       " SET EstimatedCost = EstimatedCost + "
+UPDATE_J,             " (SELECT SUM(DetailedEstimateCost) "
+UPDATE_J,             "  FROM JobBreakdown"
+UPDATE_J,             "  WHERE JobKey = %JobKey"
+UPDATE_J,             "  AND DetailedEstimate = 1 ) "
+UPDATE_J,       " WHERE JobKey = %JobKey "
+UPDATE_J,       "END "
+//
+UPDATE_J,       " UPDATE Job "
+UPDATE_J,       " SET EstimateTotal = "
+UPDATE_J,         " (EstimatedCost * (1.00 "
+UPDATE_J,         " + ConstructionEngineeringPct "
+UPDATE_J,         " + ContingencyPercent) ) "
+UPDATE_J,       " WHERE JobKey = %JobKey "
+UPDATE_J,   " END "
+
+/////////////////////////////////
+
+GET_QTYS,          "SELECT HPMI.Quantity, HPMI.Quantity "
+GET_QTYS,          "FROM HistoricalProposal HP, "
+GET_QTYS,          "HistoricalProposalMajorItem HPMI "
+GET_QTYS,          "WHERE HP.ProposalKey = HPMI.ProposalKey "
+GET_QTYS,          "AND HPMI.MajorItemKey = "
+
+
+GET_BASE_PRICE,    "/* GET_BASE_PRICE */ SELECT EXP( %s + (( %s ) * LOG( %s )) ) "
+//                                            intercept   slope     MedianQty
+
+
+GET_BASE_PRICE_QTY_ADJ, "/* GET_BASE_PRICE_QTY_ADJ */ "
+GET_BASE_PRICE_QTY_ADJ, "SELECT SUM(PriceAdjustment) "  
+GET_BASE_PRICE_QTY_ADJ,   "FROM MajorItemPriceAdjustment A, Job "
+GET_BASE_PRICE_QTY_ADJ,   "WHERE Job.BaseDate >= "
+GET_BASE_PRICE_QTY_ADJ,   "(select MAX(BaseDate) from MajorItemPriceAdjustment "
+GET_BASE_PRICE_QTY_ADJ,        " where MajorItemKey = %s ) "
+GET_BASE_PRICE_QTY_ADJ,   "AND A.BaseDate >= "
+GET_BASE_PRICE_QTY_ADJ,   "(select MAX(BaseDate) from MajorItemPriceAdjustment "
+GET_BASE_PRICE_QTY_ADJ,        " where MajorItemKey = %s ) "
+GET_BASE_PRICE_QTY_ADJ,   "AND Job.JobKey = %s "
+GET_BASE_PRICE_QTY_ADJ,   "AND A.MajorItemKey = %s "
+
+
+
+
+
+GET_ADJ_PCT,       "SELECT  EXP( ( 0 - ( %s) ) * LOG( %s ) ) -1 "
+//                                  C2{slope}        2 or 1/2
+
+
+GET_P_SLOPE, "select "
+GET_P_SLOPE, " ((count(*) * SUM(LOG(Quantity) * LOG(WeightedAverageUnitPrice)))"
+GET_P_SLOPE, "  - (SUM(LOG(Quantity)) * SUM(LOG(WeightedAverageUnitPrice))))"
+GET_P_SLOPE, " / ( (count(*) * SUM(LOG(Quantity) * LOG(Quantity)))"
+GET_P_SLOPE,      " - (SUM(LOG(Quantity)) * SUM(LOG(Quantity)))) "
+
+GET_P_INTERCEPT, "select AVG(LOG(WeightedAverageUnitPrice)) - (( %s ) * AVG(LOG(Quantity))) "
+//                                                          @slope
+
+// to calc slope = (näxy - (äx)(äy)) / (näxý-(äx)ý)
+
+GET_Q_SLOPE, "select "
+GET_Q_SLOPE, " ((count(*) * SUM((%s) * (Quantity)))"
+GET_Q_SLOPE, "  - (SUM((%s)) * SUM((Quantity))))"
+GET_Q_SLOPE, " / ( (count(*) * SUM((%s) * (%s)))"
+GET_Q_SLOPE,      " - (SUM(%s) * SUM(%s))) "
+
+GET_Q_INTERCEPT, "select AVG(Quantity) - (( %s ) * AVG(%s)) "
+//                                       @slope       @Vol or Area or Length
+
+
+GET_S_I, " from HistoricalProposalMajorItem HPMI, HistoricalProposal HP"
+GET_S_I, " where HPMI.ProposalKey = HP.ProposalKey "
+GET_S_I,  " and HP.AwardedBidTotal > 0 "
+GET_S_I,  " and ProposalLength > 0.0 "
+GET_S_I,  " and AveragePavementWidth > 0.0 "
+GET_S_I,  " and AveragePavementDepth > 0.0 "
+GET_S_I, " and HPMI.MajorItemKey = "
+
+
+
+
